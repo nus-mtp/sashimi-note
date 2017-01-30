@@ -1,0 +1,22 @@
+{
+  "name": "lecture-note-2.0",
+  "version": "0.0.1",
+  "description": "A flexible and extensible document viewing and editing platform.",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nus-mtp/lecture-note-2.0.git"
+  },
+  "keywords": [
+    "markdown", "presentation", "lecture", "note"
+  ],
+  "author": "Amos Wong Wen Jet, Chua Jia Xuan, Lek Jia Ying, Tay Jie Hao, Won Jun Ru Daphne",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/nus-mtp/lecture-note-2.0/issues"
+  },
+  "homepage": "https://github.com/nus-mtp/lecture-note-2.0#readme"
+}
