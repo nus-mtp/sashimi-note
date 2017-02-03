@@ -18,5 +18,8 @@
   "bugs": {
     "url": "https://github.com/nus-mtp/lecture-note-2.0/issues"
   },
-  "homepage": "https://github.com/nus-mtp/lecture-note-2.0#readme"
+  "homepage": "https://github.com/nus-mtp/lecture-note-2.0#readme",
+  "devDependencies": {
+    "eslint": "^3.14.1"
+  }
 }
