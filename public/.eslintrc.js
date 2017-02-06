@@ -1,7 +1,8 @@
 module.exports = {
     "env": {
-        "es6": true,
-        "node": true
+        "browser": true,
+        "commonjs": true,
+        "es6": true
     },
     "extends": "eslint:recommended",
     "parserOptions": {
@@ -19,8 +20,6 @@ module.exports = {
         "semi": [
             "error",
             "always"
-        ],
-        "no-console": 0,
-        "no-unused-vars": ["error", { "argsIgnorePattern": "next" }]
+        ]
     }
 };
