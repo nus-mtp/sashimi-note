@@ -3,14 +3,14 @@ module.exports = {
         "es6": true,
         "node": true
     },
-    "extends": "eslint:recommended",
+    "extends": "airbnb-base",
     "parserOptions": {
         "sourceType": "module"
     },
     "rules": {
         "indent": [
-            "error",
-            4
+            "error", 2, 
+            { "SwitchCase": 1 }
         ],
         "quotes": [
             "error",
@@ -20,7 +20,42 @@ module.exports = {
             "error",
             "always"
         ],
-        "no-console": 0,
-        "no-unused-vars": ["error", { "argsIgnorePattern": "next" }]
+        "no-console": "off",
+        "linebreak-style": "off",
+        "max-len": [
+            "warn", 120, 2, 
+            { ignoreComments: true }
+        ],
+        "quote-props": [
+            "warn",
+            "consistent-as-needed"
+        ],
+        "no-cond-assign": [
+            "off",
+            "except-parens"
+        ],
+        "radix": "off",
+        "space-infix-ops": "off",
+        "no-unused-vars": [
+            "warn", 
+            { 
+                "vars": "local", 
+                "args": "none", 
+                "argsIgnorePattern": "next" 
+            }
+        ],
+        "default-case": "error",
+        "no-else-return": "off",
+        "no-param-reassign": "off",
+        "quotes": "off",
+        "space-before-function-paren": [
+            "error", 
+            {
+                "anonymous": "never",
+                "named": "never",
+                "asyncArrow": "ignore"
+            }
+        ],
+        eqeqeq: ["error", "smart"]
     }
 };
