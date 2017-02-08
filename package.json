@@ -7,7 +7,8 @@
   "scripts": {
     "start": "node ./bin/www",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "bundle": "browserify public/javascripts/main.js -o public/bundles.js"
+    "build-webapp": "browserify public/javascripts/main.js | uglifyjs -mc warnings=false > public/bundles.js",
+    "watch-webapp": "watchify public/javascripts/main.js -o public/bundles.js -v"
   },
   "repository": {
     "type": "git",
@@ -36,6 +37,8 @@
   },
   "devDependencies": {
     "browserify": "^14.0.0",
-    "eslint": "^3.14.1"
+    "eslint": "^3.14.1",
+    "uglifyjs": "^2.4.10",
+    "watchify": "^3.9.0"
   }
 }
