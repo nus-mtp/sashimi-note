@@ -1,7 +1,9 @@
+# Project specific 
+
+## Browserify bundles
+public/bundles.js
 
 # Created by https://www.gitignore.io/api/node,windows,macos,visualstudiocode,sublimetext,notepadpp,linux,sass,osx
-
-public/bundle.js
 
 ### Node ###
 # Logs
