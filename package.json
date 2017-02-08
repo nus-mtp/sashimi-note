@@ -7,8 +7,8 @@
   "scripts": {
     "start": "node ./bin/www",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build-webapp": "browserify public/javascripts/main.js | uglifyjs -mc warnings=false > public/bundles.js",
-    "watch-webapp": "watchify public/javascripts/main.js -o public/bundles.js -v"
+    "build-webapp": "browserify public/javascripts/main.js -t [ babelify --presets [ es2015 ] ] | uglifyjs -mc warnings=false > public/bundles.js",
+    "watch-webapp": "watchify public/javascripts/main.js -t [ babelify --presets [ es2015 ] ] -o public/bundles.js -v"
   },
   "repository": {
     "type": "git",
@@ -36,6 +36,8 @@
     "serve-favicon": "~2.3.2"
   },
   "devDependencies": {
+    "babel-preset-es2015": "^6.22.0",
+    "babelify": "^7.3.0",
     "browserify": "^14.0.0",
     "eslint": "^3.14.1",
     "uglifyjs": "^2.4.10",
