@@ -3,7 +3,7 @@ module.exports = {
         "es6": true,
         "node": true
     },
-    "extends": "eslint:recommended",
+    "extends": "airbnb-base",
     "parserOptions": {
         "sourceType": "module"
     },
@@ -21,6 +21,7 @@ module.exports = {
             "always"
         ],
         "no-console": 0,
+        "linebreak-style": 0,
         "no-unused-vars": ["error", { "argsIgnorePattern": "next" }]
     }
 };
