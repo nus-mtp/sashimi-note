@@ -9,7 +9,7 @@ module.exports = {
     },
     "rules": {
         "indent": [
-            "error", 4, 
+            "error", 2, 
             { "SwitchCase": 1 }
         ],
         "quotes": [
@@ -23,7 +23,7 @@ module.exports = {
         "no-console": "off",
         "linebreak-style": "off",
         "max-len": [
-            "warn", 120, 4, 
+            "warn", 120, 2, 
             { ignoreComments: true }
         ],
         "quote-props": [
