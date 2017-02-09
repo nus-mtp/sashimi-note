@@ -37,4 +37,5 @@ function sendToProcessors(data) {
 
 cm.on('change', (data) => {
   sendToProcessors(data);
+  console.log(data);
 });
