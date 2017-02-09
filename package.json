@@ -33,6 +33,7 @@
     "express": "~4.14.1",
     "hbs": "~4.0.1",
     "karma-cli": "^1.0.1",
+    "markdown-it": "^8.2.2",
     "morgan": "~1.7.0",
     "phantomjs": "^2.1.7+deprecated",
     "serve-favicon": "~2.3.2"
