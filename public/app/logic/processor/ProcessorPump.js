@@ -1,9 +1,9 @@
 // Importing modules
-let cm = require("../contentManipulator/contentManipulator.js");
-let cp = require("./conditionalProcessor");
-let mdp = require("./markdownProcessor");
-let pp = require("./pluginProcessor");
-let ps = require("./processorSink");
+const cm = require("../contentManipulator/contentManipulator.js");
+const cp = require("./conditionalProcessor");
+const mdp = require("./markdownProcessor");
+const pp = require("./pluginProcessor");
+const ps = require("./processorSink");
 
 function sendToConditional(data) {
   cp.process(data);

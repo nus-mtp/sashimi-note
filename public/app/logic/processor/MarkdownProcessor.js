@@ -1,13 +1,10 @@
-/* let mdIt = require("markdown-it");
+// Import Markdown-It module for markdown parsing and processing
+const md = require('markdown-it')();
 
-processor = {
-  parse: function parse(data) {
-    return mdIt.parse(data);
+const markdownProcessor = {
+  process: function process(data) {
+    return md.render(data);
   },
 };
 
-module.exports = mdIt;*/
-
-function process(data) {
-  return data;
-}
+module.exports = markdownProcessor;
