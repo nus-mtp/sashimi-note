@@ -1,7 +1,7 @@
 # Project specific 
 
-## Browserify bundles
-public/bundles.js
+## Webapp distribution folder
+public/dist
 
 # Created by https://www.gitignore.io/api/node,windows,macos,visualstudiocode,sublimetext,notepadpp,linux,sass,osx
 
