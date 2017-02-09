@@ -32,7 +32,9 @@
     "debug": "~2.6.0",
     "express": "~4.14.1",
     "hbs": "~4.0.1",
+    "karma-cli": "^1.0.1",
     "morgan": "~1.7.0",
+    "phantomjs": "^2.1.7+deprecated",
     "serve-favicon": "~2.3.2"
   },
   "devDependencies": {
@@ -42,6 +44,11 @@
     "eslint": "^3.15.0",
     "eslint-config-airbnb-base": "^11.1.0",
     "eslint-plugin-import": "^2.2.0",
+    "jasmine-core": "^2.5.2",
+    "karma": "^1.4.1",
+    "karma-chrome-launcher": "^2.0.0",
+    "karma-jasmine": "^1.1.0",
+    "karma-phantomjs-launcher": "^1.0.2",
     "uglifyjs": "^2.4.10",
     "watchify": "^3.9.0"
   }
