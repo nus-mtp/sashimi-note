@@ -7,3 +7,7 @@ processor = {
 };
 
 module.exports = mdIt;*/
+
+function process(data) {
+  return data;
+}
