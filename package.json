@@ -7,8 +7,8 @@
   "scripts": {
     "start": "node ./bin/www",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build-webapp": "browserify public/javascripts/main.js -t [ babelify --presets [ es2015 ] ] | uglifyjs -mc warnings=false > public/bundles.js",
-    "watch-webapp": "watchify public/javascripts/main.js -t [ babelify --presets [ es2015 ] ] -o public/bundles.js -v"
+    "build-webapp": "browserify public/app/main.js -t [ babelify --presets [ es2015 ] ] | uglifyjs -mc warnings=false > public/dist/main.js",
+    "watch-webapp": "watchify public/app/main.js -t [ babelify --presets [ es2015 ] ] -o public/dist/main.js -v"
   },
   "repository": {
     "type": "git",
