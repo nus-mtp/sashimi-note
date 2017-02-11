@@ -5,8 +5,8 @@
   "private": true,
   "main": "main.js",
   "scripts": {
-    "start": "echo OFF && echo npm start is not ready yet! && echo OFF",
-    "postinstall": "node scripts/postInstallScript.js"
+    "start": "node ./bin/www",
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
@@ -25,6 +25,22 @@
   },
   "homepage": "https://github.com/nus-mtp/lecture-note-2.0#readme",
   "dependencies": {
-    "concurrently": "^3.2.0"
+    "body-parser": "~1.16.0",
+    "cookie-parser": "~1.4.3",
+    "debug": "~2.6.0",
+    "express": "~4.14.1",
+    "hbs": "~4.0.1",
+    "karma-cli": "^1.0.1",
+    "morgan": "~1.7.0",
+    "serve-favicon": "~2.3.2"
+  },
+  "devDependencies": {
+    "eslint": "^3.15.0",
+    "eslint-config-airbnb-base": "^11.1.0",
+    "eslint-plugin-import": "^2.2.0",
+    "eslint-plugin-jasmine": "^2.2.0",
+    "jasmine-core": "^2.5.2",
+    "karma": "^1.4.1",
+    "karma-jasmine": "^1.1.0"
   }
 }
