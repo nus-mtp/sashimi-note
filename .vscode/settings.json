@@ -1,19 +1,21 @@
 // Place your settings in this file to overwrite default and user settings.
 {
-     //-------- ESLint configuration --------
-    "eslint.workingDirectories": [
-        "./sashimi-platform", "./sashimi-webapp"
-    ],
+   "editor.tabSize": 2,
 
-    // Aggressive eslint auto fix
-    "eslint.autoFixOnSave": true,
+   //-------- ESLint configuration --------
+  "eslint.workingDirectories": [
+    "./sashimi-platform", "./sashimi-webapp"
+  ],
 
-    "eslint.options": {
-        "extensions": [
-            ".js", ".vue"
-        ]
-    },
-    "eslint.validate": [
-        "javascript", "html"
+  // Aggressive eslint auto fix
+  "eslint.autoFixOnSave": true,
+
+  "eslint.options": {
+    "extensions": [
+      ".js", ".vue"
     ]
+  },
+  "eslint.validate": [
+    "javascript", "html"
+  ]
 }
