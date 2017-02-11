@@ -5,7 +5,7 @@
   "private": true,
   "main": "main.js",
   "scripts": {
-    "start": "echo OFF && echo npm start is not ready yet! && echo OFF",
+    "start": "echo OFF && echo npm start is not ready yet! && echo OFF",   
     "postinstall": "node scripts/postInstallScript.js"
   },
   "repository": {
@@ -24,7 +24,7 @@
     "url": "https://github.com/nus-mtp/lecture-note-2.0/issues"
   },
   "homepage": "https://github.com/nus-mtp/lecture-note-2.0#readme",
-  "dependencies": {
+  "devDependencies": {
     "concurrently": "^3.2.0"
   }
 }
