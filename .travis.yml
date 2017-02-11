@@ -1,3 +1,7 @@
 language: node_js
 node_js:
   - "6"
+env:
+  - TEST_DIR=sashimi-webapp
+  - TEST_DIR=sashimi-platform
+script: cd $TEST_DIR && yarn && yarn test-travis
