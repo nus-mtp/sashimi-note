@@ -16,4 +16,8 @@ const sqlCommands = function sqlCommands() {
   this.createTable = function createTable(sqlStatement) {
     alasql(sqlStatement);
   };
+
+  this.deleteTable = function deleteTable(tableName) {
+    alasql(stringConcat('DROP TABLE ', tableName));
+  };
 };
