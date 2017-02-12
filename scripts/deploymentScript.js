@@ -26,23 +26,17 @@ printTitle('Copy webapp to server folder');
 rm('-rf', `../${platform.path}/${platform.buildPath}/*`);
 cp('-R', `${webapp.buildPath}/*`, `../${platform.path}/${platform.buildPath}/`);
 
-cd(`..`);
+ls(`../${platform.path}/${platform.buildPath}/`).forEach(function(file) {
+  console.log(file);
+});
 
+cd(`..`);
 
 
 printTitle('Run web server')
 
 cd(`./${platform.path}`);
 exec('yarn')
-
-// let envPort = process.env.PORT || '9010';
-// let envNode = process.env.NODE_ENV || 'production';
-
-// statusStart = exec(`set NODE_ENV=${envNode}&&set PORT=${envPort}&&yarn start`).code;
-// throwErrorIfFailedToExec(statusStart, 'run failed')
-
-
-
 
 
 function throwErrorIfFailedToExec(statusCode, message) {
