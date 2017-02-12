@@ -42,4 +42,26 @@ class entitiesCreator {
     return isTableCreatedSuccessful;
   }
 
+  static createOrganizationTable() {
+    tableCreator.init_create_table(constants.ENTITIES_ORGANIZATION);
+
+    tableCreator.add_header(constants.HEADER_ORGANIZATION_ORGANIZATION_NAME, 'VARCHAR(64)');
+    tableCreator.add_header(constants.HEADER_ORGANIZATION_CREATION_DATE, 'DATE');
+    tableCreator.add_header(constants.HEADER_ORGANIZATION_INDEX, 'INT');
+    tableCreator.add_header(constants.HEADER_ORGANIZATION_ORGANIZATION_ID, 'LONG');
+    tableCreator.add_header(constants.HEADER_ORGANIZATION_USER_ID, 'LONG');
+    tableCreator.add_header(constants.HEADER_ORGANIZATION_PARENT_ORGANIZATION_ID, 'LONG');
+
+    tableCreator.set_foreign_key(constants.HEADER_ORGANIZATION_USER_ID, constants.ENTITIES_USER, constants.HEADER_USER_USER_ID);
+    tableCreator.set_foreign_key(constants.HEADER_ORGANIZATION_PARENT_ORGANIZATION_ID, constants.ENTITIES_ORGANIZATION, constants.HEADER_ORGANIZATION_ORGANIZATION_ID);
+
+    tableCreator.set_primary_keys(constants.HEADER_ORGANIZATION_ORGANIZATION_ID, constants.HEADER_ORGANIZATION_USER_ID);
+
+    const isTableCreatedSuccessful = tableCreator.end_create_table();
+
+    if (debugActivated) {
+      const debugOrganizationTable = alasql(stringConcat('SELECT * FROM ', constants.ENTITIES_ORGANIZATION));
+      console.log('DEBUG organization table:');
+      console.log(debugOrganizationTable);
+    }
 }
