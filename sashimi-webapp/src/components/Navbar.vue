@@ -47,7 +47,7 @@
         <img src="../assets/buttons/edit.png" alt="editor">
       </button>
       <button class="navbar-buttons">
-        <img src="../assets/buttons/viewer.png" alt="viewer">
+        <img src="../assets/buttons/split-view.png" alt="split-view">
       </button>
       <button class="navbar-buttons">
         <img src="../assets/buttons/viewer.png" alt="viewer">
@@ -71,7 +71,7 @@
   margin: auto;
   overflow: hidden;
   border-bottom: 1px solid black;
-  margin: 25px 0;
+  margin-top: 25px;
   padding-bottom: 20px;
 }
 
@@ -87,6 +87,8 @@
 }
 
 .image-upload {
+  padding: 2px 6px 3px;
+  
   input {
     display: none;
   }
