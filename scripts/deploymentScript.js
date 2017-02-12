@@ -23,10 +23,16 @@ throwErrorIfFailedToExec(statusBuild, 'build failed')
 
 printTitle('Copy webapp to server folder');
 
-rm('-rf', `../${platform.path}/${platform.buildPath}/*`);
-cp('-R', `${webapp.buildPath}/*`, `../${platform.path}/${platform.buildPath}/`);
+let tempWebappBuildPath = `${webapp.buildPath}/*`;
+let tempPlatformBuildPath = `../${platform.path}/${platform.buildPath}/*`;
 
-ls(`../${platform.path}/${platform.buildPath}/`).forEach(function(file) {
+mkdir('-p', tempWebappBuildPath);
+mkdir('-p', tempPlatformBuildPath);
+
+rm('-rf', tempPlatformBuildPath);
+cp('-R', tempWebappBuildPath, tempPlatformBuildPath);
+
+ls(tempPlatformBuildPath).forEach(function(file) {
   console.log(file);
 });
 
