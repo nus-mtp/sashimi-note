@@ -23,10 +23,10 @@ const sqlCommandsTest = function sqlCommandsTest() {
     let preData = '';
     let isPreDataExists = false;
     try {
-      sqlCommands.deleteTable('demo');
-    } catch (exceptionTableDoesNotExists) {
       preData = sqlCommands.getFullTableData('demo');
       isPreDataExists = true;
+    } catch (exceptionTableDoesNotExists) {
+      //
     }
     sqlCommands.createTable('CREATE TABLE demo (paramX INT)');
     const tableData = sqlCommands.getFullTableData('demo');
