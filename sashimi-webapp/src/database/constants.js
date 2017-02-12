@@ -1,0 +1,59 @@
+/**
+ *
+ *  CS3283/4 constants.js
+ *  This class is to store all the constants required for database
+ *
+ */
+
+const constants = Object.freeze({
+
+  ENTITIES_USER: 'user',
+  ENTITIES_ORGANIZATION: 'organization',
+  ENTITIES_FILE_MANAGER: 'file_manager',
+  ENTITIES_FOLDER: 'folder',
+
+
+  HEADER_USER_TOKEN: 'token',
+  HEADER_USER_PASSWORD: 'password',
+  HEADER_USER_EMAIL: 'email',
+  HEADER_USER_USERNAME: 'username',
+  HEADER_USER_USER_ID: 'user_id',
+  HEADER_USER_CREATION_DATE: 'creation_date',
+
+  HEADER_ORGANIZATION_ORGANIZATION_NAME: 'name',
+  HEADER_ORANIZATION_CREATION_DATE: 'creation_date',
+  HEADER_ORGANIZATION_INDEX: 'index',
+  HEADER_ORGANIZATION_ORGANIZATION_ID: 'organization_id',
+  HEADER_ORGANIZATION_USER_ID: 'user_id',
+  HEADER_ORGANIZATION_PARENT_ORGANIZATION_ID: 'parent_organization_id',
+
+  HEADER_FOLDER_FOLDER_ID: 'folder_id',
+  HEADER_FOLDER_PARENT_FOLDER_ID: 'parent_folder_id',
+  HEADER_FOLDER_PERMISSION_INDEX: 'permission_index',
+  HEADER_FOLDER_ORGANIZATION_ID: 'organization_id',
+  HEADER_FOLDER_CREATION_DATE: 'creation_date',
+  HEADER_FOLDER_FOLDER_NAME: 'folder_name',
+  HEADER_FOLDER_LAST_MODIFIED_DATE: 'last_modified_date',
+
+  HEADER_FILE_MANAGER_ORGANIZATION_ID: 'organization_id',
+  HEADER_FILE_MANAGER_FILE_ID: 'file_id',
+  HEADER_FILE_MANAGER_PERMISSION_INDEX: 'permission_index',
+  HEADER_FILE_MANAGER_CREATION_DATE: 'creation_date',
+  HEADER_FILE_MANAGER_LAST_MODIFIED_DATE: 'last_modified_date',
+
+
+  DEBUG_OFF: 0,
+  DEBUG_ON: 1,
+
+  STRING_UNDEFINED: 'undefined',
+  STRING_INITIALIZE: '',
+
+  CONST_TABLE_CREATION_INITIALIZED: '1',
+  CONST_TABLE_CREATION_CLOSED: '0',
+
+  ERROR_CREATE_TABLE_PASSED: true,
+  ERROR_CREATE_TABLE_FAILED: false,
+
+});
+
+module.exports = constants;
