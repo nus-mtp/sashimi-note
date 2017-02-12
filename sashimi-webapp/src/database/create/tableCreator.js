@@ -76,6 +76,20 @@ class tableCreator {
       }
     }
   }
+
+  static endCreateTable() {
+    if (isTableInitializedForCreation) {
+      sqlCreateTableString = sqlCreateTableString.substring(0, sqlCreateTableString.length - 1);
+      sqlCreateTableString = stringConcat(sqlCreateTableString, ')');
+      isTableInitializedForCreation = constants.CONST_TABLE_CREATION_CLOSED;
+      try {
+        sqlCommands.createTable(sqlCreateTableString);
+      } catch (ExceptionFailedToCreateTable) {
+        return constants.FAILED_CREATE_TABLE;
+      }
+    }
+    return constants.PASSED_CREATE_TABLE;
+  }
 }
 
 module.export = tableCreator;
