@@ -51,6 +51,19 @@ class tableCreator {
     }
   }
 
+  static setPrimaryKeys(...primaryKeys) {
+    if (isTableInitializedForCreation) {
+      sqlCreateTableString = stringConcat(sqlCreateTableString, 'PRIMARY KEY(');
+      for (let index = 0; index < primaryKeys.length; index += 1) {
+        if (index === primaryKeys.length - 1) {
+          sqlCreateTableString = stringConcat(sqlCreateTableString, primaryKeys[index], '), ');
+        } else {
+          sqlCreateTableString = stringConcat(sqlCreateTableString, primaryKeys[index], ', ');
+        }
+      }
+    }
+  }
+
 }
 
 module.export = tableCreator;
