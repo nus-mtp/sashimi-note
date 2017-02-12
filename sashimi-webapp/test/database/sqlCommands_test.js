@@ -37,7 +37,31 @@ const sqlCommandsTest = function sqlCommandsTest() {
     }
   };
 
+  this.testDeleteTable = function testDeleteTable() {
+    let preData = '';
+    let isPreDataExists = false;
+    try {
+      preData = sqlCommands.getFullTableData('demo');
+      isPreDataExists = true;
+    } catch (exceptionTableDoesNotExists) {
+      //
+    }
+    sqlCommands.createTable('CREATE TABLE demo (paramX INT)');
+    sqlCommands.deleteTable('demo');
+    try {
+      sqlCommands.getFullTableData('demo');
+      assert.isTrue(false);
+    } catch (exceptionTableDoesNotExists2) {
+      //
+    }
+
+    if (isPreDataExists) {
+      returnTableToMemory(preData);
+    }
+  };
+
   this.testCreateTable();
+  this.testDeleteTable();
 };
 
 module.exports = sqlCommandsTest;
