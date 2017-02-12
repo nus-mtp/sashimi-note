@@ -1,11 +1,11 @@
 <template>
   <div class="row navbar">
-    <div class="col-md-1">
+    <div class="col-xs-1">
       <button class="navbar-buttons">
         <img src="../assets/buttons/back-button.png" alt="back">
       </button>
     </div>
-    <div class="col-md-2">
+    <div class="col-xs-3">
       <div class="image-upload navbar-buttons">
         <label for="file-input">
           <img src="../assets/buttons/upload-image.png" alt="upload-image">
@@ -22,9 +22,9 @@
         <img src="../assets/buttons/share.png" alt="share">
       </button>
     </div>
-    <div class="col-md-2">
+    <div class="col-xs-1">
     </div>
-    <div class="col-md-1">
+    <div class="col-xs-1">
       <button class="navbar-dropdown">
         <img src="../assets/buttons/add.png" alt="add"> New 
       </button>
@@ -33,7 +33,7 @@
         <a href="">Duplicate File</a>
       </div>
     </div>
-    <div class="col-md-1">
+    <div class="col-xs-1">
       <button class="navbar-dropdown">
         Manage <img src="../assets/buttons/add.png" alt="add">
       </button>
@@ -42,7 +42,7 @@
         <a href="">Test</a>
       </div>
     </div>
-    <div class="col-md-2">
+    <div class="col-xs-2">
       <button class="navbar-buttons">
         <img src="../assets/buttons/edit.png" alt="editor">
       </button>
@@ -53,7 +53,7 @@
         <img src="../assets/buttons/viewer.png" alt="viewer">
       </button>
     </div>
-    <div class="col-md-1">
+    <div class="col-xs-1">
       <button class="navbar-buttons">
         <img src="../assets/buttons/richtext-dropdown.png" id="richtext-dropdown" alt="dropdown">
       </button>
@@ -73,11 +73,12 @@
   border-bottom: 1px solid black;
   margin-top: 25px;
   padding-bottom: 20px;
+  
 }
 
 .navbar-buttons {
   img {
-    width: 35px;
+    width: 38px;
   }
 
   #richtext-dropdown {
@@ -88,7 +89,8 @@
 
 .image-upload {
   padding: 2px 6px 3px;
-  
+  display: inline-block;
+
   input {
     display: none;
   }
