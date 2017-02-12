@@ -3,7 +3,7 @@ const df = require("../formatter/documentFormatter");
 
 const processorSink = {
   deliver: function deliver(data) {
-    return df.format(data);
+    return df.set(data);
   },
 };
 
