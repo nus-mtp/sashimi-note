@@ -1,7 +1,16 @@
-const documentFormatter = {
-  format: function format(data) {
-    return "Document formatted! Ready for display!";
-  },
+//  Import module
+const EventEmitter2 = require('eventemitter2');
+
+const documentFormatter = new EventEmitter2();
+let content = '';
+
+documentFormatter.set = function set(newContent) {
+  content = newContent;
+  documentFormatter.emit('changed', content);
+};
+
+documentFormatter.get = function get() {
+  return content;
 };
 
 module.exports = documentFormatter;
