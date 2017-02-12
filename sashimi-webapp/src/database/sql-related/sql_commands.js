@@ -1,5 +1,5 @@
-let sql_commands = function(){
-    this.get_full_table_data = function(table_name){
-    return alasql('SELECT * FROM ' + table_name);
+const sqlCommands = function() {
+  this.get_full_table_data = function(tableName) {
+    return alasql(stringConcat('SELECT * FROM ', tableName));
   };
-}
+};
