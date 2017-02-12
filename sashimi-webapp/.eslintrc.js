@@ -83,6 +83,10 @@ module.exports = {
                 "asyncArrow": "ignore"
             }
         ],
-        eqeqeq: ["error", "smart"]
+        "eqeqeq": ["error", "smart"],
+        "comma-dangle": "off",
+        "func-names": "warn",
+        "prefer-arrow-callback": "warn",
+        "object-shorthand": "warn",
   }
 }

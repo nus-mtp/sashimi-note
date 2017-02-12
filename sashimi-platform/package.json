@@ -6,7 +6,9 @@
   "main": "main.js",
   "scripts": {
     "start": "node ./bin/www",
-    "test": "mocha \"test/**/*.js\""
+    "test": "mocha \"test/**/*.js\"",
+    "test-travis": "npm test"
+
   },
   "repository": {
     "type": "git",
