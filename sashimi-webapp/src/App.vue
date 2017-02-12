@@ -20,4 +20,13 @@ export default {
   color: #2c3e50;
   margin-top: 60px;
 }
+
+button {
+  background-color: transparent;
+  border: none;
+}
+
+button:focus {
+  outline: 0;
+}
 </style>
