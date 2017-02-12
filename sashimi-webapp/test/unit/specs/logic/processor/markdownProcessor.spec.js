@@ -1,4 +1,4 @@
-const myMod = require("src/logic/processor/MarkdownProcessor");
+const myMod = require("src/logic/processor/markdownProcessor");
 
 describe('Test for MarkdownProcessor', () => {
   it("should produce correct HTML format for Headers", () => {
@@ -40,5 +40,12 @@ describe('Test for MarkdownProcessor', () => {
                             + " and <em>underscores</em></strong>.</p>\n");
     expect(testEm4).to.equal("<p>Strikethrough uses two tildes."
                             + " <s>Scratch this.</s></p>\n");
+  });
+  it("should render correct HTML format for Lists", () => {
+    const testOList = myMod.process("1. First ordered list item\n2. Another item\n   * Sub-list of ordered lists. Just indent by 3 spaces (or tab) to make a sub-list\n1. Actual numbers don't matter, just that it's a number\n   1. Ordered sub-list\n4. And another item.\n\n   You can have properly indented paragraphs within list items. Notice the blank line above, and the leading spaces (indent 3 spaces).\n");
+    const testUList = myMod.process("* Unordered list can use asterisks\n- Or minuses\n+ Or pluses\n* Sub-lists of unordered lists are made by indenting 2 spaces\n  * Hi");
+    console.log(testOList);
+    expect(testOList).to.equal("<ol>\n<li>\n<p>First ordered list item</p>\n</li>\n<li>\n<p>Another item</p>\n<ul>\n<li>Sub-list of ordered lists. Just indent by 3 spaces (or tab) to make a sub-list</li>\n</ul>\n</li>\n<li>\n<p>Actual numbers don\’t matter, just that it\’s a number</p>\n<ol>\n<li>Ordered sub-list</li>\n</ol>\n</li>\n<li>\n<p>And another item.</p>\n<p>You can have properly indented paragraphs within list items. Notice the blank line above, and the leading spaces (indent 3 spaces).</p>\n</li>\n</ol>\n");
+    expect(testUList).to.equal("<ul>\n<li>Unordered list can use asterisks</li>\n</ul>\n<ul>\n<li>Or minuses</li>\n</ul>\n<ul>\n<li>Or pluses</li>\n</ul>\n<ul>\n<li>Sub-lists of unordered lists are made by indenting 2 spaces\n<ul>\n<li>Hi</li>\n</ul>\n</li>\n</ul>\n");
   });
 });
