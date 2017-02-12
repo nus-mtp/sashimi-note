@@ -12,9 +12,10 @@ const webapp = {
 let statusBuild = -1;
 let statusStart = -1;
 
-printTitle('Build web application')
+printTitle('Build web application');
 
 cd(`./${webapp.path}`);
+exec('yarn');
 statusBuild = exec('yarn run build').code;
 throwErrorIfFailedToExec(statusBuild, 'build failed')
 
@@ -28,6 +29,7 @@ cd(`..`);
 printTitle('Run web server')
 
 cd(`./${platform.path}`);
+exec('yarn')
 statusStart = exec('yarn start').code;
 throwErrorIfFailedToExec(statusStart, 'run failed')
 
