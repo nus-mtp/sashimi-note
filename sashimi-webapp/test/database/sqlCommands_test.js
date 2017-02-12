@@ -14,17 +14,27 @@ const isNotEmptyTable = function isNotEmptyTable(stringResult) {
   return stringResult !== undefined;
 };
 
+const returnTableToMemory = function(tableData) {
+  // do nothing for now
+};
+
 const sqlCommandsTest = function sqlCommandsTest() {
   this.testCreateTable = function testCreateTable() {
+    let preData = '';
+    let isPreDataExists = false;
     try {
       sqlCommands.deleteTable('demo');
     } catch (e) {
-      //
+      preData = sqlCommands.getFullTableData('demo');
+      isPreDataExists = true;
     }
     sqlCommands.createTable('CREATE TABLE demo (paramX INT)');
     const tableData = sqlCommands.getFullTableData('demo');
     assert.isTrue(isNotEmptyTable(tableData));
     sqlCommands.deleteTable('demo');
+    if (isPreDataExists) {
+      returnTableToMemory(preData);
+    }
   };
 
   this.testCreateTable();
