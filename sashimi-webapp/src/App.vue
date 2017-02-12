@@ -43,14 +43,16 @@ button:focus {
 }
 
 .CodeMirror {
-  width: 50%; 
-  float: left;
   border-right: 1px solid black;
-
+  
   .CodeMirror-gutters {
     background-color: white;
     border-right: 1px solid black;
   }
+}
+
+.CodeMirror.CodeMirror-wrap {
+  height: calc(100vh - 100px);
 }
 
 .CodeMirror-lines {
