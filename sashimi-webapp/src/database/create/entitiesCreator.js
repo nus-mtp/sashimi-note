@@ -67,4 +67,29 @@ class entitiesCreator {
 
     return isTableCreatedSuccessful;
   }
+
+  static createFileManagerTable() {
+    tableCreator.init_create_table(constants.ENTITIES_FILE_MANAGER);
+
+    tableCreator.add_header(constants.HEADER_FILE_MANAGER_ORGANIZATION_ID, 'LONG');
+    tableCreator.add_header(constants.HEADER_FILE_MANAGER_FILE_ID, 'LONG');
+    tableCreator.add_header(constants.HEADER_FILE_MANAGER_PERMISSION_INDEX, 'INT');
+    tableCreator.add_header(constants.HEADER_FILE_MANAGER_CREATION_DATE, 'DATE');
+    tableCreator.add_header(constants.HEADER_FILE_MANAGER_LAST_MODIFIED_DATE, 'DATE');
+
+    tableCreator.set_foreign_key(constants.HEADER_FILE_MANAGER_ORGANIZATION_ID, constants.ENTITIES_ORGANIZATION, constants.HEADER_ORGANIZATION_ORGANIZATION_ID);
+
+    tableCreator.set_primary_keys(constants.HEADER_FILE_MANAGER_FILE_ID, constants.HEADER_FILE_MANAGER_ORGANIZATION_ID);
+
+    const isTableCreatedSuccessful = tableCreator.end_create_table();
+
+    if (debugActivated) {
+      const debugFileManagerTable = alasql(stringConcat('SELECT * FROM ', constants.ENTITIES_FILE_MANAGER));
+      console.log('DEBUG file_manager table:');
+      console.log(debugFileManagerTable);
+    }
+
+    return isTableCreatedSuccessful;
+  }
+
 }
