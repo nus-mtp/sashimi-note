@@ -64,4 +64,7 @@ class entitiesCreator {
       console.log('DEBUG organization table:');
       console.log(debugOrganizationTable);
     }
+
+    return isTableCreatedSuccessful;
+  }
 }
