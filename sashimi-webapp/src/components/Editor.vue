@@ -2,11 +2,15 @@
   <div>
     <navbar></navbar>
     <div class="row">
-      <codemirror v-model="content" @changed="codeChange" > 
-      </codemirror>
-    </div>
-    <div class="row">
-      <p>{{content}}</p>
+      <div class="col-md-6">
+        <div>
+          <codemirror v-model="content" > 
+          </codemirror>
+        </div>
+      </div>
+      <div class="col-md-5">
+        <p>{{content}}</p>
+      </div>
     </div>
   </div>
 </template>
@@ -14,7 +18,8 @@
 <script>
 import { codemirror } from 'vue-codemirror';
 import navbar from './Navbar';
-import cm from '../mock/contentManipulator';
+
+let content = "";
 
 /* eslint prefer-const: 0 */
 export default {
@@ -25,21 +30,15 @@ export default {
 
   data() {
     return {
-      content: cm.testString,
+      content,
     };
-  },
-
-  methods: {
-    codeChange(newCode) {
-      cm.testString = newCode;
-      /* eslint no-console: 0 */
-      // console.log(cm.testString);
-    },
   },
 };
 
 </script>
 
 <style scoped lang="scss">
-
+  p {
+    margin: 5px 0 5px 2px;
+  }
 </style>
