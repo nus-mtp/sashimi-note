@@ -64,6 +64,18 @@ class tableCreator {
     }
   }
 
+  static setUnique(...uniqueKeys) {
+    if (isTableInitializedForCreation) {
+      sqlCreateTableString = stringConcat(sqlCreateTableString, 'UNIQUE(');
+      for (let index = 0; index < uniqueKeys.length; index += 1) {
+        if (index === uniqueKeys.length - 1) {
+          sqlCreateTableString = stringConcat(sqlCreateTableString, uniqueKeys[index], '), ');
+        } else {
+          sqlCreateTableString = stringConcat(sqlCreateTableString, uniqueKeys[index], ', ');
+        }
+      }
+    }
+  }
 }
 
 module.export = tableCreator;
