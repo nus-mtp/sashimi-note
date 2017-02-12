@@ -39,6 +39,7 @@ class tableCreator {
       for (let index = 0; index < extraConditions.length; index += 1) {
         sqlCreateTableString = stringConcat(sqlCreateTableString, ' ', extraConditions[index]);
       }
+      sqlCreateTableString = stringConcat(sqlCreateTableString, ', ');
     }
   }
 }
