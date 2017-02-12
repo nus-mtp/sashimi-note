@@ -32,4 +32,15 @@ class tableCreator {
     }
   }
 
+  static addHeader(headerName, dataType, ...extraConditions) {
+    if (isTableInitializedForCreation) {
+      sqlCreateTableString = stringConcat(sqlCreateTableString, headerName, ' ');
+      sqlCreateTableString = stringConcat(sqlCreateTableString, dataType);
+      for (let index = 0; index < extraConditions.length; index += 1) {
+        sqlCreateTableString = stringConcat(sqlCreateTableString, ' ', extraConditions[index]);
+      }
+    }
+  }
+}
+
 module.export = tableCreator;
