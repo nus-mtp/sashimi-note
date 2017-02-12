@@ -1,5 +1,6 @@
 /*
  * Test-unit framework for sqlCommands.js
+ * By right need not much testing because they are all theory and dependent on external library
  */
 
 const assert = require('assert');
