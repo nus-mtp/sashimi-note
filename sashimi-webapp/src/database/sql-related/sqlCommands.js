@@ -1,6 +1,6 @@
 const alasql = require('alasql');
 
-const stringConcat = function(...stringToConcat) {
+const stringConcat = function stringConcat(...stringToConcat) {
   let fullString = '';
   for (let index = 0; index < stringToConcat.length; index+=1) {
     fullString += stringToConcat[index];
@@ -8,13 +8,12 @@ const stringConcat = function(...stringToConcat) {
   return fullString;
 };
 
-const sqlCommands = function() {
-  this.get_full_table_data = function(tableName) {
+const sqlCommands = function sqlCommands() {
+  this.getFullTableData = function getFullTableData(tableName) {
     return alasql(stringConcat('SELECT * FROM ', tableName));
   };
 
-  this.create_table = function(sqlStatement) {
+  this.createTable = function createTable(sqlStatement) {
     alasql(sqlStatement);
   };
 };
-
