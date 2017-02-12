@@ -42,6 +42,15 @@ class tableCreator {
       sqlCreateTableString = stringConcat(sqlCreateTableString, ', ');
     }
   }
+
+  static setForeignKey(thisHeader, referencedEntity, referencedHeader) {
+    if (isTableInitializedForCreation) {
+      sqlCreateTableString = stringConcat(sqlCreateTableString, 'FOREIGN KEY(', thisHeader, ') ');
+      sqlCreateTableString = stringConcat(sqlCreateTableString, 'REFERENCES ', referencedEntity);
+      sqlCreateTableString = stringConcat(sqlCreateTableString, '(', referencedHeader, '), ');
+    }
+  }
+
 }
 
 module.export = tableCreator;
