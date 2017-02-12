@@ -29,7 +29,7 @@ rm('-rf', `../${platform.path}/${platform.buildPath}`);
 cp('-R', webapp.buildPath, `../${platform.path}`);
 mv(`../${platform.path}/${webapp.buildPath}`, `../${platform.path}/${platform.buildPath}`);
 
-ls(tempPlatformBuildPath).forEach(function(file) {
+ls(`../${platform.path}/${platform.buildPath}`).forEach(function(file) {
   console.log(file);
 });
 
