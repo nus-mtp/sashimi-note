@@ -24,8 +24,7 @@
     "url": "https://github.com/nus-mtp/lecture-note-2.0/issues"
   },
   "homepage": "https://github.com/nus-mtp/lecture-note-2.0#readme",
-  "devDependencies": {
-    "concurrently": "^3.2.0",
+  "dependencies": {
     "shelljs": "^0.7.6"
   }
 }
