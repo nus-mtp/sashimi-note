@@ -92,4 +92,29 @@ class entitiesCreator {
     return isTableCreatedSuccessful;
   }
 
+  static createFolderTable() {
+    tableCreator.init_create_table(constants.ENTITIES_FOLDER);
+
+    tableCreator.add_header(constants.HEADER_FOLDER_FOLDER_ID, 'LONG');
+    tableCreator.add_header(constants.HEADER_FOLDER_PARENT_FOLDER_ID, 'LONG');
+    tableCreator.add_header(constants.HEADER_FOLDER_PERMISSION_INDEX, 'INT');
+    tableCreator.add_header(constants.HEADER_FOLDER_ORGANIZATION_ID, 'LONG');
+    tableCreator.add_header(constants.HEADER_FOLDER_CREATION_DATE, 'DATE');
+    tableCreator.add_header(constants.HEADER_FOLDER_FOLDER_NAME, 'VARCHAR(128)');
+    tableCreator.add_header(constants.HEADER_FOLDER_LAST_MODIFIED_DATE, 'DATE');
+
+    tableCreator.set_foreign_key(constants.HEADER_FOLDER_PARENT_FOLDER_ID, constants.ENTITIES_FOLDER, constants.HEADER_FOLDER_FOLDER_ID);
+    tableCreator.set_foreign_key(constants.HEADER_FOLDER_ORGANIZATION_ID, constants.ENTITIES_ORGANIZATION, constants.HEADER_ORGANIZATION_ORGANIZATION_ID);
+
+    tableCreator.set_primary_keys(constants.HEADER_ORGANIZATION_ORGANIZATION_ID, constants.HEADER_ORGANIZATION_USER_ID);
+    const isTableCreatedSuccessful = tableCreator.end_create_table();
+
+    if (debugActivated) {
+      const debugFolderTable = alasql(stringConcat('SELECT * FROM ', constants.ENTITIES_FOLDER));
+      console.log('DEBUG folder table:');
+      console.log(debugFolderTable);
+    }
+
+    return isTableCreatedSuccessful;
+  }
 }
