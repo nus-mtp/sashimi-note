@@ -35,11 +35,11 @@ printTitle('Run web server')
 cd(`./${platform.path}`);
 exec('yarn')
 
-let envPort = process.env.PORT || '9010';
-let envNode = process.env.NODE_ENV || 'production';
+// let envPort = process.env.PORT || '9010';
+// let envNode = process.env.NODE_ENV || 'production';
 
-statusStart = exec(`set NODE_ENV=${envNode}&&set PORT=${envPort}&&yarn start`).code;
-throwErrorIfFailedToExec(statusStart, 'run failed')
+// statusStart = exec(`set NODE_ENV=${envNode}&&set PORT=${envPort}&&yarn start`).code;
+// throwErrorIfFailedToExec(statusStart, 'run failed')
 
 
 
