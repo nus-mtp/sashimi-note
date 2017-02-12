@@ -24,7 +24,7 @@ const sqlCommandsTest = function sqlCommandsTest() {
     let isPreDataExists = false;
     try {
       sqlCommands.deleteTable('demo');
-    } catch (e) {
+    } catch (exceptionTableDoesNotExists) {
       preData = sqlCommands.getFullTableData('demo');
       isPreDataExists = true;
     }
