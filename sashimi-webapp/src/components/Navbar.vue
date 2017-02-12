@@ -5,6 +5,59 @@
         <img src="../assets/buttons/back-button.png" alt="back">
       </button>
     </div>
+    <div class="col-md-2">
+      <div class="image-upload navbar-buttons">
+        <label for="file-input">
+          <img src="../assets/buttons/upload-image.png" alt="upload-image">
+        </label>
+        <input type="file" id="file-input">
+      </div>
+      <button class="navbar-buttons">
+        <img src="../assets/buttons/plugins.png" alt="plugins">
+      </button>
+      <button class="navbar-buttons">
+        <img src="../assets/buttons/annotate.png" alt="annotate">
+      </button>
+      <button class="navbar-buttons">
+        <img src="../assets/buttons/share.png" alt="share">
+      </button>
+    </div>
+    <div class="col-md-2">
+    </div>
+    <div class="col-md-1">
+      <button class="navbar-dropdown">
+        <img src="../assets/buttons/add.png" alt="add"> New 
+      </button>
+      <div class="dropdown-content">
+        <a href="">New File</a>
+        <a href="">Duplicate File</a>
+      </div>
+    </div>
+    <div class="col-md-1">
+      <button class="navbar-dropdown">
+        Manage <img src="../assets/buttons/add.png" alt="add">
+      </button>
+      <div class="dropdown-content">
+        <a href="">Test</a>
+        <a href="">Test</a>
+      </div>
+    </div>
+    <div class="col-md-2">
+      <button class="navbar-buttons">
+        <img src="../assets/buttons/edit.png" alt="editor">
+      </button>
+      <button class="navbar-buttons">
+        <img src="../assets/buttons/viewer.png" alt="viewer">
+      </button>
+      <button class="navbar-buttons">
+        <img src="../assets/buttons/viewer.png" alt="viewer">
+      </button>
+    </div>
+    <div class="col-md-1">
+      <button class="navbar-buttons">
+        <img src="../assets/buttons/richtext-dropdown.png" id="richtext-dropdown" alt="dropdown">
+      </button>
+    </div>
   </div>
 </template>
 
@@ -12,10 +65,61 @@
 
 </script>
 
-<style lang="scss">
+<style lang="scss"> 
 .navbar {
+  clear: both;
+  margin: auto;
+  overflow: hidden;
+  border-bottom: 1px solid black;
+  margin: 25px 0;
+  padding-bottom: 20px;
+}
+
+.navbar-buttons {
   img {
     width: 35px;
   }
+
+  #richtext-dropdown {
+    margin-top: 8px;
+    width: 22px;
+  }
+}
+
+.image-upload {
+  input {
+    display: none;
+  }
+}
+
+.navbar-dropdown {
+  font-size: 16px;
+  position: relative;
+  display: inline-block;
+  padding: 10px;
+  border: 1px solid transparent;
+
+  img {
+    width: 12px;
+    margin-right: 5px;
+  }
+}
+
+.navbar-dropdown:hover {
+  border: 1px solid black;
+
+  .dropdown-content {
+    display:block;
+  }
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  margin: 15px 15px 0 0;
+  min-width: 140px;
+  border: 1px solid black;
+  text-align: left;
+  padding: 10px;
 }
 </style>
