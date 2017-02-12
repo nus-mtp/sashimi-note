@@ -20,4 +20,8 @@ const sqlCommands = function sqlCommands() {
   this.deleteTable = function deleteTable(tableName) {
     alasql(stringConcat('DROP TABLE ', tableName));
   };
+
+  this.cleanTable = function cleanTable(tableName) {
+    alasql(stringConcat('DELETE * FROM ', tableName));
+  };
 };
