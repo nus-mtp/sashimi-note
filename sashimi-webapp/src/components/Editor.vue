@@ -1,9 +1,13 @@
 <template>
   <div>
     <navbar></navbar>
-    <codemirror v-model="content" @changed="codeChange" > 
-    </codemirror>
-    <p>{{content}}</p>
+    <div class="row">
+      <codemirror v-model="content" @changed="codeChange" > 
+      </codemirror>
+    </div>
+    <div class="row">
+      <p>{{content}}</p>
+    </div>
   </div>
 </template>
 
