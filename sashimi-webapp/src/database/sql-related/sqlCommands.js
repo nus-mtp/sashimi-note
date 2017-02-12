@@ -25,3 +25,5 @@ const sqlCommands = function sqlCommands() {
     alasql(stringConcat('DELETE * FROM ', tableName));
   };
 };
+
+module.exports = sqlCommands;
