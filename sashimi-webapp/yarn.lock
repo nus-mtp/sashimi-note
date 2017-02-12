@@ -2219,6 +2219,10 @@ event-emitter@~0.3.4:
     d "~0.1.1"
     es5-ext "~0.10.7"
 
+eventemitter2@^3.0.0:
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/eventemitter2/-/eventemitter2-3.0.0.tgz#fec69ba0b1cde27a1bb0bd52df549fd6f65b0f45"
+
 eventemitter3@1.x.x:
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/eventemitter3/-/eventemitter3-1.2.0.tgz#1c86991d816ad1e504750e73874224ecf3bec508"
