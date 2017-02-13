@@ -1,6 +1,8 @@
 const constants = require('../constants');
 
-const sqlCommands = require('../sql-related/sqlCommands');
+const SqlCommands = require('../sql-related/sqlCommands');
+
+const sqlCommands = new SqlCommands();
 
 const exceptions = require('../exceptions');
 
