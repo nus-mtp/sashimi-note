@@ -135,5 +135,8 @@ module.exports = class entitiesCreator {
     return isTableCreatedSuccessful;
   }
 
+  static clearDatabase() {
+    tableCreator.clearDatabase();
+  }
 };
 
