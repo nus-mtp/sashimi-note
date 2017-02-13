@@ -79,7 +79,7 @@ class tableCreator {
 
   static endCreateTable() {
     if (isTableInitializedForCreation) {
-      sqlCreateTableString = sqlCreateTableString.substring(0, sqlCreateTableString.length - 1);
+      sqlCreateTableString = sqlCreateTableString.substring(0, sqlCreateTableString.length - 2);
       sqlCreateTableString = stringConcat(sqlCreateTableString, ')');
       isTableInitializedForCreation = constants.CONST_TABLE_CREATION_CLOSED;
       try {
