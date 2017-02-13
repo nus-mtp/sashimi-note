@@ -24,6 +24,11 @@ const sqlCommands = function sqlCommands() {
   this.cleanTable = function cleanTable(tableName) {
     alasql(stringConcat('DELETE * FROM ', tableName));
   };
+
+  // for debugging
+  this.clearDatabase = function clearDatabase() {
+    alasql(stringConcat('DROP TABLE *'));
+  };
 };
 
 module.exports = sqlCommands;
