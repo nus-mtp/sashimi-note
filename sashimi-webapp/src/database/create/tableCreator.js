@@ -88,7 +88,7 @@ class tableCreator {
       try {
         sqlCommands.createTable(sqlCreateTableString);
       } catch (ExceptionFailedToCreateTable) {
-        return constants.FAILED_CREATE_TABLE;
+        return ExceptionFailedToCreateTable;
       }
     }
     return constants.PASSED_CREATE_TABLE;
