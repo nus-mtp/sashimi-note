@@ -50,7 +50,6 @@ module.exports = {
     "default-case": "error",
     "no-else-return": "off",
     "no-param-reassign": "off",
-    "quotes": "off",
     "space-before-function-paren": [
       "error", 
       {
