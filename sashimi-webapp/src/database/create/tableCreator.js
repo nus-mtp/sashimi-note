@@ -22,13 +22,14 @@ class tableCreator {
 
   static initCreateTable(tableName) {
     if (isTableInitializedForCreation) {
-      throw new exceptions.TableCreationAlreadyInitiated('Table creation is already initiated. Please close the thread first.');
+      throw new exceptions.TableCreationAlreadyInitiated('Table creation is already initiated. '
+                                                       + 'Please close the thread first.');
     } else {
       try {
         sqlCommands.getFullTableData(tableName);
         throw new exceptions.TableAlreadyExists('Table already Exist. Not available for creation.');
       } catch (exceptionTableDoesNotExists) {
-        sqlCreateTableString = stringConcat('CREATE TABLE ', tableName, '(');
+        sqlCreateTableString = stringConcat('CREATE TABLE ', tableName, ' (');
         isTableInitializedForCreation = constants.CONST_TABLE_CREATION_INITIALIZED;
       }
     }
