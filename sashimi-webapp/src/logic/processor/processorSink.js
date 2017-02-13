@@ -1,5 +1,5 @@
 // Import DocumentFormatter module
-const df = require("../formatter/documentFormatter");
+const df = require('../formatter/documentFormatter');
 
 const processorSink = {
   deliver: function deliver(data) {
