@@ -18,7 +18,7 @@ const stringConcat = function stringConcat(...stringToConcat) {
 };
 
 class tableCreator {
-  static constructor() { }
+  static constructor() {}
 
   static initCreateTable(tableName) {
     if (isTableInitializedForCreation) {
