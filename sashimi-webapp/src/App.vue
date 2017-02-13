@@ -1,5 +1,5 @@
 <template>
-  <div class="container" id="app">
+  <div id="app">
     <router-view></router-view>
   </div>
 </template>
@@ -27,6 +27,10 @@ body {
   padding: 0;
   margin: 0;
   width: 100%;
+}
+
+.no-padding {
+  padding: 0;
 }
 
 .row {

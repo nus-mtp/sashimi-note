@@ -2,14 +2,16 @@
   <div>
     <navbar></navbar>
     <div class="row">
-      <div class="col-md-6">
+      <div class="col-xs-6 no-padding">
         <div>
           <codemirror v-model="content" ref="myEditor" @changed="codeChange"> 
           </codemirror>
         </div>
       </div>
-      <div class="col-md-5">
-        <div v-html="getMarkdown"></div>
+      <div class="col-xs-6 no-padding">
+        <div class="viewer">
+          <div v-html="getMarkdown"></div>
+        </div>
       </div>
     </div>
   </div>
@@ -21,7 +23,7 @@ import MarkdownIt from 'markdown-it';
 import navbar from './Navbar';
 
 const md = new MarkdownIt();
-let content = "";
+let content = '';
 let codeMirrorInstance = null;
 
 /* eslint prefer-const: 0 */
@@ -60,5 +62,11 @@ export default {
 <style scoped lang="scss">
   p {
     margin: 5px 0 5px 2px;
+  }
+
+  .viewer {
+    height: calc(100vh - 100px);
+    overflow-wrap: break-word;
+    overflow-y: scroll;
   }
 </style>
