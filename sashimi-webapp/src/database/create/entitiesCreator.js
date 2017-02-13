@@ -34,6 +34,7 @@ class entitiesCreator {
     const isTableCreatedSuccessful = tableCreator.endCreateTable();
 
     if (debugActivated) {
+      console.log(isTableCreatedSuccessful);
       const debugUserTable = alasql(stringConcat('SELECT * FROM ', constants.ENTITIES_USER));
       console.log('DEBUG user table:');
       console.log(debugUserTable);
@@ -65,6 +66,7 @@ class entitiesCreator {
     const isTableCreatedSuccessful = tableCreator.endCreateTable();
 
     if (debugActivated) {
+      console.log(isTableCreatedSuccessful);
       const debugOrganizationTable = alasql(stringConcat('SELECT * FROM ', constants.ENTITIES_ORGANIZATION));
       console.log('DEBUG organization table:');
       console.log(debugOrganizationTable);
@@ -92,6 +94,7 @@ class entitiesCreator {
     const isTableCreatedSuccessful = tableCreator.endCreateTable();
 
     if (debugActivated) {
+      console.log(isTableCreatedSuccessful);
       const debugFileManagerTable = alasql(stringConcat('SELECT * FROM ', constants.ENTITIES_FILE_MANAGER));
       console.log('DEBUG file_manager table:');
       console.log(debugFileManagerTable);
@@ -123,6 +126,7 @@ class entitiesCreator {
     const isTableCreatedSuccessful = tableCreator.endCreateTable();
 
     if (debugActivated) {
+      console.log(isTableCreatedSuccessful);
       const debugFolderTable = alasql(stringConcat('SELECT * FROM ', constants.ENTITIES_FOLDER));
       console.log('DEBUG folder table:');
       console.log(debugFolderTable);
