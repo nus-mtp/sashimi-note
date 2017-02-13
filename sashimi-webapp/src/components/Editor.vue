@@ -4,12 +4,12 @@
     <div class="row">
       <div class="col-md-6">
         <div>
-          <codemirror v-model="content" > 
+          <codemirror v-model="content" ref="myEditor" @changed="codeChange"> 
           </codemirror>
         </div>
       </div>
       <div class="col-md-5">
-        <p>{{content}}</p>
+        <div v-html="getMarkdown"></div>
       </div>
     </div>
   </div>
@@ -17,9 +17,12 @@
 
 <script>
 import { codemirror } from 'vue-codemirror';
+import MarkdownIt from 'markdown-it';
 import navbar from './Navbar';
 
+const md = new MarkdownIt();
 let content = "";
+let codeMirrorInstance = null;
 
 /* eslint prefer-const: 0 */
 export default {
@@ -33,6 +36,23 @@ export default {
       content,
     };
   },
+  methods: {
+    codeChange(newCode) {
+      console.log(newCode);
+    }
+  },
+  computed: {
+    editor() {
+      return this.$refs.myEditor.editor;
+    },
+    getMarkdown() {
+      let tempContent = this.content || '';
+      return md.render(tempContent);
+    }
+  },
+  mounted() {
+    codeMirrorInstance = this.editor;
+  }
 };
 
 </script>
