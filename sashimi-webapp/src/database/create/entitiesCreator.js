@@ -15,7 +15,7 @@ const stringConcat = function stringConcat(...stringToConcat) {
   return fullString;
 };
 
-class entitiesCreator {
+module.exports = class entitiesCreator {
 
   static constuctor() {}
 
