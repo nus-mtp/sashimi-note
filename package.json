@@ -5,8 +5,8 @@
   "private": true,
   "main": "main.js",
   "scripts": {
-    "start": "echo OFF && echo npm start is not ready yet! && echo OFF",   
-    "postinstall": "node scripts/postInstallScript.js"
+    "start": "node sashimi-platform/bin/www",
+    "postinstall": "node scripts/deploymentScript.js && node scripts/postInstallScript.js"
   },
   "repository": {
     "type": "git",
@@ -24,7 +24,8 @@
     "url": "https://github.com/nus-mtp/lecture-note-2.0/issues"
   },
   "homepage": "https://github.com/nus-mtp/lecture-note-2.0#readme",
-  "devDependencies": {
-    "concurrently": "^3.2.0"
+  "dependencies": {
+    "concurrently": "^3.2.0",
+    "shelljs": "^0.7.6"
   }
 }
