@@ -95,4 +95,4 @@ class tableCreator {
   }
 }
 
-module.export = tableCreator;
+module.exports = tableCreator;
