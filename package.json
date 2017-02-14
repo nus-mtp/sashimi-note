@@ -27,5 +27,9 @@
   "dependencies": {
     "concurrently": "^3.2.0",
     "shelljs": "^0.7.6"
+  },
+  "engines": {
+    "node": ">= 6.9.2",
+    "npm": ">= 3.6.0"
   }
 }

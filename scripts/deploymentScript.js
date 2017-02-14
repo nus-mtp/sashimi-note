@@ -1,15 +1,15 @@
 require('shelljs/global');
 
-const platform = {
+var platform = {
   path: 'sashimi-platform',
   buildPath: 'public'
 };
-const webapp = {
+var webapp = {
   path: 'sashimi-webapp',
   buildPath: 'dist'
 };
-let statusBuild = -1;
-let statusStart = -1;
+var statusBuild = -1;
+var statusStart = -1;
 
 
 printTitle('Build web application');
@@ -51,12 +51,12 @@ function throwErrorIfFailedToExec(statusCode, message) {
 }
 
 function printMessage(message) {
-  let echoMsg = message || '';
+  var echoMsg = message || '';
   echo(` [Deploy] > ${echoMsg}`);
 }
 
 function printTitle(message) {
-  let echoMsg = message || '----------------';
+  var echoMsg = message || '----------------';
   echo('');
   echo(` [Deploy] ${echoMsg}`);
   echo('');
