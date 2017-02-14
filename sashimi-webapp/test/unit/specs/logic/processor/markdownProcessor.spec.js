@@ -1,4 +1,4 @@
-const myMod = require('src/logic/processor/markdownProcessor');
+const myMod = require('src/logic/wrapper/markdownProcessor');
 
 describe('Test for MarkdownProcessor', () => {
   it('should produce correct HTML format for Headers', () => {
