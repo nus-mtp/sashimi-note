@@ -19,10 +19,9 @@
 
 <script>
 import { codemirror } from 'vue-codemirror';
-import MarkdownIt from 'markdown-it';
+import wrapper from '../logic/wrapper';
 import navbar from './Navbar';
 
-const md = new MarkdownIt();
 let content = '';
 let codeMirrorInstance = null;
 
@@ -48,8 +47,7 @@ export default {
       return this.$refs.myEditor.editor;
     },
     getMarkdown() {
-      let tempContent = this.content || '';
-      return md.render(tempContent);
+      return wrapper.render(this.content);
     }
   },
   mounted() {
