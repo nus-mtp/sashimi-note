@@ -72,10 +72,10 @@ button:focus {
 }
 
 .viewer {
-  p {
-    margin: 0;
-    padding: 5px;
-    line-height: 28px;
-  }
+  box-sizing: border-box;
+  margin: 0;
+  padding: 5px;
+  line-height: 28px;
+
 }
 </style>
