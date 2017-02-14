@@ -15,6 +15,7 @@ export default {
 
 body {
   margin: 0;
+  font-size: 16px;
 }
 
 #app {
@@ -72,7 +73,9 @@ button:focus {
 
 .viewer {
   p {
-    margin: 5px;
+    margin: 0;
+    padding: 5px;
+    line-height: 28px;
   }
 }
 </style>
