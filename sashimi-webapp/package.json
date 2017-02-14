@@ -17,6 +17,7 @@
     "eventemitter2": "^3.0.0",
     "markdown-it": "^8.2.2",
     "vue": "^2.1.10",
+    "vue-codemirror": "^2.1.8",
     "vue-router": "^2.2.0"
   },
   "devDependencies": {
