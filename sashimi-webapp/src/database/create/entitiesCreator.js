@@ -56,9 +56,9 @@ module.exports = class entitiesCreator {
     tableCreator.setForeignKey(constants.HEADER_ORGANIZATION_USER_ID,
                                  constants.ENTITIES_USER,
                                  constants.HEADER_USER_USER_ID);
-    /* tableCreator.setForeignKey(constants.HEADER_ORGANIZATION_PARENT_ORGANIZATION_ID,
+    tableCreator.setForeignKey(constants.HEADER_ORGANIZATION_PARENT_ORGANIZATION_ID,
                                  constants.ENTITIES_ORGANIZATION,
-                                 constants.HEADER_ORGANIZATION_ORGANIZATION_ID);*/
+                                 constants.HEADER_ORGANIZATION_ORGANIZATION_ID);
 
     tableCreator.setPrimaryKeys(constants.HEADER_ORGANIZATION_ORGANIZATION_ID,
                                   constants.HEADER_ORGANIZATION_USER_ID);
