@@ -1,9 +1,7 @@
 
-const constants = require('../constants');
-
-const tableCreator = require('./tableCreator');
-
-const alasql = require('alasql');
+import alasql from 'alasql';
+import constants from '../constants';
+import tableCreator from './tableCreator';
 
 const debugActivated = constants.DEBUG_ON;
 
@@ -15,7 +13,7 @@ const stringConcat = function stringConcat(...stringToConcat) {
   return fullString;
 };
 
-module.exports = class entitiesCreator {
+export default class entitiesCreator {
 
   static constuctor() {}
 
@@ -138,5 +136,4 @@ module.exports = class entitiesCreator {
   static clearDatabase() {
     tableCreator.clearDatabase();
   }
-};
-
+}

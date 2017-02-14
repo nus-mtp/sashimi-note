@@ -5,7 +5,7 @@
  *
  */
 
-const constants = Object.freeze({
+export default Object.freeze({
 
   ENTITIES_USER: 'user',
   ENTITIES_ORGANIZATION: 'organization',
@@ -55,5 +55,3 @@ const constants = Object.freeze({
   FAILED_CREATE_TABLE: false,
 
 });
-
-module.exports = constants;
