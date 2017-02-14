@@ -5,8 +5,10 @@
   "private": true,
   "main": "main.js",
   "scripts": {
-    "start": "node sashimi-platform/bin/www",
-    "postinstall": "node scripts/deploymentScript.js && node scripts/postInstallScript.js"
+    "start": "node ./bin/www",
+    "test": "mocha \"test/**/*.js\"",
+    "test-travis": "npm test"
+
   },
   "repository": {
     "type": "git",
@@ -25,7 +27,23 @@
   },
   "homepage": "https://github.com/nus-mtp/lecture-note-2.0#readme",
   "dependencies": {
-    "concurrently": "^3.2.0",
-    "shelljs": "^0.7.6"
+    "body-parser": "~1.16.0",
+    "cookie-parser": "~1.4.3",
+    "debug": "~2.6.0",
+    "express": "~4.14.1",
+    "hbs": "~4.0.1",
+    "karma-cli": "^1.0.1",
+    "morgan": "~1.7.0",
+    "serve-favicon": "~2.3.2"
+  },
+  "devDependencies": {
+    "chai": "^3.5.0",
+    "chai-http": "^3.0.0",
+    "eslint": "^3.15.0",
+    "eslint-config-airbnb-base": "^11.1.0",
+    "eslint-plugin-import": "^2.2.0",
+    "eslint-plugin-jasmine": "^2.2.0",
+    "eslint-plugin-mocha": "^4.8.0",
+    "mocha": "^3.2.0"
   }
 }
