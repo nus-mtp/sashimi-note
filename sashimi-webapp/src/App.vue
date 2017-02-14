@@ -1,5 +1,5 @@
 <template>
-  <div id="app">
+  <div id="app" class="container">
     <router-view></router-view>
   </div>
 </template>
@@ -11,7 +11,8 @@ export default {
 </script>
 
 <style lang="scss">
-@import "assets/vendors/bootstrap-grid";
+@import 'assets/vendors/styles/responsive-grid-system.scss';
+
 body {
   margin: 0;
 }
@@ -20,21 +21,14 @@ body {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  -webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
+	-moz-box-sizing: border-box;    /* Firefox, other Gecko */
+	box-sizing: border-box;
   color: black;
-}
-
-.container {
-  padding: 0;
-  margin: 0;
-  width: 100%;
 }
 
 .no-padding {
   padding: 0;
-}
-
-.row {
-  margin: 0;
 }
 
 button {
@@ -73,6 +67,12 @@ button:focus {
 .CodeMirror-activeline {
   .CodeMirror-activeline-background {
     background-color: #e6e6e6;
+  }
+}
+
+.viewer {
+  p {
+    margin: 5px;
   }
 }
 </style>

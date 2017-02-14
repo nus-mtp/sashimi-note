@@ -1,14 +1,14 @@
 <template>
   <div>
     <navbar></navbar>
-    <div class="row">
-      <div class="col-xs-6 no-padding">
+    <div class="section group">
+      <div class="col span_6_of_12">
         <div>
           <codemirror v-model="content" ref="myEditor" @changed="codeChange"> 
           </codemirror>
         </div>
       </div>
-      <div class="col-xs-6 no-padding">
+      <div class="col span_6_of_12">
         <div class="viewer">
           <div v-html="getMarkdown"></div>
         </div>
@@ -60,13 +60,14 @@ export default {
 </script>
 
 <style scoped lang="scss">
-  p {
-    margin: 5px 0 5px 2px;
-  }
 
   .viewer {
     height: calc(100vh - 100px);
     overflow-wrap: break-word;
     overflow-y: scroll;
+
+    p {
+      margin: 5px;
+    }
   }
 </style>
