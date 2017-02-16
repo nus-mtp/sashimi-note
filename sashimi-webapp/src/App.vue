@@ -12,6 +12,7 @@ export default {
 
 <style lang="scss">
 @import 'assets/vendors/styles/responsive-grid-system.scss';
+$navbar-height: 67px;
 
 body {
   margin: 0;
@@ -50,7 +51,7 @@ button:focus {
 }
 
 .CodeMirror.cm-s-base16-dark {
-  height: calc(100vh - 67px);
+  height: calc(100vh - #{$navbar-height});
 }
 
 .CodeMirror-lines {
