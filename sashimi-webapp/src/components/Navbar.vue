@@ -1,32 +1,29 @@
 <template>
-  <div class="section">
-    <div class="navbar">
-      <div class="button-back navbar-buttons">
+  <div class="section group navbar">
+    <div class="col button-back">
         <button>
           <img src="../assets/buttons/back-button.png" alt="back">
-        </button>
+        </button>      
+    </div>
+    <div class="col button-userInputs">
+      <div class="image-upload">
+        <label for="file-input">
+          <img src="../assets/buttons/upload-image.png" alt="upload-image">
+        </label>
+        <input type="file" id="file-input">
       </div>
-      <div class="button-userInputs navbar-buttons">
-        <div class="image-upload">
-          <label for="file-input">
-            <img src="../assets/buttons/upload-image.png" alt="upload-image">
-          </label>
-          <input type="file" id="file-input">
-        </div>
-        <button>
-          <img src="../assets/buttons/plugins.png" alt="plugins">
-        </button>
-        <button>
-          <img src="../assets/buttons/annotate.png" alt="annotate">
-        </button>
-        <button>
-          <img src="../assets/buttons/share.png" alt="share">
-        </button>
-      </div>
-      <div class="space">
-        &nbsp;
-      </div>
-      <div class="button-dropdown navbar-buttons">
+      <button>
+        <img src="../assets/buttons/plugins.png" alt="plugins">
+      </button>
+      <button>
+        <img src="../assets/buttons/annotate.png" alt="annotate">
+      </button>
+      <button>
+        <img src="../assets/buttons/share.png" alt="share">
+      </button>
+    </div>
+    <div class="buttons-right">
+      <div class="col button-dropdown">
         <div id="dropdown-new">
           <button class="navbar-dropdown">
             <img src="../assets/buttons/add.png" alt="add"> New 
@@ -46,7 +43,7 @@
           </div>
         </div>
       </div>
-      <div class="button-editorViewer navbar-buttons">
+      <div class="col button-editorViewer">
         <button>
           <img src="../assets/buttons/edit.png" alt="editor">
         </button>
@@ -57,7 +54,7 @@
           <img src="../assets/buttons/viewer.png" alt="viewer">
         </button>
       </div>
-      <div class="dropdown-richText navbar-buttons">
+      <div class="col dropdown-richText">
         <button>
           <img src="../assets/buttons/richtext-dropdown.png" id="richtext-dropdown" alt="dropdown">
         </button>
@@ -70,7 +67,7 @@
 
 </script>
 
-<style lang="scss"> 
+<style scoped lang="scss"> 
 .navbar {
   clear: both;
   margin: auto;
@@ -81,58 +78,33 @@
   text-align: left;
 }
 
-.navbar-buttons {
-  float: left;
+button {
+  display: inline-block;
+}
 
-  img {
-    width: 38px;
-  }
-
-  #richtext-dropdown {
-    margin-top: 8px;
-    width: 22px;
-  }
+img {
+  width: 38px;
 }
 
 .button-back {
   width: 55px;
-  float: left;
-  margin-right: 30px;
 }
 
 .button-userInputs {
-  width: calc(55px * 4);
-  display: inline-block;
-}
-
-.button-dropdown {
-  width: 250px;
-  display: inline-block;
-
-  #dropdown-new {
-    float: left;
-  }
-
-  #dropdown-manage {
-    float: left;
-    margin-left: 20px;
-  }
-}
-
-.button-editorViewer {
-  width: calc(55px * 3);
-  margin-right: 30px;
-}
-
-.space {
   float: left;
-  display: inline-block;
-  width: calc(100% - 805px);
+  margin-left: 30px;
 }
 
-.dropdown-richText {
-  width: 55px; 
-  clear: right;
+.buttons-right {
+  float: right;
+
+  .button-dropdown {
+    margin-right: 30px;
+  }
+
+  .button-editorViewer {
+    margin-right: 30px;
+  }
 }
 
 .image-upload {
@@ -141,6 +113,16 @@
 
   input {
     display: none;
+  }
+}
+
+.button-dropdown {
+  #dropdown-new {
+    display: inline-block;
+  }
+
+  #dropdown-manage {
+    display: inline-block;
   }
 }
 
@@ -171,6 +153,11 @@
   border: 1px solid black;
   text-align: left;
   padding: 10px;
+}
+
+#richtext-dropdown {
+  margin-top: 8px;
+  width: 22px;
 }
 
 </style>
