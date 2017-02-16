@@ -71,9 +71,10 @@ export default {
 </script>
 
 <style scoped lang="scss">
+@import '../assets/styles/variables.scss';
 
   .viewer {
-    height: calc(100vh - 67px);
+    height: calc(100vh - #{$navbar-height});
     overflow-wrap: break-word;
     overflow-y: scroll;
     box-sizing: border-box;

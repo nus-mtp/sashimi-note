@@ -11,8 +11,8 @@ export default {
 </script>
 
 <style lang="scss">
-@import 'assets/vendors/styles/responsive-grid-system.scss';
-$navbar-height: 67px;
+@import 'assets/styles/responsive-grid-system.scss';
+@import 'assets/styles/variables.scss';
 
 body {
   margin: 0;
