@@ -5,14 +5,20 @@
 </template>
 
 <script>
+
 export default {
   name: 'app',
+
+  resolve: {
+    extensions: ['', '.css', '.scss'],
+  },
 };
 </script>
 
 <style lang="scss">
 @import 'assets/styles/responsive-grid-system.scss';
 @import 'assets/styles/variables.scss';
+@import '../node_modules/normalize.css/normalize.css';
 
 body {
   margin: 0;
