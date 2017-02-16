@@ -23,6 +23,7 @@ import wrapper from '../logic/wrapper';
 import navbar from './Navbar';
 
 let content = '';
+/* eslint : 0 */
 let codeMirrorInstance = null;
 
 /* eslint prefer-const: 0 */
@@ -52,7 +53,6 @@ export default {
   },
   methods: {
     codeChange(newCode) {
-      console.log(newCode);
     }
   },
   computed: {
