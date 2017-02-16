@@ -1,21 +1,27 @@
 const wrapper = require('src/logic/wrapper');
 
 describe('Wrapper', () => {
-  it('test1: handles empty data', () => {
-    const test1 = wrapper.render('');
+  it('should handle null data correctly', () => {
+    const test1 = wrapper.render(null);
 
     expect(test1).to.equal('');
   });
 
-  it('test2: handles plaintext data', () => {
-    const test2 = wrapper.render('test');
+  it('should handle empty data correctly', () => {
+    const test2 = wrapper.render('');
 
-    expect(test2).to.equal('<p>test</p>\n');
+    expect(test2).to.equal('');
   });
 
-  it('test3: handles markdowndata', () => {
-    const test3 = wrapper.render('# Hello World!');
+  it('should handle plaintext data correctly', () => {
+    const test3 = wrapper.render('test');
 
-    expect(test3).to.equal('<h1>Hello World!</h1>\n');
+    expect(test3).to.equal('<p>test</p>\n');
+  });
+
+  it('should handle markdown data correctly', () => {
+    const test4 = wrapper.render('# Hello World!');
+
+    expect(test4).to.equal('<h1>Hello World!</h1>\n');
   });
 });
