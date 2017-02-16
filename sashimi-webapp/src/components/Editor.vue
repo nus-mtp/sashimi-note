@@ -73,20 +73,17 @@ export default {
 <style scoped lang="scss">
 
   .viewer {
-    height: calc(100vh - 100px);
+    height: calc(100vh - 67px);
     overflow-wrap: break-word;
     overflow-y: scroll;
+    box-sizing: border-box;
+    margin: 0;
+    padding: 30px;
+    line-height: 1.6em;
+    font-size: 17px;
 
     p {
       margin: 5px;
     }
   }
-
-  .viewer {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 30px;
-  line-height: 1.6em;
-  font-size: 17px;
-}
 </style>
