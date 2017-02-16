@@ -15,7 +15,7 @@ export default {
 
 body {
   margin: 0;
-  font-size: 16px;
+  font-size: 20px;
 }
 
 #app {
@@ -50,32 +50,17 @@ button:focus {
   }
 }
 
-.CodeMirror.CodeMirror-wrap {
+.CodeMirror.cm-s-base16-dark {
   height: calc(100vh - 100px);
 }
 
 .CodeMirror-lines {
+  overflow-wrap: break-word;
+  
   .CodeMirror-code {
-    line-height: 1.8em;
-    font-family: 'Avenir', Helvetica, Arial, sans-serif;
+    line-height: 1.4em;
+    color: #dedede;
+    font-family: monospace;
   }
-}
-
-.CodeMirror-linenumber.CodeMirror-gutter-elt {
-  color: black;
-}
-
-.CodeMirror-activeline {
-  .CodeMirror-activeline-background {
-    background-color: #e6e6e6;
-  }
-}
-
-.viewer {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 5px;
-  line-height: 28px;
-
 }
 </style>

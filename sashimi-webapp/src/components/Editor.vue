@@ -4,7 +4,7 @@
     <div class="section group">
       <div class="col span_6_of_12">
         <div>
-          <codemirror v-model="content" ref="myEditor" @changed="codeChange"> 
+          <codemirror v-model="content" ref="myEditor" :options="editorOption" @changed="codeChange"> 
           </codemirror>
         </div>
       </div>
@@ -35,6 +35,19 @@ export default {
   data() {
     return {
       content,
+      editorOption: {
+        tabSize: 4,
+        mode: 'text/x-markdown',
+        theme: 'base16-dark',
+        lineNumbers: true,
+        lineWrapping: true,
+        line: true,
+        keyMap: 'sublime',
+        foldGutter: true,
+        gutters: ['CodeMirror-linenumbers', 'CodeMirror-foldgutter'],
+        styleSelectedText: true,
+        highlightSelectionMatches: { showToken: /\w/, annotateScrollbar: true },
+      }
     };
   },
   methods: {
@@ -68,4 +81,12 @@ export default {
       margin: 5px;
     }
   }
+
+  .viewer {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 30px;
+  line-height: 1.6em;
+  font-size: 17px;
+}
 </style>

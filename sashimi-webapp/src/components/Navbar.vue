@@ -172,13 +172,4 @@
   padding: 10px;
 }
 
-/*@media screen and (min-width: 400px) {
-  .button-editorViewer {
-    display: none;
-  }
-
-  .dropdown-richText {
-    display: none;
-  }
-}*/
 </style>
