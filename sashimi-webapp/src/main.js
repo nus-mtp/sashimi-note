@@ -3,6 +3,7 @@
 import Vue from 'vue';
 import App from './App';
 import router from './router';
+import storage from './database/storage';
 
 /* eslint-disable no-new */
 new Vue({
@@ -11,3 +12,5 @@ new Vue({
   template: '<App/>',
   components: { App },
 });
+
+storage.initializeDatabase();

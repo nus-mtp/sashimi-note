@@ -6,9 +6,9 @@
  *
  */
 
-const entitiesCreator = require('./create/entitiesCreator');
+import entitiesCreator from './create/entitiesCreator';
 
-class Storage {
+export default class Storage {
   static constructor() {}
 
   static initializeDatabase() {
@@ -19,5 +19,3 @@ class Storage {
     entitiesCreator.clearDatabase();
   }
 }
-
-Storage.initializeDatabase();

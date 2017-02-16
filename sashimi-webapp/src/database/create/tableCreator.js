@@ -17,7 +17,7 @@ const stringConcat = function stringConcat(...stringToConcat) {
   return fullString;
 };
 
-class tableCreator {
+export default class tableCreator {
   static constructor() {}
 
   static initCreateTable(tableName) {
@@ -94,5 +94,3 @@ class tableCreator {
     return constants.PASSED_CREATE_TABLE;
   }
 }
-
-module.exports = tableCreator;
