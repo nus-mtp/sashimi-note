@@ -42,16 +42,15 @@ button:focus {
 }
 
 .CodeMirror {
-  border-right: 1px solid black;
+  box-shadow: 5px 0 5px -2px #e6e6e6;
   
   .CodeMirror-gutters {
     background-color: white;
-    border-right: 1px solid black;
   }
 }
 
 .CodeMirror.cm-s-base16-dark {
-  height: calc(100vh - 100px);
+  height: calc(100vh - 67px);
 }
 
 .CodeMirror-lines {
