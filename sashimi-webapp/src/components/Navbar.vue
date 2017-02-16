@@ -75,8 +75,9 @@
   clear: both;
   margin: auto;
   overflow: hidden;
+  box-sizing: border-box;
   border-bottom: 1px solid black;
-  padding: 25px 30px;
+  padding: 8px 15px;
   text-align: left;
 }
 
@@ -172,13 +173,4 @@
   padding: 10px;
 }
 
-/*@media screen and (min-width: 400px) {
-  .button-editorViewer {
-    display: none;
-  }
-
-  .dropdown-richText {
-    display: none;
-  }
-}*/
 </style>
