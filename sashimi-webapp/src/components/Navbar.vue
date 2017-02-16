@@ -68,12 +68,13 @@
 </script>
 
 <style scoped lang="scss"> 
+@import '../assets/styles/variables.scss';
+
 .navbar {
   clear: both;
   margin: auto;
   overflow: hidden;
   box-sizing: border-box;
-  border-bottom: 1px solid black;
   padding: 8px 15px;
   text-align: left;
 }
@@ -87,7 +88,7 @@ img {
 }
 
 .button-back {
-  width: 55px;
+  width: $back-button-width;
 }
 
 .button-userInputs {
@@ -98,12 +99,12 @@ img {
 .buttons-right {
   float: right;
 
-  .button-dropdown {
-    margin-right: 30px;
+  .button-editorViewer {
+    margin-left: 30px;
   }
 
-  .button-editorViewer {
-    margin-right: 30px;
+  .dropdown-richText {
+    margin-left: 30px;
   }
 }
 
