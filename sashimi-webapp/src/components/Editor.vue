@@ -1,17 +1,7 @@
 <template>
   <div>
-    <navbar></navbar>
-    <div class="section group">
-      <div class="col span_6_of_12">
-        <div>
-          <codemirror v-model="content" ref="myEditor" :options="editorOption" @changed="codeChange"> 
-          </codemirror>
-        </div>
-      </div>
-      <div class="col span_6_of_12">
-        <viewer></viewer>
-      </div>
-    </div>
+    <codemirror v-model="content" ref="myEditor" :options="editorOption" @changed="codeChange"> 
+    </codemirror>
   </div>
 </template>
 
