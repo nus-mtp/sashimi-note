@@ -10,7 +10,7 @@
       </div>
       <div class="col span_6_of_12">
         <div class="viewer">
-          <div v-html="getMarkdown"></div>
+          <viewer></viewer>
         </div>
       </div>
     </div>
@@ -21,6 +21,7 @@
 import { codemirror } from 'vue-codemirror';
 import wrapper from '../logic/wrapper';
 import navbar from './Navbar';
+import viewer from './Viewer';
 
 let content = '';
 /* eslint : 0 */
@@ -30,7 +31,8 @@ let codeMirrorInstance = null;
 export default {
   components: {
     codemirror,
-    navbar
+    navbar,
+    viewer,
   },
 
   data() {
@@ -59,9 +61,6 @@ export default {
     editor() {
       return this.$refs.myEditor.editor;
     },
-    getMarkdown() {
-      return wrapper.render(this.content);
-    }
   },
   mounted() {
     codeMirrorInstance = this.editor;
