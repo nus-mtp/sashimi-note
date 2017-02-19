@@ -1,6 +1,7 @@
 // Import Markdown-It module for markdown processing
 const md = require('markdown-it')({
   html: true,
+  breaks: true,
   linkify: true,
   typographer: true
 });
