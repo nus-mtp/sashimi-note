@@ -79,14 +79,6 @@
   text-align: left;
 }
 
-button {
-  display: inline-block;
-}
-
-img {
-  width: 38px;
-}
-
 .button-back {
   width: $back-button-width;
 }

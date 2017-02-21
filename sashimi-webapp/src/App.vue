@@ -25,6 +25,10 @@ body {
   font-size: 20px;
 }
 
+div {
+  overflow: hidden;
+}
+
 #app {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -42,6 +46,12 @@ body {
 button {
   background-color: transparent;
   border: none;
+  display: inline-block;
+  box-sizing: border-box;
+
+  img {
+    width: 38px;
+  }
 }
 
 button:focus {
