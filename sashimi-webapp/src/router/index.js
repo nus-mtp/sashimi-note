@@ -1,6 +1,6 @@
 import Vue from 'vue';
 import Router from 'vue-router';
-import Editor from 'components/Editor';
+import Content from 'components/Content';
 
 Vue.use(Router);
 
@@ -8,8 +8,8 @@ export default new Router({
   routes: [
     {
       path: '/',
-      name: 'Editor',
-      component: Editor,
+      name: 'Content',
+      component: Content,
     },
   ],
 });

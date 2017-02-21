@@ -1,7 +1,17 @@
 <template>
   <div>
-    <codemirror v-model="content" ref="myEditor" :options="editorOption" @changed="codeChange"> 
-    </codemirror>
+    <navbar></navbar>
+    <div class="section group">
+      <div class="col span_6_of_12">
+        <div>
+          <codemirror v-model="content" ref="myEditor" :options="editorOption" @changed="codeChange"> 
+          </codemirror>
+        </div>
+      </div>
+      <div class="col span_6_of_12">
+        <viewer></viewer>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -10,6 +20,7 @@ import { codemirror } from 'vue-codemirror';
 import wrapper from '../logic/wrapper';
 import navbar from './Navbar';
 import viewer from './Viewer';
+import editor from './Editor';
 
 let content = '';
 /* eslint : 0 */
@@ -21,6 +32,7 @@ export default {
     codemirror,
     navbar,
     viewer,
+    editor,
   },
 
   data() {
