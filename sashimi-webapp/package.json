@@ -80,10 +80,10 @@
     "webpack-bundle-analyzer": "^2.2.1",
     "webpack-dev-middleware": "^1.10.0",
     "webpack-hot-middleware": "^2.16.1",
-    "webpack-merge": "^2.6.1"
+    "webpack-merge": "^2.6.1",
+    "xss": "^0.3.3"
   },
-  "devDependencies": {
-  },
+  "devDependencies": {},
   "engines": {
     "node": ">= 4.0.0",
     "npm": ">= 3.0.0"

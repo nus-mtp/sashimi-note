@@ -19,7 +19,7 @@
 
 <script>
 import { codemirror } from 'vue-codemirror';
-import wrapper from '../logic/wrapper';
+import wrapper from '../logic/documentPackager';
 import navbar from './Navbar';
 
 let content = '';
