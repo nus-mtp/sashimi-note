@@ -1,6 +1,7 @@
 import Vue from 'vue';
 import Router from 'vue-router';
 import FileManager from 'components/FileManager';
+import Content from 'components/Content';
 
 Vue.use(Router);
 
@@ -10,6 +11,11 @@ export default new Router({
       path: '/',
       name: 'fileManager',
       component: FileManager,
+    },
+    {
+      path: '/content',
+      name: 'Content',
+      component: Content,
     },
   ],
 });
