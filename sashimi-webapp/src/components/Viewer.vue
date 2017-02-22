@@ -9,9 +9,10 @@
   import wrapper from '../logic/wrapper';
 
   export default {
+    props: ['editorContent'],
     computed: {
       getMarkdown() {
-        return wrapper.render(this.content);
+        return wrapper.render(this.editorContent);
       },
     }
   };

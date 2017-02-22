@@ -1,19 +1,18 @@
 <template>
   <div>
-    <codemirror v-model="content" ref="myEditor" :options="editorOption" @changed="codeChange"> 
+    <codemirror v-model="mdContent" ref="myEditor" :options="editorOption" @changed="codeChange"> 
     </codemirror>
   </div>
 </template>
 
 <script>
 import { codemirror } from 'vue-codemirror';
-import wrapper from '../logic/wrapper';
 import navbar from './Navbar';
 import viewer from './Viewer';
 
-let content = '';
 /* eslint : 0 */
 let codeMirrorInstance = null;
+
 
 /* eslint prefer-const: 0 */
 export default {
@@ -22,10 +21,10 @@ export default {
     navbar,
     viewer,
   },
-
+  props: ['value'],
   data() {
     return {
-      content,
+      mdContent: this.value,
       editorOption: {
         tabSize: 4,
         mode: 'text/x-markdown',
@@ -43,6 +42,7 @@ export default {
   },
   methods: {
     codeChange(newCode) {
+      this.$emit('input', newCode);
     }
   },
   computed: {
