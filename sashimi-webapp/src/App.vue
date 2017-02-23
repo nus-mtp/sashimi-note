@@ -16,9 +16,7 @@ export default {
 </script>
 
 <style lang="scss">
-@import 'assets/styles/responsive-grid-system.scss';
-@import 'assets/styles/variables.scss';
-@import '../node_modules/normalize.css/normalize.css';
+@import 'assets/styles/global-styles.scss';
 
 body {
   margin: 0;
@@ -35,16 +33,44 @@ body {
   color: black;
 }
 
-button {
-  background-color: transparent;
-  border: none;
-  display: inline-block;
+.navbar {
+  overflow: hidden;
   box-sizing: border-box;
+  padding: 8px 15px;
+  text-align: left;
 }
 
-button:focus {
-  outline: 0;
+button {
+  &.navbar-buttons {
+    background-color: transparent;
+    border: none;
+    display: inline-block;
+    box-sizing: border-box;
+  }
+
+  &.navbar-buttons:focus {
+    outline: 0;
+  }
 }
+
+.button {
+  &-left {
+    float: left;
+  }
+
+  &-right {
+    float: right;
+  }
+
+  &-back {
+    width: $back-button-width;
+  }
+
+  &-img {
+    width: 38px;
+  }
+}
+
 
 .CodeMirror {
   box-shadow: 5px 0 5px -2px #e6e6e6;
@@ -70,10 +96,6 @@ button:focus {
 
 vertical-align-elements > * {
   vertical-align: middle;
-}
-
-.buttons-img {
-  width: 38px;
 }
 
 </style>
