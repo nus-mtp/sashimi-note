@@ -73,7 +73,9 @@
 @import 'src/assets/styles/variables.scss';
 
 .navbar {
-  border-bottom: 1px solid black;
+  box-sizing: border-box;
+  border-bottom: 3px solid #bebebe;
+  box-shadow: 0 2px 10px #e6e6e6;
 }
 
 .button-back {
