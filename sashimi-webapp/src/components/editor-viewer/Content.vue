@@ -5,7 +5,6 @@
       <div class="col span_6_of_12">
         <editor 
           v-model="mdContent"
-          @input="updateContent"
         ></editor>
       </div>
       <div class="col span_6_of_12">
@@ -33,9 +32,6 @@ export default {
     };
   },
   method: {
-    updateContent(data) {
-      this.content = data;
-    }
   },
   computed: {
   },
