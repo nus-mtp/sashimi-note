@@ -1,6 +1,7 @@
 import Vue from 'vue';
 import Router from 'vue-router';
-import Editor from 'components/Editor';
+import FileManager from 'components/file-manager/FileManager';
+import Content from 'components/editor-viewer/Content';
 
 Vue.use(Router);
 
@@ -8,8 +9,13 @@ export default new Router({
   routes: [
     {
       path: '/',
-      name: 'Editor',
-      component: Editor,
+      name: 'fileManager',
+      component: FileManager,
+    },
+    {
+      path: '/content',
+      name: 'Content',
+      component: Content,
     },
   ],
 });

@@ -5,13 +5,20 @@
 </template>
 
 <script>
+
 export default {
   name: 'app',
+
+  resolve: {
+    extensions: ['', '.css', '.scss'],
+  },
 };
 </script>
 
 <style lang="scss">
-@import 'assets/vendors/styles/responsive-grid-system.scss';
+@import 'assets/styles/responsive-grid-system.scss';
+@import 'assets/styles/variables.scss';
+@import '../node_modules/normalize.css/normalize.css';
 
 body {
   margin: 0;
@@ -28,13 +35,11 @@ body {
   color: black;
 }
 
-.no-padding {
-  padding: 0;
-}
-
 button {
   background-color: transparent;
   border: none;
+  display: inline-block;
+  box-sizing: border-box;
 }
 
 button:focus {
@@ -50,7 +55,7 @@ button:focus {
 }
 
 .CodeMirror.cm-s-base16-dark {
-  height: calc(100vh - 67px);
+  height: calc(100vh - #{$navbar-height});
 }
 
 .CodeMirror-lines {
@@ -62,4 +67,13 @@ button:focus {
     font-family: monospace;
   }
 }
+
+vertical-align-elements > * {
+  vertical-align: middle;
+}
+
+.buttons-img {
+  width: 38px;
+}
+
 </style>
