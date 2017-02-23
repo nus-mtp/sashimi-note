@@ -16,7 +16,7 @@ export default {
 </script>
 
 <style lang="scss">
-@import 'assets/styles/global-styles.scss';
+@import 'assets/styles/loader.scss';
 
 body {
   margin: 0;
