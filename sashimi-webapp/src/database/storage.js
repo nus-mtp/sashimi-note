@@ -21,3 +21,31 @@ export default class storage {
     query.getFullTableData('user');
   }
 
+  static getList(folderID, callback) {
+
+  }
+
+  static loadFile(fileID) {
+
+  }
+
+  static saveFile(fileID, file) {
+
+  }
+
+  static createFile() {
+
+  }
+
+  static deleteFile(fileID) {
+
+  }
+
+  static createFolder() {
+
+  }
+
+  static deleteFolder(folderID) {
+
+  }
+}
