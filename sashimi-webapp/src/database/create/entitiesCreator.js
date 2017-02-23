@@ -5,6 +5,8 @@ export default class entitiesCreator {
 
   static constuctor() {}
 
+  static initializeDatabase() {
+    tableCreator.callSqlToLinkToDatabase();
   }
 
   static createUserTable() {
