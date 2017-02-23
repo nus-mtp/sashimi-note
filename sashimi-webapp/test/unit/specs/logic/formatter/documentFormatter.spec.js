@@ -1,4 +1,4 @@
-const documentFormatter = require('src/logic/documentPackager/documentFormatter');
+import documentFormatter from 'src/logic/documentPackager/documentFormatter';
 
 describe('DocumentFormatter', () => {
   it('returns the same data', () => {
