@@ -1,4 +1,4 @@
-const wrapper = require('src/logic/wrapper');
+const wrapper = require('src/logic/documentPackager');
 
 describe('Wrapper', () => {
   it('test1: handles empty data', () => {

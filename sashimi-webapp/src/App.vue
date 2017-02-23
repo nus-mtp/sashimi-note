@@ -5,17 +5,24 @@
 </template>
 
 <script>
+
 export default {
   name: 'app',
+
+  resolve: {
+    extensions: ['', '.css', '.scss'],
+  },
 };
 </script>
 
 <style lang="scss">
-@import 'assets/vendors/styles/responsive-grid-system.scss';
+@import 'assets/styles/responsive-grid-system.scss';
+@import 'assets/styles/variables.scss';
+@import '../node_modules/normalize.css/normalize.css';
 
 body {
   margin: 0;
-  font-size: 16px;
+  font-size: 20px;
 }
 
 #app {
@@ -28,13 +35,11 @@ body {
   color: black;
 }
 
-.no-padding {
-  padding: 0;
-}
-
 button {
   background-color: transparent;
   border: none;
+  display: inline-block;
+  box-sizing: border-box;
 }
 
 button:focus {
@@ -42,40 +47,33 @@ button:focus {
 }
 
 .CodeMirror {
-  border-right: 1px solid black;
+  box-shadow: 5px 0 5px -2px #e6e6e6;
   
   .CodeMirror-gutters {
     background-color: white;
-    border-right: 1px solid black;
   }
 }
 
-.CodeMirror.CodeMirror-wrap {
-  height: calc(100vh - 100px);
+.CodeMirror.cm-s-base16-dark {
+  height: calc(100vh - #{$navbar-height});
 }
 
 .CodeMirror-lines {
+  overflow-wrap: break-word;
+  
   .CodeMirror-code {
-    line-height: 1.8em;
-    font-family: 'Avenir', Helvetica, Arial, sans-serif;
+    line-height: 1.4em;
+    color: #dedede;
+    font-family: monospace;
   }
 }
 
-.CodeMirror-linenumber.CodeMirror-gutter-elt {
-  color: black;
+vertical-align-elements > * {
+  vertical-align: middle;
 }
 
-.CodeMirror-activeline {
-  .CodeMirror-activeline-background {
-    background-color: #e6e6e6;
-  }
+.buttons-img {
+  width: 38px;
 }
 
-.viewer {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 5px;
-  line-height: 28px;
-
-}
 </style>

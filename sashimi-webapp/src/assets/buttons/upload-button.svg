@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="66px" height="66px" viewBox="0 0 66 66" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 41 (35326) - http://www.bohemiancoding.com/sketch -->
+    <title>upload-button copy 2</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Symbols" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="button-upload" transform="translate(1.000000, 1.000000)" stroke="#000000" stroke-width="2">
+            <g id="upload-button-copy-2" transform="translate(32.000000, 32.000000) rotate(90.000000) translate(-32.000000, -32.000000) ">
+                <g id="Group-5" transform="translate(9.000000, 13.000000)" stroke-linecap="square">
+                    <g id="back-arrow" transform="translate(18.384776, 19.213203) rotate(-135.000000) translate(-18.384776, -19.213203) translate(5.384776, 6.213203)">
+                        <path d="M24.1860727,1.56589293 L5.39535755,1.56589293" id="Line"></path>
+                        <path d="M24.1860727,3.13178585 L24.1860727,21.922501" id="Line"></path>
+                        <path d="M0.299656218,25.4523094 L24.1860727,1.56589293" id="Line-Copy-2"></path>
+                    </g>
+                    <g id="Group-4" transform="translate(36.769553, 18.828427) rotate(-90.000000) translate(-36.769553, -18.828427) translate(18.769553, 13.328427)">
+                        <path d="M1.14893617,10.2666667 L34.9293096,10.2666667" id="Line"></path>
+                        <path d="M0.765957447,10.2666667 L0.765957447,0.633451683" id="Line-Copy-7"></path>
+                        <path d="M35.2340426,10.2666667 L35.2340426,0.633451683" id="Line-Copy-8"></path>
+                    </g>
+                </g>
+                <circle id="Oval" cx="32" cy="32" r="32"></circle>
+            </g>
+        </g>
+    </g>
+</svg>

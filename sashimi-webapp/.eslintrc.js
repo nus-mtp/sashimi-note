@@ -87,5 +87,6 @@ module.exports = {
     "func-names": "warn",
     "prefer-arrow-callback": "warn",
     "object-shorthand": "warn",
+    "prefer-const": "warn",
   }
 }
