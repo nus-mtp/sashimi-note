@@ -18,5 +18,3 @@ export default Object.freeze({
   }
 
 });
-
-module.exports = exceptions;

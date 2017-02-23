@@ -14,7 +14,7 @@ const stringManipulator = new StringManipulator();
 
 };
 
-const sqlCommands = function sqlCommands() {
+export default function SqlCommands() {
   this.getFullTableData = function getFullTableData(tableName) {
     return alasql(stringConcat('SELECT * FROM ', tableName));
   };
@@ -35,6 +35,4 @@ const sqlCommands = function sqlCommands() {
   this.clearDatabase = function clearDatabase() {
     alasql(stringConcat('DROP TABLE *'));
   };
-};
-
-module.exports = sqlCommands;
+}

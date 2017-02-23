@@ -56,4 +56,3 @@ export default Object.freeze({
 
 });
 
-module.exports = constants;

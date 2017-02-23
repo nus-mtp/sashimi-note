@@ -2,11 +2,13 @@ import constants from '../constants';
 
 import SqlCommands from '../sql-related/SqlCommands';
 
+import StringManipulator from '../StringManipulation';
+
 import exceptions from '../exceptions';
 
 const sqlCommands = new SqlCommands();
 
-const exceptions = require('../exceptions');
+const stringManipulator = new StringManipulator();
 
 let isTableInitializedForCreation = constants.CONST_TABLE_CREATION_CLOSED;
 let sqlCreateTableString = constants.STRING_INITIALIZE;
@@ -95,6 +97,5 @@ export default class tableCreator {
     }
     return constants.PASSED_CREATE_TABLE;
   }
-}
 
-module.exports = tableCreator;
+}
