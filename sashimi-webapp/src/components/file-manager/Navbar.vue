@@ -1,10 +1,5 @@
 <template>
   <div class="section group navbar">
-    <div class="col button-back vertical-align-child">
-      <button class="navbar-buttons">
-        <img src="../../assets/images/buttons/button-back.svg" class="button-img" alt="back">
-      </button>      
-    </div>
     <div class="col">
       <ul class="breadcrumb">
         <li><a href="#">Home</a></li>
