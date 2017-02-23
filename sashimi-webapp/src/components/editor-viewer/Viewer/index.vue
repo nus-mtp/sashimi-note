@@ -1,15 +1,15 @@
 <template>
   <div class="viewer">
     <div v-if="viewMode === 'pages'">
-      <div id="viewer-pages" v-html="getMarkdown">
+      <div id="viewer-pages" v-html="getHtml">
       </div>
     </div>
     <div v-else-if="viewMode === 'slides'">
-      <div id="viewer-slides" v-html="getMarkdown">
+      <div id="viewer-slides" v-html="getHtml">
       </div>
     </div>
     <div v-else>
-      <div id="viewer-html" v-html="getMarkdown">
+      <div id="viewer-html" v-html="getHtml">
       </div>
     </div>
   </div>
@@ -44,7 +44,7 @@
       };
     },
     computed: {
-      getMarkdown() {
+      getHtml() {
         return wrapper.render(this.editorContent);
       },
     },
