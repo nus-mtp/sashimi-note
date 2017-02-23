@@ -6,7 +6,7 @@
 </template>
 
 <script>
-  import wrapper from '../logic/wrapper';
+  import wrapper from '../../logic/wrapper';
 
   export default {
     props: ['editorContent'],
@@ -19,7 +19,7 @@
 </script>
 
 <style scoped lang='scss'>
-  @import '../assets/styles/variables.scss';
+  @import '../../assets/styles/variables.scss';
   
   .viewer {
     height: calc(100vh - #{$navbar-height});
