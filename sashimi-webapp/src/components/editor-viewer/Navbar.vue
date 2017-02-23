@@ -1,9 +1,12 @@
 <template>
   <div class="section group navbar">
     <div class="col button-back vertical-align-child">
-        <a href="/">
+        <a href="/" class="vertical-align-child">
             <!--<img src="../../assets/images/buttons/button-back.svg" class="button-img" alt="back">-->
-            SASHIMI NOTE
+            <img src="../../assets/sashimi.svg" class="inline-block" alt="sashimi">
+            <p class="inline-block">
+              SASHIMI NOTE
+            </p>
         </a>
     </div>
     <div class="col float-left vertical-align-child button-margin">
@@ -25,17 +28,17 @@
     </div>
     <div class="float-right">
       <div class="col inline-block">
-        <button class="navbar-dropdown button-margin navbar-buttons">
-          <img src="../../assets/images/symbols/symbol-add.svg" alt="add"> 
+        <button class="navbar-dropdown button-margin vertical-align-child navbar-buttons">
+          <img class="inline-block" src="../../assets/images/symbols/symbol-add.svg" alt="add"> 
           <p class="inline-block">New</p>  
         </button>
         <div class="dropdown-content">
           <a href="">New File</a>
           <a href="">Duplicate File</a>
         </div>
-        <button class="navbar-dropdown button-margin navbar-buttons">
+        <button class="navbar-dropdown button-margin vertical-align-child navbar-buttons">
           <p class="inline-block">Manage</p> 
-          <img src="../../assets/images/symbols/symbol-arrow-down.svg" alt="add">
+          <img class="inline-block" src="../../assets/images/symbols/symbol-arrow-down.svg" alt="add">
         </button>
         <div class="dropdown-content">
           <a href="">Test</a>
@@ -74,8 +77,9 @@
 }
 
 .button-back {
-  text-align: center;
+  text-align: left;
   position: relative;
+  width: 150px;
 
   a {
     font-size: 14px;
@@ -89,6 +93,14 @@
 
     &:hover {
       color: darkorange;
+    }
+
+    img {
+      width: 40px;
+    }
+    
+    p {
+      margin-left: 5px;
     }
   }
 }
