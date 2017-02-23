@@ -22,8 +22,11 @@ const md = require('markdown-it')({
 // Importing markdown-it-katex plugin for parsing LaTeX mathematical forumla
 const mk = require('markdown-it-katex');
 
-// Getting markdown-it to use KaTeX plugin
+// Getting markdown-it to use plugins
+// For KaTeX
 md.use(mk);
+// For Highlightjs
+md.use(require('markdown-it-highlightjs'), { auto: true, code: true });
 
 const validateData = function validateData(data) {
   return data || '';
