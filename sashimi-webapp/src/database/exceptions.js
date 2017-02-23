@@ -6,15 +6,10 @@
  */
 
 export default Object.freeze({
-
-  TableAlreadyExists: function TableAlreadyExists(message) {
-    this.message = message;
-    this.name = 'Table_Already_Exists';
-  },
-
   TableCreationAlreadyInitiated: function TableCreationAlreadyInitiated(message) {
     this.message = message;
-    this.name = 'Table_Creation_Already_Initiated';
+    this.name = 'TableCreationAlreadyInitiated';
+    this.stack = (new Error()).stack;
   }
 
 });
