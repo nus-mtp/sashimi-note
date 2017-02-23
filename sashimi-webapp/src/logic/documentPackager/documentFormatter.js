@@ -76,7 +76,7 @@ export default {
   format: function format(data) {
     // Filter out any possible XSS threat
     // console.log(whiteList);
-    // data = xssFilter(data, options);
+    data = xssFilter(data, options);
 
     // Return data as it is for now.
     return data;
