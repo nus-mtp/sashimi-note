@@ -1,4 +1,4 @@
-import documentFormatter from 'src/logic/wrapper/documentFormatter';
+import documentFormatter from 'src/logic/documentPackager/documentFormatter';
 import base64OfSimplePdf from './reference/base64OfSimplePdf';
 
 describe('DocumentFormatter', () => {

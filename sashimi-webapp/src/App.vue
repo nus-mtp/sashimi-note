@@ -16,17 +16,15 @@ export default {
 </script>
 
 <style lang="scss">
-@import 'assets/styles/responsive-grid-system.scss';
-@import 'assets/styles/variables.scss';
-@import '../node_modules/normalize.css/normalize.css';
+@import 'assets/styles/loader.scss';
 
 body {
   margin: 0;
-  font-size: 20px;
+  font-size: 18px;
 }
 
 #app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
+  font-family: $font;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   -webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
@@ -35,16 +33,52 @@ body {
   color: black;
 }
 
-button {
-  background-color: transparent;
-  border: none;
-  display: inline-block;
-  box-sizing: border-box;
+.float-left {
+  float: left;
 }
 
-button:focus {
-  outline: 0;
+.float-right {
+  float: right;
 }
+
+.inline-block {
+  display: inline-block;
+}
+
+.navbar {
+  overflow: hidden;
+  box-sizing: border-box;
+  padding: 8px 20px;
+  text-align: left;
+}
+
+button {
+  &.navbar-buttons {
+    background-color: transparent;
+    border: none;
+    display: inline-block;
+    box-sizing: border-box;
+  }
+
+  &.navbar-buttons:focus {
+    outline: 0;
+  }
+}
+
+.button {
+  &-back {
+    width: $back-button-width;
+  }
+
+  &-margin {
+    margin-left: $left-margin-navbar-elements;
+  }
+
+  &-img {
+    width: 38px;
+  }
+}
+
 
 .CodeMirror {
   box-shadow: 5px 0 5px -2px #e6e6e6;
@@ -68,12 +102,8 @@ button:focus {
   }
 }
 
-vertical-align-elements > * {
+vertical-align-child > * {
   vertical-align: middle;
-}
-
-.buttons-img {
-  width: 38px;
 }
 
 </style>
