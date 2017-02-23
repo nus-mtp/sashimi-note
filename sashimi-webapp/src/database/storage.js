@@ -20,6 +20,4 @@ export default class storage {
     entitiesCreator.createFileManagerTable();
     query.getFullTableData('user');
   }
-}
 
-Storage.initializeDatabase();
