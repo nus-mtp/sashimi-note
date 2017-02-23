@@ -1,6 +1,8 @@
-const constants = require('../constants');
+import constants from '../constants';
 
-const SqlCommands = require('../sql-related/sqlCommands');
+import SqlCommands from '../sql-related/SqlCommands';
+
+import exceptions from '../exceptions';
 
 const sqlCommands = new SqlCommands();
 
@@ -17,7 +19,7 @@ const stringConcat = function stringConcat(...stringToConcat) {
   return fullString;
 };
 
-class tableCreator {
+export default class tableCreator {
   static constructor() {}
 
   static initCreateTable(tableName) {

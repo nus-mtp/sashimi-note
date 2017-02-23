@@ -5,7 +5,7 @@
  *
  */
 
-const constants = Object.freeze({
+export default Object.freeze({
 
   ENTITIES_USER: 'user',
   ENTITIES_ORGANIZATION: 'organization',

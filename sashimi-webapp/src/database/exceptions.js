@@ -5,7 +5,7 @@
  *
  */
 
-const exceptions = Object.freeze({
+export default Object.freeze({
 
   TableAlreadyExists: function TableAlreadyExists(message) {
     this.message = message;

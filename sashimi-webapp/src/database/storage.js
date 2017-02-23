@@ -6,9 +6,9 @@
  *
  */
 
-const entitiesCreator = require('./create/entitiesCreator');
+import entitiesCreator from './create/entitiesCreator';
 
-class Storage {
+export default class storage {
   static constructor() {}
 
   static initializeDatabase() {

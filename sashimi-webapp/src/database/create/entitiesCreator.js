@@ -1,11 +1,10 @@
+import constants from '../constants';
+import tableCreator from './tableCreator';
 
-const constants = require('../constants');
-
-const tableCreator = require('./tableCreator');
-
-const alasql = require('alasql');
+export default class entitiesCreator {
 
 const debugActivated = constants.DEBUG_ON;
+  static constuctor() {}
 
 const stringConcat = function stringConcat(...stringToConcat) {
   let fullString = '';
