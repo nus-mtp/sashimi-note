@@ -37,6 +37,7 @@ export default Object.freeze({
 
   HEADER_FILE_MANAGER_ORGANIZATION_ID: 'organization_id',
   HEADER_FILE_MANAGER_FILE_ID: 'file_id',
+  HEADER_FILE_MANAGER_FILE_MARKDOWN: 'file_markdown',
   HEADER_FILE_MANAGER_PERMISSION_INDEX: 'permission_index',
   HEADER_FILE_MANAGER_CREATION_DATE: 'creation_date',
   HEADER_FILE_MANAGER_LAST_MODIFIED_DATE: 'last_modified_date',
@@ -50,6 +51,9 @@ export default Object.freeze({
 
   PASSED_CREATE_TABLE: true,
   FAILED_CREATE_TABLE: false,
+},
 
-});
-
+  this.arrayEntitiesName = function arrayEntitiesName() {
+    return [this.ENTITIES_USER, this.ENTITIES_ORGANIZATION, this.ENTITIES_FILE_MANAGER, this.ENTITIES_FOLDER];
+  }
+);
