@@ -11,7 +11,7 @@ const callback = function callback() {
   // do nothing??
 };
 
-export default function SqlCommands() {
+export default function sqlCommands() {
   this.linkDatabaseToIndexedDB = function linkDatabaseToIndexedDB() {
     const databaseRequestStr = "CREATE INDEXEDDB DATABASE IF NOT EXISTS lecture-note-2.0; " +
                                "ATTACH INDEXEDDB DATABASE lecture-note-2.0; " +
