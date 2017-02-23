@@ -4,8 +4,11 @@ import MarkdownIt from 'markdown-it';
 // Code highlighting plugins
 import hljs from 'highlight.js'; // https://highlightjs.org/
 import mh from 'markdown-it-highlightjs';
-// Importing markdown-it-katex plugin for parsing LaTeX mathematical forumla
+// Katex plugin for parsing LaTeX mathematical forumla
 import mk from 'markdown-it-katex';
+// Table of Contents plugins
+import mdAnchor from 'markdown-it-anchor';
+import mdTOC from 'markdown-it-table-of-contents';
 
 const md = new MarkdownIt({
   html: true,
@@ -29,6 +32,9 @@ const md = new MarkdownIt({
 md.use(mk);
 // For Code Highlighting
 md.use(mh, { auto: true, code: true });
+// For TOC generation
+md.use(mdAnchor);
+md.use(mdTOC);
 
 const validateData = function validateData(data) {
   return data || '';

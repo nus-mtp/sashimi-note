@@ -16,6 +16,6 @@ describe('Wrapper', () => {
   it('test3: handles markdowndata', () => {
     const test3 = wrapper.render('# Hello World!');
 
-    expect(test3).to.equal('<h1>Hello World!</h1>\n');
+    expect(test3).to.equal('<h1 id="hello-world">Hello World!</h1>\n');
   });
 });

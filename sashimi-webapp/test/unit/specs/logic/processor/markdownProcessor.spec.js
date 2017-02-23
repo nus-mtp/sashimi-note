@@ -11,14 +11,14 @@ describe('Test for MarkdownProcessor', () => {
     const testAltH1 = myMod.process('Alt-H1!\n======');
     const testAltH2 = myMod.process('Alt-H2!\n------');
 
-    expect(testH1).to.equal('<h1>Hello World!</h1>\n');
-    expect(testH2).to.equal('<h2>H2!</h2>\n');
-    expect(testH3).to.equal('<h3>H3!</h3>\n');
-    expect(testH4).to.equal('<h4>H4!</h4>\n');
-    expect(testH5).to.equal('<h5>H5!</h5>\n');
-    expect(testH6).to.equal('<h6>H6!</h6>\n');
-    expect(testAltH1).to.equal('<h1>Alt-H1!</h1>\n');
-    expect(testAltH2).to.equal('<h2>Alt-H2!</h2>\n');
+    expect(testH1).to.equal('<h1 id="hello-world">Hello World!</h1>\n');
+    expect(testH2).to.equal('<h2 id="h2">H2!</h2>\n');
+    expect(testH3).to.equal('<h3 id="h3">H3!</h3>\n');
+    expect(testH4).to.equal('<h4 id="h4">H4!</h4>\n');
+    expect(testH5).to.equal('<h5 id="h5">H5!</h5>\n');
+    expect(testH6).to.equal('<h6 id="h6">H6!</h6>\n');
+    expect(testAltH1).to.equal('<h1 id="alt-h1">Alt-H1!</h1>\n');
+    expect(testAltH2).to.equal('<h2 id="alt-h2">Alt-H2!</h2>\n');
   });
   it('should render correct typhographical Emphasis', () => {
     const testEm1 = myMod.process('Emphasis, aka italics, with *asterisks*'
