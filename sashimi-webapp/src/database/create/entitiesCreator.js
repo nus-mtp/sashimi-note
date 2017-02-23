@@ -5,13 +5,7 @@ export default class entitiesCreator {
 
   static constuctor() {}
 
-const stringConcat = function stringConcat(...stringToConcat) {
-  let fullString = '';
-  for (let index = 0; index < stringToConcat.length; index+=1) {
-    fullString += stringToConcat[index];
   }
-  return fullString;
-};
 
   static createUserTable() {
     tableCreator.initCreateTable(constants.ENTITIES_USER);
