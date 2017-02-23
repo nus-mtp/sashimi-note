@@ -26,13 +26,11 @@
     overflow-wrap: break-word;
     overflow-y: scroll;
     box-sizing: border-box;
-    margin: 0;
-    padding: 30px;
+    margin-left: 10px;
     line-height: 1.6em;
-    font-size: 17px;
 
     p {
-      margin: 5px;
+      margin-top: 7px;
     }
   }
 </style>
