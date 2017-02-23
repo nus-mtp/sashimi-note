@@ -8,6 +8,8 @@
 
 import entitiesCreator from './create/entitiesCreator';
 
+import query from './retrieve/query'; // for debugging
+
 export default class storage {
   static constructor() {}
 
@@ -16,7 +18,7 @@ export default class storage {
     entitiesCreator.createOrganizationTable();
     entitiesCreator.createFolderTable();
     entitiesCreator.createFileManagerTable();
-    entitiesCreator.clearDatabase();
+    query.getFullTableData('user');
   }
 }
 
