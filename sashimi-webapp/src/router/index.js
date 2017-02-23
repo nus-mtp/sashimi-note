@@ -1,6 +1,6 @@
 import Vue from 'vue';
 import Router from 'vue-router';
-import FileManager from 'components/FileManager';
+import FileManager from 'components/file-manager/FileManager';
 import Content from 'components/editor-viewer/Content';
 
 Vue.use(Router);
