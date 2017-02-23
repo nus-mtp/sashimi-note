@@ -66,10 +66,6 @@ button {
 }
 
 .button {
-  &-back {
-    width: $back-button-width;
-  }
-
   &-margin {
     margin-left: $left-margin-navbar-elements;
   }
@@ -102,7 +98,7 @@ button {
   }
 }
 
-vertical-align-child > * {
+.vertical-align-child > * {
   vertical-align: middle;
 }
 
