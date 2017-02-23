@@ -1,24 +1,24 @@
 <template>
   <div>
     <div class="userInputs">
-      <div class="search">
+      <div class="searchBar inline-block">
         <input type="text" placeholder="Search..." v-bind="searchString">
       </div>
-      <div class="toggle-view">
-        <button class="">
+      <div class="toggle-view inline-block">
+        <button class="navbar-buttons">
           <span>ICON</span>
         </button>
         |
-        <button>
+        <button class="navbar-buttons">
           <span>List</span>
         </button>
       </div>
     </div>
 
     <div class="navbar">
-      <div class="col button-back">
-        <button>
-          <img src="../../assets/buttons/back-button.png" class="buttons-img" alt="back">
+      <div class="col button-back vertical-align-child">
+        <button class="navbar-buttons">
+          <img src="../../assets/buttons/back-button.png" class="button-img" alt="back">
         </button>      
       </div>
       <div class="col">
@@ -29,27 +29,27 @@
         </ul>
       </div>
       
-      <div class="navbar-buttons">
-        <div class="col file-buttons">
-          <button disabled>
-            <img src="../../assets/buttons/delete-button.svg" class="buttons-img" alt="delete">
+      <div class="float-right">
+        <div class="col vertical-align-child button-margin">
+          <button disabled class="navbar-buttons">
+            <img src="../../assets/buttons/delete-button.svg" class="button-img" alt="delete">
           </button>
-          <button disabled>
-            <img src="../../assets/buttons/duplicate-button.svg" class="buttons-img" alt="duplicate">
+          <button disabled class="navbar-buttons">
+            <img src="../../assets/buttons/duplicate-button.svg" class="button-img" alt="duplicate">
           </button>
-          <button disabled>
-            <img src="../../assets/buttons/download-button.svg" class="buttons-img" alt="download">
+          <button disabled class="navbar-buttons">
+            <img src="../../assets/buttons/download-button.svg" class="button-img" alt="download">
           </button>
         </div>
-        <div class="col static-buttons">
-          <button>
-            <img src="../../assets/buttons/add-button.svg" class="buttons-img" alt="add">
+        <div class="col vertical-align-child">
+          <button class="navbar-buttons">
+            <img src="../../assets/buttons/add-button.svg" class="button-img" alt="add">
           </button>
-          <button>
-            <img src="../../assets/buttons/upload-button.svg" class="buttons-img" alt="split-view">
+          <button class="navbar-buttons">
+            <img src="../../assets/buttons/upload-button.svg" class="button-img" alt="split-view">
           </button>
-          <button>
-            <img src="../../assets/buttons/filter-button.svg" class="buttons-img" alt="filter">
+          <button class="navbar-buttons">
+            <img src="../../assets/buttons/filter-button.svg" class="button-img" alt="filter">
           </button>
         </div>
       </div>
@@ -58,11 +58,11 @@
     <div class="group section documents">
       <div class="col folder">
         <img src="../../assets/buttons/folder-icon.svg" alt="folder">
-        <p>CS3244 Project</p>
+        <p class="inline-block">CS3244 Project</p>
       </div>
       <div class="col file">
         <img src="../../assets/buttons/file-icon.svg" alt="file">
-        <p>CS3kjs h</p>
+        <p class="inline-block">CS3kjs h</p>
       </div>
     </div>
   </div>
@@ -87,12 +87,12 @@ export default {
   input {
     width: 30vw;
     border: 1px solid black;
-    font-family: 'Avenir';
+    font-family: $font;
     font-size: 18px;
     padding: 8px 10px;
   }
 
-  .search {
+  .searchBar {
     position: relative;
   }
 
@@ -102,30 +102,9 @@ export default {
   }
 
   span {
-    font-family: 'Avenir';
+    font-family: $font;
     font-size: 16px;
   }
-}
-
-.search {
-  display: inline-block;
-}
-
-.toggle-view {
-  display: inline-block;
-}
-
-.navbar {
-  padding: 8px 15px;
-  margin-top: 20px;
-}
-
-.button-back {
-  width: $back-button-width;
-}
-
-button {
-  margin: 0 5px;
 }
 
 ul {
@@ -143,23 +122,18 @@ ul {
   }
 }
 
-.navbar-buttons {
-  float: right;
-}
-
 button:disabled {
   opacity: 0.2;
 }
 
 .documents {
-  padding: 30px;
+  padding: 20px;
   
   img {
     width: 100px;
   }
 
   p {
-    display: inline-block;
     font-size: 14px;
     position: absolute;
     top: 260px;

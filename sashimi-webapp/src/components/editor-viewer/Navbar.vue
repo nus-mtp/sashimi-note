@@ -1,61 +1,57 @@
 <template>
   <div class="section group navbar">
-    <div class="col button-back vertical-align-elements">
-        <button>
-          <img src="../../assets/buttons/back-button.png" class="buttons-img" alt="back">
+    <div class="col button-back vertical-align-child">
+        <button class="navbar-buttons">
+          <img src="../../assets/buttons/back-button.png" class="button-img" alt="back">
         </button>
     </div>
-    <div class="col button-userInputs vertical-align-elements">
+    <div class="col float-left vertical-align-child button-margin">
       <div class="image-upload">
         <label for="file-input">
-          <img src="../../assets/buttons/upload-image.png" class="buttons-img" alt="upload-image">
+          <img src="../../assets/buttons/upload-image.png" class="button-img" alt="upload-image">
         </label>
         <input type="file" id="file-input">
       </div>
-      <button>
-        <img src="../../assets/buttons/plugins.png" class="buttons-img" alt="plugins">
+      <button class="navbar-buttons">
+        <img src="../../assets/buttons/plugins.png" class="button-img" alt="plugins">
       </button>
-      <button>
-        <img src="../../assets/buttons/annotate.png" class="buttons-img" alt="annotate">
+      <button class="navbar-buttons">
+        <img src="../../assets/buttons/annotate.png" class="button-img" alt="annotate">
       </button>
-      <button>
-        <img src="../../assets/buttons/share.png" class="buttons-img" alt="share">
+      <button class="navbar-buttons">
+        <img src="../../assets/buttons/share.png" class="button-img" alt="share">
       </button>
     </div>
-    <div class="buttons-right vertical-align-elements">
-      <div class="col button-dropdown">
-        <div id="dropdown-new">
-          <button class="navbar-dropdown">
-            <img src="../../assets/buttons/add.png" alt="add"> New 
-          </button>
-          <div class="dropdown-content">
-            <a href="">New File</a>
-            <a href="">Duplicate File</a>
-          </div>
+    <div class="float-right">
+      <div class="col vertical-align-child button-margin inline-block">
+        <button class="navbar-dropdown navbar-buttons">
+          <img src="../../assets/buttons/add.png" alt="add"> New 
+        </button>
+        <div class="dropdown-content">
+          <a href="">New File</a>
+          <a href="">Duplicate File</a>
         </div>
-        <div id="dropdown-manage">
-          <button class="navbar-dropdown">
-            Manage <img src="../../assets/buttons/add.png" alt="add">
-          </button>
-          <div class="dropdown-content">
-            <a href="">Test</a>
-            <a href="">Test</a>
-          </div>
+        <button class="navbar-dropdown navbar-buttons">
+          Manage <img src="../../assets/buttons/add.png" alt="add">
+        </button>
+        <div class="dropdown-content">
+          <a href="">Test</a>
+          <a href="">Test</a>
         </div>
       </div>
-      <div class="col button-editorViewer vertical-align-elements">
-        <button>
-          <img src="../../assets/buttons/edit.png" class="buttons-img" alt="editor">
+      <div class="col vertical-align-child button-margin">
+        <button class="navbar-buttons">
+          <img src="../../assets/buttons/edit.png" class="button-img" alt="editor">
         </button>
-        <button>
-          <img src="../../assets/buttons/split-view.png" class="buttons-img" alt="split-view">
+        <button class="navbar-buttons">
+          <img src="../../assets/buttons/split-view.png" class="button-img" alt="split-view">
         </button>
-        <button>
-          <img src="../../assets/buttons/viewer.png" class="buttons-img" alt="viewer">
+        <button class="navbar-buttons">
+          <img src="../../assets/buttons/viewer.png" class="button-img" alt="viewer">
         </button>
       </div>
-      <div class="col dropdown-richText vertical-align-elements">
-        <button>
+      <div class="col vertical-align-child button-margin">
+        <button class="navbar-buttons">
           <img src="../../assets/buttons/richtext-dropdown.png" id="richtext-dropdown" alt="dropdown">
         </button>
       </div>
@@ -71,34 +67,7 @@
 @import '../../assets/styles/variables.scss';
 
 .navbar {
-  clear: both;
-  margin: auto;
-  overflow: hidden;
-  box-sizing: border-box;
-  padding: 8px 15px;
-  text-align: left;
   border-bottom: 1px solid black;
-}
-
-.button-back {
-  width: $back-button-width;
-}
-
-.button-userInputs {
-  float: left;
-  margin-left: 30px;
-}
-
-.buttons-right {
-  float: right;
-
-  .button-editorViewer {
-    margin-left: 30px;
-  }
-
-  .dropdown-richText {
-    margin-left: 30px;
-  }
 }
 
 .image-upload {
@@ -107,16 +76,6 @@
 
   input {
     display: none;
-  }
-}
-
-.button-dropdown {
-  #dropdown-new {
-    display: inline-block;
-  }
-
-  #dropdown-manage {
-    display: inline-block;
   }
 }
 
@@ -129,13 +88,13 @@
     width: 12px;
     margin-right: 5px;
   }
-}
 
-.navbar-dropdown:hover {
-  border: 1px solid black;
+  &:hover {
+    border: 1px solid black;
 
-  .dropdown-content {
-    display:block;
+    .dropdown-content {
+      display:block;
+    }
   }
 }
 
