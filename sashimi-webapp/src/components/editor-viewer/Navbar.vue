@@ -67,7 +67,7 @@
 </script>
 
 <style scoped lang="scss"> 
-@import '../../assets/styles/variables.scss';
+@import 'src/assets/styles/variables.scss';
 
 .navbar {
   border-bottom: 1px solid black;

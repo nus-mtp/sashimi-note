@@ -23,7 +23,7 @@ export default {
 </script>
 
 <style lang="scss">
-@import '../../assets/styles/variables.scss';
+@import 'src/assets/styles/variables.scss';
 
 .userInputs {
   overflow: hidden;
