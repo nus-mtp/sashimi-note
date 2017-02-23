@@ -1,38 +1,41 @@
 <template>
   <div class="section group navbar">
     <div class="col button-back vertical-align-child">
-        <button class="navbar-buttons">
-          <img src="../../assets/buttons/back-button.png" class="button-img" alt="back">
-        </button>
+        <a href="/">
+            <!--<img src="../../assets/images/buttons/button-back.svg" class="button-img" alt="back">-->
+            SASHIMI NOTE
+        </a>
     </div>
     <div class="col float-left vertical-align-child button-margin">
       <div class="image-upload">
         <label for="file-input">
-          <img src="../../assets/buttons/upload-image.png" class="button-img" alt="upload-image">
+          <img src="../../assets/images/buttons/button-upload-image.svg" class="button-img" alt="upload-image">
         </label>
         <input type="file" id="file-input">
       </div>
       <button class="navbar-buttons">
-        <img src="../../assets/buttons/plugins.png" class="button-img" alt="plugins">
+        <img src="../../assets/images/buttons/button-plugins.svg" class="button-img" alt="plugins">
       </button>
       <button class="navbar-buttons">
-        <img src="../../assets/buttons/annotate.png" class="button-img" alt="annotate">
+        <img src="../../assets/images/buttons/button-annotate.svg" class="button-img" alt="annotate">
       </button>
       <button class="navbar-buttons">
-        <img src="../../assets/buttons/share.png" class="button-img" alt="share">
+        <img src="../../assets/images/buttons/button-share-file.svg" class="button-img" alt="share">
       </button>
     </div>
     <div class="float-right">
-      <div class="col vertical-align-child button-margin inline-block">
-        <button class="navbar-dropdown navbar-buttons">
-          <img src="../../assets/buttons/add.png" alt="add"> New 
+      <div class="col inline-block">
+        <button class="navbar-dropdown button-margin navbar-buttons">
+          <img src="../../assets/images/symbols/symbol-add.svg" alt="add"> 
+          <p class="inline-block">New</p>  
         </button>
         <div class="dropdown-content">
           <a href="">New File</a>
           <a href="">Duplicate File</a>
         </div>
-        <button class="navbar-dropdown navbar-buttons">
-          Manage <img src="../../assets/buttons/add.png" alt="add">
+        <button class="navbar-dropdown button-margin navbar-buttons">
+          <p class="inline-block">Manage</p> 
+          <img src="../../assets/images/symbols/symbol-arrow-down.svg" alt="add">
         </button>
         <div class="dropdown-content">
           <a href="">Test</a>
@@ -41,18 +44,18 @@
       </div>
       <div class="col vertical-align-child button-margin">
         <button class="navbar-buttons">
-          <img src="../../assets/buttons/edit.png" class="button-img" alt="editor">
+          <img src="../../assets/images/buttons/button-edit.svg" class="button-img" alt="editor">
         </button>
         <button class="navbar-buttons">
-          <img src="../../assets/buttons/split-view.png" class="button-img" alt="split-view">
+          <img src="../../assets/images/buttons/button-split-screen.svg" class="button-img" alt="split-view">
         </button>
         <button class="navbar-buttons">
-          <img src="../../assets/buttons/viewer.png" class="button-img" alt="viewer">
+          <img src="../../assets/images/buttons/button-view.svg" class="button-img" alt="viewer">
         </button>
       </div>
       <div class="col vertical-align-child button-margin">
         <button class="navbar-buttons">
-          <img src="../../assets/buttons/richtext-dropdown.png" id="richtext-dropdown" alt="dropdown">
+          <img src="../../assets/images/buttons/button-richtext-dropdown.svg" id="richtext-dropdown" alt="dropdown">
         </button>
       </div>
     </div>
@@ -70,6 +73,26 @@
   border-bottom: 1px solid black;
 }
 
+.button-back {
+  text-align: center;
+  position: relative;
+
+  a {
+    font-size: 14px;
+    font-family: $font;
+    text-decoration: none;
+
+    &:focus,
+    &:visited {
+      color: black;
+    }
+
+    &:hover {
+      color: darkorange;
+    }
+  }
+}
+
 .image-upload {
   padding: 2px 6px 3px;
   display: inline-block;
@@ -85,8 +108,12 @@
   border: 1px solid transparent;
 
   img {
-    width: 12px;
-    margin-right: 5px;
+    width: 20px;
+  }
+
+  p {
+    margin: 0;
+    font-family: $font;
   }
 
   &:hover {
