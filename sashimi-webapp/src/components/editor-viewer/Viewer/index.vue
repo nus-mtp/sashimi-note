@@ -16,25 +16,17 @@
 </template>
 
 <script>
+  import AsyncComputed from 'vue-async-computed'
   import wrapper from 'src/logic/wrapper';
+  import urlHelper from 'src/helpers/url';
+
+  Vue.use(AsyncComputed);
 
   // getParameterByName is used to obtain the query string form the url.
   // Currently the viewMode is being obtained via query string:
   // ?viewMode=pages
   // TOOD: In release, the viewMode should be passed down from the parent instead.
-  function getParameterByName(name, url) {
-    if (!url) {
-      url = window.location.href;
-    }
-    /* eslint no-useless-escape: 0 */
-    name = name.replace(/[\[\]]/g, '\\$&');
-    /* eslint prefer-template: 0 */
-    const regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)');
-    const results = regex.exec(url);
-    if (!results) return null;
-    if (!results[2]) return '';
-    return decodeURIComponent(results[2].replace(/\+/g, ' '));
-  }
+  
 
   export default {
     props: ['editorContent'],
@@ -50,7 +42,7 @@
     },
     mounted() {
       // TODO: get viewMode from prop during release
-      this.viewMode = getParameterByName('viewMode') || 'html';
+      this.viewMode = urlHelper.getParameterByName('viewMode') || 'html';
     }
   };
 </script>
