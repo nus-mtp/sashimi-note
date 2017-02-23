@@ -112,9 +112,6 @@ export default class entitiesCreator {
     } catch (TableCreationAlreadyInitiated) {
       throw TableCreationAlreadyInitiated;
     }
-
-  static clearDatabase() {
-    tableCreator.clearDatabase();
   }
 
 }
