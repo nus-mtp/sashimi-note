@@ -56,21 +56,21 @@
     </div>
 
     <div class="group section documents">
-      <div class="col folder">
-        <img src="../../assets/buttons/folder-icon.svg" alt="folder">
-        <p class="inline-block">CS3244 Project</p>
-      </div>
-      <div class="col file">
-        <img src="../../assets/buttons/file-icon.svg" alt="file">
-        <p class="inline-block">CS3kjs h</p>
-      </div>
+      <folder></folder>
+      <file></file>
     </div>
   </div>
 </template>
 
 <script>
+import folder from './Folder';
+import file from './File';
 
 export default {
+  components: {
+    folder,
+    file,
+  },
 };
 
 </script>
@@ -144,8 +144,8 @@ button:disabled {
   }
 }
 
-.documents > .folder,
-.documents > .file   {
+.documents .folder,
+.documents .file   {
   width: 120px;
   height: 120px;
   text-align: center;
