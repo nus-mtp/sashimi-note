@@ -16,6 +16,10 @@ let sqlCreateTableString = constants.STRING_INITIALIZE;
 export default class tableCreator {
   static constructor() {}
 
+  static callSqlToLinkToDatabase() {
+    sqlCommands.linkDatabaseToIndexedDB();
+  }
+
   static initCreateTable(tableName) {
     if (isTableInitializedForCreation) {
       throw new exceptions.TableCreationAlreadyInitiated('Table creation is already initiated. '
