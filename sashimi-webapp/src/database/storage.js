@@ -14,6 +14,7 @@ export default class storage {
   static constructor() {}
 
   static initializeDatabase() {
+    entitiesCreator.initializeDatabase();
     entitiesCreator.createUserTable();
     entitiesCreator.createOrganizationTable();
     entitiesCreator.createFolderTable();
