@@ -1,8 +1,13 @@
-// Import highlight.js module for code highlighting
-const hljs = require('highlight.js'); // https://highlightjs.org/
+// Imports:
+// Markdown-It module for markdown processing
+import MarkdownIt from 'markdown-it';
+// Code highlighting plugins
+import hljs from 'highlight.js'; // https://highlightjs.org/
+import mh from 'markdown-it-highlightjs';
+// Importing markdown-it-katex plugin for parsing LaTeX mathematical forumla
+import mk from 'markdown-it-katex';
 
-// Import Markdown-It module for markdown processing
-const md = require('markdown-it')({
+const md = new MarkdownIt({
   html: true,
   breaks: true,
   linkify: true,
@@ -19,23 +24,18 @@ const md = require('markdown-it')({
   }
 });
 
-// Importing markdown-it-katex plugin for parsing LaTeX mathematical forumla
-const mk = require('markdown-it-katex');
-
 // Getting markdown-it to use plugins
 // For KaTeX
 md.use(mk);
-// For Highlightjs
-md.use(require('markdown-it-highlightjs'), { auto: true, code: true });
+// For Code Highlighting
+md.use(mh, { auto: true, code: true });
 
 const validateData = function validateData(data) {
   return data || '';
 };
 
-const markdownProcessor = {
+export default {
   process: function process(data) {
     return md.render(validateData(data));
   }
 };
-
-module.exports = markdownProcessor;

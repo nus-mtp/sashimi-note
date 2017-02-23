@@ -6,7 +6,7 @@
 ** 1. Specifies HTML tags and their attributes allowed with whitelist
 ** 2. Handle any tags or attributes using custom function.
 */
-const xssFilter = require('xss');
+import xssFilter from 'xss';
 
 // get a copy of default whiteList
 const whiteList = xssFilter.getDefaultWhiteList();
@@ -52,7 +52,7 @@ const options = {
   safeAttrValue
 };
 
-const documentFormatter = {
+export default {
   format: function format(data) {
     // Filter out any possible XSS threat
     // console.log(whiteList);
@@ -62,5 +62,3 @@ const documentFormatter = {
     return data;
   }
 };
-
-module.exports = documentFormatter;
