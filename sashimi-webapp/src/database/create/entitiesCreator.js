@@ -13,10 +13,6 @@ const stringConcat = function stringConcat(...stringToConcat) {
   return fullString;
 };
 
-module.exports = class entitiesCreator {
-
-  static constuctor() {}
-
   static createUserTable() {
     tableCreator.initCreateTable(constants.ENTITIES_USER);
 
