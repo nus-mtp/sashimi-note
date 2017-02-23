@@ -6,7 +6,7 @@
 </template>
 
 <script>
-  import wrapper from '../../logic/wrapper';
+  import wrapper from '../../logic/documentPackager';
 
   export default {
     props: ['editorContent'],
