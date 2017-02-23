@@ -35,10 +35,6 @@ body {
   color: black;
 }
 
-.no-padding {
-  padding: 0;
-}
-
 button {
   background-color: transparent;
   border: none;
@@ -71,4 +67,13 @@ button:focus {
     font-family: monospace;
   }
 }
+
+vertical-align-elements > * {
+  vertical-align: middle;
+}
+
+.buttons-img {
+  width: 38px;
+}
+
 </style>
