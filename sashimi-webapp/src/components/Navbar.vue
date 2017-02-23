@@ -1,28 +1,28 @@
 <template>
   <div class="section group navbar">
-    <div class="col button-back">
+    <div class="col button-back vertical-align-elements">
         <button>
-          <img src="../assets/buttons/back-button.png" alt="back">
-        </button>      
+          <img src="../assets/buttons/back-button.png" class="buttons-img" alt="back">
+        </button>
     </div>
-    <div class="col button-userInputs">
+    <div class="col button-userInputs vertical-align-elements">
       <div class="image-upload">
         <label for="file-input">
-          <img src="../assets/buttons/upload-image.png" alt="upload-image">
+          <img src="../assets/buttons/upload-image.png" class="buttons-img" alt="upload-image">
         </label>
         <input type="file" id="file-input">
       </div>
       <button>
-        <img src="../assets/buttons/plugins.png" alt="plugins">
+        <img src="../assets/buttons/plugins.png" class="buttons-img" alt="plugins">
       </button>
       <button>
-        <img src="../assets/buttons/annotate.png" alt="annotate">
+        <img src="../assets/buttons/annotate.png" class="buttons-img" alt="annotate">
       </button>
       <button>
-        <img src="../assets/buttons/share.png" alt="share">
+        <img src="../assets/buttons/share.png" class="buttons-img" alt="share">
       </button>
     </div>
-    <div class="buttons-right">
+    <div class="buttons-right vertical-align-elements">
       <div class="col button-dropdown">
         <div id="dropdown-new">
           <button class="navbar-dropdown">
@@ -43,18 +43,18 @@
           </div>
         </div>
       </div>
-      <div class="col button-editorViewer">
+      <div class="col button-editorViewer vertical-align-elements">
         <button>
-          <img src="../assets/buttons/edit.png" alt="editor">
+          <img src="../assets/buttons/edit.png" class="buttons-img" alt="editor">
         </button>
         <button>
-          <img src="../assets/buttons/split-view.png" alt="split-view">
+          <img src="../assets/buttons/split-view.png" class="buttons-img" alt="split-view">
         </button>
         <button>
-          <img src="../assets/buttons/viewer.png" alt="viewer">
+          <img src="../assets/buttons/viewer.png" class="buttons-img" alt="viewer">
         </button>
       </div>
-      <div class="col dropdown-richText">
+      <div class="col dropdown-richText vertical-align-elements">
         <button>
           <img src="../assets/buttons/richtext-dropdown.png" id="richtext-dropdown" alt="dropdown">
         </button>
@@ -77,6 +77,7 @@
   box-sizing: border-box;
   padding: 8px 15px;
   text-align: left;
+  border-bottom: 1px solid black;
 }
 
 .button-back {
