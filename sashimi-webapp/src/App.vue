@@ -20,11 +20,11 @@ export default {
 
 body {
   margin: 0;
-  font-size: 20px;
+  font-size: 18px;
 }
 
 #app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
+  font-family: $font;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   -webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
@@ -33,10 +33,22 @@ body {
   color: black;
 }
 
+.float-left {
+  float: left;
+}
+
+.float-right {
+  float: right;
+}
+
+.inline-block {
+  display: inline-block;
+}
+
 .navbar {
   overflow: hidden;
   box-sizing: border-box;
-  padding: 8px 15px;
+  padding: 8px 20px;
   text-align: left;
 }
 
@@ -54,16 +66,12 @@ button {
 }
 
 .button {
-  &-left {
-    float: left;
-  }
-
-  &-right {
-    float: right;
-  }
-
   &-back {
     width: $back-button-width;
+  }
+
+  &-margin {
+    margin-left: $left-margin-navbar-elements;
   }
 
   &-img {
@@ -94,7 +102,7 @@ button {
   }
 }
 
-vertical-align-elements > * {
+vertical-align-child > * {
   vertical-align: middle;
 }
 
