@@ -3,9 +3,9 @@
 import MarkdownIt from 'markdown-it';
 // Code highlighting plugins
 import hljs from 'highlight.js'; // https://highlightjs.org/
-import mh from 'markdown-it-highlightjs';
+import mdHighlight from 'markdown-it-highlightjs';
 // Katex plugin for parsing LaTeX mathematical forumla
-import mk from 'markdown-it-katex';
+import mdKatex from 'markdown-it-katex';
 // Table of Contents plugins
 import mdAnchor from 'markdown-it-anchor';
 import mdTOC from 'markdown-it-table-of-contents';
@@ -20,7 +20,7 @@ const md = new MarkdownIt({
       try {
         const val = hljs.highlight(lang, str, true).value;
         return `<pre class="hljs"><code>${val}</code></pre>`;
-      } catch (__) { return ''; }
+      } catch (error) { return ''; }
     }
 
     return `<pre class="hljs"><code>${md.utils.escapeHtml(str)}</code></pre>`;
@@ -29,9 +29,9 @@ const md = new MarkdownIt({
 
 // Getting markdown-it to use plugins
 // For KaTeX
-md.use(mk);
+md.use(mdKatex);
 // For Code Highlighting
-md.use(mh, { auto: true, code: true });
+md.use(mdHighlight, { auto: true, code: true });
 // For TOC generation
 md.use(mdAnchor);
 md.use(mdTOC);
