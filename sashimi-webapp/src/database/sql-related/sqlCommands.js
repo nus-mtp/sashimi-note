@@ -12,6 +12,13 @@ const callback = function callback() {
 };
 
 export default function SqlCommands() {
+  this.linkDatabaseToIndexedDB = function linkDatabaseToIndexedDB() {
+    const databaseRequestStr = "CREATE INDEXEDDB DATABASE IF NOT EXISTS lecture-note-2.0; " +
+                               "ATTACH INDEXEDDB DATABASE lecture-note-2.0; " +
+                               "USE lecture-note-2.0;";
+    Alasql(databaseRequestStr);
+  };
+
   this.getFullTableData = function getFullTableData(tableName) {
     return alasql(stringManipulator.stringConcat('SELECT * FROM ', tableName), callback());
   };
