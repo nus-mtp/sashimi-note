@@ -4,10 +4,13 @@
  *
  */
 
+import dataAdd from './dataAdd';
+import dataDelete from './dataDelete';
 
 export default class dataModifier {
   static constructor() {}
 
   static deleteAllEntities() {
+    dataDelete.deleteAllEntities();
   }
 }
