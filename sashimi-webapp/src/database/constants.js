@@ -42,9 +42,6 @@ export default Object.freeze({
   HEADER_FILE_MANAGER_LAST_MODIFIED_DATE: 'last_modified_date',
 
 
-  DEBUG_OFF: 0,
-  DEBUG_ON: 1,
-
   STRING_UNDEFINED: 'undefined',
   STRING_INITIALIZE: '',
 
