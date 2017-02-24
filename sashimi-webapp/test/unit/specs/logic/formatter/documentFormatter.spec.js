@@ -10,7 +10,7 @@ describe('DocumentFormatter', () => {
     expect(outputData).to.equal('<div>This is a HTML content</div>');
   });
 
-  it('should returns a pdfBlob for \'pages viewMode\'', () => {
+  it('should returns a pdfBlob for \'pages viewMode\'', (done) => {
     const expectedOutput = base64OfSimplePdf;
     const inputData = '<div>This is a HTML content</div>';
 
@@ -23,6 +23,9 @@ describe('DocumentFormatter', () => {
       // testing is used.
 
       expect(outputData.length).to.equal(expectedOutput.length);
+      done();
+    }).catch((error) => {
+      done(error);
     });
   });
 });
