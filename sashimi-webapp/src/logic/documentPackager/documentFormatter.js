@@ -1,14 +1,5 @@
 import JsPDF from 'jspdf';
-
-// Encode data into Base-64 unicode string
-const b64EncodeUnicode = function b64EncodeUnicode(str) {
-  return btoa(
-    encodeURIComponent(str).replace(/%([0-9A-F]{2})/g,
-    (match, p1) =>
-      String.fromCharCode(`0x${p1}`)
-    )
-  );
-};
+import base64 from 'src/helpers/base64';
 
 const convertHtmlToPdfBase64 = function convertHtmlToB64(htmlString) {
   const processedHtmlString = htmlString || '<div></div>';
@@ -22,7 +13,7 @@ const convertHtmlToPdfBase64 = function convertHtmlToB64(htmlString) {
       // dispose: object with X, Y of the last line add to the PDF
       //          this allow the insertion of new lines after html
 
-      const getPdfData = b64EncodeUnicode(doc.output());
+      const getPdfData = base64.encodeUnicode(doc.output());
 
       // Catch empty pdf output.
       //   This error generally does not happen.
