@@ -2,34 +2,56 @@ import markdownProcessor from './markdownProcessor';
 import documentFormatter from './documentFormatter';
 import xssFilter from './xssFilter';
 
-
-const processData = function processData(data) {
-  return markdownProcessor.process(data);
-};
-
-const formatData = function formatData(data) {
-  return documentFormatter.format(data);
-};
+/**
+  * Convert markdown string into HTML string
+  * @param {string} markdown - can be mixed with html and css
+  * @return {Promise<string, error>} Promise - containing the HTML string
+  */
+const processMarkdown = (markdownString =>
+  new Promise((resolve, reject) => {
+    try {
+      resolve(markdownProcessor.process(markdownString));
+    } catch (error) {
+      reject(error);
+    }
+  })
+);
 
 export default {
-  // Return something amazing
-  getPagesData(htmlDataString) {
-    return documentFormatter.getPdfBlob(htmlDataString);
+  /**
+  * Get the base64 string of a PDF output given a markdown string
+  * @param {string} markdown - can be mixed with html and css
+  * @return {Promise<string, error>} Promise - containing the resultant base64 PDF output
+  */
+  getPagesData(markdownString) {
+    return processMarkdown(markdownString)
+    .then(htmlDataString =>
+      documentFormatter.getPdfBase64(htmlDataString)
+    );
   },
 
-  getDataWithViewMode(markdownString, viewMode) {
-    viewMode = viewMode || 'html';
-
-    const htmlDataString = markdownProcessor.process(markdownString);
-
-    switch (viewMode) {
-      case 'pages': return this.getPagesData(htmlDataString);
-      case 'html': return htmlDataString;
-      default: return htmlDataString;
-    }
+  /**
+  * Get the HTML string of the given a markdown string
+  * @param {string} markdown - can be mixed with html and css
+  * @return {Promise<string, error>} Promise - containing resultant HTML string
+  */
+  getHtmlData(markdownString) {
+    return processMarkdown(markdownString)
+    .then(htmlDataString =>
+      xssFilter.filter(htmlDataString)
+    );
   },
-  render: function render(data) {
-    const formattedData = formatData(processData(data));
-    return xssFilter.filter(formattedData);
-  }
+
+  /**
+  * Get the HTML string of the given a markdown string
+  * @param {string} markdown - can be mixed with html and css
+  * @return {Promise<string, error>} Promise - containing resultant HTML string
+  * @todo Implement this function.
+  */
+  getSlidesData(markdownString) {
+    return processMarkdown(markdownString)
+    .then(htmlDataString =>
+      xssFilter.filter(htmlDataString)
+    );
+  },
 };
