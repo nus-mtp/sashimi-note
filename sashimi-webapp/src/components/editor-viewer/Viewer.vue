@@ -120,7 +120,7 @@
   }
 </script>
 
-<style scoped lang='scss'>
+<style lang='scss'>
   @import '../../assets/styles/variables.scss';
   
   .viewer {
@@ -130,9 +130,20 @@
     box-sizing: border-box;
     margin-left: 10px;
     line-height: 1.6em;
+    position: relative;
 
     p {
       margin-top: 7px;
     }
+  }
+
+  #viewer-pages {
+    position: absolute;
+    top: 0;
+    background-color: #FAFAFA;
+  }
+  #viewer-pages-container .page {
+    box-shadow: 1px 1px 4px 1px rgba(0,0,0,0.3);
+    margin: 32px;
   }
 </style>
