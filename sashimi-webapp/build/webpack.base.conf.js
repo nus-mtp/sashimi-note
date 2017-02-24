@@ -7,10 +7,9 @@ function resolve (dir) {
   return path.join(__dirname, '..', dir)
 }
 
-module.exports = {
+module.exports = {  
   entry: {
-    app: './src/main.js',
-    'pdf.worker': 'pdfjs-dist/build/pdf.worker.entry'
+    app: './src/main.js'
   },
   output: {
     path: config.build.assetsRoot,

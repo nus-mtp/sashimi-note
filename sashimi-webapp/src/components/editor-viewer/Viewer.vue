@@ -24,7 +24,7 @@
   import urlHelper from 'src/helpers/url';
 
   Vue.use(AsyncComputed);
-  PDFJS.PDFJS.workerSrc = '/pdf.worker.js';
+  PDFJS.PDFJS.workerSrc = '/static/workers/pdf.worker.js';
 
   // getParameterByName is used to obtain the query string form the url.
   // Currently the viewMode is being obtained via query string:
