@@ -5,10 +5,10 @@
 */
 
 function hideShowInline(state, silent) {
-  let found;
-  let content;
   const max = state.posMax;
   const start = state.pos;
+  let content;
+  let found;
 
   if (silent) { return false; } // don't run any pairs in validation mode
   if (start + 8 >= max) { return false; }
@@ -63,7 +63,6 @@ function hideShowBlock(state, startLine, endLine, silent) {
   let len;
   let params;
   let nextLine;
-  let mem;
   let token;
   let markup;
   let haveEndMarker = false;
