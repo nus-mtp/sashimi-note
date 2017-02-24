@@ -19,12 +19,15 @@
 <script>
   import Vue from 'vue';
   import AsyncComputed from 'vue-async-computed';
-  import documentPackager from 'src/logic/documentPackager';
   import PDFJS from 'pdfjs-dist';
+  import _ from 'lodash';
+  import documentPackager from 'src/logic/documentPackager';
   import urlHelper from 'src/helpers/url';
 
   Vue.use(AsyncComputed);
   PDFJS.PDFJS.workerSrc = '/static/workers/pdf.worker.js';
+
+  const throttledPdfRendering = _.debounce(renderPdfCanvasViewerToDom, 600);
 
   // getParameterByName is used to obtain the query string form the url.
   // Currently the viewMode is being obtained via query string:
@@ -44,7 +47,7 @@
           /* eslint no-use-before-define: 0*/
           documentPackager.getPagesData(this.editorContent)
           .then((pdfBase64) => {
-            renderPdfCanvasViewerToDom(pdfBase64, 'viewer-pages-container');
+            throttledPdfRendering(pdfBase64, 'viewer-pages-container');
           });
         }
       }
