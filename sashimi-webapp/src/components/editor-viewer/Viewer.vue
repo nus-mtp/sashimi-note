@@ -1,15 +1,16 @@
 <template>
   <div class="viewer">
     <div v-if="viewMode === 'pages'">
-      <div id="viewer-pages" v-html="getHtml">
+      <div id="viewer-pages">
+        <div id='viewer-pages-container'></div>
       </div>
     </div>
     <div v-else-if="viewMode === 'slides'">
-      <div id="viewer-slides" v-html="getHtml">
+      <div id="viewer-slides" v-html="getHtmlData">
       </div>
     </div>
     <div v-else>
-      <div id="viewer-html" v-html="getHtml">
+      <div id="viewer-html" v-html="getHtmlData">
       </div>
     </div>
   </div>
@@ -28,7 +29,6 @@
   // ?viewMode=pages
   // TOOD: In release, the viewMode should be passed down from the parent instead.
   
-
   export default {
     props: ['editorContent'],
     data() {
@@ -36,9 +36,9 @@
         viewMode: '',
       };
     },
-    computed: {
-      getHtml() {
-        return documentPackager.render(this.editorContent);
+    asyncComputed: {
+      getHtmlData() {
+        return documentPackager.getHtmlData(this.editorContent);
       },
     },
     mounted() {
