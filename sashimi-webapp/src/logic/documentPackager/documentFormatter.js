@@ -10,7 +10,7 @@ const b64EncodeUnicode = function b64EncodeUnicode(str) {
   );
 };
 
-const convertHtmlToPdfBlob = function convertHtmlToB64(htmlString) {
+const convertHtmlToPdfBase64 = function convertHtmlToB64(htmlString) {
   const processedHtmlString = htmlString || '<div></div>';
 
   return new Promise((resolve, reject) => {
@@ -39,8 +39,8 @@ const convertHtmlToPdfBlob = function convertHtmlToB64(htmlString) {
 };
 
 export default {
-  getPdfBlob(htmlString) {
-    return convertHtmlToPdfBlob(htmlString);
+  getPdfBase64(htmlString) {
+    return convertHtmlToPdfBase64(htmlString);
   },
   format: function format(data) {
     // Return data as it is for now.
