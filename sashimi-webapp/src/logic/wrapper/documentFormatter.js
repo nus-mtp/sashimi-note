@@ -10,7 +10,7 @@ const b64EncodeUnicode = function b64EncodeUnicode(str) {
   );
 };
 
-const convertHtmlToPdfBase64 = function convertHtmlToB64(htmlString) {
+const convertHtmlToPdfBlob = function convertHtmlToB64(htmlString) {
   const processedHtmlString = htmlString || '<div></div>';
 
   return new Promise((resolve, reject) => {
@@ -38,11 +38,13 @@ const convertHtmlToPdfBase64 = function convertHtmlToB64(htmlString) {
   });
 };
 
+
 export default {
-  getPdfBase64(htmlString) {
-    return convertHtmlToPdfBase64(htmlString);
+  getPdfBlob(htmlString) {
+    return convertHtmlToPdfBlob(htmlString);
   },
-  format: function format(data) {
+
+  format(data) {
     // Return data as it is for now.
     return data;
   }
