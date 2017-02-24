@@ -16,8 +16,9 @@
 </template>
 
 <script>
-  import AsyncComputed from 'vue-async-computed'
-  import wrapper from 'src/logic/wrapper';
+  import Vue from 'vue';
+  import AsyncComputed from 'vue-async-computed';
+  import documentPackager from 'src/logic/documentPackager';
   import urlHelper from 'src/helpers/url';
 
   Vue.use(AsyncComputed);
@@ -37,7 +38,7 @@
     },
     computed: {
       getHtml() {
-        return wrapper.render(this.editorContent);
+        return documentPackager.render(this.editorContent);
       },
     },
     mounted() {
