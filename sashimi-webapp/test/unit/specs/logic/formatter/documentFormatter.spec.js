@@ -17,7 +17,7 @@ describe('DocumentFormatter', () => {
     const thatPromise = documentFormatter.getPdfBlob(inputData);
 
     thatPromise.then((outputData) => {
-      // pdfJS does not give deterministic outputData
+      // jsPDF does not give deterministic outputData
       // around 5 characters will always be different in the output
       // therefore, an approximation method to use content length for
       // testing is used.
