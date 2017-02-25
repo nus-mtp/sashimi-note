@@ -27,8 +27,7 @@
   Vue.use(AsyncComputed);
   PDFJS.PDFJS.workerSrc = '/static/workers/pdf.worker.js';
 
-  const throttledPdfRendering = _.debounce(renderPdfCanvasViewerToDom, 600);
-
+  const throttledPdfCreation = _.debounce(createPagesHtml, 600);
   // getParameterByName is used to obtain the query string form the url.
   // Currently the viewMode is being obtained via query string:
   // ?viewMode=pages
@@ -44,11 +43,7 @@
     watch: {
       editorContent(value) {
         if (this.viewMode === 'pages') {
-          /* eslint no-use-before-define: 0*/
-          documentPackager.getPagesData(this.editorContent)
-          .then((pdfBase64) => {
-            throttledPdfRendering(pdfBase64, 'viewer-pages-container');
-          });
+          throttledPdfCreation(this.editorContent);
         }
       }
     },
@@ -62,6 +57,14 @@
       this.viewMode = urlHelper.getParameterByName('viewMode') || 'html';
     }
   };
+
+  function createPagesHtml(markdownString) {
+    documentPackager.getPagesData(markdownString)
+    .then((pdfBase64) => {
+      /* eslint no-use-before-define: 0*/
+      renderPdfCanvasViewerToDom(pdfBase64, 'viewer-pages-container');
+    });
+  }
 
   /**
   * Render a jsPDF object into the DOM
@@ -81,7 +84,7 @@
       for (let i = 1; i <= totalPages; i += 1) {
         // Get desired page
         pdfDocument.getPage(i).then((page) => {
-          const scale = 1;
+          const scale = 2;
           const viewport = page.getViewport(scale);
 
           // Check if existing page exist
