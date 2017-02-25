@@ -75,38 +75,38 @@
     .then((pdfDocument) => {
       // Get div#container and cache it for later use
       const container = document.getElementById(domId);
-
-      // Clear existing pages
-      container.innerHTML = '';
+      const totalPages = pdfDocument.numPages;
 
       // Loop from 1 to total_number_of_pages in PDF document
-      for (let i = 1; i <= pdfDocument.numPages; i += 1) {
+      for (let i = 1; i <= totalPages; i += 1) {
         // Get desired page
         pdfDocument.getPage(i).then((page) => {
-          const scale = 2;
+          const scale = 1;
           const viewport = page.getViewport(scale);
-          const div = document.createElement('div');
 
-          // Set id attribute with page-#{pdf_page_number} format
-          div.setAttribute('id', `${domId}-page-${page.pageIndex + 1}`);
+          // Check if existing page exist
+          const currentPageId = `${domId}-page-${page.pageIndex + 1}`;
+          let currentPage = document.getElementById(currentPageId);
+          let canvas = null;
 
-          // This will keep positions of child elements as per our needs
-          div.setAttribute('class', 'page');
+          if (!currentPage) {
+            // create a new page node
+            currentPage = document.createElement('div');
+            currentPage.setAttribute('id', currentPageId);
+            currentPage.setAttribute('class', 'page');
+            container.appendChild(currentPage);
 
-          // Append div within div#container
-          container.appendChild(div);
+            // create a canvas node
+            canvas = document.createElement('canvas');
+            currentPage.appendChild(canvas);
 
-          // Create a new Canvas element
-          const canvas = document.createElement('canvas');
-          canvas.setAttribute('style', 'width: 100%');
-
-          // Append Canvas within div#page-#{pdf_page_number}
-          div.appendChild(canvas);
+            canvas.height = viewport.height;
+            canvas.width = viewport.width;
+          } else {
+            canvas = currentPage.firstChild;
+          }
 
           const context = canvas.getContext('2d');
-          canvas.height = viewport.height;
-          canvas.width = viewport.width;
-
           const renderContext = {
             canvasContext: context,
             viewport
@@ -145,5 +145,9 @@
   #viewer-pages-container .page {
     box-shadow: 1px 1px 4px 1px rgba(0,0,0,0.3);
     margin: 32px;
+
+    canvas {
+      width: 100%;
+    }
   }
 </style>
