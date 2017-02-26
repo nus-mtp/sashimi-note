@@ -221,10 +221,12 @@ export default function sqlCommands() {
   };
 
   this.deleteTable = function deleteTable(tableName) {
-    alasql(stringManipulator.stringConcat('DROP TABLE ', tableName), callback());
+    alasql.promise([stringManipulator.stringConcat('DROP TABLE ', tableName)])
+      .then().catch(sqlError => sqlError);
   };
 
   this.cleanTable = function cleanTable(tableName) {
-    alasql(stringManipulator.stringConcat('DELETE * FROM ', tableName), callback());
+    alasql.promise([stringManipulator.stringConcat('DELETE * FROM ', tableName)])
+      .then().catch(sqlError => sqlError);
   };
 }
