@@ -15,6 +15,11 @@ const sqlCommands = new SqlCommands();
 export default class query {
   static constructor() {}
 
+  static isTableExistsInDatabase(tableName) {
+    sqlCommands.getFullTableData(tableName)
+      .then(data => true).catch(sqlErr => false);
+  }
+
   static getFullTableData(tableName) {
     return sqlCommands.getFullTableData(tableName);
   }
