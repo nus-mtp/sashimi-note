@@ -17,6 +17,29 @@ function isTableExists(tableName) {
   sqlCommands.getFullTableData(tableName)
     .then(data => true).catch(sqlErr => false);
 }
+
+function defaultFillUpUserTable() {
+  if (isTableExists(constants.ENTITIES_USER)) {
+    const userToken = '"temporary"';
+    const password = '""';
+    const email = '"default@email.com"';
+    const username = constants.DEFAULT_USER_NAME;
+    const userId = constants.DEFAULT_USER_ID;
+    const creationDate = getFormattedCurrentDateTime();
+
+    sqlCommands.insertContent(constants.ENTITIES_USER,
+                              userToken,
+                              password,
+                              email,
+                              username,
+                              userId,
+                              creationDate)
+    .then().catch(err => err);
+  } else {
+    throw new exceptions.IllegalAccessToUserTable();
+  }
+}
+
 export default class entitiesCreator {
 
   static constuctor() {}
