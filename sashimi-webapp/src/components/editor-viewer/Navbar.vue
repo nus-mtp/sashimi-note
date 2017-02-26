@@ -1,13 +1,13 @@
 <template>
   <div class="section group navbar">
     <div class="col button-back vertical-align-child">
-        <a href="/" class="vertical-align-child">
+        <router-link to="/" class="vertical-align-child">
             <!--<img src="../../assets/images/buttons/button-back.svg" class="button-img" alt="back">-->
             <img src="../../assets/sashimi.svg" class="inline-block" alt="sashimi">
             <p class="inline-block">
               SASHIMI NOTE
             </p>
-        </a>
+        </router-link>
     </div>
     <div class="col float-left vertical-align-child button-margin">
       <div class="image-upload">
@@ -66,7 +66,8 @@
 </template>
 
 <script>
-
+export default {
+};
 </script>
 
 <style scoped lang="scss"> 
