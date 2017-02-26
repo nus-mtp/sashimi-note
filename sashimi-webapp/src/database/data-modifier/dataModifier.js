@@ -54,4 +54,17 @@ export default class dataModifier {
       throw new exceptions.PromiseFunctionNotDefined();
     }
   }
+
+  static deleteFile(fileId) {
+    if (typeof Promise === 'function') {
+      return new Promise((resolve, reject) => {
+        resolve(dataDelete.deleteFile(fileId)
+          .then(() => true))
+          .catch(sqlError => sqlError);
+      });
+    } else {
+      throw new exceptions.PromiseFunctionNotDefined();
+    }
+  }
+
 }
