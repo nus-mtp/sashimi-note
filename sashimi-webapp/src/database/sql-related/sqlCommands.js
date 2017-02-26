@@ -107,6 +107,21 @@ export default function sqlCommands() {
       throw new exceptions.PromiseFunctionNotDefined();
     }
   };
+
+  this.partialSearchFolderName = function partialSearchFolderName(searchString) {
+    if (typeof Promise === 'function') {
+      return new Promise((resolve, reject) => {
+        alasql.promise([stringManipulator.stringConcat('SELECT * FROM ', constants.ENTITIES_FOLDER,
+                                                       ' WHERE ', constants.HEADER_FOLDER_FOLDER_NAME,
+                                                       ' LIKE "%', searchString, '%"')])
+        .then(data => resolve(data))
+        .catch(sqlError => sqlError);
+      });
+    } else {
+      throw new exceptions.PromiseFunctionNotDefined();
+    }
+  };
+
   };
 
   this.deleteTable = function deleteTable(tableName) {
