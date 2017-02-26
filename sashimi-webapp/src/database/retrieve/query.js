@@ -19,6 +19,33 @@ export default class query {
     return sqlCommands.getFullTableData(tableName);
   }
 
+  static searchString(searchString) {
+    if (typeof Promise === 'function') {
+      return new Promise((resolve, reject) => {
+        resolve(() => {
+          let fileArr;
+          let folderArr;
+
+          sqlCommands.partialSearchFile(searchString)
+            .then((returnedArr) => {
+              fileArr = returnedArr;
+            })
+            .catch(sqlError => sqlError);
+
+          sqlCommands.partialSearchFolder(searchString)
+            .then((returnedArr) => {
+              folderArr = returnedArr;
+            })
+            .catch(sqlError => sqlError);
+
+          resolve([fileArr, folderArr]);
+        });
+      });
+    } else {
+      throw new exceptions.PromiseFunctionNotDefined();
+    }
+  }
+
   static loadFolder(folderId) {
     if (typeof Promise === 'function') {
       return new Promise((resolve, reject) => {
