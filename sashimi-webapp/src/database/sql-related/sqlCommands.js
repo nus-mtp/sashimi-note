@@ -166,6 +166,31 @@ export default function sqlCommands() {
       throw new exceptions.PromiseFunctionNotDefined();
     }
   };
+
+  this.saveFile = function saveFile(fileId, markdownFile) {
+    if (typeof Promise === 'function') {
+      return new Promise((resolve, reject) => {
+        // save file
+        alasql.promise([stringManipulator.stringConcat('UPDATE ', constants.ENTITIES_FILE_MANAGER,
+                                                       ' SET ', constants.HEADER_FILE_MANAGER_FILE_MARKDOWN,
+                                                       ' = "', markdownFile,
+                                                       '" WHERE ', constants.HEADER_FILE_MANAGER_FILE_ID,
+                                                       ' = ', fileId)])
+          .then().catch(sqlError => sqlError);
+
+        // update last modified datetime
+        const currentDateTime = getFormattedCurrentDateTime();
+        alasql.promise([stringManipulator.stringConcat('UPDATE ', constants.ENTITIES_FILE_MANAGER,
+                                                       ' SET ', constants.HEADER_FILE_MANAGER_LAST_MODIFIED_DATE,
+                                                       ' = "', currentDateTime,
+                                                       '" WHERE ', constants.HEADER_FILE_MANAGER_FILE_ID,
+                                                       ' = ', fileId)])
+          .then(() => true).catch(sqlError => sqlError);
+      });
+    } else {
+      throw new exceptions.PromiseFunctionNotDefined();
+    }
+  };
   };
 
   this.deleteTable = function deleteTable(tableName) {
