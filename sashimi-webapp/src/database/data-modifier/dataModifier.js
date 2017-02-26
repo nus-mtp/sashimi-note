@@ -42,4 +42,16 @@ export default class dataModifier {
       throw new exceptions.PromiseFunctionNotDefined();
     }
   }
+
+  static saveFile(fileId, file) {
+    if (typeof Promise === 'function') {
+      return new Promise((resolve, reject) => {
+        resolve(dataUpdate.saveFile(fileId, file)
+          .then(() => true))
+          .catch(sqlError => sqlError);
+      });
+    } else {
+      throw new exceptions.PromiseFunctionNotDefined();
+    }
+  }
 }
