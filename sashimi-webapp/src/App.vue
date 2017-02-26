@@ -75,9 +75,37 @@ button {
   }
 }
 
+.button-logo {
+  text-align: left;
+  position: relative;
+  width: 150px;
+
+  a {
+    font-size: 14px;
+    font-family: $font;
+    text-decoration: none;
+
+    &:focus,
+    &:visited {
+      color: black;
+    }
+
+    &:hover {
+      color: darkorange;
+    }
+
+    img {
+      width: 40px;
+    }
+    
+    p {
+      margin-left: 5px;
+    }
+  }
+}
 
 .CodeMirror {
-  box-shadow: 5px 0 5px -2px #e6e6e6;
+  box-shadow: 4px 0 12px 0px rgba(0, 0, 0, 0.2);
   
   .CodeMirror-gutters {
     background-color: white;

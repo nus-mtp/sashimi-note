@@ -76,7 +76,7 @@ export default {
 .navbar {
   box-sizing: border-box;
   border-bottom: 3px solid #bebebe;
-  box-shadow: 0 4px 10px #e6e6e6;
+  box-shadow: 0 4px 10px 0px rgba(0, 0, 0, 0.1);
 }
 
 .image-upload {
