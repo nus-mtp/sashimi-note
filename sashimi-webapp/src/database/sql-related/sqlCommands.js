@@ -205,6 +205,19 @@ export default function sqlCommands() {
       throw new exceptions.PromiseFunctionNotDefined();
     }
   };
+
+  this.deleteFolder = function deleteFolder(folderId) {
+    if (typeof Promise === 'function') {
+      return new Promise((resolve, reject) => {
+        alasql.promise([stringManipulator.stringConcat('DELETE FROM ', constants.ENTITIES_FOLDER,
+                                                       ' WHERE ', constants.HEADER_FOLDER_FOLDER_ID,
+                                                       ' = ', folderId)])
+        .then(() => true)
+        .catch(sqlError => sqlError);
+      });
+    } else {
+      throw new exceptions.PromiseFunctionNotDefined();
+    }
   };
 
   this.deleteTable = function deleteTable(tableName) {
