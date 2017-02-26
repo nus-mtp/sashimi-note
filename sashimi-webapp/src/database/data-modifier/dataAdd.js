@@ -97,4 +97,22 @@ export default class dataAdd {
       throw new exceptions.PromiseFunctionNotDefined();
     }
   }
+
+  static createNewFolder(organizationId, folderPath, folderId) {
+    if (typeof Promise === 'function') {
+      return new Promise((resolve, reject) => {
+        // set default new ID if not exist (already have 0)
+        let newFolderId = 1;
+        sqlCommands.getMaxFolderId()
+          .then((maxId) => {
+            newFolderId = maxId + 1;
+            createNewFolder(organizationId, folderPath, folderId, newFolderId)
+              .then(data => data)
+              .catch(err => err);
+          }).catch(sqlError => sqlError);
+      });
+    } else {
+      throw new exceptions.PromiseFunctionNotDefined();
+    }
+  }
 }
