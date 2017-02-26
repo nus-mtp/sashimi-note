@@ -1,6 +1,6 @@
 <template>
   <div class="section group navbar">
-    <div class="col button-back vertical-align-child">
+    <div class="col button-logo vertical-align-child">
         <router-link to="/" class="vertical-align-child">
             <!--<img src="../../assets/images/buttons/button-back.svg" class="button-img" alt="back">-->
             <img src="../../assets/sashimi.svg" class="inline-block" alt="sashimi">
@@ -76,36 +76,7 @@ export default {
 .navbar {
   box-sizing: border-box;
   border-bottom: 3px solid #bebebe;
-  box-shadow: 0 2px 10px #e6e6e6;
-}
-
-.button-back {
-  text-align: left;
-  position: relative;
-  width: 150px;
-
-  a {
-    font-size: 14px;
-    font-family: $font;
-    text-decoration: none;
-
-    &:focus,
-    &:visited {
-      color: black;
-    }
-
-    &:hover {
-      color: darkorange;
-    }
-
-    img {
-      width: 40px;
-    }
-    
-    p {
-      margin-left: 5px;
-    }
-  }
+  box-shadow: 0 4px 10px #e6e6e6;
 }
 
 .image-upload {

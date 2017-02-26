@@ -1,8 +1,13 @@
 <template>
-  <div class="userInputs">
-    <div class="searchBar inline-block">
-      <input type="text" placeholder="Search..." @changed="searchInput">
-    </div>
+  <div class="section group userInputs">
+  <div class="col button-logo vertical-align-child">
+    <router-link to="/" class="vertical-align-child">
+      <img src="../../assets/sashimi.svg" class="inline-block" alt="sashimi">
+      <p class="inline-block">
+        SASHIMI NOTE
+      </p>
+    </router-link>
+  </div>
     <div class="toggle-view inline-block">
       <button class="navbar-buttons">
         <span>ICON</span>
@@ -27,28 +32,6 @@ export default {
 
 .userInputs {
   overflow: hidden;
-  text-align: center;
-  margin: 60px 0 30px 0;
-  position: relative;
 
-  input {
-    width: 30vw;
-    border: 1px solid black;
-    font-family: $font;
-    font-size: 18px;
-    padding: 8px 10px;
-  }
-
-  .searchBar {
-  }
-
-  .toggle-view {
-    padding: 4px;
-  }
-
-  span {
-    font-family: $font;
-    font-size: 16px;
-  }
 }
 </style>
