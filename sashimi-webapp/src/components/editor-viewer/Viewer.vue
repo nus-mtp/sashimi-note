@@ -19,20 +19,18 @@
 <script>
   import Vue from 'vue';
   import AsyncComputed from 'vue-async-computed';
-  import PDFJS from 'pdfjs-dist';
   import _ from 'lodash';
   import documentPackager from 'src/logic/documentPackager';
   import urlHelper from 'src/helpers/url';
+  import pdfjsRenderer from 'src/helpers/pdfjsRenderer';
 
   Vue.use(AsyncComputed);
-  PDFJS.PDFJS.workerSrc = '/static/workers/pdf.worker.js';
 
-  const throttledPdfCreation = _.debounce(createPagesHtml, 600);
   // getParameterByName is used to obtain the query string form the url.
   // Currently the viewMode is being obtained via query string:
   // ?viewMode=pages
   // TOOD: In release, the viewMode should be passed down from the parent instead.
-  
+
   export default {
     props: ['editorContent'],
     data() {
@@ -41,11 +39,12 @@
       };
     },
     watch: {
-      editorContent(value) {
-        if (this.viewMode === 'pages') {
-          throttledPdfCreation(this.editorContent);
-        }
-      }
+      editorContent: _.throttle((markdownString) => {
+        documentPackager.getPagesData(markdownString)
+        .then((pdfBase64) => {
+          pdfjsRenderer.renderCanvasView(pdfBase64, 'viewer-pages-container');
+        });
+      }, 1200)
     },
     asyncComputed: {
       getHtmlData() {
@@ -58,74 +57,11 @@
     }
   };
 
-  function createPagesHtml(markdownString) {
-    documentPackager.getPagesData(markdownString)
-    .then((pdfBase64) => {
-      /* eslint no-use-before-define: 0*/
-      renderPdfCanvasViewerToDom(pdfBase64, 'viewer-pages-container');
-    });
-  }
-
-  /**
-  * Render a jsPDF object into the DOM
-  * @param {jsPDFOutput} jsPDFOutput
-  * @param {string} document ID where the pages should be rendered
-  * Function referenced from:
-  *   https://www.sitepoint.com/custom-pdf-rendering/
-  */
-  function renderPdfCanvasViewerToDom(pdfBase64, domId) {
-    PDFJS.getDocument(pdfBase64)
-    .then((pdfDocument) => {
-      // Get div#container and cache it for later use
-      const container = document.getElementById(domId);
-      const totalPages = pdfDocument.numPages;
-
-      // Loop from 1 to total_number_of_pages in PDF document
-      for (let i = 1; i <= totalPages; i += 1) {
-        // Get desired page
-        pdfDocument.getPage(i).then((page) => {
-          const scale = 2;
-          const viewport = page.getViewport(scale);
-
-          // Check if existing page exist
-          const currentPageId = `${domId}-page-${page.pageIndex + 1}`;
-          let currentPage = document.getElementById(currentPageId);
-          let canvas = null;
-
-          if (!currentPage) {
-            // create a new page node
-            currentPage = document.createElement('div');
-            currentPage.setAttribute('id', currentPageId);
-            currentPage.setAttribute('class', 'page');
-            container.appendChild(currentPage);
-
-            // create a canvas node
-            canvas = document.createElement('canvas');
-            currentPage.appendChild(canvas);
-
-            canvas.height = viewport.height;
-            canvas.width = viewport.width;
-          } else {
-            canvas = currentPage.firstChild;
-          }
-
-          const context = canvas.getContext('2d');
-          const renderContext = {
-            canvasContext: context,
-            viewport
-          };
-
-          // Render PDF page
-          page.render(renderContext);
-        });
-      }
-    });
-  }
 </script>
 
-<style lang='scss'>
+<style lang="scss">
   @import '../../assets/styles/variables.scss';
-  
+
   .viewer {
     height: calc(100vh - #{$navbar-height});
     overflow-wrap: break-word;
