@@ -3,6 +3,17 @@
 ** See here: https://github.com/jay-hodgson/markdown-it-inline-comments
 ** Process =>hide 'This is a Text' <= as ''
 */
+let fileName;
+
+function findName(state, startLine) {
+  const indent = state.sCount[startLine];
+  const end = state.eMarks[startLine];
+  const text = state.getLines(startLine, startLine + 1, indent, true).toString();
+  const parameter = text.slice(0, 9);
+  if (parameter === 'fileName:') {
+    fileName = text.slice(9, end);
+  }
+}
 
 function hideShowInline(state, silent) {
   const max = state.posMax;
@@ -53,23 +64,29 @@ function hideShowInline(state, silent) {
 }
 
 /*
-** Referenced from markdown-it's fence rule
+** Referenced from markdown-it's fence rule and markdown-it-container plugin
 ** See here: https://github.com/markdown-it/markdown-it/blob/master/lib/rules_block/fence.js
-** Outputs everything within ==>hide and <== as ''
+** Outputs everything that is conditionally stated to be hidden as ''
 */
 
 function hideShowBlock(state, startLine, endLine, silent) {
+  let category;
+  let mem;
   let marker;
   let len;
   let params;
   let nextLine;
   let token;
   let markup;
+  let hasCategory = false;
   let haveEndMarker = false;
   let pos = state.bMarks[startLine] + state.tShift[startLine];
   let max = state.eMarks[startLine];
 
   if (pos + 7 > max) { return false; }
+
+  // console.log(state);
+  findName(state, startLine);
 
   marker = state.src.charCodeAt(pos);
 
@@ -87,8 +104,19 @@ function hideShowBlock(state, startLine, endLine, silent) {
     return false;
   }
 
-  markup = state.src.slice(pos, pos + 7);
-  params = state.src.slice(pos + 7, max);
+  // Check if got category e.g. ==>hide:slides ...
+  if (state.src.charCodeAt(pos + 7) === 58  /* : */) {
+    hasCategory = true;
+    category = state.src.slice(pos+8, max).toString();
+  }
+
+  mem = pos;
+  pos = state.skipChars(pos, state.src.charCodeAt(pos + 6));
+
+  len = pos - mem;
+
+  markup = state.src.slice(mem, pos);
+  params = state.src.slice(pos, max);
 
   // Since start is found, we can report success here in validation mode
   if (silent) { return true; }
@@ -96,41 +124,99 @@ function hideShowBlock(state, startLine, endLine, silent) {
   // search end of block
   nextLine = startLine;
 
-  for (;;) {
-    nextLine += 1;
-    if (nextLine >= endLine) {
-        // unclosed block should be autoclosed by end of document.
-        // also block seems to be autoclosed by end of parent
-      break;
+  if (!hasCategory || category === fileName) {
+    for (;;) {
+      nextLine += 1;
+      if (nextLine >= endLine) {
+        // unclosed block should be leave the ==>hide there
+        return false;
+      }
+
+      pos = state.bMarks[nextLine] + state.tShift[nextLine];
+      max = state.eMarks[nextLine];
+
+      // This checks if there was an unclosed hide block
+      // before the start of another hide block
+      // e.g. ==>hide *Text here* \n\n ==>hide ... <==
+      if (state.src.charCodeAt(pos) === 61  /* = */&&
+      state.src.charCodeAt(pos + 1) === 61  /* = */&&
+      state.src.charCodeAt(pos + 2) === 62 /* > */ &&
+      state.src.charCodeAt(pos + 3) === 104 /* h */ &&
+      state.src.charCodeAt(pos + 4) === 105 /* i */ &&
+      state.src.charCodeAt(pos + 5) === 100 /* d */ &&
+      state.src.charCodeAt(pos + 6) === 101 /* e */
+      ) {
+        return false;
+      }
+
+      if (pos < max && state.sCount[nextLine] < state.blkIndent) {
+          // non-empty line with negative indent should stop the list:
+          // - <==
+          //  test
+        break;
+      }
+
+      marker = state.src.charCodeAt(pos);
+      const marker2 = state.src.charCodeAt(pos + 1);
+      const marker3 = state.src.charCodeAt(pos + 2);
+
+      if (marker === 0x3C /* < */ && marker2 === 0x3D /* = */ &&
+          marker3 === 0x3D /* = */
+      ) {
+        pos = state.skipChars(pos, marker3);
+
+        // make sure tail has spaces only
+        pos = state.skipSpaces(pos);
+
+        if (pos >= max) { break; }
+
+        // found!
+        haveEndMarker = true;
+        // state.md.block.tokenize(state, startLine + 1, nextLine - 1);
+        break;
+      }
     }
+  } else if (category !== fileName) {
+    // Having found the start hide syntax (e.g. ==>hide:notequal), find the
+    // end marker (e.g. <==) and remove them from output into viewer, since
+    // the content will not be hidden
+    const contentStartLine = nextLine + 1;
+    let oldLineMax;
 
-    pos = state.bMarks[nextLine] + state.tShift[nextLine];
-    max = state.eMarks[nextLine];
+    for (;;) {
+      nextLine += 1;
 
-    if (pos < max && state.sCount[nextLine] < state.blkIndent) {
-        // non-empty line with negative indent should stop the list:
-        // - <==
-        //  test
-      break;
-    }
+      pos = state.bMarks[nextLine] + state.tShift[nextLine];
+      max = state.eMarks[nextLine];
 
-    marker = state.src.charCodeAt(pos);
-    const marker2 = state.src.charCodeAt(pos + 1);
-    const marker3 = state.src.charCodeAt(pos + 2);
+      marker = state.src.charCodeAt(pos);
+      const marker2 = state.src.charCodeAt(pos + 1);
+      const marker3 = state.src.charCodeAt(pos + 2);
 
-    if (marker === 0x3C /* < */ && marker2 === 0x3D /* = */ &&
-        marker3 === 0x3D /* = */
-    ) {
-      pos += 3;
+      if (marker === 0x3C /* < */ && marker2 === 0x3D /* = */ &&
+          marker3 === 0x3D /* = */
+      ) {
+        // tokenize the content and ignore the hide syntax
+        oldLineMax = state.lineMax;
 
-      // make sure tail has spaces only
-      pos = state.skipSpaces(pos);
+        // this will prevent lazy continuations from ever going past our end marker
+        state.lineMax = nextLine;
 
-      if (pos < max) { break; }
+        token = state;
+        token.markup = markup;
+        token.block = true;
+        token.info = params;
+        token.map = [contentStartLine, nextLine];
 
-      // found!
-      haveEndMarker = true;
-      break;
+        state.md.block.tokenize(state, contentStartLine, nextLine);
+
+        token = state;
+        token.block = true;
+
+        state.lineMax = oldLineMax;
+        state.line = nextLine + 1;
+        return true;
+      }
     }
   }
 
@@ -138,6 +224,7 @@ function hideShowBlock(state, startLine, endLine, silent) {
   len = state.sCount[startLine];
 
   state.line = nextLine + (haveEndMarker ? 1 : 0);
+
   token = state;
   token.info = params;
   token.content = state.getLines(startLine + 1, nextLine, len, true);
@@ -149,5 +236,5 @@ function hideShowBlock(state, startLine, endLine, silent) {
 
 export default function hideShowPlugin(md) {
   md.inline.ruler.after('emphasis', 'hideShowInline', hideShowInline);
-  md.block.ruler.after('fence', 'hideShowBlock', hideShowBlock);
+  md.block.ruler.after('table', 'hideShowBlock', hideShowBlock);
 }
