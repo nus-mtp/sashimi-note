@@ -1,15 +1,17 @@
 import StringManipulator from '../stringManipulation';
 
-const Alasql = require('alasql');
+import exceptions from '../exceptions';
 
-const alasql = new Alasql.Database();
+import constants from '../constants';
+
+import DateTime from '../generated-data/dateTime';
+
+const alasql = require('alasql');
 
 const stringManipulator = new StringManipulator();
 
+const dateTime = new DateTime();
 
-const callback = function callback() {
-  // do nothing??
-};
 
 export default function sqlCommands() {
   this.linkDatabaseToIndexedDB = function linkDatabaseToIndexedDB() {
