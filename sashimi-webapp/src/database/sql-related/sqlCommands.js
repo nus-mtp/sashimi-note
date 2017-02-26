@@ -191,6 +191,20 @@ export default function sqlCommands() {
       throw new exceptions.PromiseFunctionNotDefined();
     }
   };
+
+  this.deleteFile = function deleteFile(fileId) {
+    if (typeof Promise === 'function') {
+      return new Promise((resolve, reject) => {
+        alasql.promise([stringManipulator.stringConcat('DELETE FROM ', constants.ENTITIES_FILE_MANAGER,
+                                                       ' WHERE ', constants.HEADER_FILE_MANAGER_FILE_ID,
+                                                       ' = ', fileId)])
+        .then(() => true)
+        .catch(sqlError => sqlError);
+      });
+    } else {
+      throw new exceptions.PromiseFunctionNotDefined();
+    }
+  };
   };
 
   this.deleteTable = function deleteTable(tableName) {
