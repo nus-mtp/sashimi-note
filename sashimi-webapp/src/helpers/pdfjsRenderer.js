@@ -28,10 +28,14 @@ export default {
   renderCanvasView(pdfBase64, domId) {
     PDFJS.getDocument(pdfBase64)
     .then((pdfDocument) => {
-      // Get div#container and cache it for later use
-      const container = document.getElementById(domId);
       const totalPages = pdfDocument.numPages;
       const viewportScale = 2;
+
+      // Get div#container and cache it for later use
+      const container = document.getElementById(domId);
+      if (!container) {
+        throw new ReferenceError(`Cannot find element with id: "${domId}". `);
+      }
 
       // Loop from 1 to total_number_of_pages in PDF document
       for (let i = 1; i <= totalPages; i += 1) {
