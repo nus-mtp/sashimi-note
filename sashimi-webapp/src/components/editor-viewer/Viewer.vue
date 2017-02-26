@@ -19,7 +19,7 @@
   import pdfjsRenderer from 'src/helpers/pdfjsRenderer';
 
   Vue.use(AsyncComputed);
-  const throttleTime = 500;
+  const throttleTime = 200;
 
   // getParameterByName is used to obtain the query string form the url.
   // Currently the viewMode is being obtained via query string:
@@ -28,6 +28,10 @@
 
   const renderPdfToDom = ((pdfBase64) => {
     pdfjsRenderer.renderCanvasView(pdfBase64, 'viewer-container');
+  });
+  
+  const renderPagesToDom = ((htmlString) => {
+    pdfjsRenderer.renderView(htmlString, 'viewer-container');
   });
 
   const updateViewer = ((vueComponent) => {
@@ -44,8 +48,8 @@
       return {
         viewMode: '',
         pagesRenderThrottleFn: _.throttle((markdownString) => {
-          documentPackager.getPagesData(markdownString)
-          .then(renderPdfToDom);
+          documentPackager.getHtmlData(markdownString)
+          .then(renderPagesToDom);
         }, throttleTime),
         slidesRenderThrottleFn: _.throttle((markdownString) => {
           documentPackager.getSlidesData(markdownString)
@@ -88,6 +92,23 @@
       margin-top: 7px;
     }
   }
+
+  #viewer-container {
+    transform: scale(0.75);
+    transform-origin: top left;
+    
+    .page-view {
+      box-shadow: 1px 1px 4px 1px rgba(0, 0, 0, 0.3);
+      width: 21cm;
+      height: 29.7cm;
+      position: relative;
+      margin: 50px;
+      padding: 1.2cm;
+      box-sizing: border-box;
+      background-color: white;
+    }
+  }
+
 
   .viewer[data-viewmode="slides"],
   .viewer[data-viewmode="pages"] {
