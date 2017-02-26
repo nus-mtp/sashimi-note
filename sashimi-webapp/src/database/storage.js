@@ -6,9 +6,15 @@
  *
  */
 
+import constants from './constants';
+
 import entitiesCreator from './create/entitiesCreator';
 
-import query from './retrieve/query'; // for debugging
+import query from './retrieve/query';
+
+import dataModifier from './data-modifier/dataModifier';
+
+import exceptions from './exceptions';
 
 export default class storage {
   static constructor() {}
@@ -22,8 +28,17 @@ export default class storage {
     query.getFullTableData('user');
   }
 
-  static getList(folderID, callback) {
-
+  // Searching the filename and foldername ONLY
+  static partialSearch(searchString) {
+    if (typeof Promise === 'function') {
+      return new Promise((resolve, reject) => {
+        query.searchString(searchString)
+          .then(returnedArr => returnedArr)
+          .catch(sqlError => sqlError);
+      });
+    } else {
+      throw new exceptions.PromiseFunctionNotDefined();
+    }
   }
 
   static loadFile(fileID) {
