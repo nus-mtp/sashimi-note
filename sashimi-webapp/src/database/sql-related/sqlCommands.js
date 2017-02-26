@@ -39,7 +39,9 @@ export default function sqlCommands() {
   };
 
   this.createTable = function createTable(sqlStatement) {
-    alasql(stringManipulator.stringConcat('CREATE TABLE IF NOT EXISTS ', sqlStatement), callback());
+    alasql.promise([stringManipulator.stringConcat('CREATE TABLE IF NOT EXISTS ', sqlStatement)])
+      .then().catch(sqlError => sqlError);
+  };
   };
 
   this.deleteTable = function deleteTable(tableName) {
