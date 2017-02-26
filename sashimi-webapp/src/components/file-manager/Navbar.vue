@@ -39,7 +39,7 @@
   
 </script>
 
-<style lang="scss">
+<style scoped lang="scss">
 ul {
   list-style: none;
   margin-top: 10px;
