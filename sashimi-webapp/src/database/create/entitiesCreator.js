@@ -1,5 +1,17 @@
 import constants from '../constants';
 import tableCreator from './tableCreator';
+import SqlCommands from '../sql-related/sqlCommands';
+import DateTime from '../generated-data/dateTime';
+import exceptions from '../exceptions';
+import StringManipulator from '../stringManipulation';
+
+const sqlCommands = new SqlCommands();
+const dateTime = new DateTime();
+const stringManipulator = new StringManipulator();
+
+function getFormattedCurrentDateTime() {
+  return stringManipulator.stringConcat('"', dateTime.getCurrentDateTime(), '"');
+}
 
 export default class entitiesCreator {
 
