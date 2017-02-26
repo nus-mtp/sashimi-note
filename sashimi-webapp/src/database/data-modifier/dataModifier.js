@@ -30,4 +30,16 @@ export default class dataModifier {
       throw new exceptions.PromiseFunctionNotDefined();
     }
   }
+
+  static createNewFolder(organizationId, folderPath, folderId) {
+    if (typeof Promise === 'function') {
+      return new Promise((resolve, reject) => {
+        dataAdd.createNewFolder(organizationId, folderPath, folderId)
+          .then(data => true)
+          .catch(sqlErr => sqlErr);
+      });
+    } else {
+      throw new exceptions.PromiseFunctionNotDefined();
+    }
+  }
 }
