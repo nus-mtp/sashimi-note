@@ -34,13 +34,31 @@ export default Object.freeze({
   HEADER_FOLDER_CREATION_DATE: 'creation_date',
   HEADER_FOLDER_FOLDER_NAME: 'folder_name',
   HEADER_FOLDER_LAST_MODIFIED_DATE: 'last_modified_date',
+  HEADER_FOLDER_PATH: 'folder_path',
 
   HEADER_FILE_MANAGER_ORGANIZATION_ID: 'organization_id',
+  HEADER_FILE_MANAGER_FOLDER_ID: 'folder_id',
   HEADER_FILE_MANAGER_FILE_ID: 'file_id',
+  HEADER_FILE_MANAGER_FILE_NAME: 'file_name',
   HEADER_FILE_MANAGER_FILE_MARKDOWN: 'file_markdown',
   HEADER_FILE_MANAGER_PERMISSION_INDEX: 'permission_index',
   HEADER_FILE_MANAGER_CREATION_DATE: 'creation_date',
   HEADER_FILE_MANAGER_LAST_MODIFIED_DATE: 'last_modified_date',
+  HEADER_FILE_MANAGER_PATH: 'file_path',
+
+
+  DEFAULT_USER_ID: '1',
+  DEFAULT_USER_NAME: '"owner"',
+  DEFAULT_ORGANIZATION_ID: '1',
+  DEFAULT_FOLDER_ID: '0',
+  DEFAULT_FOLDER_NAME: '"root"',
+  DEFAULT_FILE_NAME: '"newFile.md"',
+
+
+  ORGANIZATION_TYPE_USER: '0',
+
+
+  PERMISSION_CREATOR: '0',
 
 
   STRING_UNDEFINED: 'undefined',
