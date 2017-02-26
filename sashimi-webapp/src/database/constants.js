@@ -51,9 +51,6 @@ export default Object.freeze({
 
   PASSED_CREATE_TABLE: true,
   FAILED_CREATE_TABLE: false,
-},
 
-  this.arrayEntitiesName = function arrayEntitiesName() {
-    return [this.ENTITIES_USER, this.ENTITIES_ORGANIZATION, this.ENTITIES_FILE_MANAGER, this.ENTITIES_FOLDER];
-  }
-);
+  ARRAY_ENTITIES_NAME: ['user', 'organization', 'file_manager', 'folder']
+});
