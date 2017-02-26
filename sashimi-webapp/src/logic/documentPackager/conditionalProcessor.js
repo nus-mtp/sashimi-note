@@ -1,24 +1,27 @@
-/* Conditional processor to format what to show and what to hide in viewer
-** Referenced from markdown-it-inline-comments plugin
-** See here: https://github.com/jay-hodgson/markdown-it-inline-comments
-** Process =>hide 'This is a Text' <= as ''
-*/
+/**
+ * Conditional processor to format what to show and what to hide in viewer
+ * Referenced from markdown-it-inline-comments plugin
+ * See here: https://github.com/jay-hodgson/markdown-it-inline-comments
+ * Process =>hide 'This is a Text' <= as ''
+ */
 let fileName;
 
 function findName(state, startLine) {
   const indent = state.sCount[startLine];
   const end = state.eMarks[startLine];
   const text = state.getLines(startLine, startLine + 1, indent, true).toString();
-  const parameter = text.slice(0, 9);
-  if (parameter === 'fileName:') {
-    fileName = text.slice(9, end);
+
+  if (end >= 9) {
+    const parameter = text.slice(0, 9);
+    if (parameter === 'fileName:') {
+      fileName = text.slice(9, end);
+    }
   }
 }
 
 function hideShowInline(state, silent) {
   const max = state.posMax;
   const start = state.pos;
-  let content;
   let found;
 
   if (silent) { return false; } // don't run any pairs in validation mode
@@ -53,7 +56,7 @@ function hideShowInline(state, silent) {
     return false;
   }
 
-  content = state.src.slice(start + 6, state.pos);
+  const content = state.src.slice(start + 6, state.pos);
 
   // don't allow unescaped newlines inside
   if (content.match(/(^|[^\\])(\\\\)*[\n]/)) {
@@ -63,36 +66,28 @@ function hideShowInline(state, silent) {
   return true;
 }
 
-/*
-** Referenced from markdown-it's fence rule and markdown-it-container plugin
-** See here: https://github.com/markdown-it/markdown-it/blob/master/lib/rules_block/fence.js
-** Outputs everything that is conditionally stated to be hidden as ''
-*/
-
+/**
+ * Referenced from markdown-it's fence rule and markdown-it-container plugin
+ * See here: https://github.com/markdown-it/markdown-it/blob/master/lib/rules_block/fence.js
+ * For conditional categorical hiding.
+ * Outputs everything that is conditionally stated to be hidden as ''
+ */
 function hideShowBlock(state, startLine, endLine, silent) {
-  let category;
-  let mem;
-  let marker;
-  let len;
-  let params;
-  let nextLine;
-  let token;
-  let markup;
+  let category; // variable to store conditional hiding for different document types
+  let nextLine; // next line counter, to keep track of line number
+  let token;  // token for use to pass into renderer to generate HTML
   let hasCategory = false;
   let haveEndMarker = false;
-  let pos = state.bMarks[startLine] + state.tShift[startLine];
-  let max = state.eMarks[startLine];
+  let pos = state.bMarks[startLine] + state.tShift[startLine]; // current "cursor" position
+  let max = state.eMarks[startLine]; // position of last char in the line
 
   if (pos + 7 > max) { return false; }
 
-  // console.log(state);
   findName(state, startLine);
-
-  marker = state.src.charCodeAt(pos);
 
   // Check out the first character quickly,
   // this should filter out most of non-containers
-  if (marker !== 61 /* = */) { return false; }
+  if (state.src.charCodeAt(pos) !== 61 /* = */) { return false; }
 
   if (state.src.charCodeAt(pos + 1) !== 61  /* = */||
       state.src.charCodeAt(pos + 2) !== 62 /* > */ ||
@@ -104,19 +99,19 @@ function hideShowBlock(state, startLine, endLine, silent) {
     return false;
   }
 
+  if (pos + 8 > max) { return false; }
+
   // Check if got category e.g. ==>hide:slides ...
   if (state.src.charCodeAt(pos + 7) === 58  /* : */) {
     hasCategory = true;
     category = state.src.slice(pos+8, max).toString();
   }
 
-  mem = pos;
+  const oldPos = pos;
   pos = state.skipChars(pos, state.src.charCodeAt(pos + 6));
 
-  len = pos - mem;
-
-  markup = state.src.slice(mem, pos);
-  params = state.src.slice(pos, max);
+  const markup = state.src.slice(oldPos, pos);
+  const params = state.src.slice(pos, max);
 
   // Since start is found, we can report success here in validation mode
   if (silent) { return true; }
@@ -129,6 +124,7 @@ function hideShowBlock(state, startLine, endLine, silent) {
       nextLine += 1;
       if (nextLine >= endLine) {
         // unclosed block should be leave the ==>hide there
+        // checks if nextLine is a valid value too
         return false;
       }
 
@@ -156,7 +152,7 @@ function hideShowBlock(state, startLine, endLine, silent) {
         break;
       }
 
-      marker = state.src.charCodeAt(pos);
+      const marker = state.src.charCodeAt(pos);
       const marker2 = state.src.charCodeAt(pos + 1);
       const marker3 = state.src.charCodeAt(pos + 2);
 
@@ -172,7 +168,6 @@ function hideShowBlock(state, startLine, endLine, silent) {
 
         // found!
         haveEndMarker = true;
-        // state.md.block.tokenize(state, startLine + 1, nextLine - 1);
         break;
       }
     }
@@ -185,11 +180,16 @@ function hideShowBlock(state, startLine, endLine, silent) {
 
     for (;;) {
       nextLine += 1;
+      if (nextLine >= endLine) {
+        // unclosed block should be leave the ==>hide there
+        // checks if nextLine is a valid value too
+        return false;
+      }
 
       pos = state.bMarks[nextLine] + state.tShift[nextLine];
       max = state.eMarks[nextLine];
 
-      marker = state.src.charCodeAt(pos);
+      const marker = state.src.charCodeAt(pos);
       const marker2 = state.src.charCodeAt(pos + 1);
       const marker3 = state.src.charCodeAt(pos + 2);
 
@@ -216,18 +216,20 @@ function hideShowBlock(state, startLine, endLine, silent) {
         state.lineMax = oldLineMax;
         state.line = nextLine + 1;
         return true;
+      } else {
+        return false;
       }
     }
   }
 
   // If a fence has heading spaces, they should be removed from its inner block
-  len = state.sCount[startLine];
+  const blockOffset = state.sCount[startLine];
 
   state.line = nextLine + (haveEndMarker ? 1 : 0);
 
   token = state;
   token.info = params;
-  token.content = state.getLines(startLine + 1, nextLine, len, true);
+  token.content = state.getLines(startLine + 1, nextLine, blockOffset, true);
   token.markup = markup;
   token.map = [startLine, state.line];
 
