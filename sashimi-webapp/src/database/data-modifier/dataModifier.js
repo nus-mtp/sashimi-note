@@ -67,4 +67,15 @@ export default class dataModifier {
     }
   }
 
+  static deleteFolder(folderId) {
+    if (typeof Promise === 'function') {
+      return new Promise((resolve, reject) => {
+        resolve(dataDelete.deleteFolder(folderId)
+          .then(() => true))
+          .catch(sqlError => sqlError);
+      });
+    } else {
+      throw new exceptions.PromiseFunctionNotDefined();
+    }
+  }
 }
