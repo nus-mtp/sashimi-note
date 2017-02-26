@@ -10,7 +10,7 @@ import { codemirror } from 'vue-codemirror';
 import navbar from './Navbar';
 import viewer from './Viewer';
 
-/* eslint : 0 */
+/* eslint no-unused-vars: 0 */
 let codeMirrorInstance = null;
 
 
