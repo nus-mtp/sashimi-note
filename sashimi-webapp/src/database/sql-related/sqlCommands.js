@@ -18,10 +18,11 @@ function getFormattedCurrentDateTime() {
 
 export default function sqlCommands() {
   this.linkDatabaseToIndexedDB = function linkDatabaseToIndexedDB() {
-    const databaseRequestStr = "CREATE INDEXEDDB DATABASE IF NOT EXISTS lecture-note-2.0; " +
-                               "ATTACH INDEXEDDB DATABASE lecture-note-2.0; " +
-                               "USE lecture-note-2.0;";
-    Alasql(databaseRequestStr);
+    const databaseRequestStr = "CREATE INDEXEDDB DATABASE IF NOT EXISTS lectureNote; " +
+                               "ATTACH INDEXEDDB DATABASE lectureNote; " +
+                               "USE lectureNote;";
+    alasql.promise([databaseRequestStr])
+      .then().catch(sqlError => sqlError);
   };
 
   this.getFullTableData = function getFullTableData(tableName) {
