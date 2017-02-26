@@ -13,6 +13,10 @@ function getFormattedCurrentDateTime() {
   return stringManipulator.stringConcat('"', dateTime.getCurrentDateTime(), '"');
 }
 
+function isTableExists(tableName) {
+  sqlCommands.getFullTableData(tableName)
+    .then(data => true).catch(sqlErr => false);
+}
 export default class entitiesCreator {
 
   static constuctor() {}
