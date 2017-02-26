@@ -12,6 +12,9 @@ const stringManipulator = new StringManipulator();
 
 const dateTime = new DateTime();
 
+function getFormattedCurrentDateTime() {
+  return stringManipulator.stringConcat('"', dateTime.getCurrentDateTime(), '"');
+}
 
 export default function sqlCommands() {
   this.linkDatabaseToIndexedDB = function linkDatabaseToIndexedDB() {
