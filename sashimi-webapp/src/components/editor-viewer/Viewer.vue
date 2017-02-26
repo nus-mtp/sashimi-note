@@ -19,6 +19,7 @@
   import pdfjsRenderer from 'src/helpers/pdfjsRenderer';
 
   Vue.use(AsyncComputed);
+  const throttleTime = 500;
 
   // getParameterByName is used to obtain the query string form the url.
   // Currently the viewMode is being obtained via query string:
@@ -35,13 +36,13 @@
           .then((pdfBase64) => {
             pdfjsRenderer.renderCanvasView(pdfBase64, 'viewer-container');
           });
-        }, 1200),
+        }, throttleTime),
         slidesRenderThrottleFn: _.throttle((markdownString) => {
           documentPackager.getSlidesData(markdownString)
           .then((pdfBase64) => {
             pdfjsRenderer.renderCanvasView(pdfBase64, 'viewer-container');
           });
-        }, 1200),
+        }, throttleTime),
       };
     },
     watch: {
@@ -61,6 +62,12 @@
     mounted() {
       // TODO: get viewMode from prop during release
       this.viewMode = urlHelper.getParameterByName('viewMode') || 'html';
+
+      if (this.viewMode === 'pages') {
+        this.pagesRenderThrottleFn(this.editorContent);
+      } else if (this.viewMode === 'slides') {
+        this.slidesRenderThrottleFn(this.editorContent);
+      }
     }
   };
 
