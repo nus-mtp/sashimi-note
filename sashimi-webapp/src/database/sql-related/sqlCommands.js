@@ -89,6 +89,24 @@ export default function sqlCommands() {
       throw new exceptions.PromiseFunctionNotDefined();
     }
   };
+  this.getMaxFolderId = function getMaxFolderId() {
+    if (typeof Promise === 'function') {
+      return new Promise((resolve, reject) => {
+        alasql.promise([stringManipulator.stringConcat('SELECT MAX(', constants.HEADER_FOLDER_FOLDER_ID,
+                                                       ') FROM ', constants.ENTITIES_FOLDER)])
+        .then((data) => {
+          const maxFolderId = getDataOutOfAlasql(data);
+          if (typeof maxFolderId === 'number') {
+            resolve(maxFolderId);
+          } else {
+            resolve(0);
+          }
+        }).catch(sqlError => sqlError);
+      });
+    } else {
+      throw new exceptions.PromiseFunctionNotDefined();
+    }
+  };
   };
 
   this.deleteTable = function deleteTable(tableName) {
