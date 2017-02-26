@@ -26,6 +26,18 @@
   // ?viewMode=pages
   // TOOD: In release, the viewMode should be passed down from the parent instead.
 
+  const renderPdfToDom = ((pdfBase64) => {
+    pdfjsRenderer.renderCanvasView(pdfBase64, 'viewer-container');
+  });
+
+  const updateViewer = ((vueComponent) => {
+    if (vueComponent.viewMode === 'pages') {
+      vueComponent.pagesRenderThrottleFn(vueComponent.editorContent);
+    } else if (vueComponent.viewMode === 'slides') {
+      vueComponent.slidesRenderThrottleFn(vueComponent.editorContent);
+    }
+  });
+
   export default {
     props: ['editorContent'],
     data() {
@@ -33,25 +45,17 @@
         viewMode: '',
         pagesRenderThrottleFn: _.throttle((markdownString) => {
           documentPackager.getPagesData(markdownString)
-          .then((pdfBase64) => {
-            pdfjsRenderer.renderCanvasView(pdfBase64, 'viewer-container');
-          });
+          .then(renderPdfToDom);
         }, throttleTime),
         slidesRenderThrottleFn: _.throttle((markdownString) => {
           documentPackager.getSlidesData(markdownString)
-          .then((pdfBase64) => {
-            pdfjsRenderer.renderCanvasView(pdfBase64, 'viewer-container');
-          });
+          .then(renderPdfToDom);
         }, throttleTime),
       };
     },
     watch: {
       editorContent() {
-        if (this.viewMode === 'pages') {
-          this.pagesRenderThrottleFn(this.editorContent);
-        } else if (this.viewMode === 'slides') {
-          this.slidesRenderThrottleFn(this.editorContent);
-        }
+        updateViewer(this);
       }
     },
     asyncComputed: {
@@ -62,12 +66,7 @@
     mounted() {
       // TODO: get viewMode from prop during release
       this.viewMode = urlHelper.getParameterByName('viewMode') || 'html';
-
-      if (this.viewMode === 'pages') {
-        this.pagesRenderThrottleFn(this.editorContent);
-      } else if (this.viewMode === 'slides') {
-        this.slidesRenderThrottleFn(this.editorContent);
-      }
+      updateViewer(this);
     }
   };
 
