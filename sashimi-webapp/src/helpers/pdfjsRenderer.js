@@ -31,13 +31,13 @@ export default {
       // Get div#container and cache it for later use
       const container = document.getElementById(domId);
       const totalPages = pdfDocument.numPages;
+      const viewportScale = 2;
 
       // Loop from 1 to total_number_of_pages in PDF document
       for (let i = 1; i <= totalPages; i += 1) {
         // Get desired page
         pdfDocument.getPage(i).then((page) => {
-          const scale = 2;
-          const viewport = page.getViewport(scale);
+          const viewport = page.getViewport(viewportScale);
 
           // Check if existing page exist
           const currentPageId = `${domId}-page-${page.pageIndex + 1}`;
@@ -45,31 +45,36 @@ export default {
           let canvas = null;
 
           if (!currentPage) {
-            // create a new page node
+            // if the page doesn't exist, create a new page node
             currentPage = document.createElement('div');
             currentPage.setAttribute('id', currentPageId);
             currentPage.setAttribute('class', 'page');
             container.appendChild(currentPage);
 
-            // create a canvas node
+            // create and attach a canvas to the page node
             canvas = document.createElement('canvas');
-            currentPage.appendChild(canvas);
-
             canvas.height = viewport.height;
             canvas.width = viewport.width;
+            currentPage.appendChild(canvas);
           } else {
+            // else, reuse the existing canvas
             canvas = currentPage.firstChild;
           }
 
-          const context = canvas.getContext('2d');
-          const renderContext = {
-            canvasContext: context,
+          // Render PDF page on the canvas
+          page.render({
+            canvasContext: canvas.getContext('2d'),
             viewport
-          };
-
-          // Render PDF page
-          page.render(renderContext);
+          });
         });
+      }
+
+      // Clean up excessive pages
+      let numOfExistingPage = container.childNodes.length;
+
+      while (totalPages < numOfExistingPage) {
+        container.childNodes[container.childNodes.length - 1].remove();
+        numOfExistingPage = container.childNodes.length;
       }
     });
   }
