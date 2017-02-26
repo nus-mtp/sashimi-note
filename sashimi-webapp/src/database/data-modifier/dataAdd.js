@@ -80,4 +80,21 @@ function createNewFolder(organizationId, folderPath, currentFolderId, newFolderI
 
 export default class dataAdd {
   static constructor() {}
+
+  static createNewFile(organizationId, filePath, folderId) {
+    if (typeof Promise === 'function') {
+      return new Promise((resolve, reject) => {
+        // set default new ID if not exist
+        sqlCommands.getMaxFileId()
+          .then((maxId) => {
+            const newFileId = maxId + 1;
+            createNewFile(organizationId, filePath, folderId, newFileId)
+              .then(data => data)
+              .catch(err => err);
+          }).catch(sqlError => sqlError);
+      });
+    } else {
+      throw new exceptions.PromiseFunctionNotDefined();
+    }
+  }
 }
