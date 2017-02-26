@@ -26,7 +26,14 @@ export default {
   getPagesData(markdownString) {
     return processMarkdown(markdownString)
     .then(htmlDataString =>
-      documentFormatter.getPdfBase64(htmlDataString)
+      documentFormatter.getPdfBase64(htmlDataString, {
+        paperSize: {
+          orientation: 'portrait',
+          unit: 'mm',
+          format: 'a4'
+        },
+        width: 170,
+      })
     );
   },
 
@@ -51,7 +58,14 @@ export default {
   getSlidesData(markdownString) {
     return processMarkdown(markdownString)
     .then(htmlDataString =>
-      xssFilter.filter(htmlDataString)
+      documentFormatter.getPdfBase64(htmlDataString, {
+        paperSize: {
+          orientation: 'landscape',
+          unit: 'mm',
+          format: 'a6'
+        },
+        width: 120
+      })
     );
   },
 };

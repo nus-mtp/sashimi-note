@@ -1,16 +1,10 @@
 <template>
-  <div class="viewer">
-    <div v-if="viewMode === 'pages'">
-      <div id="viewer-pages">
-        <div id='viewer-pages-container'></div>
-      </div>
-    </div>
-    <div v-else-if="viewMode === 'slides'">
-      <div id="viewer-slides" v-html="getHtmlData">
-      </div>
+  <div class="viewer" v-bind:data-viewmode='viewMode'>
+    <div v-if="viewMode === 'pages' || viewMode === 'slides'">
+      <div id='viewer-container'></div>
     </div>
     <div v-else>
-      <div id="viewer-html" v-html="getHtmlData">
+      <div id="viewer-container" v-html="getHtmlData">
       </div>
     </div>
   </div>
@@ -36,15 +30,28 @@
     data() {
       return {
         viewMode: '',
+        pagesRenderThrottleFn: _.throttle((markdownString) => {
+          documentPackager.getPagesData(markdownString)
+          .then((pdfBase64) => {
+            pdfjsRenderer.renderCanvasView(pdfBase64, 'viewer-container');
+          });
+        }, 1200),
+        slidesRenderThrottleFn: _.throttle((markdownString) => {
+          documentPackager.getSlidesData(markdownString)
+          .then((pdfBase64) => {
+            pdfjsRenderer.renderCanvasView(pdfBase64, 'viewer-container');
+          });
+        }, 1200),
       };
     },
     watch: {
-      editorContent: _.throttle((markdownString) => {
-        documentPackager.getPagesData(markdownString)
-        .then((pdfBase64) => {
-          pdfjsRenderer.renderCanvasView(pdfBase64, 'viewer-pages-container');
-        });
-      }, 1200)
+      editorContent() {
+        if (this.viewMode === 'pages') {
+          this.pagesRenderThrottleFn(this.editorContent);
+        } else if (this.viewMode === 'slides') {
+          this.slidesRenderThrottleFn(this.editorContent);
+        }
+      }
     },
     asyncComputed: {
       getHtmlData() {
@@ -67,26 +74,27 @@
     overflow-wrap: break-word;
     overflow-y: scroll;
     box-sizing: border-box;
-    margin-left: 10px;
     line-height: 1.6em;
     position: relative;
+    padding: 20px 50px;
 
     p {
       margin-top: 7px;
     }
   }
 
-  #viewer-pages {
-    position: absolute;
-    top: 0;
+  .viewer[data-viewmode="slides"],
+  .viewer[data-viewmode="pages"] {
     background-color: #FAFAFA;
-  }
-  #viewer-pages-container .page {
-    box-shadow: 1px 1px 4px 1px rgba(0,0,0,0.3);
-    margin: 32px;
+    padding: 0;
 
-    canvas {
-      width: 100%;
+    .page {
+      box-shadow: 1px 1px 4px 1px rgba(0,0,0,0.3);
+      margin: 32px;
+
+      canvas {
+        width: 100%;
+      }
     }
   }
 </style>
