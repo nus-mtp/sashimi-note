@@ -57,6 +57,20 @@ export default function sqlCommands() {
       throw new exceptions.PromiseFunctionNotDefined();
     }
   };
+
+  this.partialSearchFileName = function partialSearchFileName(searchString) {
+    if (typeof Promise === 'function') {
+      return new Promise((resolve, reject) => {
+        alasql.promise([stringManipulator.stringConcat('SELECT * FROM ', constants.ENTITIES_FILE_MANAGER,
+                                                       ' WHERE ', constants.HEADER_FILE_MANAGER_FILE_NAME,
+                                                       ' LIKE "%', searchString, '%"')])
+        .then(data => resolve(data))
+        .catch(sqlError => sqlError);
+      });
+    } else {
+      throw new exceptions.PromiseFunctionNotDefined();
+    }
+  };
   };
 
   this.deleteTable = function deleteTable(tableName) {
