@@ -7,7 +7,7 @@
 
 export default Object.freeze({
   TableCreationAlreadyInitiated: function TableCreationAlreadyInitiated(message) {
-    this.message = message;
+    this.message = message || 'Exception: table creation thread is not closed.';
     this.name = 'TableCreationAlreadyInitiated';
     this.stack = (new Error()).stack;
   },
