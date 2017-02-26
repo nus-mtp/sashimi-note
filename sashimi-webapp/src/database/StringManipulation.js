@@ -1,5 +1,5 @@
 
-export default function StringManipulation() {
+export default function stringManipulation() {
   this.stringConcat = function stringConcat(...stringToConcat) {
     return stringToConcat.join('');
   };
