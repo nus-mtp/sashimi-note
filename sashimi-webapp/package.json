@@ -14,6 +14,7 @@
     "lint": "eslint --ext .js,.vue src test/unit/specs test/e2e/specs"
   },
   "dependencies": {
+<<<<<<< HEAD
     "alasql": "^0.3.7",
     "start": "^5.1.0",
     "vue": "^2.1.10",
@@ -21,6 +22,8 @@
   },
   "devDependencies": {
     "alasql": "^0.3.6",
+=======
+>>>>>>> refs/remotes/origin/master
     "autoprefixer": "^6.7.2",
     "babel-core": "^6.22.1",
     "babel-eslint": "^7.1.1",
@@ -44,6 +47,7 @@
     "eslint-loader": "^1.6.1",
     "eslint-plugin-html": "^2.0.0",
     "eslint-plugin-import": "^2.2.0",
+    "eventemitter2": "^3.0.0",
     "eventsource-polyfill": "^0.9.6",
     "express": "^4.14.1",
     "extract-text-webpack-plugin": "^2.0.0-rc.2",
@@ -62,6 +66,7 @@
     "karma-spec-reporter": "0.0.26",
     "karma-webpack": "^2.0.2",
     "lolex": "^1.5.2",
+    "markdown-it": "^8.2.2",
     "mocha": "^3.2.0",
     "nightwatch": "^0.9.12",
     "node-sass": "^4.5.0",
@@ -75,8 +80,14 @@
     "sinon": "^1.17.7",
     "sinon-chai": "^2.8.0",
     "url-loader": "^0.5.7",
+<<<<<<< HEAD
     "vows": "^3.10.10",
+=======
+    "vue": "^2.1.10",
+    "vue-codemirror": "^2.1.8",
+>>>>>>> refs/remotes/origin/master
     "vue-loader": "^10.3.0",
+    "vue-router": "^2.2.0",
     "vue-style-loader": "^2.0.0",
     "vue-template-compiler": "^2.1.10",
     "webpack": "^2.2.1",
@@ -84,6 +95,8 @@
     "webpack-dev-middleware": "^1.10.0",
     "webpack-hot-middleware": "^2.16.1",
     "webpack-merge": "^2.6.1"
+  },
+  "devDependencies": {
   },
   "engines": {
     "node": ">= 4.0.0",
