@@ -152,6 +152,20 @@ export default function sqlCommands() {
     }
   };
 
+  this.loadFile = function loadFile(fileId) {
+    if (typeof Promise === 'function') {
+      return new Promise((resolve, reject) => {
+        alasql.promise([stringManipulator.stringConcat('SELECT ', constants.HEADER_FILE_MANAGER_FILE_MARKDOWN,
+                                                       ' FROM ', constants.ENTITIES_FILE_MANAGER,
+                                                       ' WHERE ', constants.HEADER_FILE_MANAGER_FILE_ID,
+                                                       ' = ', fileId)])
+        .then(data => resolve(data))
+        .catch(sqlError => sqlError);
+      });
+    } else {
+      throw new exceptions.PromiseFunctionNotDefined();
+    }
+  };
   };
 
   this.deleteTable = function deleteTable(tableName) {
