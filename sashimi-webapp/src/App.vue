@@ -5,7 +5,6 @@
 </template>
 
 <script>
-
 export default {
   name: 'app',
 
@@ -17,6 +16,7 @@ export default {
 
 <style lang="scss">
 @import 'assets/styles/loader.scss';
+
 
 body {
   margin: 0;
@@ -52,21 +52,33 @@ body {
   text-align: left;
 }
 
-button {
-  &.navbar-buttons {
-    background-color: transparent;
-    border: none;
-    display: inline-block;
-    box-sizing: border-box;
+.navbar-buttons {
+  background-color: transparent;
+  border: none;
+  display: inline-block;
+  box-sizing: border-box;
+
+  &:focus {
+    outline: 0;
   }
 
-  &.navbar-buttons:focus {
-    outline: 0;
+  &.hvr-grow-shadow {
+    box-shadow: none;
+  
+    @include navbar-buttons-hover-shadow-color("#upload-image", #b79ef7);
+    @include navbar-buttons-hover-shadow-color("#plugins", #64bcad);
+    @include navbar-buttons-hover-shadow-color("#annotate", #ffafe5);
+    @include navbar-buttons-hover-shadow-color("#share-file", #7abcf9);
+    @include navbar-buttons-hover-shadow-color("#new-file", transparent);
+    @include navbar-buttons-hover-shadow-color("#manage-file", transparent);
+    @include navbar-buttons-hover-shadow-color("#button-editor", #b570a5);
+    @include navbar-buttons-hover-shadow-color("#button-viewer", #5d96b7);
+    @include navbar-buttons-hover-shadow-color("#button-split-screen", #a06346);        
   }
 }
 
 .button {
-  &-margin {
+  &-group-margin {
     margin-left: $left-margin-navbar-elements;
   }
 
