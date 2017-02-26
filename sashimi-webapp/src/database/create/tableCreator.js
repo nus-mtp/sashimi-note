@@ -2,7 +2,7 @@ import constants from '../constants';
 
 import SqlCommands from '../sql-related/sqlCommands';
 
-import StringManipulator from '../StringManipulation';
+import StringManipulator from '../stringManipulation';
 
 import exceptions from '../exceptions';
 

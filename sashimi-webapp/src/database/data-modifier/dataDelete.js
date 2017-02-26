@@ -1,6 +1,6 @@
 import constants from '../constants';
 
-import SqlCommands from '../sql-related/SqlCommands';
+import SqlCommands from '../sql-related/sqlCommands';
 
 const sqlCommands = new SqlCommands();
 
