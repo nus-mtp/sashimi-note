@@ -42,6 +42,21 @@ export default function sqlCommands() {
     alasql.promise([stringManipulator.stringConcat('CREATE TABLE IF NOT EXISTS ', sqlStatement)])
       .then().catch(sqlError => sqlError);
   };
+
+  this.insertContent = function insertContent(tableName, ...content) {
+    if (typeof Promise === 'function') {
+      return new Promise((resolve, reject) => {
+        // concatenate all the values to insert together
+        const valuesToInsertIntoTable = content.join(', ');
+        alasql.promise([stringManipulator.stringConcat('INSERT INTO ', tableName,
+                                                       ' VALUES (', valuesToInsertIntoTable, ')')])
+        .then(() => true)
+        .catch(sqlError => sqlError);
+      });
+    } else {
+      throw new exceptions.PromiseFunctionNotDefined();
+    }
+  };
   };
 
   this.deleteTable = function deleteTable(tableName) {
