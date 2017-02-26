@@ -71,6 +71,24 @@ export default function sqlCommands() {
       throw new exceptions.PromiseFunctionNotDefined();
     }
   };
+  this.getMaxFileId = function getMaxFileId() {
+    if (typeof Promise === 'function') {
+      return new Promise((resolve, reject) => {
+        alasql.promise([stringManipulator.stringConcat('SELECT MAX(', constants.HEADER_FILE_MANAGER_FILE_ID,
+                                                       ') FROM ', constants.ENTITIES_FILE_MANAGER)])
+        .then((data) => {
+          const maxFileId = getDataOutOfAlasql(data);
+          if (typeof maxFileId === 'number') {
+            resolve(maxFileId);
+          } else {
+            resolve(-1);
+          }
+        }).catch(sqlError => sqlError);
+      });
+    } else {
+      throw new exceptions.PromiseFunctionNotDefined();
+    }
+  };
   };
 
   this.deleteTable = function deleteTable(tableName) {
