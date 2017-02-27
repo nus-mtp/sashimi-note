@@ -5,21 +5,26 @@
 </template>
 
 <script>
+
 export default {
   name: 'app',
+
+  resolve: {
+    extensions: ['', '.css', '.scss'],
+  },
 };
 </script>
 
 <style lang="scss">
-@import 'assets/vendors/styles/responsive-grid-system.scss';
+@import 'assets/styles/loader.scss';
 
 body {
   margin: 0;
-  font-size: 16px;
+  font-size: 18px;
 }
 
 #app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
+  font-family: $font;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   -webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
@@ -28,54 +33,77 @@ body {
   color: black;
 }
 
-.no-padding {
-  padding: 0;
+.float-left {
+  float: left;
+}
+
+.float-right {
+  float: right;
+}
+
+.inline-block {
+  display: inline-block;
+}
+
+.navbar {
+  overflow: hidden;
+  box-sizing: border-box;
+  padding: 8px 20px;
+  text-align: left;
 }
 
 button {
-  background-color: transparent;
-  border: none;
+  &.navbar-buttons {
+    background-color: transparent;
+    border: none;
+    display: inline-block;
+    box-sizing: border-box;
+  }
+
+  &.navbar-buttons:focus {
+    outline: 0;
+  }
 }
 
-button:focus {
-  outline: 0;
+.button {
+  &-back {
+    width: $back-button-width;
+  }
+
+  &-margin {
+    margin-left: $left-margin-navbar-elements;
+  }
+
+  &-img {
+    width: 38px;
+  }
 }
+
 
 .CodeMirror {
-  border-right: 1px solid black;
+  box-shadow: 5px 0 5px -2px #e6e6e6;
   
   .CodeMirror-gutters {
     background-color: white;
-    border-right: 1px solid black;
   }
 }
 
-.CodeMirror.CodeMirror-wrap {
-  height: calc(100vh - 100px);
+.CodeMirror.cm-s-base16-dark {
+  height: calc(100vh - #{$navbar-height});
 }
 
 .CodeMirror-lines {
+  overflow-wrap: break-word;
+  
   .CodeMirror-code {
-    line-height: 1.8em;
-    font-family: 'Avenir', Helvetica, Arial, sans-serif;
+    line-height: 1.4em;
+    color: #dedede;
+    font-family: monospace;
   }
 }
 
-.CodeMirror-linenumber.CodeMirror-gutter-elt {
-  color: black;
+vertical-align-child > * {
+  vertical-align: middle;
 }
 
-.CodeMirror-activeline {
-  .CodeMirror-activeline-background {
-    background-color: #e6e6e6;
-  }
-}
-
-.viewer {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 5px;
-  line-height: 28px;
-
-}
 </style>
