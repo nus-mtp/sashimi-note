@@ -1,6 +1,7 @@
 @mixin navbar-buttons-hover-shadow-color ($idSelector,$colorCode) {
   &#{$idSelector}:hover,
-  &#{$idSelector}:focus, {
+  &#{$idSelector}:focus, 
+  &#{$idSelector}:active {
 
     @if $idSelector == '#new-file' {
       transform: scale(1.1);

@@ -33,6 +33,10 @@ body {
   color: black;
 }
 
+:focus {
+  outline: 0;
+}
+
 .float-left {
   float: left;
 }
@@ -61,10 +65,17 @@ body {
   &:focus {
     outline: 0;
   }
+  
+  &.active {
+    transform: scale(1.3);
+    -webkit-filter: drop-shadow(1px 1px 2px pink);
+    filter: drop-shadow(1px 1px 2px pink);
+  }
 
   &.hvr-grow-shadow {
     box-shadow: none;
-  
+
+    @include navbar-buttons-hover-shadow-color("#upload-image", transparent);
     @include navbar-buttons-hover-shadow-color("#upload-image", #b79ef7);
     @include navbar-buttons-hover-shadow-color("#plugins", #64bcad);
     @include navbar-buttons-hover-shadow-color("#annotate", #ffafe5);
@@ -96,10 +107,11 @@ body {
     font-size: 14px;
     font-family: $font;
     text-decoration: none;
+    color: #95989A;
 
     &:focus,
     &:visited {
-      color: black;
+      color: #95989A;;
     }
 
     &:hover {
