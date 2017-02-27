@@ -98,7 +98,7 @@ export default {
 
 .navbar {
   box-sizing: border-box;
-  border-bottom: 3px solid #bebebe;
+  border-bottom: 3px solid $navbar-border-color;
 }
 
 .image-upload {
@@ -121,7 +121,7 @@ export default {
 
   p {
     margin: 0;
-    font-family: $font;
+    font-family: $general-font;
   }
 }
 

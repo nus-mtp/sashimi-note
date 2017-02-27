@@ -24,7 +24,7 @@ body {
 }
 
 #app {
-  font-family: $font;
+  font-family: $general-font;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   -webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
@@ -101,11 +101,11 @@ body {
 .button-logo {
   text-align: left;
   position: relative;
-  width: 150px;
+  width: $button-logo-width;
 
   a {
     font-size: 14px;
-    font-family: $font;
+    font-family: $general-font;
     text-decoration: none;
     color: #95989A;
 
