@@ -1,6 +1,6 @@
 <template>
   <div>
-    <navbar></navbar>
+    <navbar v-model="fileFormat"></navbar>
     <div class="section group">
       <div class="col span_6_of_12">
         <editor 
@@ -8,7 +8,7 @@
         ></editor>
       </div>
       <div class="col span_6_of_12">
-        <viewer :editor-content="mdContent"></viewer>
+        <viewer :editor-content="mdContent" :file-format="fileFormat"></viewer>
       </div>
     </div>
   </div>
@@ -29,7 +29,10 @@ export default {
   data() {
     return {
       mdContent: '',
+      fileFormat: '',
     };
+  },
+  watch: {
   },
   method: {
   },

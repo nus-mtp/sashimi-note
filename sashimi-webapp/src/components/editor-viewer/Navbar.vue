@@ -1,7 +1,7 @@
 <template>
   <div class="section group navbar">
     <div class="col button-logo vertical-align-child">
-        <router-link to="/" class="vertical-align-child">
+        <router-link to="/" class="vertical-align-child navbar-buttons hvr-grow-shadow" id="button-logo">
             <!--<img src="../../assets/images/buttons/button-back.svg" class="button-img" alt="back">-->
             <img src="../../assets/sashimi.svg" class="inline-block" alt="sashimi">
             <p class="inline-block">
@@ -28,28 +28,33 @@
     </div>
     <div class="float-right">
       <div class="col inline-block">
-        <button class="navbar-dropdown button-group-margin vertical-align-child navbar-buttons hvr-grow-shadow" id="new-file">
-          <img class="inline-block" src="../../assets/images/symbols/symbol-add.svg" alt="add"> 
-          <p class="inline-block">New</p>  
-        </button>
-        <div class="dropdown-content">
-          <a href="">New File</a>
-          <a href="">Duplicate File</a>
+        <div class="navbar-dropdown inline-block">
+          <button class="button-dropdown button-group-margin vertical-align-child navbar-buttons hvr-grow-shadow" id="new-file">
+            <img class="inline-block" src="../../assets/images/symbols/symbol-add.svg" alt="add"> 
+            <p class="inline-block">New</p>  
+          </button>
+          <div class="dropdown-content">
+            <a href="">New File</a>
+            <a href="">Duplicate File</a>
+          </div>
         </div>
-        <button class="navbar-dropdown button-group-margin vertical-align-child navbar-buttons hvr-grow-shadow" id="manage-file">
-          <p class="inline-block">Manage</p> 
-          <img class="inline-block" src="../../assets/images/symbols/symbol-arrow-down.svg" alt="add">
-        </button>
-        <div class="dropdown-content">
-          <a href="">Test</a>
-          <a href="">Test</a>
+        <div class="navbar-dropdown inline-block">
+          <button class="button-dropdown button-group-margin vertical-align-child navbar-buttons hvr-grow-shadow" id="manage-file">
+            <p class="inline-block">Manage</p> 
+            <img class="inline-block" src="../../assets/images/symbols/symbol-arrow-down.svg" alt="add">
+          </button>
+          <div class="dropdown-content">
+            <a href="#" v-on:click="setFileFormat('pages')">Pages</a><br>
+            <a href="#" v-on:click="setFileFormat('slides')">Slides</a><br>
+            <a href="#" v-on:click="setFileFormat('html')">HTML</a><br>
+          </div>
         </div>
       </div>
       <div class="col vertical-align-child button-group-margin">
-        <button class="navbar-buttons hvr-grow-shadow" id="button-editor">
+        <label v-on:click="toggleActiveClass" v-bind:class="{active: isActive}" class="navbar-buttons hvr-grow-shadow" id="button-editor">
           <img src="../../assets/images/buttons/button-edit.svg" class="button-img" alt="editor">
-        </button>
-        <button class="navbar-buttons hvr-grow-shadow" id="button-viewer" active>
+        </label>
+        <button class="navbar-buttons hvr-grow-shadow" id="button-viewer">
           <img src="../../assets/images/buttons/button-split-screen.svg" class="button-img" alt="split-view">
         </button>
         <button class="navbar-buttons hvr-grow-shadow" id="button-split-screen">
@@ -66,6 +71,26 @@
 </template>
 
 <script>
+export default {
+  components: {
+  },
+  data() {
+    return {
+      isActive: false,
+    };
+  },
+  props: ['value'],
+  methods: {
+    toggleActiveClass() {
+      if (!this.isActive) {
+        this.isActive = !this.isActive;
+      }
+    },
+    setFileFormat(format) {
+      this.$emit('input', format);
+    },
+  },
+};
 </script>
 
 <style scoped lang="scss"> 
@@ -85,10 +110,10 @@
   }
 }
 
-.navbar-dropdown {
+.button-dropdown {
   font-size: 16px;
   padding: 10px;
-  border: 1px solid transparent;
+  box-sizing: border-box;
 
   img {
     width: 20px;
@@ -98,22 +123,32 @@
     margin: 0;
     font-family: $font;
   }
-
-  &:hover {
-    .dropdown-content {
-      display:block;
-    }
-  }
 }
 
 .dropdown-content {
   display: none;
   position: absolute;
-  margin: 15px 15px 0 0;
+  /*margin: 15px 15px 0 $left-margin-navbar-elements;*/
   min-width: 140px;
   border: 1px solid black;
   text-align: left;
   padding: 10px;
+  background-color: white;
+}
+
+.navbar-dropdown {
+  box-sizing: border-box;
+
+  &:hover {
+    border: 1px solid black;
+
+    .button-dropdown {
+      font-weight: bold;
+    }
+    .dropdown-content {
+      display:block;
+    }
+  }
 }
 
 #richtext-dropdown {
