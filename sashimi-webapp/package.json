@@ -14,7 +14,6 @@
     "lint": "eslint --ext .js,.vue src test/unit/specs test/e2e/specs"
   },
   "dependencies": {
-<<<<<<< HEAD
     "alasql": "^0.3.7",
     "start": "^5.1.0",
     "vue": "^2.1.10",
@@ -22,8 +21,6 @@
   },
   "devDependencies": {
     "alasql": "^0.3.6",
-=======
->>>>>>> refs/remotes/origin/master
     "autoprefixer": "^6.7.2",
     "babel-core": "^6.22.1",
     "babel-eslint": "^7.1.1",
@@ -80,12 +77,9 @@
     "sinon": "^1.17.7",
     "sinon-chai": "^2.8.0",
     "url-loader": "^0.5.7",
-<<<<<<< HEAD
     "vows": "^3.10.10",
-=======
     "vue": "^2.1.10",
     "vue-codemirror": "^2.1.8",
->>>>>>> refs/remotes/origin/master
     "vue-loader": "^10.3.0",
     "vue-router": "^2.2.0",
     "vue-style-loader": "^2.0.0",
