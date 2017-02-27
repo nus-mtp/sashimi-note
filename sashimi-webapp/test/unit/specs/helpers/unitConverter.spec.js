@@ -12,8 +12,8 @@ describe('Unit Converter', () => {
       expect(outputResult).to.equal('793.7007874015748px');
     });
 
-    it('should convert 21 cm to 793.7 px', () => {
-      const outputResult = unitConverter.get('21cm', 'px');
+    it('should convert input with space between value and unit type', () => {
+      const outputResult = unitConverter.get('21 cm', 'px');
       expect(outputResult).to.equal('793.7007874015748px');
     });
 

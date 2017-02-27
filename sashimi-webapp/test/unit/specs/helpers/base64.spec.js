@@ -10,7 +10,7 @@ describe('Base-64', () => {
       expect(outputData).to.equal(expected);
     });
 
-    it('should encode a data string into base-64 format', () => {
+    it('should encode a empty string into a empty string', () => {
       const inputData = '';
       const outputData = base64.encodeUnicode(inputData);
       expect(outputData).to.equal('');
