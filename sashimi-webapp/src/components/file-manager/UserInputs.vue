@@ -13,7 +13,7 @@
         <input type="text" placeholder="Search...">
       </div>
     </div>
-    <div class="section group navbar userActions">
+    <div class="section group navbar userActions vertical-align-child">
       <div class="col breadcrumb float-left">
         <ul class="navbar-breadcrumb">
           <li><a href="#">Home</a></li>
@@ -21,8 +21,28 @@
           <li>Blah</li>
         </ul>
       </div>
-      <div class="col navbar-buttons vertical-align-child float-right">
-
+      <div class="vertical-align-child float-right">
+        <div class="col buttons">
+          <button class="navbar-buttons hvr-grow-shadow">
+            <img src="../../assets/images/buttons/button-upload-file.svg" class="button-img" alt="delete">
+          </button>
+          <button class="navbar-buttons hvr-grow-shadow">
+            <img src="../../assets/images/buttons/button-add-new.svg" class="button-img" alt="delete">
+          </button>
+          <button class="navbar-buttons hvr-grow-shadow">
+            <img src="../../assets/images/buttons/button-duplicate.svg" class="button-img" alt="delete">
+          </button>
+          <button class="navbar-buttons hvr-grow-shadow">
+            <img src="../../assets/images/buttons/button-download.svg" class="button-img" alt="delete">
+          </button>
+          <button class="navbar-buttons hvr-grow-shadow">
+            <img src="../../assets/images/buttons/button-delete.svg" class="button-img" alt="delete">
+          </button>
+        </div>
+        <div class="col vertical-align-child view ">
+          <a href="#"><strong>ICON</strong></a> |
+          <a href="#">List</a>
+        </div>
       </div>
     </div>
   </div>
@@ -41,24 +61,33 @@ export default {
 .userInputs {
   overflow: hidden;
   border-bottom: 1px solid $navbar-border-color;
-  padding-top: 20px;
-  padding-bottom: 20px;
+}
+
+.button-logo {
+  width: 100%;
+  text-align: center;
+  transform: scale(1.2);
 }
 
 .searchBar {
   text-align: center;
-  width: calc(100% - #{$button-logo-width});
+  width: 100%;
+  margin-top: 3px;
+
   input {
     border: 1px solid $navbar-border-color;
-    width: 50vw;
-    padding: 10px;
+    width: 80%;
+    padding: 8px;
     font-family: $general-font;
+    font-size: 15px;
   }
 }
 
 .userActions {
   background-color: #F7F7F7;
   box-shadow: 0 2px 10px rgba(0,0,0,0.12);
+  padding-top: 3px;
+  padding-bottom: 3px;
 }
 
 .navbar-breadcrumb {
@@ -77,12 +106,44 @@ export default {
     }
 
     a {
-      text-decoration: none;
-      
+      text-decoration: underline;
+
       &:visited {
-        color: #A8A8A8;
+        color: black;
       }
     }
+  }
+}
+
+.navbar-buttons {
+  img {
+    width: 32px;
+  }
+}
+
+.buttons {
+  border-right: 1px solid $navbar-border-color;
+}
+
+.view {
+  margin-left: 15px;
+  a {
+    text-decoration: none;
+
+    &:visited {
+      color: black;
+    }
+  }
+}
+
+@media screen and (min-width: 768px) {
+  .button-logo {
+    width: $button-logo-width;
+    transform: scale(1);
+  }
+
+  .searchBar {
+    width: calc(100% - #{$button-logo-width});
   }
 }
 </style>
