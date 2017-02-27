@@ -144,6 +144,10 @@ export default {
 
   .searchBar {
     width: calc(100% - #{$button-logo-width});
+
+    input {
+      width: 70%;
+    }
   }
 }
 </style>
