@@ -46,38 +46,39 @@ export default {
 
     // Retrieve existing sandbox renderer
     let renderSandbox = document.getElementById(renderSandboxId);
+
     if (!renderSandbox) { // Create a new sandbox if not found
       renderSandbox = document.createElement('iframe');
       renderSandbox.setAttribute('id', renderSandboxId);
       renderSandbox.setAttribute('scrolling', 'no');
       renderSandbox.setAttribute('style', `
-        width: calc(18.6cm + 16px);
+        width: ${targetInfo.page.width};
         position: absolute;
         top: 0;
         left: -99999px;
         transform: scale(0.75);
         overflow-y: hidden;
-        right: 0;
       `);
       renderSandbox.src = 'about:blank';
       document.body.appendChild(renderSandbox);
     }
 
-    // Render sourceHtml into the sandbox
     const sandboxDoc = renderSandbox.contentWindow.document;
 
-    sandboxDoc.open();
-    sandboxDoc.write(sourceHtml);
-    sandboxDoc.close();
-
-    // Retrieve all element node from sandbox
-    const styleBlock = document.createElement('style');
-    styleBlock.innerHTML = `
-* {
+    let renderSandboxStyleBlock = sandboxDoc.getElementById(`${renderSandboxId}-style`);
+    if (!renderSandboxStyleBlock) {
+      // Add styling to the iframe
+      renderSandboxStyleBlock = document.createElement('style');
+      renderSandboxStyleBlock.setAttribute('id', `${renderSandboxId}-style`);
+      renderSandboxStyleBlock.innerHTML = `
+body {
   font-family: "Avenir", Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   color: black;
+  padding-left: ${targetInfo.page.padding.left};
+  padding-right: ${targetInfo.page.padding.right};
+  box-sizing: border-box;
 }
 h1 {
   font-size: 2em;
@@ -94,96 +95,114 @@ p {
   line-height: 1.6em;
   font-size: 18px;
 }
-`; sandboxDoc.childNodes[0].childNodes[0].appendChild(styleBlock);
+p img {
+  width: 100%;
+}`;
+      sandboxDoc.childNodes[0].childNodes[0].appendChild(renderSandboxStyleBlock);
+    }
 
-    const domList = sandboxDoc.childNodes[0].childNodes[1].childNodes;
-    const domArray = Object.keys(sandboxDoc.childNodes[0].childNodes[1].childNodes)
-                           .map(key => domList[key])
-                           .filter(node => node.nodeName !== '#text');
-    console.log(domArray);
-    const domHeightList = domArray.map(node => node.offsetHeight || 0);
 
-    // Structure all element node into target view
-    const contentHeightInCm = parseFloat(targetInfo.page.height, 10) -
-                             (parseFloat(targetInfo.page.padding.top, 10) +
-                              parseFloat(targetInfo.page.padding.bottom, 10));
-    const contentHeight = parseFloat(unitConverter.get(`${contentHeightInCm}cm`, 'px'), 10);
+    // Render sourceHtml into the sandbox
+    const sandboxDocBody = sandboxDoc.childNodes[0].childNodes[1];
+    sandboxDocBody.innerHTML = sourceHtml;
 
-    /* eslint no-var: 0 */
-    /* eslint vars-on-top: 0 */
-    var pagesArray = [];
-    var pageArray = [];
-    let cummulativePageHeight = 0;
-    domArray.forEach((node, index) => {
-      const elementHeight = domHeightList[index];
-      const prospectiveCummulativeHeight = cummulativePageHeight + elementHeight;
-      console.log('prospectiveCummulativeHeight', prospectiveCummulativeHeight);
+    setTimeout(() => {
+      // Retrieve all element node from sandbox
+      const domList = sandboxDocBody.childNodes;
+      const domArray = Object.keys(sandboxDoc.childNodes[0].childNodes[1].childNodes)
+                            .map(key => domList[key])
+                            .filter(node => node.nodeName !== '#text');
+      const domHeightList = domArray.map((node) => {
+        const nodeStyle = node.currentStyle || renderSandbox.contentWindow.getComputedStyle(node);
 
-      // If this node cannot fit inside the existing page
-      if (prospectiveCummulativeHeight > contentHeight) {
-        console.log('cannot fit in page');
-        // If this element is larger than the page
-        if ((contentHeight / elementHeight) > 1) {
-          console.log('element is larget than page');
-          // If it is currently at the beginning of the page
-          if (cummulativePageHeight === 0) {
-            console.log('element is at beginning');
-          // Else it is at the middle of the page
-          } else {
-            console.log('element is at the middle');
+        const resultantHeight = Math.max(node.offsetHeight, Number.parseFloat(nodeStyle.height, 10));
+
+        console.log(node.offsetHeight, nodeStyle.height, nodeStyle.marginTop, nodeStyle.marginBottom);
+        return resultantHeight +
+              Number.parseFloat(nodeStyle.marginTop, 10) +
+              Number.parseFloat(nodeStyle.marginBottom, 10);
+      });
+
+      // Structure all element node into target view
+      const contentHeightInCm = parseFloat(targetInfo.page.height, 10) -
+                              (parseFloat(targetInfo.page.padding.top, 10) +
+                                parseFloat(targetInfo.page.padding.bottom, 10));
+      const heightError = 0;
+      const contentHeight = parseFloat(unitConverter.get(`${contentHeightInCm}cm`, 'px'), 10) - heightError;
+
+      /* eslint no-var: 0 */
+      /* eslint vars-on-top: 0 */
+      var pagesArray = [];
+      var pageArray = [];
+      let cummulativePageHeight = 0;
+      domArray.forEach((node, index) => {
+        const elementHeight = domHeightList[index];
+        const prospectiveCummulativeHeight = cummulativePageHeight + elementHeight;
+
+        // If this node cannot fit inside the existing page
+        if (prospectiveCummulativeHeight > contentHeight) {
+          console.log(`${index} | ${elementHeight}|${cummulativePageHeight}/${parseInt(contentHeight, 10)} cannot fit in page`, node);
+          // If this element is larger than the page
+          if ((elementHeight / contentHeight) > 1) {
+            console.log(`${index} | ${elementHeight}|${cummulativePageHeight}/${parseInt(contentHeight, 10)} is larget than page`, node);
+            // If it is currently at the beginning of the page
+            if (cummulativePageHeight === 0) {
+              console.log(`${index} | ${elementHeight}|${cummulativePageHeight}/${parseInt(contentHeight, 10)} is at beginning`, node);
+            // Else it is at the middle of the page
+            } else {
+              console.log(`${index} | ${elementHeight}|${cummulativePageHeight}/${parseInt(contentHeight, 10)} is at the middle`, node);
+              // > create a new page
+              pagesArray.push(pageArray);
+              pageArray = [];
+              cummulativePageHeight = 0;
+            }
+            // > then just insert in the page
+            pageArray.push(node);
             // > create a new page
             pagesArray.push(pageArray);
             pageArray = [];
             cummulativePageHeight = 0;
+
+          // Else this element is smaller than the page
+          } else {
+            console.log(`${index} | ${elementHeight}|${cummulativePageHeight}/${parseInt(contentHeight, 10)} is smaller than page`, node);
+
+            // > create a new page
+            pagesArray.push(pageArray);
+            pageArray = [];
+            cummulativePageHeight = 0;
+            // > then insert in the page
+            pageArray.push(node);
+            cummulativePageHeight = elementHeight;
           }
-          // > then just insert in the page
-          pageArray.push(node);
-          // > create a new page
-          pagesArray.push(pageArray);
-          pageArray = [];
-          cummulativePageHeight = 0;
 
-        // Else this element is smaller than the page
+        // else this node can fit inside the existing page
         } else {
-          console.log('element is smaller than page');
-
-          // > create a new page
-          pagesArray.push(pageArray);
-          pageArray = [];
-          cummulativePageHeight = 0;
-          // > then insert in the page
+          console.log(`${index} | ${elementHeight}|${cummulativePageHeight}/${parseInt(contentHeight, 10)} can fit inside`, node);
           pageArray.push(node);
           cummulativePageHeight = prospectiveCummulativeHeight;
         }
-
-      // else this node can fit inside the existing page
-      } else {
-        console.log('element can fit inside');
-        pageArray.push(node);
-        cummulativePageHeight = prospectiveCummulativeHeight;
-        console.log(cummulativePageHeight, contentHeight);
-      }
-    });
-    if (pageArray.length > 0) {
-      pagesArray.push(pageArray);
-      pageArray = [];
-    }
-    console.log(domArray, domHeightList, pagesArray);
-
-    // Generate HTML string
-    const pageContainer = document.createElement('div');
-
-    pagesArray.forEach((page, pageNumber) => {
-      const pageView = document.createElement('div');
-      pageView.setAttribute('class', 'page-view');
-      page.forEach((pageNode) => {
-        pageView.appendChild(pageNode.cloneNode(true));
       });
-      pageContainer.appendChild(pageView);
-    });
+      if (pageArray.length > 0) {
+        pagesArray.push(pageArray);
+        pageArray = [];
+      }
 
-    container.innerHTML = '<div></div>';
-    container.appendChild(pageContainer);
+      // Generate HTML string
+      const pageContainer = document.createElement('div');
+
+      pagesArray.forEach((page, pageNumber) => {
+        const pageView = document.createElement('div');
+        pageView.setAttribute('class', 'page-view');
+        page.forEach((pageNode) => {
+          pageView.appendChild(pageNode.cloneNode(true));
+        });
+        pageContainer.appendChild(pageView);
+      });
+
+      container.innerHTML = '<div></div>';
+      container.appendChild(pageContainer);
+    }, 1000);
   },
 
   /**

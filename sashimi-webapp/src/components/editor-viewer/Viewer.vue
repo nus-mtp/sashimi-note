@@ -106,6 +106,10 @@
       padding: 1.2cm;
       box-sizing: border-box;
       background-color: white;
+
+      img {
+        width: 100%;
+      }
     }
   }
 
