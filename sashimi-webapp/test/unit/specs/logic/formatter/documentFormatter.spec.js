@@ -13,6 +13,7 @@ describe('DocumentFormatter', () => {
   });
 
   describe('getPdfBase64', () => {
+    // TODO: Remove this test as it may produce non-deterministic result.
     it('should returns a pdfBase64 for \'pages viewMode\'', (done) => {
       const expectedOutput = base64OfSimplePdf;
       const inputData = '<div>This is a HTML content</div>';
