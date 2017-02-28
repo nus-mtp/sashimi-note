@@ -86,6 +86,10 @@ export default {
   computed: {
   },
   mounted() {
+    console.log(this.$route.query.id);
+
+    // if id != null
+    //  load content
   }
 };
 
