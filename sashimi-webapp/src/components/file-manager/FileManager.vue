@@ -1,9 +1,7 @@
 <template>
   <div>
     <userInputs v-model="action"></userInputs>
-    <div class="documents">
-      <documents :action="action"></documents>
-    </div>
+    <documents :action="action"></documents>
   </div>
 </template>
 
