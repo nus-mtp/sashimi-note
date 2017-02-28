@@ -17,6 +17,7 @@
   import documentPackager from 'src/logic/documentPackager';
   import urlHelper from 'src/helpers/url';
   import pdfjsRenderer from 'src/helpers/pdfjsRenderer';
+  import { PageRenderer } from 'src/helpers/pageRenderer';
 
   Vue.use(AsyncComputed);
   const throttleTime = 200;
@@ -47,9 +48,14 @@
     data() {
       return {
         viewMode: '',
+        pr: null,
         pagesRenderThrottleFn: _.throttle((markdownString) => {
           documentPackager.getHtmlData(markdownString)
-          .then(renderPagesToDom);
+          // .then(renderPagesToDom);
+          .then((htmlString) => {
+            if (!this.pr) this.pr = new PageRenderer('viewer-container');
+            this.pr.write(htmlString);
+          });
         }, throttleTime),
         slidesRenderThrottleFn: _.throttle((markdownString) => {
           documentPackager.getSlidesData(markdownString)
@@ -96,21 +102,25 @@
   #viewer-container {
     transform: scale(0.75);
     transform-origin: top left;
-    
+
+    .page-view {
+      margin: 50px;
+    }
+  }
+  
+  #viewer-container,
+  #reference-frame-of-viewer-container {   
     .page-view {
       box-shadow: 1px 1px 4px 1px rgba(0, 0, 0, 0.3);
-      width: 21cm;
-      height: 29.7cm;
       position: relative;
-      margin: 50px;
-      padding: 1.2cm;
       box-sizing: border-box;
       background-color: white;
-
-      img {
-        width: 100%;
-      }
     }
+    
+    img, pre, blockquote, p {
+      width: 100%;
+    }
+
   }
 
 
