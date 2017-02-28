@@ -1,13 +1,13 @@
 import unitConverter from 'src/helpers/unitConverter';
 
 const defaultConfig = {
-
   prefix: {
-    reference: 'reference-frame-of-'
+    reference: 'reference-frame-of-',
+    className: 'page-view',
   },
 
   /**
-   * Default target page size
+   * Default target page size (Portrait - A4)
    */
   page: {
     width: '21cm',
@@ -23,36 +23,33 @@ const defaultConfig = {
 
 
 /**
- * A PageRenderer instance that is used to contain the
+ * Constructor for the PageRenderer instance that is used to contain the
  * source HTML and CSS data and the render target's id and page size
  * @param {string} renderDomId
- * @param {Object} [page] - A page config containing information about the page sizing
- * @param {string} [page.width] - in css width.
- * @param {string} [page.height] - in css height.
- * @param {Object} [page.padding] - for setting the inner the padding size used on the page.
- * @param {string} [page.padding.top] - the css padding top of the page.
+ * @param {Object} page - A page config containing information about the page sizing
+ * @param {string} page.width - in css width.
+ * @param {string} page.height - in css height.
+ * @param {Object} page.padding - for setting the inner the padding size used on the page.
  */
-/* eslint import/prefer-default-export: 0 */
-export function PageRenderer(renderDomId, page) {
-  // Use default page sizing if not provided
+export default function PageRenderer(renderDomId, page) {
+  // Set page sizing. Use default if not provided
   this.page = page || defaultConfig.page;
 
-  /**
-   * HTML string used for this rendering
-   * @type {string}
-   */
-  this.sourceHTML = null;
-
+  // Set renderFrame and id
   this.renderDomId = renderDomId;
   if (!this.renderDomId) {
     throw new Error('Target DOM id is not provided');
   }
-
   this.renderFrame = document.getElementById(renderDomId);
   if (!this.renderFrame) {
     throw new Error(`Element with id='${renderDomId}' is not found at this moment`);
   }
+
+  // Set reference frame
   this.referenceFrame = this.getReferenceFrame();
+
+  // Set sourceHTML
+  this.sourceHTML = null;
 }
 
 /**
@@ -103,15 +100,16 @@ PageRenderer.prototype.getReferenceFrame = function getReferenceFrame() {
   return referenceFrame;
 };
 
-// Static methods
-PageRenderer.isPageRenderer = object => object instanceof PageRenderer;
-
 // Private methods
 /**
- * @return a promise after html is loaded
+ * Render HTML content into a referenceFrame.
+ * This function will cause the reflowing of HTML content
+ * within the width of the referenceFrame.
+ * @return {Promise} promise after the HTML has rendered
  */
-const updateReferenceFrame = function updateReferenceFrame(ele, htmlString) {
-  ele.innerHTML = htmlString;
+const updateReferenceFrame = function updateReferenceFrame(referenceFrame, htmlString) {
+  const rf = referenceFrame;
+  rf.innerHTML = htmlString;
 
   // Special check for image loading
   // A similar checking might be needed for external plugin
@@ -119,11 +117,11 @@ const updateReferenceFrame = function updateReferenceFrame(ele, htmlString) {
     // TODO: Need to reject promise after timeout
     // in case the images is taking too long to load.
 
-    const imageArray = ele.getElementsByTagName('img');
+    const imageArray = rf.getElementsByTagName('IMG');
     let countLoadedImage = 0;
     const checkForLoadingCompletion = () => {
       if (countLoadedImage === imageArray.length) {
-        resolve(ele);
+        resolve(rf);
       }
     };
     const increateLoadedImageCount = () => {
@@ -139,6 +137,10 @@ const updateReferenceFrame = function updateReferenceFrame(ele, htmlString) {
   });
 };
 
+/**
+ * Get the height of all elements inside a referenceFrame.
+ * @return {array} childHeights - array containing reference to each elements and its respective height
+ */
 const getChildHeights = function getChildHeights(referenceFrame) {
   const childNodes = referenceFrame.childNodes;
   const childArray = Object.keys(childNodes).map(key => childNodes[key]);
@@ -158,6 +160,7 @@ const getChildHeights = function getChildHeights(referenceFrame) {
                 // Get node's margin
                 const nodeMargin = parseFloat(nodeStyle.marginTop, 10) +
                                    parseFloat(nodeStyle.marginBottom, 10);
+
                 return ({
                   height: nodeHeight + nodeMargin,
                   ele: childNode
@@ -203,7 +206,14 @@ VirtualPage.prototype.forceAdd = function forceAdd(element) {
   return remainingHeight;
 };
 
-const getPaginationVirtualDom = function getPaginationVirtualDom(pageRenderer, eleHeightArray) {
+/**
+ * This function will take in an array of elements with their heights information
+ * to organise them into an array of page according to the page size specified.
+ * @param {PageRenderer} pageRenderer
+ * @param {array} childHeights - array containing reference to each elements and its respective height
+ * @return {array} virtualBookPages - array of pages containing references to element
+ */
+const getPaginationVirtualDom = function getPaginationVirtualDom(pageRenderer, childHeights) {
   const pr = pageRenderer;
   const pageSize = pr.page;
 
@@ -211,55 +221,60 @@ const getPaginationVirtualDom = function getPaginationVirtualDom(pageRenderer, e
                          parseFloat(unitConverter.get(pageSize.padding.top, 'px'), 10) +
                          parseFloat(unitConverter.get(pageSize.padding.bottom, 'px'), 10)
                        );
-  console.log(renderHeight, pageSize.height, pageSize.padding.top, pageSize.padding.bottom);
 
-  const book = new VirtualBook();
-
+  const virtualBook = new VirtualBook();
   let virtualPage = new VirtualPage(renderHeight);
 
   // Allocate element in pages within the render height
-  eleHeightArray.forEach((element, index) => {
+  childHeights.forEach((element, index) => {
     try {
       virtualPage.add(element);
-      console.log(index, 'added', virtualPage.filledHeight, element);
     } catch (error) {
-      // Store existing page
-      book.add(virtualPage);
-      // create a new page
+      // Store existing page first
+      virtualBook.add(virtualPage);
 
       if (error.message === 'Element is larger than page') {
-        if (virtualPage.filledHeight === 0) {
-          // if at the beginning of page,
-          // don't create new page, just insert
-        } else {
+        if (virtualPage.filledHeight > 0) {
+          // if currently not at the beginning of page,
+          // create new page before inserting.
+          // TODO: Consider breaking element into smaller chunk
           virtualPage = new VirtualPage(renderHeight);
         }
         virtualPage.forceAdd(element);
-        console.log(index, 'force', virtualPage.filledHeight, element);
       } else if (error.message === 'Page is full') {
         virtualPage = new VirtualPage(renderHeight);
         virtualPage.add(element);
-        console.log(index, 'next', virtualPage.filledHeight, element);
+      } else {
+        throw error;
       }
     }
   });
 
-  book.add(virtualPage);
-  console.log(book.pages);
-  return book.pages;
+  virtualBook.add(virtualPage);
+  return virtualBook.pages;
 };
 
-const renderPage = function renderPage(pageRenderer, virtualDom) {
-  if (!pageRenderer || !virtualDom) {
+/**
+ *  Render DOM into the renderFrame of the given pageRenderer
+ *  @param {PageRenderer} pageRenderer - to supply page sizing and renderFrame
+ *  @param {array} virtualBookPages - array of pages containing references to element
+ */
+const renderPage = function renderPage(pageRenderer, virtualBookPages) {
+  if (!pageRenderer || !virtualBookPages) {
     throw new Error('parameters is null or undefined');
   }
   const pr = pageRenderer;
-  const containerHolder = document.createElement('DIV');
 
-  virtualDom.forEach((page) => {
+  // Remove all existing children of renderFrame
+  while (pr.renderFrame.firstChild) {
+    pr.renderFrame.removeChild(pr.renderFrame.firstChild);
+  }
+
+  // Recreate pages for renderFrame
+  virtualBookPages.forEach((page) => {
     // Create a new page
     const pageDiv = document.createElement('DIV');
-    pageDiv.setAttribute('class', 'page-view');
+    pageDiv.setAttribute('class', defaultConfig.prefix.className);
     const refStyle = {
       // CSS to set up the page sizing
       width: pr.page.width,
@@ -273,60 +288,45 @@ const renderPage = function renderPage(pageRenderer, virtualDom) {
       pageDiv.style[styleKey] = refStyle[styleKey];
     });
 
-    containerHolder.appendChild(pageDiv);
+    pr.renderFrame.appendChild(pageDiv);
 
     // Put content into the page
     page.elements.forEach((node) => {
       pageDiv.appendChild(node.ele);
     });
   });
-
-  return containerHolder;
 };
 
-const updateRenderer = function updateRenderer() {
-  const pr = this;
-  if (!PageRenderer.isPageRenderer(pr)) {
-    throw new Error('Attempted to call a instance method without an instance');
-  }
-
-  updateReferenceFrame(pr.referenceFrame, pr.sourceHTML)
+// Public instance methods
+/**
+ * Trigger the rendering process of the pageRenderer instance
+ * @return {Promise} promise - to indicate the completion of the rendering process
+ */
+PageRenderer.prototype.render = function render() {
+  return updateReferenceFrame(this.referenceFrame, this.sourceHTML)
   .then(getChildHeights)
-  .then(childHeights => getPaginationVirtualDom(pr, childHeights))
-  .then(virtualDom => renderPage(pr, virtualDom))
-  .then((virtualDom) => {
-    pr.renderFrame.innerHTML = virtualDom.innerHTML;
-  });
+  .then(childHeights => getPaginationVirtualDom(this, childHeights))
+  .then(virtualDom => renderPage(this, virtualDom));
 };
 
-// Public methods
+/**
+ * Update the HTML content of the page renderer.
+ * This will trigger the rendering process.
+ * @param {string} htmlString
+ * @return {Promise} promise - to indicate the completion of the rendering process
+ */
 PageRenderer.prototype.write = function write(htmlString) {
   this.sourceHTML = htmlString;
-  updateRenderer.apply(this);
+  return this.render();
 };
-/**  2. Get elements height
- *    - Collect all elements from the reference frame
- *    - Get the computed height (with margin, padding & border)
- *      of each elements
- *    - Required parameter:
- *        > Access to reference frame
- *
- *  3. Build virtual DOM of pages
- *    - Organise nodes into target page
- *    - Required parameter:
- *        > elements height
- *        > target page height
- *
- *  4. Render DOM into the view
- *    - Required parameter:
- *        > Virtual DOM
- *        > Target id
+
+/**
+ * Update the page size of the page renderer.
+ * This will trigger the rendering process.
+ * @param {pageConfig} htmlString
+ * @return {Promise} promise - to indicate the completion of the rendering process
  */
-
-PageRenderer.prototype.render = function render(htmlString) {
-  this.sourceHTML = htmlString;
-};
-
 PageRenderer.prototype.updatePageSize = function write(pageConfig) {
   this.page = pageConfig;
+  return this.render();
 };
