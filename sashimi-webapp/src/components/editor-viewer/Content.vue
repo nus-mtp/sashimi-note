@@ -19,7 +19,6 @@ import navbar from './Navbar';
 import viewer from './Viewer';
 import editor from './Editor';
 
-/* eslint prefer-const: 0 */
 export default {
   components: {
     navbar,
