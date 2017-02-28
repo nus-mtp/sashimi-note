@@ -37,12 +37,12 @@ export default {
       editorCols: {
         span_6_of_12: true,
         span_12_of_12: false,
-        hide: false
+        span_0_of_12: false
       },
       viewerCols: {
         span_6_of_12: true,
         span_12_of_12: false,
-        hide: false
+        span_0_of_12: false
       }
     };
   },
@@ -57,16 +57,16 @@ export default {
             this.editorCols.span_6_of_12 = false;
             this.viewerCols.span_6_of_12 = false;
             this.viewerCols.span_12_of_12 = false;
-            this.viewerCols.hide = true;
-            this.editorCols.hide = false;
+            this.viewerCols.span_0_of_12 = true;
+            this.editorCols.span_0_of_12 = false;
             break;
           case 'viewer':
             this.editorCols.span_12_of_12 = false;
             this.editorCols.span_6_of_12 = false;
             this.viewerCols.span_6_of_12 = false;
             this.viewerCols.span_12_of_12 = true;
-            this.editorCols.hide = true;
-            this.viewerCols.hide = false;
+            this.editorCols.span_0_of_12 = true;
+            this.viewerCols.span_0_of_12 = false;
             break;
           default:
           // split screen
@@ -74,8 +74,8 @@ export default {
             this.viewerCols.span_6_of_12 = true;
             this.editorCols.span_12_of_12 = false;
             this.viewerCols.span_12_of_12 = false;
-            this.editorCols.hide = false;
-            this.viewerCols.hide = false;
+            this.editorCols.span_0_of_12 = false;
+            this.viewerCols.span_0_of_12 = false;
             break;
         }
       }
@@ -99,4 +99,11 @@ export default {
 .hide {
   display: none;
 }
+
+.span_6_of_12,
+.span_12_of_12,
+.span_0_of_12 {
+  transition: width 0.7s;
+}
+
 </style>
