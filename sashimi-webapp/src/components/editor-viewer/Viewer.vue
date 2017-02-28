@@ -1,13 +1,29 @@
 <template>
   <div class="viewer">
-    <div v-html="getMarkdown">
+    <div v-if="fileFormat === 'pages'">
+      <div id="viewer-pages">
+        <div id='viewer-pages-container'></div>
+      </div>
+    </div>
+    <div v-else-if="fileFormat === 'slides'">
+      <div id="viewer-slides" v-html="getHtmlData">
+      </div>
+    </div>
+    <div v-else>
+      <div id="viewer-html" v-html="getHtmlData">
+      </div>
     </div>
   </div>
 </template>
 
 <script>
-  import wrapper from '../../logic/wrapper';
+  import Vue from 'vue';
+  import AsyncComputed from 'vue-async-computed';
+  import documentPackager from 'src/logic/documentPackager';
+  import urlHelper from 'src/helpers/url';
 
+  Vue.use(AsyncComputed);
+  
   export default {
     props: ['editorContent', 'fileFormat'],
     watch: {
@@ -16,6 +32,13 @@
       getMarkdown() {
         return wrapper.render(this.editorContent);
       },
+    },
+    asyncComputed: {
+      getHtmlData() {
+        return documentPackager.getHtmlData(this.editorContent);
+      },
+    },
+    mounted() {
     }
   };
 </script>
