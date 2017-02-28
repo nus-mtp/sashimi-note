@@ -13,7 +13,6 @@ import viewer from './Viewer';
 /* eslint no-unused-vars: 0 */
 let codeMirrorInstance = null;
 
-
 /* eslint prefer-const: 0 */
 export default {
   components: {
@@ -62,6 +61,21 @@ export default {
 
 .editor {
   box-shadow: 4px 0 12px 0px rgba(0, 0, 0, 0.2);
-  height: calc(100vh - #{$navbar-height});
+  height: calc(100vh - #{$content-navbar-height});
+}
+</style>
+
+<style lang="scss">
+.editor {
+  .CodeMirror.cm-s-base16-dark {
+    height: 100%;
+  }
+
+  .CodeMirror-lines {
+    .CodeMirror-code {
+      color: #dedede;
+      font-family: monospace;
+    }
+  }
 }
 </style>

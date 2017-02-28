@@ -137,24 +137,6 @@ img {
   }
 }
 
-.CodeMirror {
-  .CodeMirror-gutters {
-    background-color: white;
-  }
-}
-
-.CodeMirror.cm-s-base16-dark {
-  height: calc(100vh - #{$navbar-height});
-}
-
-.CodeMirror-lines {
-  .CodeMirror-code {
-    line-height: 1.4em;
-    color: #dedede;
-    font-family: monospace;
-  }
-}
-
 .vertical-align-child > * {
   vertical-align: middle;
 }
