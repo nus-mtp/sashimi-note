@@ -80,20 +80,13 @@ img {
     -webkit-filter: drop-shadow(1px 1px 2px pink);
     filter: drop-shadow(1px 1px 2px pink);
   }
+}
 
-  &.hvr-grow-shadow {
-    box-shadow: none;
-
-    @include navbar-buttons-hover-shadow-color("#upload-image", transparent);
-    @include navbar-buttons-hover-shadow-color("#upload-image", #b79ef7);
-    @include navbar-buttons-hover-shadow-color("#plugins", #64bcad);
-    @include navbar-buttons-hover-shadow-color("#annotate", #ffafe5);
-    @include navbar-buttons-hover-shadow-color("#share-file", #7abcf9);
-    @include navbar-buttons-hover-shadow-color("#new-file", transparent);
-    @include navbar-buttons-hover-shadow-color("#manage-file", transparent);
-    @include navbar-buttons-hover-shadow-color("#button-editor", #b570a5);
-    @include navbar-buttons-hover-shadow-color("#button-viewer", #5d96b7);
-    @include navbar-buttons-hover-shadow-color("#button-split-screen", #a06346);        
+.hover-grow {
+  &:hover {
+    transform: scale(1.2);
+    transition: transform 0.5s;
+    -webkit-transition: transform 0.5s;
   }
 }
 
