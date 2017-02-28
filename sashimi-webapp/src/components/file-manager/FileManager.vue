@@ -31,6 +31,6 @@ export default {
 @import 'src/assets/styles/variables.scss';
 
 .documents {
-  height: calc(100% - $navbar-height);
+  height: calc(100% - #{$navbar-height});
 }
 </style>
