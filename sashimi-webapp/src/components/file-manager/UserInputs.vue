@@ -106,7 +106,7 @@ export default {
 
 .userActions {
   background-color: #F7F7F7;
-  box-shadow: 0 2px 10px rgba(0,0,0,0.12);
+  box-shadow: 0 2px 10px rgba(0,0,0,0.2);
   padding-top: 3px;
   padding-bottom: 3px;
 }
