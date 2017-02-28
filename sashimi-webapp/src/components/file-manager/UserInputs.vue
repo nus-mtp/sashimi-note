@@ -14,44 +14,62 @@
       </div>
     </div>
     <div class="section group navbar userActions vertical-align-child">
-      <div class="col breadcrumb float-left">
-        <ul class="navbar-breadcrumb">
-          <li><a href="#">Home</a></li>
-          <li><a href="#">Blah</a></li>
-          <li>Blah</li>
-        </ul>
-      </div>
-      <div class="vertical-align-child float-right">
-        <div class="col buttons">
-          <button class="navbar-buttons hvr-grow-shadow">
-            <img src="../../assets/images/buttons/button-upload-file.svg" class="button-img" alt="delete">
-          </button>
-          <button class="navbar-buttons hvr-grow-shadow">
-            <img src="../../assets/images/buttons/button-add-new.svg" class="button-img" alt="delete">
-          </button>
-          <button class="navbar-buttons hvr-grow-shadow">
-            <img src="../../assets/images/buttons/button-duplicate.svg" class="button-img" alt="delete">
-          </button>
-          <button class="navbar-buttons hvr-grow-shadow">
-            <img src="../../assets/images/buttons/button-download.svg" class="button-img" alt="delete">
-          </button>
-          <button class="navbar-buttons hvr-grow-shadow">
-            <img src="../../assets/images/buttons/button-delete.svg" class="button-img" alt="delete">
-          </button>
-        </div>
-        <div class="col vertical-align-child view ">
-          <a href="#"><strong>ICON</strong></a> |
-          <a href="#">List</a>
-        </div>
-      </div>
+      <table class="col breadcrumb float-left">
+        <tr>
+          <td>
+            <ul class="navbar-breadcrumb">
+              <li><a href="#">Home</a></li>
+              <li><a href="#">Blah</a></li>
+              <li>Blah</li>
+            </ul>
+          </td>
+        </tr>
+      </table>
+      <table class="vertical-align-child float-right">
+        <tr>
+          <div class="col buttons">
+            <td>
+              <button class="navbar-buttons hvr-grow-shadow">
+                <img src="../../assets/images/buttons/button-upload-file.svg" class="button-img" alt="delete">
+              </button>
+            </td>
+            <td>
+              <button class="navbar-buttons hvr-grow-shadow">
+                <img src="../../assets/images/buttons/button-add-new.svg" class="button-img" alt="delete">
+              </button>
+            </td>
+            <td>
+              <button class="navbar-buttons hvr-grow-shadow">
+                <img src="../../assets/images/buttons/button-duplicate.svg" class="button-img" alt="delete">
+              </button>
+            </td>
+            <td>
+              <button class="navbar-buttons hvr-grow-shadow">
+                <img src="../../assets/images/buttons/button-download.svg" class="button-img" alt="delete">
+              </button>
+            </td>
+            <td>
+              <button class="navbar-buttons hvr-grow-shadow">
+                <img src="../../assets/images/buttons/button-delete.svg" class="button-img" alt="delete">
+              </button>
+            </td>
+          </div>
+          <td>
+            <div class="col vertical-align-child view ">
+              <a href="#"><strong>ICON</strong></a> |
+              <a href="#">List</a>
+            </div>
+          </td>
+        </tr>
+      </table>
     </div>
   </div>
 </template>
 
 <script>
 export default {
+  props: ['value'],
 };
-
 </script>
 
 <style scoped lang="scss">
@@ -115,8 +133,10 @@ export default {
 }
 
 .navbar-buttons {
+  margin: 0 2px; 
+
   img {
-    width: 32px;
+    width: 26px;
   }
 }
 
@@ -148,5 +168,9 @@ export default {
       width: 70%;
     }
   }
+}
+
+td {
+  vertical-align: middle;
 }
 </style>
