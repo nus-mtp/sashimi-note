@@ -160,6 +160,10 @@ export default {
   }
 }
 
+td {
+  vertical-align: middle;
+}
+
 @media screen and (min-width: 768px) {
   .button-logo {
     width: $button-logo-width;
@@ -173,9 +177,5 @@ export default {
       width: 70%;
     }
   }
-}
-
-td {
-  vertical-align: middle;
 }
 </style>
