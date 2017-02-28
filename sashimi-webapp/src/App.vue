@@ -138,8 +138,6 @@ img {
 }
 
 .CodeMirror {
-  box-shadow: 4px 0 12px 0px rgba(0, 0, 0, 0.2);
-  
   .CodeMirror-gutters {
     background-color: white;
   }
@@ -150,8 +148,6 @@ img {
 }
 
 .CodeMirror-lines {
-  overflow-wrap: break-word;
-  
   .CodeMirror-code {
     line-height: 1.4em;
     color: #dedede;
