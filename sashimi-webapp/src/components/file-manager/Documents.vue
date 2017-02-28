@@ -10,6 +10,12 @@ import folder from './Folder';
 import file from './File';
 
 export default {
+  props: ['action'],
+  watch: {
+    action(value) {
+      // compute action based on value
+    },
+  },
   components: {
     folder,
     file,

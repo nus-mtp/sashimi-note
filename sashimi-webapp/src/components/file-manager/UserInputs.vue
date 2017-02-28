@@ -56,8 +56,8 @@
           </div>
           <td>
             <div class="col vertical-align-child view ">
-              <a href="#"><strong>ICON</strong></a> |
-              <a href="#">List</a>
+              <button class="navbar-buttons" v-on:click="setAction('iconView')"><strong>ICON</strong></button>|
+              <button class="navbar-buttons" v-on:click="setAction('listView')"><a href="#">List</a></button>
             </div>
           </td>
         </tr>
@@ -69,6 +69,11 @@
 <script>
 export default {
   props: ['value'],
+  methods: {
+    setAction(action) {
+      this.$emit('input', action);
+    }
+  }
 };
 </script>
 

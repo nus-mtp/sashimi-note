@@ -1,8 +1,8 @@
 <template>
   <div>
-    <userInputs></userInputs>
+    <userInputs v-model="action"></userInputs>
     <div class="documents">
-      <documents></documents>
+      <documents :action="action"></documents>
     </div>
   </div>
 </template>
@@ -16,6 +16,16 @@ export default {
     documents,
     userInputs,
   },
+  data() {
+    return {
+      action: '',
+    };
+  },
+  watch: {
+    action(value) {
+      console.log(value);
+    }
+  }
 };
 
 </script>
