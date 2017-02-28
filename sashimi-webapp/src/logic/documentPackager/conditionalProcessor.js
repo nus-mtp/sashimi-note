@@ -99,8 +99,6 @@ function hideShowBlock(state, startLine, endLine, silent) {
     return false;
   }
 
-  if (pos + 8 > max) { return false; }
-
   // Check if got category e.g. ==>hide:slides ...
   if (state.src.charCodeAt(pos + 7) === 58  /* : */) {
     hasCategory = true;
@@ -216,8 +214,6 @@ function hideShowBlock(state, startLine, endLine, silent) {
         state.lineMax = oldLineMax;
         state.line = nextLine + 1;
         return true;
-      } else {
-        return false;
       }
     }
   }
@@ -240,3 +236,5 @@ export default function hideShowPlugin(md) {
   md.inline.ruler.after('emphasis', 'hideShowInline', hideShowInline);
   md.block.ruler.after('table', 'hideShowBlock', hideShowBlock);
 }
+
+// Future note: can use hideShowPlugin.setCon = function() {...} for setting fileName variable
