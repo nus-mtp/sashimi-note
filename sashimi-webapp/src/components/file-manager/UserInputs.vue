@@ -55,8 +55,8 @@
             </td>
           </div>
           <td>
-            <div class="col vertical-align-child view ">
-              <button class="navbar-buttons" v-on:click="setAction('iconView')"><strong>ICON</strong></button>|
+            <div class="col vertical-align-child view">
+              <button class="navbar-buttons" v-on:click="setAction('iconView')">Icon</button>|
               <button class="navbar-buttons" v-on:click="setAction('listView')"><a href="#">List</a></button>
             </div>
           </td>
@@ -115,7 +115,7 @@ export default {
 .navbar-breadcrumb {
   list-style: none;
   margin-top: 10px;
-  font-size: 15px;
+  font-size: $navbar-font-size;
   padding-left: 0;
 
   li {
@@ -150,7 +150,8 @@ export default {
 }
 
 .view {
-  margin-left: 15px;
+  font-size: $navbar-font-size;
+
   a {
     text-decoration: none;
 
