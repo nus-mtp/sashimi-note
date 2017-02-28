@@ -17,7 +17,6 @@ export default {
 <style lang="scss">
 @import 'assets/styles/loader.scss';
 
-
 body {
   margin: 0;
   font-size: 18px;
@@ -56,6 +55,10 @@ img {
 
 .inline-block {
   display: inline-block;
+}
+
+.span_0_of_12 {
+  width: 0;
 }
 
 .navbar {
