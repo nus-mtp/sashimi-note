@@ -1,6 +1,14 @@
 <template>
-  <div class="group section">
+  <div class="group section" v-bind:class="view">
     <folder></folder>
+    <file></file>
+    <file></file>
+    <file></file>
+    <file></file>
+    <file></file>
+    <file></file>
+    <file></file>
+    <file></file>
     <file></file>
   </div>
 </template>
@@ -11,9 +19,24 @@ import file from './File';
 
 export default {
   props: ['action'],
+  data() {
+    return {
+      view: {
+        iconView: true,
+        listView: false
+      },
+    };
+  },
   watch: {
     action(value) {
       // compute action based on value
+      if (value === 'iconView') {
+        this.view.iconView = true;
+        this.view.listView = false;
+      } else {
+        this.view.iconView = false;
+        this.view.listView = true;
+      }
     },
   },
   components: {
@@ -24,29 +47,54 @@ export default {
 </script>
 
 <style lang="scss">
-.folder,
-.file   {
-  width: 120px;
-  height: 120px;
-  text-align: center;
-  position: relative;
-  margin-right: 30px;
+@import 'src/assets/styles/variables.scss';
+.iconView {
+  padding: 20px;
 
-  img {
+  .folder,
+  .file   {
     width: 120px;
-  }
+    height: 120px;
+    text-align: center;
+    position: relative;
+    margin-right: 30px;
 
-  p {
-    position: absolute;
-    top: 15px;
-    left: 0;
-    bottom: 0;
-    right: 0;
-    width: 60px;
-    height: 40px;
-    margin: auto;
+    img {
+      width: 120px;
+    }
+
+    p {
+      font-size: 13px;
+      position: absolute;
+      top: 15px;
+      left: 0;
+      bottom: 0;
+      right: 0;
+      width: 60px;
+      height: 40px;
+      margin: auto;
+      overflow: hidden;
+      overflow-wrap: break-word;
+    }
+  }
+}
+
+.listView {
+  .folder,
+  .file {
+    width: 100%;
+    border-bottom: 1px solid $navbar-border-color;
+    vertical-align: middle;
+    padding: 10px 20px;
+    text-overflow: ellipsis;
     overflow: hidden;
-    overflow-wrap: break-word;
+    white-space: nowrap;
+  }
+  img {
+    width: 50px;
+  }
+  p {
+    font-size: 16px;
   }
 }
 </style>

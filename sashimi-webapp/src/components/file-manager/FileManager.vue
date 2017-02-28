@@ -22,9 +22,6 @@ export default {
     };
   },
   watch: {
-    action(value) {
-      console.log(value);
-    }
   }
 };
 
@@ -34,7 +31,6 @@ export default {
 @import 'src/assets/styles/variables.scss';
 
 .documents {
-  padding: 20px;
+  height: calc(100% - $navbar-height);
 }
-
 </style>
