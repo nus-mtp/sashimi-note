@@ -56,8 +56,8 @@
           </div>
           <td>
             <div class="col vertical-align-child view">
-              <button class="navbar-buttons" v-on:click="setAction('iconView')">Icon</button>|
-              <button class="navbar-buttons" v-on:click="setAction('listView')"><a href="#">List</a></button>
+              <button class="navbar-buttons hvr-grow-shadow" v-on:click="setAction('iconView')">Icon</button>|
+              <button class="navbar-buttons hvr-grow-shadow" v-on:click="setAction('listView')">List</button>
             </div>
           </td>
         </tr>
@@ -81,7 +81,6 @@ export default {
 @import 'src/assets/styles/variables.scss';
 
 .userInputs {
-  overflow: hidden;
   border-bottom: 1px solid $navbar-border-color;
 }
 
