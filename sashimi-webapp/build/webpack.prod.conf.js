@@ -103,15 +103,4 @@ if (config.build.bundleAnalyzerReport) {
   webpackConfig.plugins.push(new BundleAnalyzerPlugin())
 }
 
-// Naively adding support for worker file
-webpackConfigArr = [webpackConfig, {
-  entry: {
-    'pdf.worker': 'pdfjs-dist/build/pdf.worker.entry'
-  },
-  output: {
-    path: config.build.assetsRoot,
-    filename: utils.assetsPath('workers/[name].js'),
-  }
-}];
-
-module.exports = webpackConfigArr;
+module.exports = webpackConfig;

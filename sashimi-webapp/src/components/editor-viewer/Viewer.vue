@@ -16,7 +16,6 @@
   import _ from 'lodash';
   import documentPackager from 'src/logic/documentPackager';
   import urlHelper from 'src/helpers/url';
-  import pdfjsRenderer from 'src/helpers/pdfjsRenderer';
   import PageRenderer from 'src/helpers/pageRenderer';
 
   Vue.use(AsyncComputed);
@@ -26,14 +25,6 @@
   // Currently the viewMode is being obtained via query string:
   // ?viewMode=pages
   // TOOD: In release, the viewMode should be passed down from the parent instead.
-
-  const renderPdfToDom = ((pdfBase64) => {
-    pdfjsRenderer.renderCanvasView(pdfBase64, 'viewer-container');
-  });
-  
-  const renderPagesToDom = ((htmlString) => {
-    pdfjsRenderer.renderView(htmlString, 'viewer-container');
-  });
 
   const updateViewer = ((vueComponent) => {
     if (vueComponent.viewMode === 'pages') {
@@ -48,18 +39,34 @@
     data() {
       return {
         viewMode: '',
-        pr: null,
+        prPages: null,
+        prSlides: null,
         pagesRenderThrottleFn: _.throttle((markdownString) => {
           documentPackager.getHtmlData(markdownString)
-          // .then(renderPagesToDom);
           .then((htmlString) => {
-            if (!this.pr) this.pr = new PageRenderer('viewer-container');
-            this.pr.write(htmlString);
+            if (!this.prPages) this.prPages = new PageRenderer('viewer-container');
+            this.prPages.write(htmlString);
           });
         }, throttleTime),
         slidesRenderThrottleFn: _.throttle((markdownString) => {
-          documentPackager.getSlidesData(markdownString)
-          .then(renderPdfToDom);
+          documentPackager.getHtmlData(markdownString)
+          .then((htmlString) => {
+            if (!this.prSlides) {
+              this.prSlides = new PageRenderer(
+                'viewer-container',
+                {
+                  width: '14.8cm',
+                  height: '10.5cm',
+                  padding: {
+                    top: '1.2cm',
+                    bottom: '1.2cm',
+                    right: '1.2cm',
+                    left: '1.2cm'
+                  }
+                });
+            }
+            this.prSlides.write(htmlString);
+          });
         }, throttleTime),
       };
     },
@@ -120,10 +127,7 @@
     img, pre, blockquote, p {
       width: 100%;
     }
-
   }
-
-
   .viewer[data-viewmode="slides"],
   .viewer[data-viewmode="pages"] {
     background-color: #FAFAFA;

@@ -11,7 +11,7 @@ Object.keys(baseWebpackConfig.entry).forEach(function (name) {
   baseWebpackConfig.entry[name] = ['./build/dev-client'].concat(baseWebpackConfig.entry[name])
 })
 
-var webpackConfig = merge(baseWebpackConfig, { 
+module.exports = merge(baseWebpackConfig, {
   module: {
     rules: utils.styleLoaders({ sourceMap: config.dev.cssSourceMap })
   },
@@ -33,8 +33,3 @@ var webpackConfig = merge(baseWebpackConfig, {
     new FriendlyErrorsPlugin()
   ]
 })
-
-// Naively adding support for worker file
-webpackConfig.entry['static/workers/pdf.worker'] = 'pdfjs-dist/build/pdf.worker.entry';
-
-module.exports = webpackConfig;
