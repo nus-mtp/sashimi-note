@@ -51,13 +51,13 @@
         </div>
       </div>
       <div class="col vertical-align-child button-group-margin">
-        <label v-on:click="toggleActiveClass" v-bind:class="{active: isActive}" class="navbar-buttons hvr-grow-shadow" id="button-editor">
+        <button v-on:click="updateParent('editor')" class="navbar-buttons hvr-grow-shadow" id="button-editor">
           <img src="../../assets/images/buttons/button-edit.svg" class="button-img" alt="editor">
-        </label>
-        <button class="navbar-buttons hvr-grow-shadow" id="button-viewer">
+        </button>
+        <button v-on:click="updateParent('split')" class="navbar-buttons hvr-grow-shadow" id="button-viewer">
           <img src="../../assets/images/buttons/button-split-screen.svg" class="button-img" alt="split-view">
         </button>
-        <button class="navbar-buttons hvr-grow-shadow" id="button-split-screen">
+        <button v-on:click="updateParent('viewer')" class="navbar-buttons hvr-grow-shadow" id="button-split-screen">
           <img src="../../assets/images/buttons/button-view.svg" class="button-img" alt="viewer">
         </button>
       </div>
@@ -81,13 +81,8 @@ export default {
   },
   props: ['value'],
   methods: {
-    toggleActiveClass() {
-      if (!this.isActive) {
-        this.isActive = !this.isActive;
-      }
-    },
-    setFileFormat(format) {
-      this.$emit('input', format);
+    updateParent(action) {
+      this.$emit('input', action);
     },
   },
 };
@@ -111,7 +106,7 @@ export default {
 }
 
 .button-dropdown {
-  font-size: 16px;
+  font-size: $navbar-font-size;
   padding: 10px;
   box-sizing: border-box;
 
