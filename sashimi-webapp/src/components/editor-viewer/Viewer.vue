@@ -19,7 +19,7 @@
   import PageRenderer from 'src/helpers/pageRenderer';
 
   Vue.use(AsyncComputed);
-  const throttleTime = 200;
+  const throttleTime = 100;
 
   // getParameterByName is used to obtain the query string form the url.
   // Currently the viewMode is being obtained via query string:
