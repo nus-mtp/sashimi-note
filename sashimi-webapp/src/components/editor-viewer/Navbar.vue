@@ -44,9 +44,9 @@
             <img class="inline-block" src="../../assets/images/symbols/symbol-arrow-down.svg" alt="add">
           </button>
           <div class="dropdown-content">
-            <a href="#" v-on:click="updateParent('pages')">Pages</a><br>
-            <a href="#" v-on:click="updateParent('slides')">Slides</a><br>
-            <a href="#" v-on:click="updateParent('html')">HTML</a><br>
+            <button v-on:click="updateParent('pages')">Pages</button>
+            <button v-on:click="updateParent('slides')">Slides</button>
+            <button v-on:click="updateParent('html')">HTML</button>
           </div>
         </div>
       </div>
@@ -115,29 +115,37 @@ export default {
   }
 }
 
+.navbar-dropdown {
+  box-sizing: border-box;
+
+  &:hover {
+    .button-dropdown {
+      transform: scale(1.1);
+      border: 1px solid black;
+    }
+    .dropdown-content {
+      display:block;
+    }
+  }
+}
+
 .dropdown-content {
   display: none;
   position: absolute;
-  /*margin: 15px 15px 0 $left-margin-navbar-elements;*/
   min-width: 140px;
   border: 1px solid black;
   text-align: left;
   padding: 10px;
   background-color: white;
-}
 
-.navbar-dropdown {
-  box-sizing: border-box;
-
-  &:hover {
-    border: 1px solid black;
-
-    .button-dropdown {
-      font-weight: bold;
-    }
-    .dropdown-content {
-      display:block;
-    }
+  button {
+    border: none;
+    background-color: transparent;
+    cursor: pointer;
+    font-family: $general-font;
+    font-size: $navbar-font-size;
+    display: block;
+    padding: 8px;
   }
 }
 </style>
