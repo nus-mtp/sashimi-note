@@ -21,6 +21,12 @@ const defaultConfig = {
   }
 };
 
+const overwriteStyle = function overwriteStyle(target, source) {
+  Object.keys(source).forEach((styleKey) => {
+    target[styleKey] = source[styleKey];
+  });
+};
+
 
 /**
  * Constructor for the PageRenderer instance that is used to contain the
@@ -86,9 +92,7 @@ PageRenderer.prototype.getReferenceFrame = function getReferenceFrame() {
       paddingLeft: this.page.padding.left,
       paddingRight: this.page.padding.right
     };
-    Object.keys(refStyle).forEach((styleKey) => {
-      referenceFrame.style[styleKey] = refStyle[styleKey];
-    });
+    overwriteStyle(referenceFrame.style, refStyle);
 
     // Render reference frame to DOM
     if (!document.body) {
@@ -284,9 +288,7 @@ const renderPage = function renderPage(pageRenderer, virtualBookPages) {
       paddingLeft: pr.page.padding.left,
       paddingRight: pr.page.padding.right
     };
-    Object.keys(refStyle).forEach((styleKey) => {
-      pageDiv.style[styleKey] = refStyle[styleKey];
-    });
+    overwriteStyle(pageDiv.style, refStyle);
 
     pr.renderFrame.appendChild(pageDiv);
 
