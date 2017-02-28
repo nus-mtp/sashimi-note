@@ -44,9 +44,9 @@
             <img class="inline-block" src="../../assets/images/symbols/symbol-arrow-down.svg" alt="add">
           </button>
           <div class="dropdown-content">
-            <a href="#" v-on:click="setFileFormat('pages')">Pages</a><br>
-            <a href="#" v-on:click="setFileFormat('slides')">Slides</a><br>
-            <a href="#" v-on:click="setFileFormat('html')">HTML</a><br>
+            <a href="#" v-on:click="updateParent('pages')">Pages</a><br>
+            <a href="#" v-on:click="updateParent('slides')">Slides</a><br>
+            <a href="#" v-on:click="updateParent('html')">HTML</a><br>
           </div>
         </div>
       </div>
