@@ -1,6 +1,6 @@
 {
   "name": "lecture-note-2.0",
-  "version": "1.0.0",
+  "version": "0.21.3",
   "description": "A flexible and extensible document viewing and editing platform.",
   "author": "amoshydra <amoswwj@gmail.com>",
   "private": true,
@@ -70,6 +70,7 @@
     "ora": "^1.1.0",
     "phantomjs-prebuilt": "^2.1.14",
     "sass-loader": "^5.0.1",
+    "save": "^2.3.0",
     "selenium-server": "^3.0.1",
     "semver": "^5.3.0",
     "shelljs": "^0.7.6",
