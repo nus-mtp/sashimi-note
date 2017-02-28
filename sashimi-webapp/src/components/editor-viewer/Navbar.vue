@@ -1,7 +1,7 @@
 <template>
   <div class="section group navbar">
     <div class="col button-logo vertical-align-child">
-        <router-link to="/" class="vertical-align-child navbar-buttons hvr-grow-shadow" id="button-logo">
+        <router-link to="/" class="vertical-align-child navbar-buttons hover-grow" id="button-logo">
             <!--<img src="../../assets/images/buttons/button-back.svg" class="button-img" alt="back">-->
             <img src="../../assets/sashimi.svg" class="inline-block" alt="sashimi">
             <p class="inline-block">
@@ -11,25 +11,25 @@
     </div>
     <div class="col float-left vertical-align-child button-group-margin">
       <div class="image-upload">
-        <label for="file-input" class="navbar-buttons hvr-grow-shadow" id="upload-image">
+        <label for="file-input" class="navbar-buttons hover-grow" id="upload-image">
           <img src="../../assets/images/buttons/button-upload-image.svg" class="button-img" alt="upload-image">
         </label>
         <input type="file" id="file-input">
       </div>
-      <button class="navbar-buttons hvr-grow-shadow" id="plugins">
+      <button class="navbar-buttons hover-grow" id="plugins">
         <img src="../../assets/images/buttons/button-plugins.svg" class="button-img" alt="plugins">
       </button>
-      <button class="navbar-buttons hvr-grow-shadow" id="annotate">
+      <button class="navbar-buttons hover-grow" id="annotate">
         <img src="../../assets/images/buttons/button-annotate.svg" class="button-img" alt="annotate">
       </button>
-      <button class="navbar-buttons hvr-grow-shadow" id="share-file">
+      <button class="navbar-buttons hover-grow" id="share-file">
         <img src="../../assets/images/buttons/button-share-file.svg" class="button-img" alt="share">
       </button>
     </div>
     <div class="float-right">
       <div class="col inline-block">
         <div class="navbar-dropdown inline-block">
-          <button class="button-dropdown button-group-margin vertical-align-child navbar-buttons hvr-grow-shadow" id="new-file">
+          <button class="button-dropdown button-group-margin vertical-align-child navbar-buttons hover-grow" id="new-file">
             <img class="inline-block" src="../../assets/images/symbols/symbol-add.svg" alt="add"> 
             <p class="inline-block">New</p>  
           </button>
@@ -39,7 +39,7 @@
           </div>
         </div>
         <div class="navbar-dropdown inline-block">
-          <button class="button-dropdown button-group-margin vertical-align-child navbar-buttons hvr-grow-shadow" id="manage-file">
+          <button class="button-dropdown button-group-margin vertical-align-child navbar-buttons hover-grow" id="manage-file">
             <p class="inline-block">Manage</p> 
             <img class="inline-block" src="../../assets/images/symbols/symbol-arrow-down.svg" alt="add">
           </button>
@@ -51,19 +51,14 @@
         </div>
       </div>
       <div class="col vertical-align-child button-group-margin">
-        <button v-on:click="updateParent('editor')" class="navbar-buttons hvr-grow-shadow" id="button-editor">
+        <button v-on:click="updateParent('editor')" class="navbar-buttons hover-grow" id="button-editor">
           <img src="../../assets/images/buttons/button-edit.svg" class="button-img" alt="editor">
         </button>
-        <button v-on:click="updateParent('split')" class="navbar-buttons hvr-grow-shadow" id="button-viewer">
+        <button v-on:click="updateParent('split')" class="navbar-buttons hover-grow" id="button-viewer">
           <img src="../../assets/images/buttons/button-split-screen.svg" class="button-img" alt="split-view">
         </button>
-        <button v-on:click="updateParent('viewer')" class="navbar-buttons hvr-grow-shadow" id="button-split-screen">
+        <button v-on:click="updateParent('viewer')" class="navbar-buttons hover-grow" id="button-split-screen">
           <img src="../../assets/images/buttons/button-view.svg" class="button-img" alt="viewer">
-        </button>
-      </div>
-      <div class="col vertical-align-child button-group-margin">
-        <button class="navbar-buttons hvr-grow-shadow" id="button-richtext-dropdown">
-          <img src="../../assets/images/buttons/button-richtext-dropdown.svg" id="richtext-dropdown" alt="dropdown">
         </button>
       </div>
     </div>
@@ -145,10 +140,4 @@ export default {
     }
   }
 }
-
-#richtext-dropdown {
-  margin-top: 8px;
-  width: 22px;
-}
-
 </style>

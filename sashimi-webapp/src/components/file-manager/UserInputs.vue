@@ -29,35 +29,35 @@
         <tr>
           <div class="col buttons">
             <td>
-              <button class="navbar-buttons hvr-grow-shadow">
+              <button class="navbar-buttons hover-grow">
                 <img src="../../assets/images/buttons/button-upload-file.svg" class="button-img" alt="delete">
               </button>
             </td>
             <td>
-              <button class="navbar-buttons hvr-grow-shadow">
+              <button class="navbar-buttons hover-grow">
                 <img src="../../assets/images/buttons/button-add-new.svg" class="button-img" alt="delete">
               </button>
             </td>
             <td>
-              <button class="navbar-buttons hvr-grow-shadow">
+              <button class="navbar-buttons hover-grow">
                 <img src="../../assets/images/buttons/button-duplicate.svg" class="button-img" alt="delete">
               </button>
             </td>
             <td>
-              <button class="navbar-buttons hvr-grow-shadow">
+              <button class="navbar-buttons hover-grow">
                 <img src="../../assets/images/buttons/button-download.svg" class="button-img" alt="delete">
               </button>
             </td>
             <td>
-              <button class="navbar-buttons hvr-grow-shadow">
+              <button class="navbar-buttons hover-grow">
                 <img src="../../assets/images/buttons/button-delete.svg" class="button-img" alt="delete">
               </button>
             </td>
           </div>
           <td>
             <div class="col vertical-align-child view">
-              <button class="navbar-buttons hvr-grow-shadow" v-on:click="setAction('iconView')">Icon</button>|
-              <button class="navbar-buttons hvr-grow-shadow" v-on:click="setAction('listView')">List</button>
+              <button class="navbar-buttons hover-grow" v-on:click="setAction('iconView')">Icon</button>|
+              <button class="navbar-buttons hover-grow" v-on:click="setAction('listView')">List</button>
             </div>
           </td>
         </tr>
