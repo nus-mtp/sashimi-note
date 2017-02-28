@@ -53,6 +53,15 @@ export default {
 .documents {
   overflow: hidden;
   height: calc(100% - #{$navbar-height});
+
+  .folder, 
+  .file {
+    cursor: default;
+
+    p::selection {
+      background-color: white;
+    }
+  }
 }
 
 .iconView {
