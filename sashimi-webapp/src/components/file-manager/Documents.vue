@@ -50,6 +50,7 @@ export default {
 @import 'src/assets/styles/variables.scss';
 .iconView {
   padding: 20px;
+  box-sizing: border-box;
 
   .folder,
   .file   {
@@ -80,6 +81,7 @@ export default {
 }
 
 .listView {
+
   .folder,
   .file {
     width: 100%;
@@ -89,12 +91,18 @@ export default {
     text-overflow: ellipsis;
     overflow: hidden;
     white-space: nowrap;
-  }
-  img {
+    box-sizing: border-box;
+
+    img {
     width: 50px;
-  }
-  p {
-    font-size: 16px;
+    }
+    p {
+      font-size: 16px;
+      width: 95%;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
   }
 }
 </style>

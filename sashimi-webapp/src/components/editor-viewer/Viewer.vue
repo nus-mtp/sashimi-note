@@ -26,7 +26,7 @@
   .viewer {
     height: calc(100vh - #{$navbar-height});
     overflow-wrap: break-word;
-    overflow-y: scroll;
+    overflow-y: auto;
     box-sizing: border-box;
     margin-left: 10px;
     line-height: 1.6em;
