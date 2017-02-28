@@ -28,11 +28,6 @@
     props: ['editorContent', 'fileFormat'],
     watch: {
     },
-    computed: {
-      getMarkdown() {
-        return wrapper.render(this.editorContent);
-      },
-    },
     asyncComputed: {
       getHtmlData() {
         return documentPackager.getHtmlData(this.editorContent);
@@ -47,7 +42,7 @@
   @import 'src/assets/styles/variables.scss';
   
   .viewer {
-    height: calc(100vh - #{$navbar-height});
+    height: calc(100vh - #{$content-navbar-height});
     overflow-wrap: break-word;
     overflow-y: auto;
     box-sizing: border-box;
