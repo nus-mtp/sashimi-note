@@ -1,17 +1,15 @@
 <template>
-  <div class="group section" v-bind:class="view">
-    <div class="documents">
-      <folder></folder>
-      <file></file>
-      <file></file>
-      <file></file>
-      <file></file>
-      <file></file>
-      <file></file>
-      <file></file>
-      <file></file>
-      <file></file>
-    </div>
+  <div class="group section documents" v-bind:class="view">
+    <folder></folder>
+    <file></file>
+    <file></file>
+    <file></file>
+    <file></file>
+    <file></file>
+    <file></file>
+    <file></file>
+    <file></file>
+    <file></file>
   </div>
 </template>
 
@@ -51,8 +49,8 @@ export default {
 <style lang="scss">
 @import 'src/assets/styles/variables.scss';
 .documents {
-  overflow: hidden;
-  height: calc(100% - #{$navbar-height});
+  overflow-y: auto;
+  height: calc(100vh - #{$file-manager-navbar-height});
 
   .folder, 
   .file {
