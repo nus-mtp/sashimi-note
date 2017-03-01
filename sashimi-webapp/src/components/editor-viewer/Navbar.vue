@@ -149,6 +149,7 @@ export default {
   text-align: left;
   padding: 10px;
   background-color: white;
+  z-index: 999;
 
   button {
     border: none;
