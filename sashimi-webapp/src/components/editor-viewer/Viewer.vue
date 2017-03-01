@@ -16,7 +16,7 @@
   import _ from 'lodash';
   import documentPackager from 'src/logic/documentPackager';
   import urlHelper from 'src/helpers/url';
-  import PageRenderer from 'src/helpers/pageRenderer';
+  import PageRenderer from 'src/logic/renderer';
 
   Vue.use(AsyncComputed);
   const throttleTime = 100;
