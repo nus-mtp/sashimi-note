@@ -33,7 +33,7 @@ export default {
     return {
       mdContent: '',
       action: '',
-      fileFormat: '',
+      fileFormat: 'html',
       editorCols: {
         span_6_of_12: true,
         span_12_of_12: false,
