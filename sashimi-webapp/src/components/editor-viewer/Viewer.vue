@@ -85,6 +85,7 @@
 
 <style lang='scss'>
   @import 'src/assets/styles/variables.scss';
+  @import 'src/assets/styles/internal/amblin/style.scss';
   
   .viewer {
     height: calc(100vh - #{$content-navbar-height});
@@ -95,20 +96,32 @@
     padding: 20px 50px;
   }
 
+  .viewer[data-fileFormat="html"] {
+    #viewer-container {
+      max-width: 768px;
+      margin: 0 auto;
+    }
+  }
+  
+
   .viewer[data-fileFormat="slides"],
   .viewer[data-fileFormat="pages"] {
     background-color: #FAFAFA;
     padding: 0;
+
+    #viewer-container {
+      transform: scale(0.75);
+    }
   }
 
   #viewer-container {
     overflow-wrap: break-word;
     line-height: 1.6em;
-    transform: scale(0.75);
     transform-origin: top left;
 
     .page-view {
       margin: 50px;
+      overflow: hidden;
     }
   }
   
@@ -126,11 +139,6 @@
       background-color: white;
     }
     
-    img, pre, blockquote, p {
-      width: 100%;
-      margin: 0;
-    }
-
     img {
       height: auto;
       width: auto;
