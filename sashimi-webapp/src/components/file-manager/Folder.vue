@@ -10,7 +10,6 @@
     methods: {
       openFolder() {
         const folderId = this.$el.id;
-        console.log(folderId);
         this.$router.push({ path: 'content', query: { id: folderId } });
       },
     }

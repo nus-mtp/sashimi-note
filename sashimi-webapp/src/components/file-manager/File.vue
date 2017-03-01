@@ -10,7 +10,6 @@ export default {
   methods: {
     openFile() {
       const fileId = this.$el.id;
-      console.log(fileId);
       this.$router.push({ path: 'content', query: { id: fileId } });
     },
   }
