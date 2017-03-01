@@ -1,6 +1,6 @@
 <template>
-  <div class="viewer" v-bind:data-viewmode='viewMode'>
-    <div v-if="viewMode === 'pages' || viewMode === 'slides'">
+  <div class="viewer" v-bind:data-fileFormat='fileFormat'>
+    <div v-if="fileFormat === 'pages' || fileFormat === 'slides'">
       <div id='viewer-container'></div>
     </div>
     <div v-else>
@@ -15,30 +15,24 @@
   import AsyncComputed from 'vue-async-computed';
   import _ from 'lodash';
   import documentPackager from 'src/logic/documentPackager';
-  import urlHelper from 'src/helpers/url';
   import PageRenderer from 'src/logic/renderer';
+  
 
   Vue.use(AsyncComputed);
   const throttleTime = 100;
 
-  // getParameterByName is used to obtain the query string form the url.
-  // Currently the viewMode is being obtained via query string:
-  // ?viewMode=pages
-  // TOOD: In release, the viewMode should be passed down from the parent instead.
-
   const updateViewer = ((vueComponent) => {
-    if (vueComponent.viewMode === 'pages') {
+    if (vueComponent.fileFormat === 'pages') {
       vueComponent.pagesRenderThrottleFn(vueComponent.editorContent);
-    } else if (vueComponent.viewMode === 'slides') {
+    } else if (vueComponent.fileFormat === 'slides') {
       vueComponent.slidesRenderThrottleFn(vueComponent.editorContent);
     }
   });
 
   export default {
-    props: ['editorContent'],
+    props: ['editorContent', 'fileFormat'],
     data() {
       return {
-        viewMode: '',
         prPages: null,
         prSlides: null,
         pagesRenderThrottleFn: _.throttle((markdownString) => {
@@ -81,27 +75,25 @@
       }
     },
     mounted() {
-      // TODO: get viewMode from prop during release
-      this.viewMode = urlHelper.getParameterByName('viewMode') || 'html';
-      updateViewer(this);
     }
   };
 
 </script>
 
-<style lang="scss">
-  @import '../../assets/styles/variables.scss';
-
+<style lang='scss'>
+  @import 'src/assets/styles/variables.scss';
+  
   .viewer {
-    height: calc(100vh - #{$navbar-height});
-    overflow-y: scroll;
+    height: calc(100vh - #{$content-navbar-height});
+    overflow-wrap: break-word;
+    overflow-y: auto;
     box-sizing: border-box;
     position: relative;
     padding: 20px 50px;
   }
 
-  .viewer[data-viewmode="slides"],
-  .viewer[data-viewmode="pages"] {
+  .viewer[data-fileFormat="slides"],
+  .viewer[data-fileFormat="pages"] {
     background-color: #FAFAFA;
     padding: 0;
   }

@@ -9,6 +9,8 @@ import mdKatex from 'markdown-it-katex';
 // Table of Contents plugins
 import mdAnchor from 'markdown-it-anchor';
 import mdTOC from 'markdown-it-table-of-contents';
+// Custom conditional plugin
+import mdConditional from './conditionalProcessor';
 
 const md = new MarkdownIt({
   html: true,
@@ -35,6 +37,8 @@ md.use(mdHighlight, { auto: true, code: true });
 // For TOC generation
 md.use(mdAnchor);
 md.use(mdTOC);
+// For custom conditional plugin
+md.use(mdConditional);
 
 const validateData = function validateData(data) {
   return data || '';

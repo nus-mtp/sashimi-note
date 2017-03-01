@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="editor">
     <codemirror v-model="mdContent" ref="myEditor" :options="editorOption" @changed="codeChange"> 
     </codemirror>
   </div>
@@ -10,9 +10,8 @@ import { codemirror } from 'vue-codemirror';
 import navbar from './Navbar';
 import viewer from './Viewer';
 
-/* eslint : 0 */
+/* eslint no-unused-vars: 0 */
 let codeMirrorInstance = null;
-
 
 /* eslint prefer-const: 0 */
 export default {
@@ -58,5 +57,25 @@ export default {
 </script>
 
 <style scoped lang="scss">
+@import 'src/assets/styles/variables.scss';
 
+.editor {
+  box-shadow: 4px 0 12px 0px rgba(0, 0, 0, 0.3);
+  height: calc(100vh - #{$content-navbar-height});
+}
+</style>
+
+<style lang="scss">
+.editor {
+  .CodeMirror.cm-s-base16-dark {
+    height: 100%;
+  }
+
+  .CodeMirror-lines {
+    .CodeMirror-code {
+      color: #dedede;
+      font-family: monospace;
+    }
+  }
+}
 </style>

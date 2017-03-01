@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="66px" height="66px" viewBox="0 0 66 66" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 41 (35326) - http://www.bohemiancoding.com/sketch -->
+    <title>button-upload-image</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Symbols" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="button-upload-image" transform="translate(1.000000, 1.000000)">
+            <g>
+                <g id="Group" transform="translate(8.000000, 8.000000)">
+                    <circle id="Oval" stroke="#000000" stroke-width="2" cx="24" cy="24" r="6.4"></circle>
+                    <path d="M18,4 L14.34,8 L8,8 C5.8,8 4,9.8 4,12 L4,36 C4,38.2 5.8,40 8,40 L40,40 C42.2,40 44,38.2 44,36 L44,12 C44,9.8 42.2,8 40,8 L33.66,8 L30,4 L18,4 Z M24,34 C18.48,34 14,29.52 14,24 C14,18.48 18.48,14 24,14 C29.52,14 34,18.48 34,24 C34,29.52 29.52,34 24,34 Z" id="Shape" stroke="#000000" stroke-width="2"></path>
+                    <polygon id="Shape" points="0 0 48 0 48 48 0 48"></polygon>
+                </g>
+                <!--<circle id="Oval" stroke="#000000" stroke-width="2" cx="32" cy="32" r="32"></circle>-->
+            </g>
+        </g>
+    </g>
+</svg>
