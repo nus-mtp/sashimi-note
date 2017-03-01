@@ -20,7 +20,6 @@
   import Vue from 'vue';
   import AsyncComputed from 'vue-async-computed';
   import documentPackager from 'src/logic/documentPackager';
-  import urlHelper from 'src/helpers/url';
 
   Vue.use(AsyncComputed);
   
