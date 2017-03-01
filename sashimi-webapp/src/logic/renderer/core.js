@@ -64,18 +64,24 @@ export default {
                   const nodeStyle = childNode.currentStyle || getComputedStyle(childNode);
 
                   // Get node's height
+                  const nodeStyleHeight = parseFloat(nodeStyle.height, 10) || 0;
                   const nodeHeight = Math.max(
                     childNode.clientHeight,
                     childNode.offsetHeight,
-                    parseFloat(nodeStyle.height, 10)
+                    nodeStyleHeight
                   );
 
                   // Get node's margin
                   const nodeMargin = parseFloat(nodeStyle.marginTop, 10) +
                                     parseFloat(nodeStyle.marginBottom, 10);
 
+                  const totalHeight = nodeHeight + nodeMargin;
+                  if (isNaN(totalHeight)) {
+                    throw new Error('Error calculating element\'s height');
+                  }
+
                   return ({
-                    height: nodeHeight + nodeMargin,
+                    height: totalHeight,
                     ele: childNode
                   });
                 });
