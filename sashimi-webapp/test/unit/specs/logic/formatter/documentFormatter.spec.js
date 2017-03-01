@@ -1,5 +1,4 @@
 import documentFormatter from 'src/logic/documentPackager/documentFormatter';
-import base64OfSimplePdf from './reference/base64OfSimplePdf';
 
 describe('DocumentFormatter', () => {
   describe('format', () => {
@@ -14,7 +13,6 @@ describe('DocumentFormatter', () => {
 
   describe('getPdfBase64', () => {
     it('should returns a pdfBase64 for \'pages viewMode\'', (done) => {
-      const expectedOutput = base64OfSimplePdf;
       const inputData = '<div>This is a HTML content</div>';
 
       documentFormatter.getPdfBase64(inputData)
@@ -24,7 +22,7 @@ describe('DocumentFormatter', () => {
         // therefore, an approximation method to use content length for
         // testing is used.
 
-        expect(outputData.length).to.equal(expectedOutput.length);
+        expect(outputData.length).to.equal(3333);
         done();
       })
       .catch((error) => {

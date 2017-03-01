@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="66px" height="66px" viewBox="0 0 66 66" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 41 (35326) - http://www.bohemiancoding.com/sketch -->
+    <title>back-button</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Symbols" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="button-back" transform="translate(1.000000, 1.000000)" stroke-width="2" stroke="#000000">
+            <g id="back-button">
+                <g id="back-arrow" transform="translate(31.213203, 32.213203) rotate(-135.000000) translate(-31.213203, -32.213203) translate(16.213203, 17.213203)" stroke-linecap="square">
+                    <path d="M28.1860727,1.56589293 L9.39535755,1.56589293" id="Line"></path>
+                    <path d="M28.1860727,3.13178585 L28.1860727,21.922501" id="Line"></path>
+                    <path d="M1.15456965,28.5973959 L28.1860727,1.56589293" id="Line-Copy-2"></path>
+                </g>
+                <circle id="Oval" cx="32" cy="32" r="32"></circle>
+            </g>
+        </g>
+    </g>
+</svg>

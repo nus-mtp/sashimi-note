@@ -1,11 +1,11 @@
 <template>
   <div class="viewer">
-    <div v-if="viewMode === 'pages'">
+    <div v-if="fileFormat === 'pages'">
       <div id="viewer-pages">
         <div id='viewer-pages-container'></div>
       </div>
     </div>
-    <div v-else-if="viewMode === 'slides'">
+    <div v-else-if="fileFormat === 'slides'">
       <div id="viewer-slides" v-html="getHtmlData">
       </div>
     </div>
@@ -20,21 +20,12 @@
   import Vue from 'vue';
   import AsyncComputed from 'vue-async-computed';
   import documentPackager from 'src/logic/documentPackager';
-  import urlHelper from 'src/helpers/url';
 
   Vue.use(AsyncComputed);
-
-  // getParameterByName is used to obtain the query string form the url.
-  // Currently the viewMode is being obtained via query string:
-  // ?viewMode=pages
-  // TOOD: In release, the viewMode should be passed down from the parent instead.
   
   export default {
-    props: ['editorContent'],
-    data() {
-      return {
-        viewMode: '',
-      };
+    props: ['editorContent', 'fileFormat'],
+    watch: {
     },
     asyncComputed: {
       getHtmlData() {
@@ -42,19 +33,17 @@
       },
     },
     mounted() {
-      // TODO: get viewMode from prop during release
-      this.viewMode = urlHelper.getParameterByName('viewMode') || 'html';
     }
   };
 </script>
 
 <style scoped lang='scss'>
-  @import '../../assets/styles/variables.scss';
+  @import 'src/assets/styles/variables.scss';
   
   .viewer {
-    height: calc(100vh - #{$navbar-height});
+    height: calc(100vh - #{$content-navbar-height});
     overflow-wrap: break-word;
-    overflow-y: scroll;
+    overflow-y: auto;
     box-sizing: border-box;
     margin-left: 10px;
     line-height: 1.6em;

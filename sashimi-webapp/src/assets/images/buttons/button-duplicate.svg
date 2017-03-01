@@ -1,0 +1,15 @@
+<svg id="button-duplicate" xmlns="http://www.w3.org/2000/svg" viewBox="975 138 41 41">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: none;
+      }
+
+      .cls-2 {
+        fill: #939393;
+      }
+    </style>
+  </defs>
+  <path id="Path_3" data-name="Path 3" class="cls-1" d="M0,0H41V41H0Z" transform="translate(975 138)"/>
+  <path id="Path_4" data-name="Path 4" class="cls-2" d="M25.917,1H5.417A3.427,3.427,0,0,0,2,4.417V28.333H5.417V4.417h20.5Zm5.125,6.833H12.25A3.427,3.427,0,0,0,8.833,11.25V35.167a3.427,3.427,0,0,0,3.417,3.417H31.042a3.427,3.427,0,0,0,3.417-3.417V11.25A3.427,3.427,0,0,0,31.042,7.833Zm0,27.333H12.25V11.25H31.042Z" transform="translate(981.417 138.708)"/>
+</svg>
