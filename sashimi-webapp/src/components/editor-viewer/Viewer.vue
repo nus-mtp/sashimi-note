@@ -17,52 +17,32 @@
   import documentPackager from 'src/logic/documentPackager';
   import PageRenderer from 'src/logic/renderer';
   
-
   Vue.use(AsyncComputed);
-  const throttleTime = 100;
 
-  const updateViewer = ((vueComponent) => {
-    if (vueComponent.fileFormat === 'pages') {
-      vueComponent.pagesRenderThrottleFn(vueComponent.editorContent);
-    } else if (vueComponent.fileFormat === 'slides') {
-      vueComponent.slidesRenderThrottleFn(vueComponent.editorContent);
-    }
+  // Declare page renderers instance. These renderer
+  // will be initialised when this component is mounted.
+  const pageRendererList = {
+    slides: null,
+    pages: null,
+  };
+
+  // Throttle function used to limit the rate which
+  // the render function is called
+  const throttleTime = 600;
+  const renderThrottleFn = _.throttle((markdownString, pageRenderer) => {
+    documentPackager.getHtmlData(markdownString)
+    .then(htmlString => pageRenderer.write(htmlString));
+  }, throttleTime);
+
+  const updateViewer = ((compunent) => {
+    const pr = pageRendererList[compunent.fileFormat];
+    if (pr) renderThrottleFn(compunent.editorContent, pr);
   });
 
   export default {
     props: ['editorContent', 'fileFormat'],
     data() {
-      return {
-        prPages: null,
-        prSlides: null,
-        pagesRenderThrottleFn: _.throttle((markdownString) => {
-          documentPackager.getHtmlData(markdownString)
-          .then((htmlString) => {
-            if (!this.prPages) this.prPages = new PageRenderer('viewer-container');
-            this.prPages.write(htmlString);
-          });
-        }, throttleTime),
-        slidesRenderThrottleFn: _.throttle((markdownString) => {
-          documentPackager.getHtmlData(markdownString)
-          .then((htmlString) => {
-            if (!this.prSlides) {
-              this.prSlides = new PageRenderer(
-                'viewer-container',
-                {
-                  width: '14.8cm',
-                  height: '10.5cm',
-                  padding: {
-                    top: '1.2cm',
-                    bottom: '1.2cm',
-                    right: '1.2cm',
-                    left: '1.2cm'
-                  }
-                });
-            }
-            this.prSlides.write(htmlString);
-          });
-        }, throttleTime),
-      };
+      return {};
     },
     watch: {
       editorContent() {
@@ -78,6 +58,24 @@
       }
     },
     mounted() {
+      const PAGE_A6 = {
+        width: '14.8cm',
+        height: '10.5cm',
+        padding: {
+          top: '1.2cm',
+          bottom: '1.2cm',
+          right: '1.2cm',
+          left: '1.2cm'
+        }
+      };
+
+      // Mount does not gurrantee DOM to be ready, thus nextTick is used
+      const self = this;
+      Vue.nextTick(() => {
+        pageRendererList.pages = new PageRenderer('viewer-container');
+        pageRendererList.slides = new PageRenderer('viewer-container', PAGE_A6);
+        updateViewer(self);
+      });
     }
   };
 
