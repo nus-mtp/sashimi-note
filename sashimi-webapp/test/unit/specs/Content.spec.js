@@ -1,6 +1,5 @@
 import Vue from 'vue';
 import Content from 'src/components/editor-viewer/Content';
-import router from 'vue-router';
 
 describe('Content.vue', () => {
   it('should render Editor component', () => {
