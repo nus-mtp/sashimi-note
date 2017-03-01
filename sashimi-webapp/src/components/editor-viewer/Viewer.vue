@@ -67,6 +67,9 @@
     watch: {
       editorContent() {
         updateViewer(this);
+      },
+      fileFormat() {
+        updateViewer(this);
       }
     },
     asyncComputed: {
