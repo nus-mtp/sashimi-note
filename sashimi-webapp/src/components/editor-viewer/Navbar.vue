@@ -1,13 +1,13 @@
 <template>
   <div class="section group navbar">
     <div class="col button-logo vertical-align-child">
-        <router-link to="/" class="vertical-align-child navbar-buttons hover-grow" id="button-logo">
+        <a v-on:click="goHome" class="vertical-align-child navbar-buttons hover-grow">        
             <!--<img src="../../assets/images/buttons/button-back.svg" class="button-img" alt="back">-->
             <img src="../../assets/sashimi.svg" class="inline-block" alt="sashimi">
             <p class="inline-block">
               SASHIMI NOTE
             </p>
-        </router-link>
+        </a>
     </div>
     <div class="col float-left vertical-align-child button-group-margin">
       <div class="image-upload">
@@ -79,6 +79,9 @@ export default {
     updateParent(action) {
       this.$emit('input', action);
     },
+    goHome() {
+      this.$router.push({ path: '/' });
+    }
   },
 };
 </script>
@@ -97,6 +100,15 @@ export default {
 
   input {
     display: none;
+  }
+}
+
+.button-logo {
+  cursor: pointer;
+  .hover-grow{
+    &:hover {
+      transform: scale(1.1);
+    }
   }
 }
 
