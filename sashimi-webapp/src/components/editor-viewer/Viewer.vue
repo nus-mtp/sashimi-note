@@ -126,20 +126,12 @@
     
     img, pre, blockquote, p {
       width: 100%;
+      margin: 0;
     }
-  }
-  .viewer[data-viewmode="slides"],
-  .viewer[data-viewmode="pages"] {
-    background-color: #FAFAFA;
-    padding: 0;
 
-    .page {
-      box-shadow: 1px 1px 4px 1px rgba(0,0,0,0.3);
-      margin: 32px;
-
-      canvas {
-        width: 100%;
-      }
+    img {
+      height: auto;
+      width: auto;
     }
   }
 </style>

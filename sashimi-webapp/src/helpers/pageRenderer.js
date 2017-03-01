@@ -113,14 +113,23 @@ PageRenderer.prototype.getReferenceFrame = function getReferenceFrame() {
 
 // Private methods
 /**
- * Render HTML content into a referenceFrame.
+ * Render pageRenderer's HTML content into its referenceFrame.
  * This function will cause the reflowing of HTML content
  * within the width of the referenceFrame.
  * @return {Promise} promise after the HTML has rendered
  */
-const updateReferenceFrame = function updateReferenceFrame(referenceFrame, htmlString) {
-  const rf = referenceFrame;
-  rf.innerHTML = htmlString;
+const updateReferenceFrame = function updateReferenceFrame(pageRenderer) {
+  const rf = pageRenderer.referenceFrame;
+  rf.innerHTML = pageRenderer.sourceHTML;
+
+  // Additional element styling
+  const imgElements = rf.getElementsByTagName('IMG');
+  for (let i = 0; i < imgElements.length; i += 1) {
+    overwriteStyle(imgElements[i].style, {
+      maxWidth: '100%',
+      maxHeight: `${pageRenderer.renderHeight}px`
+    });
+  }
 
   // Special check for image loading
   // A similar checking might be needed for external plugin
@@ -306,7 +315,7 @@ const renderPage = function renderPage(pageRenderer, virtualBookPages) {
  * @return {Promise} promise - to indicate the completion of the rendering process
  */
 PageRenderer.prototype.render = function render() {
-  return updateReferenceFrame(this.referenceFrame, this.sourceHTML)
+  return updateReferenceFrame(this)
   .then(getChildHeights)
   .then(childHeights => getPaginationVirtualDom(this, childHeights))
   .then(virtualDom => renderPage(this, virtualDom));
