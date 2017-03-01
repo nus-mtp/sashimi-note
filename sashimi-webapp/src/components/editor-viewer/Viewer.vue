@@ -94,19 +94,21 @@
 
   .viewer {
     height: calc(100vh - #{$navbar-height});
-    overflow-wrap: break-word;
     overflow-y: scroll;
     box-sizing: border-box;
-    line-height: 1.6em;
     position: relative;
     padding: 20px 50px;
+  }
 
-    p {
-      margin-top: 7px;
-    }
+  .viewer[data-viewmode="slides"],
+  .viewer[data-viewmode="pages"] {
+    background-color: #FAFAFA;
+    padding: 0;
   }
 
   #viewer-container {
+    overflow-wrap: break-word;
+    line-height: 1.6em;
     transform: scale(0.75);
     transform-origin: top left;
 
@@ -116,7 +118,12 @@
   }
   
   #viewer-container,
-  #reference-frame-of-viewer-container {   
+  #reference-frame-of-viewer-container {
+    font-family: "Avenir", Helvetica, Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    color: black;
+
     .page-view {
       box-shadow: 1px 1px 4px 1px rgba(0, 0, 0, 0.3);
       position: relative;
