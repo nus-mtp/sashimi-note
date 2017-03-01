@@ -86,7 +86,7 @@ export default {
   computed: {
   },
   mounted() {
-    console.log(this.$route.query.id);
+    // console.log(this.$route.query.id);
 
     // if id != null
     //  load content
@@ -106,4 +106,7 @@ export default {
   transition: width 0.7s;
 }
 
+@media screen and (min-width: 768px) {
+  
+}
 </style>
