@@ -27,6 +27,12 @@ const overwriteStyle = function overwriteStyle(target, source) {
   });
 };
 
+const computeRenderHeight = function computeRenderHeight(page) {
+  return parseFloat(unitConverter.get(page.height, 'px'), 10) - (
+           parseFloat(unitConverter.get(page.padding.top, 'px'), 10) +
+           parseFloat(unitConverter.get(page.padding.bottom, 'px'), 10)
+         );
+};
 
 /**
  * Constructor for the PageRenderer instance that is used to contain the
@@ -40,6 +46,7 @@ const overwriteStyle = function overwriteStyle(target, source) {
 export default function PageRenderer(renderDomId, page) {
   // Set page sizing. Use default if not provided
   this.page = page || defaultConfig.page;
+  this.renderHeight = computeRenderHeight(this.page);
 
   // Set renderFrame and id
   this.renderDomId = renderDomId;
@@ -219,15 +226,9 @@ VirtualPage.prototype.forceAdd = function forceAdd(element) {
  */
 const getPaginationVirtualDom = function getPaginationVirtualDom(pageRenderer, childHeights) {
   const pr = pageRenderer;
-  const pageSize = pr.page;
-
-  const renderHeight = parseFloat(unitConverter.get(pageSize.height, 'px'), 10) - (
-                         parseFloat(unitConverter.get(pageSize.padding.top, 'px'), 10) +
-                         parseFloat(unitConverter.get(pageSize.padding.bottom, 'px'), 10)
-                       );
 
   const virtualBook = new VirtualBook();
-  let virtualPage = new VirtualPage(renderHeight);
+  let virtualPage = new VirtualPage(pr.renderHeight);
 
   // Allocate element in pages within the render height
   childHeights.forEach((element, index) => {
@@ -242,11 +243,11 @@ const getPaginationVirtualDom = function getPaginationVirtualDom(pageRenderer, c
           // if currently not at the beginning of page,
           // create new page before inserting.
           // TODO: Consider breaking element into smaller chunk
-          virtualPage = new VirtualPage(renderHeight);
+          virtualPage = new VirtualPage(pr.renderHeight);
         }
         virtualPage.forceAdd(element);
       } else if (error.message === 'Page is full') {
-        virtualPage = new VirtualPage(renderHeight);
+        virtualPage = new VirtualPage(pr.renderHeight);
         virtualPage.add(element);
       } else {
         throw error;
@@ -330,5 +331,6 @@ PageRenderer.prototype.write = function write(htmlString) {
  */
 PageRenderer.prototype.updatePageSize = function write(pageConfig) {
   this.page = pageConfig;
+  this.renderHeight = computeRenderHeight(this.page);
   return this.render();
 };
