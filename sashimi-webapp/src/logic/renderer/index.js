@@ -1,25 +1,7 @@
 import unitConverter from 'src/helpers/unitConverter';
-
-const defaultConfig = {
-  prefix: {
-    reference: 'reference-frame-of-',
-    className: 'page-view',
-  },
-
-  /**
-   * Default target page size (Portrait - A4)
-   */
-  page: {
-    width: '21cm',
-    height: '29.7cm',
-    padding: {
-      top: '1.2cm',
-      bottom: '1.2cm',
-      right: '1.2cm',
-      left: '1.2cm'
-    }
-  }
-};
+import VirtualBook from './VirtualBook';
+import VirtualPage from './VirtualPage';
+import defaultConfig from './defaultConfig';
 
 const overwriteStyle = function overwriteStyle(target, source) {
   Object.keys(source).forEach((styleKey) => {
@@ -188,42 +170,6 @@ const getChildHeights = function getChildHeights(referenceFrame) {
               });
 
   return childHeights;
-};
-
-function VirtualBook() {
-  this.pages = [];
-}
-
-VirtualBook.prototype.add = function add(page) {
-  this.pages.push(page);
-};
-
-function VirtualPage(maxHeight) {
-  this.maxHeight = maxHeight;
-  this.filledHeight = 0;
-  this.elements = [];
-}
-VirtualPage.prototype.add = function add(element) {
-  if (element.height / this.maxHeight > 1) {
-    throw new Error('Element is larger than page');
-  }
-
-  const remainingHeight = this.maxHeight - (element.height + this.filledHeight);
-
-  if (remainingHeight > 0) {
-    this.elements.push(element);
-    this.filledHeight += element.height;
-    return remainingHeight;
-  } else {
-    throw new Error('Page is full');
-  }
-};
-
-VirtualPage.prototype.forceAdd = function forceAdd(element) {
-  const remainingHeight = this.maxHeight - (element.height + this.filledHeight);
-  this.elements.push(element);
-  this.filledHeight += element.height;
-  return remainingHeight;
 };
 
 /**
