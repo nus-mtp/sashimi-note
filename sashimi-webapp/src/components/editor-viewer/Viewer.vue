@@ -34,9 +34,9 @@
     .then(htmlString => pageRenderer.write(htmlString));
   }, throttleTime);
 
-  const updateViewer = ((compunent) => {
-    const pr = pageRendererList[compunent.fileFormat];
-    if (pr) renderThrottleFn(compunent.editorContent, pr);
+  const updateViewer = ((component) => {
+    const pr = pageRendererList[component.fileFormat];
+    if (pr) renderThrottleFn(component.editorContent, pr);
   });
 
   export default {
