@@ -87,7 +87,7 @@ describe('Document Packager', () => {
       });
     });
 
-    it('should handle XSS threats', (done) => {
+    it('should handle HTML XSS threats', (done) => {
       documentPackager.getHtmlData(xssInput).then((output) => {
         expect(output).to.equal(xssOutput);
         done();
