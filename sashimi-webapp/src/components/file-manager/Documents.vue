@@ -1,7 +1,7 @@
 <template>
   <div class="group section documents" v-bind:class="view">
-    <folder></folder>
-    <file></file>
+    <folder :view="action"></folder>
+    <file :view="action"></file>
     <file></file>
     <file></file>
     <file></file>
@@ -22,8 +22,8 @@ export default {
   data() {
     return {
       view: {
-        iconView: true,
-        listView: false
+        iconView: false,
+        listView: true
       },
     };
   },
@@ -55,6 +55,14 @@ export default {
   .folder, 
   .file {
     cursor: default;
+    box-sizing: border-box;
+    border: none;
+    background-color: transparent;
+    padding: 0;
+
+    &:focus {
+      background-color: #e8f3f9;
+    }
 
     p::selection {
       background-color: white;
@@ -80,6 +88,7 @@ export default {
 
     p {
       font-size: 13px;
+      font-family: $general-font;
       position: absolute;
       top: 15px;
       left: 0;
@@ -88,14 +97,16 @@ export default {
       width: 60px;
       height: 40px;
       margin: auto;
-      overflow: hidden;
+      overflow: auto;
       overflow-wrap: break-word;
     }
   }
 }
 
 .listView {
-
+  .col {
+    width: 100%;
+  }
   .folder,
   .file {
     width: 100%;
@@ -106,10 +117,12 @@ export default {
     overflow: hidden;
     white-space: nowrap;
     box-sizing: border-box;
+    text-align: left;
 
     img {
     width: 50px;
     }
+
     p {
       font-size: 16px;
       width: 95%;
