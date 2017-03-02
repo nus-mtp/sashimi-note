@@ -30,27 +30,27 @@
           <div class="col buttons">
             <td>
               <button class="navbar-buttons hover-grow">
-                <img src="../../assets/images/buttons/button-upload-file.svg" class="button-img" alt="delete">
+                <i class="material-icons md-dark">file_upload</i>
               </button>
             </td>
             <td>
               <button class="navbar-buttons hover-grow">
-                <img src="../../assets/images/buttons/button-add-new.svg" class="button-img" alt="delete">
+                <i class="material-icons md-dark">note_add</i>
               </button>
             </td>
             <td>
-              <button class="navbar-buttons hover-grow">
-                <img src="../../assets/images/buttons/button-duplicate.svg" class="button-img" alt="delete">
+              <button class="navbar-buttons" v-bind:class="{'hover-grow': isDisabled}">
+               <i class="material-icons md-dark" v-bind:class="{'md-inactive': isDisabled}">content_copy</i>
               </button>
             </td>
             <td>
-              <button class="navbar-buttons hover-grow">
-                <img src="../../assets/images/buttons/button-download.svg" class="button-img" alt="delete">
+              <button class="navbar-buttons" v-bind:class="{'hover-grow': isDisabled}">
+                <i class="material-icons md-dark" v-bind:class="{'md-inactive': isDisabled}">file_download</i>
               </button>
             </td>
             <td>
-              <button class="navbar-buttons hover-grow">
-                <img src="../../assets/images/buttons/button-delete.svg" class="button-img" alt="delete">
+              <button class="navbar-buttons" v-bind:class="{'hover-grow': isDisabled}">
+                <i class="material-icons md-dark" v-bind:class="{'md-inactive': isDisabled}">delete</i>
               </button>
             </td>
           </div>
@@ -69,6 +69,11 @@
 <script>
 export default {
   props: ['value'],
+  data() {
+    return {
+      isDisabled: true,
+    };
+  },
   methods: {
     setAction(action) {
       this.$emit('input', action);
