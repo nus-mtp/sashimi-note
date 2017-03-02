@@ -1,7 +1,11 @@
 <template>
-  <div class="col file vertical-align-child" v-on:dblclick="openFile()" id="123">
-    <img src="../../assets/images/icons/icon-file.svg" alt="file">
-    <p class="inline-block">CS3kjs h</p>
+  <div class="col vertical-align-child"
+    v-on:dblclick="openFile" 
+    id="123">
+    <button class="file">
+      <img src="../../assets/images/icons/icon-file.svg" alt="file">
+      <p class="inline-block">Your first document</p>
+    </button>
   </div>
 </template>
 

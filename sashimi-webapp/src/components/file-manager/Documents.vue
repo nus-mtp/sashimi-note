@@ -1,15 +1,6 @@
 <template>
   <div class="group section documents" v-bind:class="view">
-    <folder></folder>
-    <file></file>
-    <file></file>
-    <file></file>
-    <file></file>
-    <file></file>
-    <file></file>
-    <file></file>
-    <file></file>
-    <file></file>
+    <file :view="action"></file>
   </div>
 </template>
 
@@ -22,8 +13,8 @@ export default {
   data() {
     return {
       view: {
-        iconView: true,
-        listView: false
+        iconView: false,
+        listView: true
       },
     };
   },
@@ -50,14 +41,30 @@ export default {
 @import 'src/assets/styles/variables.scss';
 .documents {
   overflow-y: auto;
-  height: calc(100vh - #{$file-manager-navbar-height});
+  height: calc(100vh - #{$file-manager-navbar-height-mobile});
 
   .folder, 
   .file {
-    cursor: default;
+    cursor: pointer;
+    box-sizing: border-box;
+    border: none;
+    background-color: transparent;
+    padding: 0;
 
-    p::selection {
-      background-color: white;
+    &:hover {
+      background-color: rgba(0,0,0,0.02);      
+    }
+
+    &:focus {
+      background-color: #d3e2e2;
+    }
+
+    p {
+      font-family: $general-font;
+      
+      &::selection {
+        background-color: white;
+      }
     }
   }
 }
@@ -88,28 +95,33 @@ export default {
       width: 60px;
       height: 40px;
       margin: auto;
-      overflow: hidden;
+      overflow: auto;
       overflow-wrap: break-word;
     }
   }
 }
 
 .listView {
-
+  .col {
+    width: 100%;
+  }
   .folder,
   .file {
     width: 100%;
     border-bottom: 1px solid $navbar-border-color;
     vertical-align: middle;
     padding: 10px 20px;
+    padding-top: 16px;
     text-overflow: ellipsis;
     overflow: hidden;
     white-space: nowrap;
     box-sizing: border-box;
+    text-align: left;
 
     img {
-    width: 50px;
+      width: 50px;
     }
+
     p {
       font-size: 16px;
       width: 95%;
@@ -117,6 +129,12 @@ export default {
       text-overflow: ellipsis;
       white-space: nowrap;
     }
+  }
+}
+
+@media screen and (min-width: 768px) {
+  .documents {
+    height: calc(100vh - #{$file-manager-navbar-height});
   }
 }
 </style>

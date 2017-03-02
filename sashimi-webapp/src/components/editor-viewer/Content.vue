@@ -1,7 +1,7 @@
 <template>
   <div>
     <navbar v-model="action"></navbar>
-    <div class="section group">
+    <div class="section group content">
       <div class="col" v-bind:class="editorCols">
         <editor 
           v-model="mdContent"
@@ -106,7 +106,7 @@ export default {
   transition: width 0.7s;
 }
 
-@media screen and (min-width: 768px) {
-  
+.content {
+  overflow-x: hidden;
 }
 </style>
