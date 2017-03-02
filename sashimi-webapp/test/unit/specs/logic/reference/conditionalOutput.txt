@@ -1,0 +1,14 @@
+<p>fileName:waha</p>
+<p>This is the question:<br>
+What is the first app you make from all coding tutorials?</p>
+<p></p>
+<p>This is the second question:<br>
+What is 1+1?</p>
+<p>Ans:</p>
+<p>==&gt;hide<br>
+This unclosed block and its hide syntax wont hide!</p>
+<p>==&gt;hide:waha<br>
+This unclosed categorised block and its hide syntax wont hide too!</p>
+<p>This won’t hide, but its hide syntax will be removed!</p>
+<p>==&gt;hide<br>
+This unclosed block wont hide! the hide start syntax should stay too</p>

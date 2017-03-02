@@ -3,6 +3,7 @@ const path = require('path');
 const logger = require('morgan');
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
+const history = require('connect-history-api-fallback');
 
 const api = require('./routes/api');
 
@@ -14,6 +15,7 @@ app.set('view engine', 'hbs');
 
 // uncomment after placing your favicon in /public
 app.use(logger('dev'));
+app.use(history());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
