@@ -119,7 +119,7 @@ img {
   }
 
   &-img {
-    width: 35px;
+    width: $button-img-width;
   }
 }
 
