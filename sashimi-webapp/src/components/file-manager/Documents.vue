@@ -50,7 +50,7 @@ export default {
 @import 'src/assets/styles/variables.scss';
 .documents {
   overflow-y: auto;
-  height: calc(100vh - #{$file-manager-navbar-height});
+  height: calc(100vh - #{$file-manager-navbar-height-mobile});
 
   .folder, 
   .file {
@@ -130,6 +130,12 @@ export default {
       text-overflow: ellipsis;
       white-space: nowrap;
     }
+  }
+}
+
+@media screen and (min-width: 768px) {
+  .documents {
+    height: calc(100vh - #{$file-manager-navbar-height});
   }
 }
 </style>
