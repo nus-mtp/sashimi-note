@@ -55,8 +55,12 @@ export default {
       background-color: #d3e2e2;
     }
 
-    p::selection {
-      background-color: white;
+    p {
+      font-family: $general-font;
+      
+      &::selection {
+        background-color: white;
+      }
     }
   }
 }
@@ -79,7 +83,6 @@ export default {
 
     p {
       font-size: 13px;
-      font-family: $general-font;
       position: absolute;
       top: 15px;
       left: 0;
