@@ -12,7 +12,7 @@
     <div class="col float-left vertical-align-child button-group-margin">
       <div class="image-upload">
         <label for="file-input" class="navbar-buttons hover-grow" id="upload-image">
-          <img src="../../assets/images/buttons/button-upload-image.svg" class="button-img" alt="upload-image">
+          <i class="material-icons md-dark">photo_camera</i>
         </label>
         <input type="file" id="file-input">
       </div>
@@ -23,7 +23,7 @@
         <img src="../../assets/images/buttons/button-annotate.svg" class="button-img" alt="annotate">
       </button>
       <button class="navbar-buttons hover-grow" id="share-file">
-        <img src="../../assets/images/buttons/button-share-file.svg" class="button-img" alt="share">
+        <i class="material-icons md-dark">share</i>
       </button>
     </div>
     <div class="float-right">
@@ -52,13 +52,14 @@
       </div>
       <div class="col vertical-align-child button-group-margin">
         <button v-on:click="updateParent('editor')" class="navbar-buttons hover-grow" id="button-editor">
-          <img src="../../assets/images/buttons/button-edit.svg" class="button-img" alt="editor">
+        <i class="material-icons md-dark md-dark">edit</i>
         </button>
         <button v-on:click="updateParent('split')" class="navbar-buttons hover-grow" id="button-viewer">
-          <img src="../../assets/images/buttons/button-split-screen.svg" class="button-img" alt="split-view">
+        <!--<i class="material-icons md-dark md-dark">chrome_reader_mode</i>-->
+        <img src="../../assets/images/buttons/button-split-screen.svg" class="button-img" alt="plugins">
         </button>
         <button v-on:click="updateParent('viewer')" class="navbar-buttons hover-grow" id="button-split-screen">
-          <img src="../../assets/images/buttons/button-view.svg" class="button-img" alt="viewer">
+        <i class="material-icons md-dark md-dark md-dark">remove_red_eye</i>
         </button>
       </div>
     </div>
