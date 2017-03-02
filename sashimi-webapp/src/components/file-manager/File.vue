@@ -4,7 +4,7 @@
     id="123">
     <button class="file">
       <img src="../../assets/images/icons/icon-file.svg" alt="file">
-      <p class="inline-block">Game Design Document</p>
+      <p class="inline-block">Your first document</p>
     </button>
   </div>
 </template>
