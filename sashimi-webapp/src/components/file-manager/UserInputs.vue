@@ -18,9 +18,7 @@
         <tr>
           <td>
             <ul class="navbar-breadcrumb">
-              <li><a href="#">Home</a></li>
-              <li><a href="#">Blah</a></li>
-              <li>Blah</li>
+              <li><a href="\">Home</a></li>
             </ul>
           </td>
         </tr>
