@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="66px" height="66px" viewBox="0 0 66 66" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 41 (35326) - http://www.bohemiancoding.com/sketch -->
+    <title>button-split-screen</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <rect id="path-1" x="0" y="0" width="46" height="38" rx="8"></rect>
+        <mask id="mask-2" maskContentUnits="userSpaceOnUse" maskUnits="objectBoundingBox" x="0" y="0" width="46" height="38" fill="white">
+            <use xlink:href="#path-1"></use>
+        </mask>
+    </defs>
+    <g id="Symbols" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="button-split-screen" transform="translate(1.000000, 1.000000)" stroke="#000000">
+            <g>
+                <!--<path d="M32,64 C42.08766,64 51.0851108,59.3322598 56.9503286,52.0388032 C61.3607001,46.5544625 64,39.585452 64,32 C64,14.326888 49.673112,0 32,0 C14.326888,0 0,14.326888 0,32 C0,49.673112 14.326888,64 32,64 Z" id="Oval-Copy-2" stroke-width="2"></path>-->
+                <g id="split-screen-icon" transform="translate(9.000000, 13.000000)">
+                    <use id="Rectangle" mask="url(#mask-2)" stroke-width="4" xlink:href="#path-1"></use>
+                    <path d="M1.32692308,12.372093 L44.6730769,12.372093" id="Line" stroke-width="2" stroke-linecap="square"></path>
+                    <path d="M23,13.255814 L23,36.6744186" id="Line" stroke-width="2" stroke-linecap="square"></path>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

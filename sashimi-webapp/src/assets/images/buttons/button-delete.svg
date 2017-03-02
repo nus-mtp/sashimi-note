@@ -1,0 +1,15 @@
+<svg id="button-delete" xmlns="http://www.w3.org/2000/svg" viewBox="1115 138 41 41">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: #939393;
+      }
+
+      .cls-2 {
+        fill: none;
+      }
+    </style>
+  </defs>
+  <path id="Path_1" data-name="Path 1" class="cls-1" d="M6.708,30.333a3.427,3.427,0,0,0,3.417,3.417H23.792a3.427,3.427,0,0,0,3.417-3.417V9.833H6.708ZM28.917,4.708H22.938L21.229,3H12.688L10.979,4.708H5V8.125H28.917Z" transform="translate(1118.542 140.125)"/>
+  <path id="Path_2" data-name="Path 2" class="cls-2" d="M0,0H41V41H0Z" transform="translate(1115 138)"/>
+</svg>

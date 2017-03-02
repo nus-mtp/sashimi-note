@@ -1,58 +1,64 @@
 <template>
   <div class="section group navbar">
-    <div class="col button-back vertical-align-child">
-        <button class="navbar-buttons">
-          <img src="../../assets/buttons/back-button.png" class="button-img" alt="back">
-        </button>
+    <div class="col button-logo vertical-align-child">
+        <a v-on:click="goHome" class="vertical-align-child navbar-buttons hover-grow">        
+            <!--<img src="../../assets/images/buttons/button-back.svg" class="button-img" alt="back">-->
+            <img src="../../assets/sashimi.svg" class="inline-block" alt="sashimi">
+            <p class="inline-block">
+              SASHIMI NOTE
+            </p>
+        </a>
     </div>
-    <div class="col float-left vertical-align-child button-margin">
+    <div class="col float-left vertical-align-child button-group-margin">
       <div class="image-upload">
-        <label for="file-input">
-          <img src="../../assets/buttons/upload-image.png" class="button-img" alt="upload-image">
+        <label for="file-input" class="navbar-buttons hover-grow" id="upload-image">
+          <img src="../../assets/images/buttons/button-upload-image.svg" class="button-img" alt="upload-image">
         </label>
         <input type="file" id="file-input">
       </div>
-      <button class="navbar-buttons">
-        <img src="../../assets/buttons/plugins.png" class="button-img" alt="plugins">
+      <button class="navbar-buttons hover-grow" id="plugins">
+        <img src="../../assets/images/buttons/button-plugins.svg" class="button-img" alt="plugins">
       </button>
-      <button class="navbar-buttons">
-        <img src="../../assets/buttons/annotate.png" class="button-img" alt="annotate">
+      <button class="navbar-buttons hover-grow" id="annotate">
+        <img src="../../assets/images/buttons/button-annotate.svg" class="button-img" alt="annotate">
       </button>
-      <button class="navbar-buttons">
-        <img src="../../assets/buttons/share.png" class="button-img" alt="share">
+      <button class="navbar-buttons hover-grow" id="share-file">
+        <img src="../../assets/images/buttons/button-share-file.svg" class="button-img" alt="share">
       </button>
     </div>
     <div class="float-right">
-      <div class="col vertical-align-child button-margin inline-block">
-        <button class="navbar-dropdown navbar-buttons">
-          <img src="../../assets/buttons/add.png" alt="add"> New 
-        </button>
-        <div class="dropdown-content">
-          <a href="">New File</a>
-          <a href="">Duplicate File</a>
+      <div class="col inline-block">
+        <div class="navbar-dropdown inline-block">
+          <button class="button-dropdown button-group-margin vertical-align-child navbar-buttons hover-grow" id="new-file">
+            <img class="inline-block" src="../../assets/images/symbols/symbol-add.svg" alt="add"> 
+            <p class="inline-block">New</p>  
+          </button>
+          <div class="dropdown-content">
+            <a href="">New File</a>
+            <a href="">Duplicate File</a>
+          </div>
         </div>
-        <button class="navbar-dropdown navbar-buttons">
-          Manage <img src="../../assets/buttons/add.png" alt="add">
-        </button>
-        <div class="dropdown-content">
-          <a href="">Test</a>
-          <a href="">Test</a>
+        <div class="navbar-dropdown inline-block">
+          <button class="button-dropdown button-group-margin vertical-align-child navbar-buttons hover-grow" id="manage-file">
+            <p class="inline-block">Manage</p> 
+            <img class="inline-block" src="../../assets/images/symbols/symbol-arrow-down.svg" alt="add">
+          </button>
+          <div class="dropdown-content">
+            <button v-on:click="updateParent('pages')">Pages</button>
+            <button v-on:click="updateParent('slides')">Slides</button>
+            <button v-on:click="updateParent('html')">HTML</button>
+          </div>
         </div>
       </div>
-      <div class="col vertical-align-child button-margin">
-        <button class="navbar-buttons">
-          <img src="../../assets/buttons/edit.png" class="button-img" alt="editor">
+      <div class="col vertical-align-child button-group-margin">
+        <button v-on:click="updateParent('editor')" class="navbar-buttons hover-grow" id="button-editor">
+          <img src="../../assets/images/buttons/button-edit.svg" class="button-img" alt="editor">
         </button>
-        <button class="navbar-buttons">
-          <img src="../../assets/buttons/split-view.png" class="button-img" alt="split-view">
+        <button v-on:click="updateParent('split')" class="navbar-buttons hover-grow" id="button-viewer">
+          <img src="../../assets/images/buttons/button-split-screen.svg" class="button-img" alt="split-view">
         </button>
-        <button class="navbar-buttons">
-          <img src="../../assets/buttons/viewer.png" class="button-img" alt="viewer">
-        </button>
-      </div>
-      <div class="col vertical-align-child button-margin">
-        <button class="navbar-buttons">
-          <img src="../../assets/buttons/richtext-dropdown.png" id="richtext-dropdown" alt="dropdown">
+        <button v-on:click="updateParent('viewer')" class="navbar-buttons hover-grow" id="button-split-screen">
+          <img src="../../assets/images/buttons/button-view.svg" class="button-img" alt="viewer">
         </button>
       </div>
     </div>
@@ -60,14 +66,32 @@
 </template>
 
 <script>
-
+export default {
+  components: {
+  },
+  data() {
+    return {
+      isActive: false,
+    };
+  },
+  props: ['value'],
+  methods: {
+    updateParent(action) {
+      this.$emit('input', action);
+    },
+    goHome() {
+      this.$router.push({ path: '/' });
+    }
+  },
+};
 </script>
 
 <style scoped lang="scss"> 
-@import '../../assets/styles/variables.scss';
+@import 'src/assets/styles/variables.scss';
 
 .navbar {
-  border-bottom: 1px solid black;
+  box-sizing: border-box;
+  border-bottom: 3px solid $navbar-border-color;
 }
 
 .image-upload {
@@ -79,19 +103,38 @@
   }
 }
 
-.navbar-dropdown {
-  font-size: 16px;
+.button-logo {
+  cursor: pointer;
+  .hover-grow{
+    &:hover {
+      transform: scale(1.1);
+    }
+  }
+}
+
+.button-dropdown {
+  font-size: $navbar-font-size;
   padding: 10px;
-  border: 1px solid transparent;
+  box-sizing: border-box;
 
   img {
-    width: 12px;
-    margin-right: 5px;
+    width: 20px;
   }
 
-  &:hover {
-    border: 1px solid black;
+  p {
+    margin: 0;
+    font-family: $general-font;
+  }
+}
 
+.navbar-dropdown {
+  box-sizing: border-box;
+
+  &:hover {
+    .button-dropdown {
+      transform: scale(1.1);
+      border: 1px solid black;
+    }
     .dropdown-content {
       display:block;
     }
@@ -101,16 +144,21 @@
 .dropdown-content {
   display: none;
   position: absolute;
-  margin: 15px 15px 0 0;
   min-width: 140px;
   border: 1px solid black;
   text-align: left;
   padding: 10px;
-}
+  background-color: white;
+  z-index: 999;
 
-#richtext-dropdown {
-  margin-top: 8px;
-  width: 22px;
+  button {
+    border: none;
+    background-color: transparent;
+    cursor: pointer;
+    font-family: $general-font;
+    font-size: $navbar-font-size;
+    display: block;
+    padding: 8px;
+  }
 }
-
 </style>
