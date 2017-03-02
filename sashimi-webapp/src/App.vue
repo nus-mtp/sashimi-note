@@ -120,7 +120,7 @@ img {
   }
 
   &-img {
-    width: 38px;
+    width: 35px;
   }
 }
 
