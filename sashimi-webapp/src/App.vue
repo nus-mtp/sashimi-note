@@ -68,6 +68,16 @@ img {
   text-align: left;
 }
 
+.material-icons { 
+  &.md-dark {
+    color: rgba(0, 0, 0, 0.54); 
+
+    &.md-inactive { 
+      color: rgba(0, 0, 0, 0.26); 
+    }
+  }
+}
+
 .navbar-buttons {
   background-color: transparent;
   border: none;
