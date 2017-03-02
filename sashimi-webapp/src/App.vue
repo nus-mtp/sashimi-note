@@ -30,6 +30,7 @@ body {
 	-moz-box-sizing: border-box;    /* Firefox, other Gecko */
 	box-sizing: border-box;
   color: black;
+  font-family: $general-font;
 }
 
 img {
@@ -69,6 +70,16 @@ img {
 }
 
 .material-icons { 
+
+  &.md-54 { 
+    font-size: 54px; 
+  }
+  &.md-120 { 
+    font-size: 120px; 
+  }
+  &.folder-blue {
+    color: #77CBFF;
+  }
   &.md-dark {
     color: rgba(0, 0, 0, 0.54); 
 
