@@ -25,7 +25,7 @@
           </td>
         </tr>
       </table>
-      <table class="vertical-align-child float-right">
+      <table class="vertical-align-child buttons-right float-right">
         <tr>
           <div class="col buttons">
             <td>
@@ -55,7 +55,7 @@
             </td>
           </div>
           <td>
-            <div class="col vertical-align-child view">
+            <div class="col vertical-align-child view-type">
               <button class="navbar-buttons hover-grow" v-on:click="setAction('iconView')">Icon</button>|
               <button class="navbar-buttons hover-grow" v-on:click="setAction('listView')">List</button>
             </div>
@@ -72,7 +72,7 @@ export default {
   data() {
     return {
       buttonDisabled: true,
-      buttonEffect: false
+      buttonEffect: false,
     };
   },
   methods: {
@@ -111,10 +111,14 @@ export default {
 }
 
 .userActions {
-  background-color: #F7F7F7;
+  background-color: $navbar-background-color;
   box-shadow: 0 2px 10px rgba(0,0,0,0.2);
   padding-top: 3px;
   padding-bottom: 3px;
+
+  .buttons-right {
+    display: none;
+  }
 }
 
 .navbar-breadcrumb {
@@ -154,7 +158,7 @@ export default {
   border-right: 1px solid $navbar-border-color;
 }
 
-.view {
+.view-type {
   font-size: $navbar-font-size;
 
   a {
@@ -181,6 +185,12 @@ td {
 
     input {
       width: 70%;
+    }
+  }
+
+  .userActions  {
+    .buttons-right {
+      display: block;
     }
   }
 }
