@@ -45,10 +45,10 @@
             <p class="inline-block">Manage</p> 
             <img class="inline-block" src="../../assets/images/symbols/symbol-arrow-down.svg" alt="add">
           </button>
-          <div class="dropdown-content">
-            <button v-on:click="updateParent('pages')" class="hover-grow" >Pages</button>
-            <button v-on:click="updateParent('slides')" class="hover-grow">Slides</button>
-            <button v-on:click="updateParent('html')" class="hover-grow">HTML</button>
+          <div class="dropdown-content" :data-active="value">
+            <button v-on:click="updateParent('pages')" data-format="pages">Pages</button>
+            <button v-on:click="updateParent('slides')" data-format="slides">Slides</button>
+            <button v-on:click="updateParent('html')" data-format="html">HTML</button>
           </div>
         </div>
       </div>
@@ -133,26 +133,40 @@ export default {
 .navbar-dropdown {
   box-sizing: border-box;
 
+  .button-dropdown {
+    border: 1px solid transparent;  
+    transition: border 0.5s;
+    width: 140px;
+  }
+
   &:hover {
     .button-dropdown {
-      transform: scale(1.1);
+      transform: scale(1);
       border: 1px solid black;
     }
     .dropdown-content {
-      display:block;
+      opacity:1;
+      visibility: visible;
+      transition: opacity 0.5s,
+                  visibility 0.5s;
     }
   }
 }
 
 .dropdown-content {
-  display: none;
+  opacity:0;
+  visibility: hidden;
   position: absolute;
-  min-width: 140px;
+  width: 140px;
+  box-sizing: border-box;
   border: 1px solid black;
   text-align: left;
-  padding: 10px;
   background-color: white;
   z-index: 999;
+  margin-left: 18px;
+  margin-top: -1px;
+  transition: opacity 0.5s,
+              visibility 0.5s;
 
   button {
     border: none;
@@ -161,7 +175,23 @@ export default {
     font-family: $general-font;
     font-size: $navbar-font-size;
     display: block;
-    padding: 8px;
+    padding: 12px;
+    width: 100%;
+    text-align: left;
+
+    &:hover {
+      background-color: rgba(0,0,0,0.05);
+      color: #333;
+    }
+  }
+
+  // Dropdown button active conditions
+  &[data-active="slides"] button[data-format="slides"],
+  &[data-active="pages"] button[data-format="pages"],
+  &[data-active=""] button[data-format="html"],
+  &[data-active="html"] button[data-format="html"] {
+    background-color: rgba(0,0,0,0.2);
+    font-weight: 600;
   }
 }
 </style>

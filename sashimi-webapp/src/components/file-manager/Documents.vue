@@ -45,11 +45,15 @@ export default {
 
   .folder, 
   .file {
-    cursor: default;
+    cursor: pointer;
     box-sizing: border-box;
     border: none;
     background-color: transparent;
     padding: 0;
+
+    &:hover {
+      background-color: rgba(0,0,0,0.02);      
+    }
 
     &:focus {
       background-color: #d3e2e2;
@@ -107,6 +111,7 @@ export default {
     border-bottom: 1px solid $navbar-border-color;
     vertical-align: middle;
     padding: 10px 20px;
+    padding-top: 16px;
     text-overflow: ellipsis;
     overflow: hidden;
     white-space: nowrap;
@@ -114,7 +119,7 @@ export default {
     text-align: left;
 
     img {
-    width: 50px;
+      width: 50px;
     }
 
     p {
