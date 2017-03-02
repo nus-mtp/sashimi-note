@@ -1,15 +1,6 @@
 <template>
   <div class="group section documents" v-bind:class="view">
-    <folder :view="action"></folder>
     <file :view="action"></file>
-    <file></file>
-    <file></file>
-    <file></file>
-    <file></file>
-    <file></file>
-    <file></file>
-    <file></file>
-    <file></file>
   </div>
 </template>
 
@@ -61,7 +52,7 @@ export default {
     padding: 0;
 
     &:focus {
-      background-color: #e8f3f9;
+      background-color: #d3e2e2;
     }
 
     p::selection {
