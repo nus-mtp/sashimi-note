@@ -158,4 +158,10 @@ img {
   vertical-align: middle;
 }
 
+@media screen and (max-width: 480px) {
+  .col {
+    margin: 0;
+  }
+}
+
 </style>
