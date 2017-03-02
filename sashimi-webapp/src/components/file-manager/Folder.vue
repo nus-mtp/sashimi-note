@@ -4,7 +4,7 @@
     id="123">
       <button class="folder">
         <img src="../../assets/images/icons/icon-folder.svg" alt="folder">
-        <p class="inline-block">CS3244 Project dsajdakhdsajkdhaajskdhasjdhasjhdjashdjahdajhdjahdjkahsdajshdjahdjahskajhdksahdkajshdksjahdkajshdsadajshdkajsdas hdjask dakshdjaksd kasdjkashdkjsahdjkhas dhaskjdkjsdjsdjkahskjhsadajk d</p>
+        <p class="inline-block">CS3244 Project</p>
       </button>
   </div>
 </template>

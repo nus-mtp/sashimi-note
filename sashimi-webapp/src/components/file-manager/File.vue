@@ -1,10 +1,10 @@
 <template>
-  <div class="col vertical-align-child" 
-    v-on:dblclick="openFile()" 
+  <div class="col vertical-align-child"
+    v-on:dblclick="openFile" 
     id="123">
     <button class="file">
       <img src="../../assets/images/icons/icon-file.svg" alt="file">
-      <p class="inline-block">CS3kjs h</p>
+      <p class="inline-block">Game Design Document</p>
     </button>
   </div>
 </template>
