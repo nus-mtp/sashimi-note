@@ -1,0 +1,12 @@
+# Simple XSS
+<script>alert('xss');</script>
+
+# Whitelist/Blacklist insufficient
+hello <a name="n" href="javascript:alert('xss')">*you*</a>
+
+# Striping HTML tags is not enough
+[some text](javascript:alert('xss'))
+
+# Mixed HTML/Markdown XSS attack
+hello <a name="n"
+href="javascript:alert('xss')">*you*</a>

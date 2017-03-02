@@ -1,0 +1,8 @@
+<h1 id="simple-xss">Simple XSS</h1>
+&lt;script&gt;alert('xss');&lt;/script&gt;
+<h1 id="whitelistblacklist-insufficient">Whitelist/Blacklist insufficient</h1>
+<p>hello <a href><em>you</em></a></p>
+<h1 id="striping-html-tags-is-not-enough">Striping HTML tags is not enough</h1>
+<p>[some text](javascript:alert(‘xss’))</p>
+<h1 id="mixed-htmlmarkdown-xss-attack">Mixed HTML/Markdown XSS attack</h1>
+<p>hello <a href><em>you</em></a></p>
