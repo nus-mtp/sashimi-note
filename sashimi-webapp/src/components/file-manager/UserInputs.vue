@@ -9,9 +9,10 @@
           </p>
         </router-link>
       </div>
-      <div class="col searchBar inline-block">
+      <!--Waiting for file-manager api to be completed to implement buttons-->
+      <!--<div class="col searchBar inline-block">
         <input type="text" placeholder="Search...">
-      </div>
+      </div>-->
     </div>
     <div class="section group navbar userActions vertical-align-child">
       <table class="col breadcrumb float-left">
@@ -25,7 +26,8 @@
       </table>
       <table class="vertical-align-child buttons-right float-right">
         <tr>
-          <div class="col buttons">
+          <!--Waiting for file-manager api to be completed to implement buttons-->
+          <!--<div class="col buttons">
             <td>
               <button class="navbar-buttons hover-grow">
                 <i class="material-icons md-dark">file_upload</i>
@@ -51,7 +53,7 @@
                 <i class="material-icons md-dark" v-bind:class="{'md-inactive': buttonDisabled}">delete</i>
               </button>
             </td>
-          </div>
+          </div>-->
           <td>
             <div class="col vertical-align-child view-type">
               <button class="navbar-buttons hover-grow" v-on:click="setAction('iconView')">Icon</button>|

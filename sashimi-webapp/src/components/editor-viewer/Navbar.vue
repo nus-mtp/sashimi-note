@@ -9,7 +9,8 @@
             </p>
         </a>
     </div>
-    <div class="col float-left vertical-align-child button-group-margin">
+    <!--Waiting for file-manager api to be completed to implement buttons-->
+    <!--<div class="col float-left vertical-align-child button-group-margin">
       <div class="image-upload">
         <label for="file-input" class="navbar-buttons hover-grow" id="upload-image">
           <i class="material-icons md-dark">photo_camera</i>
@@ -25,10 +26,11 @@
       <button class="navbar-buttons hover-grow" id="share-file">
         <i class="material-icons md-dark">share</i>
       </button>
-    </div>
+    </div>-->
     <div class="float-right">
       <div class="col inline-block">
-        <div class="navbar-dropdown inline-block">
+        <!--Waiting for file-manager api to be completed to implement buttons-->    
+        <!--<div class="navbar-dropdown inline-block">
           <button class="button-dropdown button-group-margin vertical-align-child navbar-buttons hover-grow" id="new-file">
             <img class="inline-block" src="../../assets/images/symbols/symbol-add.svg" alt="add"> 
             <p class="inline-block">New</p>  
@@ -37,7 +39,7 @@
             <a href="">New File</a>
             <a href="">Duplicate File</a>
           </div>
-        </div>
+        </div>-->
         <div class="navbar-dropdown inline-block">
           <button class="button-dropdown button-group-margin vertical-align-child navbar-buttons hover-grow" id="manage-file">
             <p class="inline-block">Manage</p> 
