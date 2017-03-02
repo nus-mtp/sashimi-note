@@ -46,9 +46,9 @@
             <img class="inline-block" src="../../assets/images/symbols/symbol-arrow-down.svg" alt="add">
           </button>
           <div class="dropdown-content">
-            <button v-on:click="updateParent('pages')">Pages</button>
-            <button v-on:click="updateParent('slides')">Slides</button>
-            <button v-on:click="updateParent('html')">HTML</button>
+            <button v-on:click="updateParent('pages')" class="hover-grow" >Pages</button>
+            <button v-on:click="updateParent('slides')" class="hover-grow">Slides</button>
+            <button v-on:click="updateParent('html')" class="hover-grow">HTML</button>
           </div>
         </div>
       </div>
