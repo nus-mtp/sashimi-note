@@ -39,18 +39,18 @@
               </button>
             </td>
             <td>
-              <button class="navbar-buttons" v-bind:class="{'hover-grow': isDisabled}">
-               <i class="material-icons md-dark" v-bind:class="{'md-inactive': isDisabled}">content_copy</i>
+              <button class="navbar-buttons" v-bind:class="{'hover-grow': buttonEffect}">
+               <i class="material-icons md-dark" v-bind:class="{'md-inactive': buttonDisabled}">content_copy</i>
               </button>
             </td>
             <td>
-              <button class="navbar-buttons" v-bind:class="{'hover-grow': isDisabled}">
-                <i class="material-icons md-dark" v-bind:class="{'md-inactive': isDisabled}">file_download</i>
+              <button class="navbar-buttons" v-bind:class="{'hover-grow': buttonEffect}">
+                <i class="material-icons md-dark" v-bind:class="{'md-inactive': buttonDisabled}">file_download</i>
               </button>
             </td>
             <td>
-              <button class="navbar-buttons" v-bind:class="{'hover-grow': isDisabled}">
-                <i class="material-icons md-dark" v-bind:class="{'md-inactive': isDisabled}">delete</i>
+              <button class="navbar-buttons" v-bind:class="{'hover-grow': buttonEffect}">
+                <i class="material-icons md-dark" v-bind:class="{'md-inactive': buttonDisabled}">delete</i>
               </button>
             </td>
           </div>
@@ -71,7 +71,8 @@ export default {
   props: ['value'],
   data() {
     return {
-      isDisabled: true,
+      buttonDisabled: true,
+      buttonEffect: false
     };
   },
   methods: {
