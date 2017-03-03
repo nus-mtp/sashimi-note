@@ -4,6 +4,39 @@ import helper from './helper';
 
 const CLASS_NAME_PREFIX = 'page-view';
 
+// Setting up page-break-before mechanism
+// These page-break-before are hardcoded for now.
+// TODO: Refactor this code
+const checkShouldPageBreak = function checkShouldPageBreak(childHeights, index) {
+  const BREAK_PAGE = true;
+  const DO_NOTHING = false;
+
+  const eleName = childHeights[index].ele.tagName;
+
+  switch (eleName) {
+    case 'H1': {
+      // If this H1 is at the beginning of the page, do not break
+      if (index === 0) {
+        return DO_NOTHING;
+      } else {
+        return BREAK_PAGE;
+      }
+    }
+    case 'H2': {
+      // If a H2 was immediately preceeded by H1,
+      // then, this H2 will not have a page-before-break
+      if (childHeights[index - 1] &&
+          childHeights[index - 1].ele.tagName === 'H1') {
+        return DO_NOTHING;
+      } else {
+        return BREAK_PAGE;
+      }
+    }
+    default:
+      return ['PAGEBREAK'].some(name => name === eleName);
+  }
+};
+
 export default {
   /**
    * Render pageRenderer's HTML content into its referenceFrame.
@@ -105,6 +138,12 @@ export default {
     // Allocate element in pages within the render height
     childHeights.forEach((element, index) => {
       try {
+        if (checkShouldPageBreak(childHeights, index)) {
+          // Create a new page is page should be broken here
+          virtualBook.add(virtualPage);
+          virtualPage = new VirtualPage(pr.renderHeight);
+        }
+
         virtualPage.add(element);
       } catch (error) {
         // Store existing page first
@@ -117,6 +156,9 @@ export default {
             // TODO: Consider breaking element into smaller chunk
             virtualPage = new VirtualPage(pr.renderHeight);
           }
+          virtualPage.forceAdd(element);
+        } else if (error.message === 'Page should break here') {
+          virtualPage = new VirtualPage(pr.renderHeight);
           virtualPage.forceAdd(element);
         } else if (error.message === 'Page is full') {
           virtualPage = new VirtualPage(pr.renderHeight);
