@@ -31,7 +31,9 @@ export default {
   },
   data() {
     return {
-      mdContent: '',
+      // TODO: Temporary solution for presistence storage
+      //       to be remove when file manager is implemented.
+      mdContent: localStorage.getItem('mdContent'),
       action: '',
       fileFormat: 'html',
       editorCols: {
@@ -79,7 +81,12 @@ export default {
             break;
         }
       }
-    }
+    },
+    mdContent(value) {
+      // TODO: Temporary solution for presistence storage
+      //       to be remove when file manager is implemented.
+      localStorage.setItem('mdContent', value);
+    },
   },
   method: {
   },
