@@ -59,8 +59,8 @@
     },
     mounted() {
       const PAGE_A6 = {
-        width: '14.8cm',
-        height: '10.5cm',
+        width: '16.51cm',
+        height: '13.159cm',
         padding: {
           top: '1.2cm',
           bottom: '1.2cm',
@@ -148,7 +148,7 @@
     @page {
       size: A4;
       margin: 0;
-    } 
+    }
 
     #app > div > div.section.group.content > div:nth-child(2) {
       width: 100%;
