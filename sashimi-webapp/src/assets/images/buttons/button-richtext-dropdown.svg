@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="40px" height="39px" viewBox="0 0 40 39" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 41 (35326) - http://www.bohemiancoding.com/sketch -->
+    <title>dropdown</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Symbols" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="dropdown" transform="translate(1.000000, 1.000000)" stroke-width="2" stroke="#000000">
+            <g>
+                <path d="M1.09995069,0.770833333 L36.1395232,0.770833333" id="Line" stroke-linecap="square"></path>
+                <path d="M1.09995069,7.70833333 L36.1395232,7.70833333" id="Line-Copy-2" stroke-linecap="square"></path>
+                <g id="ic_keyboard_arrow_down_black_24px" transform="translate(0.000000, 13.875000)">
+                    <g id="Group">
+                        <polygon id="Shape" points="4.90994898 0.00493333333 19 13.9853833 33.090051 0.00493333333 37.4183673 4.30895833 19 22.6239583 0.581632653 4.30895833"></polygon>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

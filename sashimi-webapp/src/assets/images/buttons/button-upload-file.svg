@@ -1,0 +1,15 @@
+<svg id="button-upload-file" xmlns="http://www.w3.org/2000/svg" viewBox="835 138 41 41">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: none;
+      }
+
+      .cls-2 {
+        fill: #939393;
+      }
+    </style>
+  </defs>
+  <path id="Path_3" data-name="Path 3" class="cls-1" d="M0,0H41V41H0Z" transform="translate(835 138)"/>
+  <path id="Path_4" data-name="Path 4" class="cls-2" d="M11.833,25.208h10.25V14.958h6.833L16.958,3,5,14.958h6.833ZM5,28.625H28.917v3.417H5Z" transform="translate(838.542 140.125)"/>
+</svg>

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="66px" height="66px" viewBox="0 0 66 66" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 41 (35326) - http://www.bohemiancoding.com/sketch -->
+    <title>button-edit</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Symbols" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="button-edit" transform="translate(1.000000, 1.000000)">
+            <g>
+                <g id="ic_edit_black_24px" transform="translate(12.000000, 12.000000)">
+                    <g id="Group">
+                        <path d="M2.125,31.21875 L2.125,38.875 L9.78125,38.875 L32.3620833,16.2941667 L24.7058333,8.63791667 L2.125,31.21875 Z M38.2829167,10.3733333 C39.0791667,9.57708333 39.0791667,8.29083333 38.2829167,7.49458333 L33.5054167,2.71708333 C32.7091667,1.92083333 31.4229167,1.92083333 30.6266667,2.71708333 L26.8904167,6.45333333 L34.5466667,14.1095833 L38.2829167,10.3733333 Z" id="Shape" stroke="#000000" stroke-width="2"></path>
+                        <polygon id="Shape" points="0 0 40 0 40 40 0 40"></polygon>
+                    </g>
+                </g>
+                <!--<path d="M32,64 C42.08766,64 51.0851108,59.3322598 56.9503286,52.0388032 C61.3607001,46.5544625 64,39.585452 64,32 C64,14.326888 49.673112,0 32,0 C14.326888,0 0,14.326888 0,32 C0,49.673112 14.326888,64 32,64 Z" id="Oval-Copy-2" stroke="#000000" stroke-width="2"></path>-->
+            </g>
+        </g>
+    </g>
+</svg>
