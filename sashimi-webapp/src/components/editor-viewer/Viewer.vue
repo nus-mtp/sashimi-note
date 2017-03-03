@@ -115,11 +115,12 @@
   #viewer-container {
     overflow-wrap: break-word;
     line-height: 1.6em;
-    transform-origin: top left;
+    transform-origin: top center;
 
     .page-view {
-      margin: 50px;
       overflow: hidden;
+      margin: 0 auto;
+      margin-top: 50px;
     }
   }
   
