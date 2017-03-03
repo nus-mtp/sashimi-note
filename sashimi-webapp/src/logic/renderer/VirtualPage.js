@@ -12,6 +12,13 @@ export default function VirtualPage(maxHeight) {
   this.filledHeight = 0;
   this.elements = [];
 }
+
+/**
+ * @param {Object} element
+ * @param {Element} element.ele
+ * @param {number} element.height
+ * @return {number} remaining height of the current page
+ */
 VirtualPage.prototype.add = function add(element) {
   if (element.height / this.maxHeight > 1) {
     throw new VirtualPageError('Element is larger than page');
