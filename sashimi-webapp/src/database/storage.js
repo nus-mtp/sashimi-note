@@ -31,11 +31,11 @@ export default class storage {
   // Searching the filename and foldername ONLY
   static partialSearch(searchString) {
     if (typeof Promise === 'function') {
-      return new Promise((resolve, reject) => {
+      return new Promise((resolve, reject) =>
         query.searchString(searchString)
-          .then(returnedArr => returnedArr)
-          .catch(sqlError => sqlError);
-      });
+        .then(returnedArr => resolve(returnedArr))
+        .catch(sqlError => reject(sqlError))
+      );
     } else {
       throw new exceptions.PromiseFunctionNotDefined();
     }
