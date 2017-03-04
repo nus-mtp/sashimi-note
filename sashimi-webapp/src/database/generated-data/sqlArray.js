@@ -4,5 +4,16 @@
  *
  */
 
+import constants from '../constants';
+
+let sqlObject = {};
+let isAlasqlArrayInitialized = constants.CONST_ALASQL_CREATION_CLOSED;
+
 export default function sqlArray() {
+  this.initializeAlasqlArray = function initializeAlasqlArray() {
+    if (!isAlasqlArrayInitialized) {
+      sqlObject = {};
+      isAlasqlArrayInitialized = constants.CONST_ALASQL_CREATION_INITIALIZED;
+    }
+  };
 }
