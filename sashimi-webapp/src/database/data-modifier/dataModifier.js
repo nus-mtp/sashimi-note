@@ -13,24 +13,19 @@ export default class dataModifier {
   static constructor() {}
 
   static deleteAllEntities() {
-    if (typeof Promise === 'function') {
-      return new Promise((resolve, reject) =>
-        dataDelete.deleteAllEntities(0)
-          .then(data => resolve(data))
-          .catch(sqlErr => reject(sqlErr))
-      );
-    } else {
-      throw new exceptions.PromiseFunctionNotDefined();
-    }
+    dataDelete.deleteAllEntities();
   }
 
   static createNewFile(organizationId, filePath, folderId) {
     if (typeof Promise === 'function') {
-      return new Promise((resolve, reject) =>
+      return new Promise((resolve, reject) => {
         dataAdd.createNewFile(organizationId, filePath, folderId)
-          .then(fileId => resolve(fileId))
-          .catch(sqlErr => reject(sqlErr))
-      );
+          .then((fileId) => {
+            console.log('DATAMODIFIER');
+            console.log(fileId);
+            resolve(fileId);
+          }).catch(sqlErr => sqlErr);
+      });
     } else {
       throw new exceptions.PromiseFunctionNotDefined();
     }
@@ -38,11 +33,11 @@ export default class dataModifier {
 
   static createNewFolder(organizationId, folderPath, folderId) {
     if (typeof Promise === 'function') {
-      return new Promise((resolve, reject) =>
+      return new Promise((resolve, reject) => {
         dataAdd.createNewFolder(organizationId, folderPath, folderId)
-          .then(data => resolve(true))
-          .catch(sqlErr => reject(sqlErr))
-      );
+          .then(data => true)
+          .catch(sqlErr => sqlErr);
+      });
     } else {
       throw new exceptions.PromiseFunctionNotDefined();
     }
@@ -50,11 +45,11 @@ export default class dataModifier {
 
   static saveFile(fileId, file) {
     if (typeof Promise === 'function') {
-      return new Promise((resolve, reject) =>
-        dataUpdate.saveFile(fileId, file)
-          .then(data => resolve(true))
-          .catch(sqlError => reject(sqlError))
-      );
+      return new Promise((resolve, reject) => {
+        resolve(dataUpdate.saveFile(fileId, file)
+          .then(() => true))
+          .catch(sqlError => sqlError);
+      });
     } else {
       throw new exceptions.PromiseFunctionNotDefined();
     }
@@ -62,11 +57,11 @@ export default class dataModifier {
 
   static deleteFile(fileId) {
     if (typeof Promise === 'function') {
-      return new Promise((resolve, reject) =>
-        dataDelete.deleteFile(fileId)
-          .then(data => resolve(true))
-          .catch(sqlError => reject(sqlError))
-      );
+      return new Promise((resolve, reject) => {
+        resolve(dataDelete.deleteFile(fileId)
+          .then(() => true))
+          .catch(sqlError => sqlError);
+      });
     } else {
       throw new exceptions.PromiseFunctionNotDefined();
     }
@@ -74,11 +69,11 @@ export default class dataModifier {
 
   static deleteFolder(folderId) {
     if (typeof Promise === 'function') {
-      return new Promise((resolve, reject) =>
-        dataDelete.deleteFolder(folderId)
-          .then(data => resolve(true))
-          .catch(sqlError => reject(sqlError))
-      );
+      return new Promise((resolve, reject) => {
+        resolve(dataDelete.deleteFolder(folderId)
+          .then(() => true))
+          .catch(sqlError => sqlError);
+      });
     } else {
       throw new exceptions.PromiseFunctionNotDefined();
     }

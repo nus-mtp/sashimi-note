@@ -15,47 +15,36 @@ const sqlCommands = new SqlCommands();
 export default class query {
   static constructor() {}
 
-  // working
   static isTableExistsInDatabase(tableName) {
-    if (typeof Promise === 'function') {
-      return new Promise((resolve, reject) =>
-        sqlCommands.getFullTableData(tableName)
-          .then(data => resolve(true))
-          .catch(sqlErr => resolve(false))
-      );
-    } else {
-      throw new exceptions.PromiseFunctionNotDefined();
-    }
+    sqlCommands.getFullTableData(tableName)
+      .then(data => true).catch(sqlErr => false);
   }
 
   static getFullTableData(tableName) {
-    if (typeof Promise === 'function') {
-      return new Promise((resolve, reject) =>
-        sqlCommands.getFullTableData(tableName)
-          .then(data => resolve(data))
-          .catch(sqlError => reject(sqlError))
-      );
-    } else {
-      throw new exceptions.PromiseFunctionNotDefined();
-    }
+    return sqlCommands.getFullTableData(tableName);
   }
 
   static searchString(searchString) {
     if (typeof Promise === 'function') {
       return new Promise((resolve, reject) => {
-        const promiseArr = [];
+        resolve(() => {
+          let fileArr;
+          let folderArr;
 
-        sqlCommands.partialSearchFile(searchString)
-          .then(fileArr => promiseArr.push(promiseArr))
-          .catch(sqlError => reject(sqlError));
+          sqlCommands.partialSearchFile(searchString)
+            .then((returnedArr) => {
+              fileArr = returnedArr;
+            })
+            .catch(sqlError => sqlError);
 
-        sqlCommands.partialSearchFolder(searchString)
-          .then(folderArr => promiseArr.push(promiseArr))
-          .catch(sqlError => reject(sqlError));
+          sqlCommands.partialSearchFolder(searchString)
+            .then((returnedArr) => {
+              folderArr = returnedArr;
+            })
+            .catch(sqlError => sqlError);
 
-        return Promise.all(promiseArr)
-          .then(([fileArr, folderArr]) => resolve([fileArr, folderArr]))
-          .catch(sqlErr => reject(sqlErr));
+          resolve([fileArr, folderArr]);
+        });
       });
     } else {
       throw new exceptions.PromiseFunctionNotDefined();
@@ -65,19 +54,21 @@ export default class query {
   static loadFolder(folderId) {
     if (typeof Promise === 'function') {
       return new Promise((resolve, reject) => {
-        const promiseArr = [];
+        resolve(() => {
+          let fileArr;
+          let folderArr;
+          sqlCommands.loadFilesFromFolder(folderId)
+            .then((returnedArr) => {
+              fileArr = returnedArr;
+            }).catch(sqlError => sqlError);
 
-        sqlCommands.loadFilesFromFolder(folderId)
-          .then(fileArr => promiseArr.push(promiseArr))
-          .catch(sqlError => reject(sqlError));
+          sqlCommands.loadFoldersFromFolder(folderId)
+            .then((returnedArr) => {
+              folderArr = returnedArr;
+            }).catch(sqlError => sqlError);
 
-        sqlCommands.loadFoldersFromFolder(folderId)
-          .then(folderArr => promiseArr.push(promiseArr))
-          .catch(sqlError => reject(sqlError));
-
-        return Promise.all(promiseArr)
-          .then(([fileArr, folderArr]) => resolve([fileArr, folderArr]))
-          .catch(sqlErr => reject(sqlErr));
+          resolve([fileArr, folderArr]);
+        });
       });
     } else {
       throw new exceptions.PromiseFunctionNotDefined();
@@ -86,11 +77,13 @@ export default class query {
 
   static loadFile(fileId) {
     if (typeof Promise === 'function') {
-      return new Promise((resolve, reject) =>
-        sqlCommands.loadFile(fileId)
-          .then(data => resolve(data))
-          .catch(sqlError => reject(sqlError))
-      );
+      return new Promise((resolve, reject) => {
+        resolve(() => {
+          sqlCommands.loadFile(fileId)
+          .then(data => data)
+          .catch(sqlError => sqlError);
+        });
+      });
     } else {
       throw new exceptions.PromiseFunctionNotDefined();
     }
