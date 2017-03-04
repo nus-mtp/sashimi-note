@@ -63,5 +63,15 @@ export default class storage {
 
   static deleteFolder(folderID) {
 
+  static deleteAll() {
+    if (typeof Promise === 'function') {
+      return new Promise((resolve, reject) =>
+        dataModifier.deleteAllEntities()
+        .then(data => resolve(true))
+        .catch(sqlError => reject(sqlError))
+      );
+    } else {
+      throw new exceptions.PromiseFunctionNotDefined();
+    }
   }
 }
