@@ -65,16 +65,12 @@ export default function sqlCommands() {
       .then().catch(sqlError => sqlError);
   };
 
-  this.insertContent = function insertContent(tableName, ...content) {
+  this.insertContent = function insertContent(tableName, alasqlArray) {
     if (typeof Promise === 'function') {
-      return new Promise((resolve, reject) => {
-        // concatenate all the values to insert together
-        const valuesToInsertIntoTable = content.join(', ');
-        alasql.promise([stringManipulator.stringConcat('INSERT INTO ', tableName,
-                                                       ' VALUES (', valuesToInsertIntoTable, ')')])
-        .then(() => true)
-        .catch(sqlError => sqlError);
-      });
+      return new Promise((resolve, reject) => alasql.promise([stringManipulator.stringConcat('INSERT INTO ', tableName,
+                                                              ' VALUES ?'), alasqlArray])
+          .then(data => resolve(true))
+          .catch(sqlError => reject(sqlError)));
     } else {
       throw new exceptions.PromiseFunctionNotDefined();
     }
