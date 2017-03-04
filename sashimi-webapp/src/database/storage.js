@@ -45,8 +45,16 @@ export default class storage {
 
   }
 
-  static saveFile(fileID, file) {
-
+  static loadFile(fileId) {
+    if (typeof Promise === 'function') {
+      return new Promise((resolve, reject) =>
+        query.loadFile(fileId)
+        .then(returnedArr => resolve(returnedArr))
+        .catch(sqlError => reject(sqlError))
+      );
+    } else {
+      throw new exceptions.PromiseFunctionNotDefined();
+    }
   }
 
   static saveFile(fileId, fileString) {
