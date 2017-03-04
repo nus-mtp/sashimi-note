@@ -26,9 +26,11 @@ export default class dataDelete {
 
   static deleteFile(fileId) {
     if (typeof Promise === 'function') {
-      return new Promise((resolve, reject) => {
-        resolve(sqlCommands.deleteFile(fileId));
-      });
+      return new Promise((resolve, reject) =>
+        sqlCommands.deleteFile(fileId)
+        .then(data => resolve(data))
+        .catch(sqlError => reject(sqlError))
+      );
     } else {
       throw new exceptions.PromiseFunctionNotDefined();
     }
@@ -37,9 +39,11 @@ export default class dataDelete {
 
   static deleteFolder(folderId) {
     if (typeof Promise === 'function') {
-      return new Promise((resolve, reject) => {
-        resolve(sqlCommands.deleteFolder(folderId));
-      });
+      return new Promise((resolve, reject) =>
+        sqlCommands.deleteFolder(folderId)
+        .then(data => resolve(data))
+        .catch(sqlError => reject(sqlError))
+      );
     } else {
       throw new exceptions.PromiseFunctionNotDefined();
     }
