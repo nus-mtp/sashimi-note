@@ -16,8 +16,17 @@ let sqlCreateTableString = constants.STRING_INITIALIZE;
 export default class tableCreator {
   static constructor() {}
 
-  static callSqlToLinkToDatabase() {
-    sqlCommands.linkDatabaseToIndexedDB();
+  static callSqlToLinkToDatabase(databaseName) {
+    if (typeof Promise === 'function') {
+      return new Promise((resolve, reject) => {
+        const thisDatabaseName = databaseName || 'lectureNote';
+        return sqlCommands.linkDatabaseToIndexedDB(thisDatabaseName)
+          .then(data => resolve(data))
+          .catch(sqlError => reject(sqlError));
+      });
+    } else {
+      throw new exceptions.PromiseFunctionNotDefined();
+    }
   }
 
   static initCreateTable(tableName) {
