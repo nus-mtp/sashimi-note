@@ -225,9 +225,14 @@ export default function sqlCommands() {
   };
 
   this.deleteTable = function deleteTable(tableName) {
-    alasql.promise([stringManipulator.stringConcat('DROP TABLE ', tableName)])
-      .then().catch(sqlError => sqlError);
-  };
-
+    if (typeof Promise === 'function') {
+      return new Promise((resolve, reject) =>
+        alasql.promise([stringManipulator.stringConcat('DROP TABLE IF EXISTS ', tableName, ';')])
+          .then(data => resolve(true))
+          .catch(sqlError => reject(sqlError))
+      );
+    } else {
+      throw new exceptions.PromiseFunctionNotDefined();
+    }
   };
 }
