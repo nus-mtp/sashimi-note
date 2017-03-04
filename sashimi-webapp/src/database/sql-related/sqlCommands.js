@@ -229,8 +229,5 @@ export default function sqlCommands() {
       .then().catch(sqlError => sqlError);
   };
 
-  this.cleanTable = function cleanTable(tableName) {
-    alasql.promise([stringManipulator.stringConcat('DELETE * FROM ', tableName)])
-      .then().catch(sqlError => sqlError);
   };
 }
