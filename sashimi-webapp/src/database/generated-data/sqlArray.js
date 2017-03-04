@@ -9,6 +9,10 @@ import constants from '../constants';
 let sqlObject = {};
 let isAlasqlArrayInitialized = constants.CONST_ALASQL_CREATION_CLOSED;
 
+function endOfCreateAlasqlStringForAlasql() {
+  return [[sqlObject]];
+}
+
 export default function sqlArray() {
   this.initializeAlasqlArray = function initializeAlasqlArray() {
     if (!isAlasqlArrayInitialized) {
@@ -23,4 +27,14 @@ export default function sqlArray() {
     }
   };
 
+  this.endAlasqlArray = function endAlasqlArray() {
+    if (isAlasqlArrayInitialized) {
+      isAlasqlArrayInitialized = constants.CONST_ALASQL_CREATION_CLOSED;
+      const returnSqlArrayObject = endOfCreateAlasqlStringForAlasql();
+      return returnSqlArrayObject;
+    } else {
+      // return empty alasql array of array of object
+      return [[{}]];
+    }
+  };
 }
