@@ -29,7 +29,7 @@ function createNewFile(organizationId, filePath, folderId, newFileId) {
       const fileLastModified = fileCreationDate;
       const fileNewPath = stringManipulator.stringConcat('"', filePath, '"');
 
-      sqlCommands.insertContent(constants.ENTITIES_FILE_MANAGER,
+      return sqlCommands.insertContent(constants.ENTITIES_FILE_MANAGER,
                                 thisOrganizationId,
                                 thisFolderId,
                                 fileId,
@@ -39,8 +39,8 @@ function createNewFile(organizationId, filePath, folderId, newFileId) {
                                 fileCreationDate,
                                 fileLastModified,
                                 fileNewPath)
-      .then(data => fileId)
-      .catch(err => err);
+      .then(data => resolve(data))
+      .catch(err => reject(err));
     });
   } else {
     throw new exceptions.PromiseFunctionNotDefined();
@@ -61,7 +61,7 @@ function createNewFolder(organizationId, folderPath, currentFolderId, newFolderI
       const lastModifiedDate = creationDate;
       const thisFolderPath = folderPath;
 
-      sqlCommands.insertContent(constants.ENTITIES_FOLDER,
+      return sqlCommands.insertContent(constants.ENTITIES_FOLDER,
                                 folderId,
                                 parentFolderId,
                                 permissionIndex,
@@ -70,8 +70,8 @@ function createNewFolder(organizationId, folderPath, currentFolderId, newFolderI
                                 folderName,
                                 lastModifiedDate,
                                 thisFolderPath)
-      .then(data => true)
-      .catch(err => err);
+      .then(data => resolve(true))
+      .catch(err => reject(err));
     });
   } else {
     throw new exceptions.PromiseFunctionNotDefined();
@@ -83,16 +83,16 @@ export default class dataAdd {
 
   static createNewFile(organizationId, filePath, folderId) {
     if (typeof Promise === 'function') {
-      return new Promise((resolve, reject) => {
+      return new Promise((resolve, reject) =>
         // set default new ID if not exist
         sqlCommands.getMaxFileId()
           .then((maxId) => {
             const newFileId = maxId + 1;
-            createNewFile(organizationId, filePath, folderId, newFileId)
-              .then(data => data)
-              .catch(err => err);
-          }).catch(sqlError => sqlError);
-      });
+            return createNewFile(organizationId, filePath, folderId, newFileId)
+              .then(data => resolve(data))
+              .catch(err => reject(err));
+          }).catch(sqlError => reject(sqlError))
+      );
     } else {
       throw new exceptions.PromiseFunctionNotDefined();
     }
