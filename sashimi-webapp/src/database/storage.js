@@ -16,16 +16,139 @@ import dataModifier from './data-modifier/dataModifier';
 
 import exceptions from './exceptions';
 
+// dummy function to initialize createTables promises
+function initCreateTable() {
+  if (typeof Promise === 'function') {
+    return new Promise((resolve, reject) => {
+      resolve(true);
+    });
+  } else {
+    throw new exceptions.PromiseFunctionNotDefined();
+  }
+}
+
+function createUserTable(isUserTableFirstInitialize) {
+  if (typeof Promise === 'function') {
+    return new Promise((resolve, reject) => {
+      if (!isUserTableFirstInitialize) {
+        entitiesCreator.createUserTable()
+        .then(success => resolve(true))
+        .catch(sqlError => reject(sqlError));
+      } else {
+        resolve('false');
+      }
+    });
+  } else {
+    throw new exceptions.PromiseFunctionNotDefined();
+  }
+}
+
+function createOrganizationTable(isOrganizationTableFirstInitialize) {
+  if (typeof Promise === 'function') {
+    return new Promise((resolve, reject) => {
+      if (!isOrganizationTableFirstInitialize) {
+        entitiesCreator.createOrganizationTable()
+        .then(success => resolve(true))
+        .catch(sqlError => reject(sqlError));
+      } else {
+        resolve('false');
+      }
+    });
+  } else {
+    throw new exceptions.PromiseFunctionNotDefined();
+  }
+}
+
+function createFolderTable(isFolderTableFirstInitialize) {
+  if (typeof Promise === 'function') {
+    return new Promise((resolve, reject) => {
+      if (!isFolderTableFirstInitialize) {
+        entitiesCreator.createFolderTable()
+        .then(success => resolve(true))
+        .catch(sqlError => reject(sqlError));
+      } else {
+        resolve('false');
+      }
+    });
+  } else {
+    throw new exceptions.PromiseFunctionNotDefined();
+  }
+}
+
+function createFileManagerTable(isFileTableFirstInitialize) {
+  if (typeof Promise === 'function') {
+    return new Promise((resolve, reject) => {
+      if (!isFileTableFirstInitialize) {
+        entitiesCreator.createFileManagerTable()
+        .then(success => resolve(true))
+        .catch(sqlError => reject(sqlError));
+      } else {
+        resolve('false');
+      }
+    });
+  } else {
+    throw new exceptions.PromiseFunctionNotDefined();
+  }
+}
+
+function creationOfTables() {
+  if (typeof Promise === 'function') {
+    return new Promise((resolve, reject) => {
+      initCreateTable()
+      .then(() =>
+        query.isTableExistsInDatabase(constants.ENTITIES_USER)
+        .then(isUserTableFirstInitialize =>
+          createUserTable(isUserTableFirstInitialize)
+          .catch(sqlError => reject(sqlError))
+          )
+        .catch(sqlError => reject(sqlError))
+      )
+      .then(isSuccess => query.isTableExistsInDatabase(constants.ENTITIES_ORGANIZATION)
+        .then(isOrganizationTableFirstInitialize =>
+          createOrganizationTable(isOrganizationTableFirstInitialize))
+          .catch(sqlError => reject(sqlError))
+        .catch(sqlError => reject(sqlError))
+      )
+      .then(() => query.isTableExistsInDatabase(constants.ENTITIES_FOLDER)
+        .then(isFolderTableFirstInitialize =>
+          createFolderTable(isFolderTableFirstInitialize))
+          .catch(sqlError => reject(sqlError))
+        .catch(sqlError => reject(sqlError))
+      )
+      .then(() => query.isTableExistsInDatabase(constants.ENTITIES_FILE_MANAGER)
+        .then(isFileTableFirstInitialize =>
+          createFileManagerTable(isFileTableFirstInitialize)
+          .then(success => resolve(success))
+        .catch(sqlError => reject(sqlError))
+      ));
+    });
+  } else {
+    throw new exceptions.PromiseFunctionNotDefined();
+  }
+}
+
 export default class storage {
   static constructor() {}
 
   static initializeDatabase() {
-    entitiesCreator.initializeDatabase();
-    entitiesCreator.createUserTable();
-    entitiesCreator.createOrganizationTable();
-    entitiesCreator.createFolderTable();
-    entitiesCreator.createFileManagerTable();
-    query.getFullTableData('user');
+    if (typeof Promise === 'function') {
+      return new Promise((resolve, reject) =>
+      entitiesCreator.initializeDatabase()
+      .then(step1 => creationOfTables()
+          .then((isFirstInstance) => {
+            if (typeof isFirstInstance === 'boolean') {
+              return entitiesCreator.fillUpDefaultData()
+              .then(isFilledUp => resolve(isFilledUp))
+              .catch(sqlErr => reject(sqlErr));
+            } else {
+              return resolve(true);
+            }
+          })
+      )
+      .catch(sqlError => reject(sqlError)));
+    } else {
+      throw new exceptions.PromiseFunctionNotDefined();
+    }
   }
 
   // Searching the filename and foldername ONLY
