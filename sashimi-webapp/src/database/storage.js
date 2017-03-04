@@ -53,8 +53,16 @@ export default class storage {
 
   }
 
-  static deleteFile(fileID) {
-
+  static createFile(organizationId, filePath, folderId) {
+    if (typeof Promise === 'function') {
+      return new Promise((resolve, reject) =>
+        dataModifier.createNewFile(organizationId, filePath, folderId)
+        .then(data => resolve(data))
+        .catch(err => reject(err))
+      );
+    } else {
+      throw new exceptions.PromiseFunctionNotDefined();
+    }
   }
 
   static deleteFile(fileId) {
