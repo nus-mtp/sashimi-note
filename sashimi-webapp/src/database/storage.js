@@ -59,6 +59,16 @@ export default class storage {
 
   static createFolder() {
 
+  static createFolder(organizationId, folderPath, currentFolderId) {
+    if (typeof Promise === 'function') {
+      return new Promise((resolve, reject) =>
+        dataModifier.createNewFolder(organizationId, folderPath, currentFolderId)
+        .then(data => resolve(data))
+        .catch(err => reject(err))
+      );
+    } else {
+      throw new exceptions.PromiseFunctionNotDefined();
+    }
   }
 
   // only delete folder for now without cascade delete
