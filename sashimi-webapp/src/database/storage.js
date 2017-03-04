@@ -49,8 +49,16 @@ export default class storage {
 
   }
 
-  static createFile() {
-
+  static saveFile(fileId, fileString) {
+    if (typeof Promise === 'function') {
+      return new Promise((resolve, reject) =>
+        dataModifier.saveFile(fileId, fileString)
+        .then(data => resolve(true))
+        .catch(sqlError => reject(sqlError))
+      );
+    } else {
+      throw new exceptions.PromiseFunctionNotDefined();
+    }
   }
 
   static createFile(organizationId, filePath, folderId) {
