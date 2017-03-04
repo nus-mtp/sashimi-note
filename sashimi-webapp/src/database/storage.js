@@ -57,7 +57,17 @@ export default class storage {
 
   }
 
-  static createFolder() {
+  static deleteFile(fileId) {
+    if (typeof Promise === 'function') {
+      return new Promise((resolve, reject) =>
+        dataModifier.deleteFile(fileId)
+          .then(data => resolve(true))
+          .catch(sqlError => reject(sqlError))
+      );
+    } else {
+      throw new exceptions.PromiseFunctionNotDefined();
+    }
+  }
 
   static createFolder(organizationId, folderPath, currentFolderId) {
     if (typeof Promise === 'function') {
