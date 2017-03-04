@@ -12,6 +12,10 @@ const stringManipulator = new StringManipulator();
 
 const dateTime = new DateTime();
 
+function getDataOutOfAlasql(data) {
+  return Object.values(data[0][0])[0];
+}
+
 function getFormattedCurrentDateTime() {
   return stringManipulator.stringConcat('"', dateTime.getCurrentDateTime(), '"');
 }
