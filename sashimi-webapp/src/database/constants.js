@@ -6,7 +6,6 @@
  */
 
 export default Object.freeze({
-  INDEXEDDB_NAME: 'lectureNote',
 
   ENTITIES_USER: 'user',
   ENTITIES_ORGANIZATION: 'organization',
@@ -47,12 +46,11 @@ export default Object.freeze({
   HEADER_FILE_MANAGER_LAST_MODIFIED_DATE: 'last_modified_date',
   HEADER_FILE_MANAGER_PATH: 'file_path',
 
-  DEFAULT_EMPTY: '""',
-  DEFAULT_USER_ID: '0',
+
+  DEFAULT_USER_ID: '1',
   DEFAULT_USER_NAME: '"owner"',
-  DEFAULT_ORGANIZATION_ID: '0',
+  DEFAULT_ORGANIZATION_ID: '1',
   DEFAULT_FOLDER_ID: '0',
-  DEFAULT_FILE_ID: '0',
   DEFAULT_FOLDER_NAME: '"root"',
   DEFAULT_FILE_NAME: '"newFile.md"',
 
@@ -68,8 +66,6 @@ export default Object.freeze({
 
   CONST_TABLE_CREATION_INITIALIZED: true,
   CONST_TABLE_CREATION_CLOSED: false,
-  CONST_ALASQL_CREATION_INITIALIZED: true,
-  CONST_ALASQL_CREATION_CLOSED: false,
 
   PASSED_CREATE_TABLE: true,
   FAILED_CREATE_TABLE: false,

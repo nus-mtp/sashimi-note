@@ -5,15 +5,9 @@ import SqlCommands from '../sql-related/sqlCommands';
 const sqlCommands = new SqlCommands();
 
 function updateFile(fileId, markdownFile) {
-  if (typeof Promise === 'function') {
-    return new Promise((resolve, reject) =>
-      sqlCommands.saveFile(fileId, markdownFile)
-        .then(data => true)
-        .catch(sqlError => sqlError)
-      );
-  } else {
-    throw new exceptions.PromiseFunctionNotDefined();
-  }
+  sqlCommands.saveFile(fileId, markdownFile)
+  .then(() => true)
+  .catch(sqlError => sqlError);
 }
 
 export default class dataUpdate {
@@ -21,11 +15,9 @@ export default class dataUpdate {
 
   static saveFile(fileId, markdownFile) {
     if (typeof Promise === 'function') {
-      return new Promise((resolve, reject) =>
-        resolve(updateFile(fileId, markdownFile))
-          .then(data => resolve(data))
-          .catch(sqlError => reject(sqlError))
-      );
+      return new Promise((resolve, reject) => {
+        resolve(updateFile(fileId, markdownFile));
+      });
     } else {
       throw new exceptions.PromiseFunctionNotDefined();
     }
