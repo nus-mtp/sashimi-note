@@ -32,12 +32,20 @@ function initPromiseSequence() {
 }
 
 export default function sqlCommands() {
-  this.linkDatabaseToIndexedDB = function linkDatabaseToIndexedDB() {
-    const databaseRequestStr = 'CREATE INDEXEDDB DATABASE IF NOT EXISTS lectureNote; ' +
-                               'ATTACH INDEXEDDB DATABASE lectureNote; ' +
-                               'USE lectureNote;';
-    alasql.promise([databaseRequestStr])
-      .then().catch(sqlError => sqlError);
+  this.linkDatabaseToIndexedDB = function linkDatabaseToIndexedDB(databaseName) {
+    if (typeof Promise === 'function') {
+      return new Promise((resolve, reject) => {
+        const databaseRequestStr = stringManipulator.stringConcat(
+          'CREATE INDEXEDDB DATABASE IF NOT EXISTS ', databaseName, ';',
+          'ATTACH INDEXEDDB DATABASE ', databaseName, ';',
+          'USE ', databaseName, ';');
+        return alasql.promise([databaseRequestStr])
+          .then(data => resolve(true))
+          .catch(sqlError => reject(sqlError));
+      });
+    } else {
+      throw new exceptions.PromiseFunctionNotDefined();
+    }
   };
 
   this.getFullTableData = function getFullTableData(tableName) {
