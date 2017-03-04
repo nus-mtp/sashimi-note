@@ -16,4 +16,11 @@ export default function sqlArray() {
       isAlasqlArrayInitialized = constants.CONST_ALASQL_CREATION_INITIALIZED;
     }
   };
+
+  this.addKeyBasePair = function addKeyBasePair(key, value) {
+    if (isAlasqlArrayInitialized) {
+      sqlObject.key = value;
+    }
+  };
+
 }
