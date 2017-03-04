@@ -16,52 +16,250 @@ import dataModifier from './data-modifier/dataModifier';
 
 import exceptions from './exceptions';
 
+// dummy function to initialize createTables promises
+function initCreateTable() {
+  if (typeof Promise === 'function') {
+    return new Promise((resolve, reject) => {
+      resolve(true);
+    });
+  } else {
+    throw new exceptions.PromiseFunctionNotDefined();
+  }
+}
+
+function createUserTable(isUserTableFirstInitialize) {
+  if (typeof Promise === 'function') {
+    return new Promise((resolve, reject) => {
+      if (!isUserTableFirstInitialize) {
+        entitiesCreator.createUserTable()
+        .then(success => resolve(true))
+        .catch(sqlError => reject(sqlError));
+      } else {
+        resolve('false');
+      }
+    });
+  } else {
+    throw new exceptions.PromiseFunctionNotDefined();
+  }
+}
+
+function createOrganizationTable(isOrganizationTableFirstInitialize) {
+  if (typeof Promise === 'function') {
+    return new Promise((resolve, reject) => {
+      if (!isOrganizationTableFirstInitialize) {
+        entitiesCreator.createOrganizationTable()
+        .then(success => resolve(true))
+        .catch(sqlError => reject(sqlError));
+      } else {
+        resolve('false');
+      }
+    });
+  } else {
+    throw new exceptions.PromiseFunctionNotDefined();
+  }
+}
+
+function createFolderTable(isFolderTableFirstInitialize) {
+  if (typeof Promise === 'function') {
+    return new Promise((resolve, reject) => {
+      if (!isFolderTableFirstInitialize) {
+        entitiesCreator.createFolderTable()
+        .then(success => resolve(true))
+        .catch(sqlError => reject(sqlError));
+      } else {
+        resolve('false');
+      }
+    });
+  } else {
+    throw new exceptions.PromiseFunctionNotDefined();
+  }
+}
+
+function createFileManagerTable(isFileTableFirstInitialize) {
+  if (typeof Promise === 'function') {
+    return new Promise((resolve, reject) => {
+      if (!isFileTableFirstInitialize) {
+        entitiesCreator.createFileManagerTable()
+        .then(success => resolve(true))
+        .catch(sqlError => reject(sqlError));
+      } else {
+        resolve('false');
+      }
+    });
+  } else {
+    throw new exceptions.PromiseFunctionNotDefined();
+  }
+}
+
+function creationOfTables() {
+  if (typeof Promise === 'function') {
+    return new Promise((resolve, reject) => {
+      initCreateTable()
+      .then(() =>
+        query.isTableExistsInDatabase(constants.ENTITIES_USER)
+        .then(isUserTableFirstInitialize =>
+          createUserTable(isUserTableFirstInitialize)
+          .catch(sqlError => reject(sqlError))
+          )
+        .catch(sqlError => reject(sqlError))
+      )
+      .then(isSuccess => query.isTableExistsInDatabase(constants.ENTITIES_ORGANIZATION)
+        .then(isOrganizationTableFirstInitialize =>
+          createOrganizationTable(isOrganizationTableFirstInitialize))
+          .catch(sqlError => reject(sqlError))
+        .catch(sqlError => reject(sqlError))
+      )
+      .then(() => query.isTableExistsInDatabase(constants.ENTITIES_FOLDER)
+        .then(isFolderTableFirstInitialize =>
+          createFolderTable(isFolderTableFirstInitialize))
+          .catch(sqlError => reject(sqlError))
+        .catch(sqlError => reject(sqlError))
+      )
+      .then(() => query.isTableExistsInDatabase(constants.ENTITIES_FILE_MANAGER)
+        .then(isFileTableFirstInitialize =>
+          createFileManagerTable(isFileTableFirstInitialize)
+          .then(success => resolve(success))
+        .catch(sqlError => reject(sqlError))
+      ));
+    });
+  } else {
+    throw new exceptions.PromiseFunctionNotDefined();
+  }
+}
+
 export default class storage {
   static constructor() {}
 
+  // working
   static initializeDatabase() {
-    entitiesCreator.initializeDatabase();
-    entitiesCreator.createUserTable();
-    entitiesCreator.createOrganizationTable();
-    entitiesCreator.createFolderTable();
-    entitiesCreator.createFileManagerTable();
-    query.getFullTableData('user');
-  }
-
-  // Searching the filename and foldername ONLY
-  static partialSearch(searchString) {
     if (typeof Promise === 'function') {
-      return new Promise((resolve, reject) => {
-        query.searchString(searchString)
-          .then(returnedArr => returnedArr)
-          .catch(sqlError => sqlError);
-      });
+      return new Promise((resolve, reject) =>
+      entitiesCreator.initializeDatabase()
+      .then(step1 => creationOfTables()
+          .then((isFirstInstance) => {
+            if (typeof isFirstInstance === 'boolean') {
+              return entitiesCreator.fillUpDefaultData()
+              .then(isFilledUp => resolve(isFilledUp))
+              .catch(sqlErr => reject(sqlErr));
+            } else {
+              return resolve(true);
+            }
+          })
+      )
+      .catch(sqlError => reject(sqlError)));
     } else {
       throw new exceptions.PromiseFunctionNotDefined();
     }
   }
 
-  static loadFile(fileID) {
-
+  // Searching the filename and foldername ONLY
+  static partialSearch(searchString) {
+    if (typeof Promise === 'function') {
+      return new Promise((resolve, reject) =>
+        query.searchString(searchString)
+          .then(returnedArr => resolve(returnedArr))
+          .catch(sqlError => reject(sqlError))
+      );
+    } else {
+      throw new exceptions.PromiseFunctionNotDefined();
+    }
   }
 
-  static saveFile(fileID, file) {
-
+  static getList(folderId) {
+    if (typeof Promise === 'function') {
+      return new Promise((resolve, reject) =>
+        query.loadFolder(folderId)
+          .then(returnedArr => resolve(returnedArr))
+          .catch(sqlError => reject(sqlError))
+      );
+    } else {
+      throw new exceptions.PromiseFunctionNotDefined();
+    }
   }
 
-  static createFile() {
-
+  static loadFile(fileId) {
+    if (typeof Promise === 'function') {
+      return new Promise((resolve, reject) =>
+        query.loadFile(fileId)
+          .then(returnedArr => resolve(returnedArr))
+          .catch(sqlError => reject(sqlError))
+      );
+    } else {
+      throw new exceptions.PromiseFunctionNotDefined();
+    }
   }
 
-  static deleteFile(fileID) {
-
+  static saveFile(fileId, fileString) {
+    if (typeof Promise === 'function') {
+      return new Promise((resolve, reject) =>
+        dataModifier.saveFile(fileId, fileString)
+          .then(data => resolve(true))
+          .catch(sqlError => reject(sqlError))
+      );
+    } else {
+      throw new exceptions.PromiseFunctionNotDefined();
+    }
   }
 
-  static createFolder() {
-
+  // working
+  static createFile(organizationId, filePath, folderId) {
+    if (typeof Promise === 'function') {
+      return new Promise((resolve, reject) =>
+        dataModifier.createNewFile(organizationId, filePath, folderId)
+          .then(data => resolve(data))
+          .catch(err => reject(err))
+      );
+    } else {
+      throw new exceptions.PromiseFunctionNotDefined();
+    }
   }
 
-  static deleteFolder(folderID) {
+  static deleteFile(fileId) {
+    if (typeof Promise === 'function') {
+      return new Promise((resolve, reject) =>
+        dataModifier.deleteFile(fileId)
+          .then(data => resolve(true))
+          .catch(sqlError => reject(sqlError))
+      );
+    } else {
+      throw new exceptions.PromiseFunctionNotDefined();
+    }
+  }
 
+  static createFolder(organizationId, folderPath, currentFolderId) {
+    if (typeof Promise === 'function') {
+      return new Promise((resolve, reject) =>
+        dataModifier.createNewFolder(organizationId, folderPath, currentFolderId)
+          .then(data => resolve(data))
+          .catch(err => reject(err))
+      );
+    } else {
+      throw new exceptions.PromiseFunctionNotDefined();
+    }
+  }
+
+  // only delete folder for now without cascade delete
+  static deleteFolder(folderId) {
+    if (typeof Promise === 'function') {
+      return new Promise((resolve, reject) =>
+        dataModifier.deleteFolder(folderId)
+          .then(data => resolve(true))
+          .catch(sqlError => reject(sqlError))
+      );
+    } else {
+      throw new exceptions.PromiseFunctionNotDefined();
+    }
+  }
+
+  static deleteAll() {
+    if (typeof Promise === 'function') {
+      return new Promise((resolve, reject) =>
+        dataModifier.deleteAllEntities()
+          .then(data => resolve(true))
+          .catch(sqlError => reject(sqlError))
+      );
+    } else {
+      throw new exceptions.PromiseFunctionNotDefined();
+    }
   }
 }
