@@ -100,17 +100,16 @@ export default class dataAdd {
 
   static createNewFolder(organizationId, folderPath, folderId) {
     if (typeof Promise === 'function') {
-      return new Promise((resolve, reject) => {
+      return new Promise((resolve, reject) =>
         // set default new ID if not exist (already have 0)
-        let newFolderId = 1;
         sqlCommands.getMaxFolderId()
-          .then((maxId) => {
-            newFolderId = maxId + 1;
-            createNewFolder(organizationId, folderPath, folderId, newFolderId)
-              .then(data => data)
-              .catch(err => err);
-          }).catch(sqlError => sqlError);
-      });
+        .then((maxId) => {
+          const newFolderId = maxId + 1;
+          return createNewFolder(organizationId, folderPath, folderId, newFolderId)
+            .then(data => resolve(data))
+            .catch(err => reject(err));
+        }).catch(sqlError => reject(sqlError))
+      );
     } else {
       throw new exceptions.PromiseFunctionNotDefined();
     }
