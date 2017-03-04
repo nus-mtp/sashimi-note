@@ -61,7 +61,18 @@ export default class storage {
 
   }
 
-  static deleteFolder(folderID) {
+  // only delete folder for now without cascade delete
+  static deleteFolder(folderId) {
+    if (typeof Promise === 'function') {
+      return new Promise((resolve, reject) =>
+        dataModifier.deleteFolder(folderId)
+        .then(data => resolve(true))
+        .catch(sqlError => reject(sqlError))
+      );
+    } else {
+      throw new exceptions.PromiseFunctionNotDefined();
+    }
+  }
 
   static deleteAll() {
     if (typeof Promise === 'function') {
