@@ -41,8 +41,16 @@ export default class storage {
     }
   }
 
-  static loadFile(fileID) {
-
+  static getList(folderId) {
+    if (typeof Promise === 'function') {
+      return new Promise((resolve, reject) =>
+        query.loadFolder(folderId)
+        .then(returnedArr => resolve(returnedArr))
+        .catch(sqlError => reject(sqlError))
+      );
+    } else {
+      throw new exceptions.PromiseFunctionNotDefined();
+    }
   }
 
   static loadFile(fileId) {
