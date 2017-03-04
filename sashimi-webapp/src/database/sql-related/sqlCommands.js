@@ -20,6 +20,17 @@ function getFormattedCurrentDateTime() {
   return stringManipulator.stringConcat('"', dateTime.getCurrentDateTime(), '"');
 }
 
+// dummy function to init sequence running
+function initPromiseSequence() {
+  if (typeof Promise === 'function') {
+    return new Promise((resolve, reject) => {
+      resolve(true);
+    });
+  } else {
+    throw new exceptions.PromiseFunctionNotDefined();
+  }
+}
+
 export default function sqlCommands() {
   this.linkDatabaseToIndexedDB = function linkDatabaseToIndexedDB() {
     const databaseRequestStr = 'CREATE INDEXEDDB DATABASE IF NOT EXISTS lectureNote; ' +
@@ -32,11 +43,10 @@ export default function sqlCommands() {
   this.getFullTableData = function getFullTableData(tableName) {
     // ensure working in browsers that support Promise
     if (typeof Promise === 'function') {
-      return new Promise((resolve, reject) => {
+      return new Promise((resolve, reject) =>
         alasql.promise([stringManipulator.stringConcat('SELECT * FROM ', tableName)])
-          .then(data => resolve(data))
-          .catch(sqlError => sqlError);
-      });
+        .then(data => resolve(data))
+        .catch(sqlError => reject(sqlError)));
     } else {
       throw new exceptions.PromiseFunctionNotDefined();
     }
@@ -64,13 +74,13 @@ export default function sqlCommands() {
 
   this.partialSearchFileName = function partialSearchFileName(searchString) {
     if (typeof Promise === 'function') {
-      return new Promise((resolve, reject) => {
+      return new Promise((resolve, reject) =>
         alasql.promise([stringManipulator.stringConcat('SELECT * FROM ', constants.ENTITIES_FILE_MANAGER,
                                                        ' WHERE ', constants.HEADER_FILE_MANAGER_FILE_NAME,
                                                        ' LIKE "%', searchString, '%"')])
         .then(data => resolve(data))
-        .catch(sqlError => sqlError);
-      });
+        .catch(sqlError => reject(sqlError))
+      );
     } else {
       throw new exceptions.PromiseFunctionNotDefined();
     }
@@ -98,14 +108,14 @@ export default function sqlCommands() {
       return new Promise((resolve, reject) =>
         alasql.promise([stringManipulator.stringConcat('SELECT MAX(', constants.HEADER_FOLDER_FOLDER_ID,
                                                        ') FROM ', constants.ENTITIES_FOLDER)])
-          .then((data) => {
-            const maxFolderId = getDataOutOfAlasql(data);
-            if (typeof maxFolderId === 'number') {
-              resolve(maxFolderId);
-            } else {
-              resolve(0);
-            }
-          }).catch(sqlError => reject(sqlError))
+        .then((data) => {
+          const maxFolderId = getDataOutOfAlasql(data);
+          if (typeof maxFolderId === 'number') {
+            resolve(maxFolderId);
+          } else {
+            resolve(0);
+          }
+        }).catch(sqlError => reject(sqlError))
       );
     } else {
       throw new exceptions.PromiseFunctionNotDefined();
@@ -114,13 +124,13 @@ export default function sqlCommands() {
 
   this.partialSearchFolderName = function partialSearchFolderName(searchString) {
     if (typeof Promise === 'function') {
-      return new Promise((resolve, reject) => {
+      return new Promise((resolve, reject) =>
         alasql.promise([stringManipulator.stringConcat('SELECT * FROM ', constants.ENTITIES_FOLDER,
                                                        ' WHERE ', constants.HEADER_FOLDER_FOLDER_NAME,
                                                        ' LIKE "%', searchString, '%"')])
         .then(data => resolve(data))
-        .catch(sqlError => sqlError);
-      });
+        .catch(sqlError => reject(sqlError))
+      );
     } else {
       throw new exceptions.PromiseFunctionNotDefined();
     }
@@ -128,13 +138,13 @@ export default function sqlCommands() {
 
   this.loadFilesFromFolder = function loadFilesFromFolder(folderId) {
     if (typeof Promise === 'function') {
-      return new Promise((resolve, reject) => {
+      return new Promise((resolve, reject) =>
         alasql.promise([stringManipulator.stringConcat('SELECT * FROM ', constants.ENTITIES_FILE_MANAGER,
                                                        ' WHERE ', constants.HEADER_FILE_MANAGER_FOLDER_ID,
                                                        ' = ', folderId)])
         .then(data => resolve(data))
-        .catch(sqlError => sqlError);
-      });
+        .catch(sqlError => reject(sqlError))
+      );
     } else {
       throw new exceptions.PromiseFunctionNotDefined();
     }
@@ -142,15 +152,15 @@ export default function sqlCommands() {
 
   this.loadFoldersFromFolder = function loadFoldersFromFolder(folderId) {
     if (typeof Promise === 'function') {
-      return new Promise((resolve, reject) => {
+      return new Promise((resolve, reject) =>
         alasql.promise([stringManipulator.stringConcat('SELECT * FROM ', constants.ENTITIES_FOLDER,
                                                        ' WHERE ', constants.HEADER_FOLDER_PARENT_FOLDER_ID,
                                                        ' = ', folderId,
                                                        ' AND ', constants.HEADER_FOLDER_PARENT_FOLDER_ID,
                                                        ' != NULL')])
-          .then(data => resolve(data))
-          .catch(sqlError => sqlError);
-      });
+        .then(data => resolve(data))
+        .catch(sqlError => reject(sqlError))
+      );
     } else {
       throw new exceptions.PromiseFunctionNotDefined();
     }
@@ -158,14 +168,14 @@ export default function sqlCommands() {
 
   this.loadFile = function loadFile(fileId) {
     if (typeof Promise === 'function') {
-      return new Promise((resolve, reject) => {
+      return new Promise((resolve, reject) =>
         alasql.promise([stringManipulator.stringConcat('SELECT ', constants.HEADER_FILE_MANAGER_FILE_MARKDOWN,
                                                        ' FROM ', constants.ENTITIES_FILE_MANAGER,
                                                        ' WHERE ', constants.HEADER_FILE_MANAGER_FILE_ID,
                                                        ' = ', fileId)])
         .then(data => resolve(data))
-        .catch(sqlError => sqlError);
-      });
+        .catch(sqlError => reject(sqlError))
+      );
     } else {
       throw new exceptions.PromiseFunctionNotDefined();
     }
@@ -174,22 +184,24 @@ export default function sqlCommands() {
   this.saveFile = function saveFile(fileId, markdownFile) {
     if (typeof Promise === 'function') {
       return new Promise((resolve, reject) => {
-        // save file
-        alasql.promise([stringManipulator.stringConcat('UPDATE ', constants.ENTITIES_FILE_MANAGER,
-                                                       ' SET ', constants.HEADER_FILE_MANAGER_FILE_MARKDOWN,
-                                                       ' = "', markdownFile,
-                                                       '" WHERE ', constants.HEADER_FILE_MANAGER_FILE_ID,
-                                                       ' = ', fileId)])
-          .then().catch(sqlError => sqlError);
-
-        // update last modified datetime
-        const currentDateTime = getFormattedCurrentDateTime();
-        alasql.promise([stringManipulator.stringConcat('UPDATE ', constants.ENTITIES_FILE_MANAGER,
-                                                       ' SET ', constants.HEADER_FILE_MANAGER_LAST_MODIFIED_DATE,
-                                                       ' = "', currentDateTime,
-                                                       '" WHERE ', constants.HEADER_FILE_MANAGER_FILE_ID,
-                                                       ' = ', fileId)])
-          .then(() => true).catch(sqlError => sqlError);
+        initPromiseSequence()
+        .then(() => alasql.promise([stringManipulator.stringConcat('UPDATE ', constants.ENTITIES_FILE_MANAGER,
+                                                                   ' SET ', constants.HEADER_FILE_MANAGER_FILE_MARKDOWN,
+                                                                   ' = "', markdownFile,
+                                                                   '" WHERE ', constants.HEADER_FILE_MANAGER_FILE_ID,
+                                                                   ' = ', fileId)])
+          .catch(sqlError => reject(sqlError)))
+        .then(() => {
+          const currentDateTime = getFormattedCurrentDateTime();
+          alasql.promise([stringManipulator.stringConcat('UPDATE ', constants.ENTITIES_FILE_MANAGER,
+                                                         ' SET ', constants.HEADER_FILE_MANAGER_LAST_MODIFIED_DATE,
+                                                         ' = "', currentDateTime,
+                                                         '" WHERE ', constants.HEADER_FILE_MANAGER_FILE_ID,
+                                                         ' = ', fileId)])
+          .catch(sqlError => reject(sqlError));
+        })
+        .then(() => resolve(true))
+        .catch(sqlErr => reject(sqlErr));
       });
     } else {
       throw new exceptions.PromiseFunctionNotDefined();
@@ -198,13 +210,13 @@ export default function sqlCommands() {
 
   this.deleteFile = function deleteFile(fileId) {
     if (typeof Promise === 'function') {
-      return new Promise((resolve, reject) => {
+      return new Promise((resolve, reject) =>
         alasql.promise([stringManipulator.stringConcat('DELETE FROM ', constants.ENTITIES_FILE_MANAGER,
                                                        ' WHERE ', constants.HEADER_FILE_MANAGER_FILE_ID,
                                                        ' = ', fileId)])
-        .then(() => true)
-        .catch(sqlError => sqlError);
-      });
+        .then(data => resolve(true))
+        .catch(sqlError => reject(sqlError))
+      );
     } else {
       throw new exceptions.PromiseFunctionNotDefined();
     }
@@ -212,13 +224,13 @@ export default function sqlCommands() {
 
   this.deleteFolder = function deleteFolder(folderId) {
     if (typeof Promise === 'function') {
-      return new Promise((resolve, reject) => {
+      return new Promise((resolve, reject) =>
         alasql.promise([stringManipulator.stringConcat('DELETE FROM ', constants.ENTITIES_FOLDER,
                                                        ' WHERE ', constants.HEADER_FOLDER_FOLDER_ID,
                                                        ' = ', folderId)])
-        .then(() => true)
-        .catch(sqlError => sqlError);
-      });
+        .then(data => resolve(true))
+        .catch(sqlError => reject(sqlError))
+      );
     } else {
       throw new exceptions.PromiseFunctionNotDefined();
     }
@@ -228,8 +240,8 @@ export default function sqlCommands() {
     if (typeof Promise === 'function') {
       return new Promise((resolve, reject) =>
         alasql.promise([stringManipulator.stringConcat('DROP TABLE IF EXISTS ', tableName, ';')])
-          .then(data => resolve(true))
-          .catch(sqlError => reject(sqlError))
+        .then(data => resolve(true))
+        .catch(sqlError => reject(sqlError))
       );
     } else {
       throw new exceptions.PromiseFunctionNotDefined();
