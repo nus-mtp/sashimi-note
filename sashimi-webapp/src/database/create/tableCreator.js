@@ -13,6 +13,11 @@ const stringManipulator = new StringManipulator();
 let isTableInitializedForCreation = constants.CONST_TABLE_CREATION_CLOSED;
 let sqlCreateTableString = constants.STRING_INITIALIZE;
 
+function endOfCreateTableStringForAlasql(sqlString) {
+  sqlString = sqlCreateTableString.substring(0, sqlString.length - 2);
+  return stringManipulator.stringConcat(sqlString, ')');
+}
+
 export default class tableCreator {
   static constructor() {}
 
@@ -84,18 +89,26 @@ export default class tableCreator {
     }
   }
 
-  static endCreateTable() {
-    if (isTableInitializedForCreation) {
-      sqlCreateTableString = sqlCreateTableString.substring(0, sqlCreateTableString.length - 2);
-      sqlCreateTableString = stringManipulator.stringConcat(sqlCreateTableString, ')');
-      isTableInitializedForCreation = constants.CONST_TABLE_CREATION_CLOSED;
-      try {
-        sqlCommands.createTable(sqlCreateTableString);
-      } catch (ExceptionFailedToCreateTable) {
-        return ExceptionFailedToCreateTable;
-      }
+  static endCreateTable(headerName, alasqlArrayObject) {
+    if (typeof Promise === 'function') {
+      return new Promise((resolve, reject) => {
+        if (isTableInitializedForCreation) {
+          // remove extra characters to input into alasql
+          sqlCreateTableString = endOfCreateTableStringForAlasql(sqlCreateTableString);
+          isTableInitializedForCreation = constants.CONST_TABLE_CREATION_CLOSED;
+          return sqlCommands.createTable(sqlCreateTableString)
+            .then(data =>
+              sqlCommands.insertDefaultArray(headerName, alasqlArrayObject)
+              .then(insertSuccess => resolve(insertSuccess))
+              .catch(sqlErr => reject(sqlErr)))
+            .catch(sqlError => reject(sqlError));
+        } else {
+          return null;
+        }
+      });
+    } else {
+      throw new exceptions.PromiseFunctionNotDefined();
     }
-    return constants.PASSED_CREATE_TABLE;
   }
 
 }
