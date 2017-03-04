@@ -12,39 +12,61 @@ import exceptions from '../exceptions';
 
 const sqlCommands = new SqlCommands();
 
+// dummy function to init sequence running
+function initPromiseSequence() {
+  if (typeof Promise === 'function') {
+    return new Promise((resolve, reject) => {
+      resolve(true);
+    });
+  } else {
+    throw new exceptions.PromiseFunctionNotDefined();
+  }
+}
+
 export default class query {
   static constructor() {}
 
   static isTableExistsInDatabase(tableName) {
-    sqlCommands.getFullTableData(tableName)
-      .then(data => true).catch(sqlErr => false);
+    if (typeof Promise === 'function') {
+      return new Promise((resolve, reject) =>
+        sqlCommands.getFullTableData(tableName)
+        .then(data => resolve(true))
+        .catch(sqlErr => resolve(false))
+      );
+    } else {
+      throw new exceptions.PromiseFunctionNotDefined();
+    }
   }
 
   static getFullTableData(tableName) {
-    return sqlCommands.getFullTableData(tableName);
+    if (typeof Promise === 'function') {
+      return new Promise((resolve, reject) =>
+        sqlCommands.getFullTableData(tableName)
+        .then(data => resolve(data))
+        .catch(sqlError => reject(sqlError))
+      );
+    } else {
+      throw new exceptions.PromiseFunctionNotDefined();
+    }
   }
 
   static searchString(searchString) {
     if (typeof Promise === 'function') {
       return new Promise((resolve, reject) => {
-        resolve(() => {
-          let fileArr;
-          let folderArr;
+        const promiseArr = [];
 
-          sqlCommands.partialSearchFile(searchString)
-            .then((returnedArr) => {
-              fileArr = returnedArr;
-            })
-            .catch(sqlError => sqlError);
+        initPromiseSequence()
+        .then(() => sqlCommands.partialSearchFile(searchString)
+          .then(fileArr => promiseArr.push(promiseArr))
+          .catch(sqlError => reject(sqlError)))
+        .then(() => sqlCommands.partialSearchFolder(searchString)
+          .then(folderArr => promiseArr.push(promiseArr))
+          .catch(sqlError => reject(sqlError)))
+        .catch(sqlErr => reject(sqlErr));
 
-          sqlCommands.partialSearchFolder(searchString)
-            .then((returnedArr) => {
-              folderArr = returnedArr;
-            })
-            .catch(sqlError => sqlError);
-
-          resolve([fileArr, folderArr]);
-        });
+        return Promise.all(promiseArr)
+          .then(([fileArr, folderArr]) => resolve([fileArr, folderArr]))
+          .catch(sqlErr => reject(sqlErr));
       });
     } else {
       throw new exceptions.PromiseFunctionNotDefined();
@@ -54,21 +76,20 @@ export default class query {
   static loadFolder(folderId) {
     if (typeof Promise === 'function') {
       return new Promise((resolve, reject) => {
-        resolve(() => {
-          let fileArr;
-          let folderArr;
-          sqlCommands.loadFilesFromFolder(folderId)
-            .then((returnedArr) => {
-              fileArr = returnedArr;
-            }).catch(sqlError => sqlError);
+        const promiseArr = [];
 
-          sqlCommands.loadFoldersFromFolder(folderId)
-            .then((returnedArr) => {
-              folderArr = returnedArr;
-            }).catch(sqlError => sqlError);
+        initPromiseSequence()
+        .then(() => sqlCommands.loadFilesFromFolder(folderId)
+          .then(fileArr => promiseArr.push(promiseArr))
+          .catch(sqlError => reject(sqlError)))
+        .then(() => sqlCommands.loadFoldersFromFolder(folderId)
+          .then(folderArr => promiseArr.push(promiseArr))
+          .catch(sqlError => reject(sqlError)))
+        .catch(sqlError => reject(sqlError));
 
-          resolve([fileArr, folderArr]);
-        });
+        return Promise.all(promiseArr)
+          .then(([fileArr, folderArr]) => resolve([fileArr, folderArr]))
+          .catch(sqlErr => reject(sqlErr));
       });
     } else {
       throw new exceptions.PromiseFunctionNotDefined();
@@ -77,13 +98,11 @@ export default class query {
 
   static loadFile(fileId) {
     if (typeof Promise === 'function') {
-      return new Promise((resolve, reject) => {
-        resolve(() => {
-          sqlCommands.loadFile(fileId)
-          .then(data => data)
-          .catch(sqlError => sqlError);
-        });
-      });
+      return new Promise((resolve, reject) =>
+        sqlCommands.loadFile(fileId)
+        .then(data => resolve(data))
+        .catch(sqlError => reject(sqlError))
+      );
     } else {
       throw new exceptions.PromiseFunctionNotDefined();
     }
