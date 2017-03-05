@@ -47,14 +47,15 @@ export default Object.freeze({
   HEADER_FILE_MANAGER_LAST_MODIFIED_DATE: 'last_modified_date',
   HEADER_FILE_MANAGER_PATH: 'file_path',
 
-  DEFAULT_EMPTY: '""',
+  DEFAULT_EMPTY: '',
   DEFAULT_USER_ID: '0',
-  DEFAULT_USER_NAME: '"owner"',
+  DEFAULT_USER_NAME: 'owner',
   DEFAULT_ORGANIZATION_ID: '0',
   DEFAULT_FOLDER_ID: '0',
   DEFAULT_FILE_ID: '0',
-  DEFAULT_FOLDER_NAME: '"root"',
-  DEFAULT_FILE_NAME: '"newFile.md"',
+  DEFAULT_FOLDER_NAME: 'newFolder',
+  DEFAULT_ROOT_FOLDER_NAME: 'root',
+  DEFAULT_FILE_NAME: 'newFile.md',
 
 
   ORGANIZATION_TYPE_USER: '0',
