@@ -16,8 +16,8 @@ function getDataOutOfAlasql(data) {
   return Object.values(data[0][0])[0];
 }
 
-function getFormattedCurrentDateTime() {
-  return stringManipulator.stringConcat('"', dateTime.getCurrentDateTime(), '"');
+function getArray(data) {
+  return data[0];
 }
 
 // dummy function to init sequence running
@@ -90,7 +90,7 @@ export default function sqlCommands() {
         alasql.promise([stringManipulator.stringConcat('SELECT * FROM ', constants.ENTITIES_FILE_MANAGER,
                                                        ' WHERE ', constants.HEADER_FILE_MANAGER_FILE_NAME,
                                                        ' LIKE "%', searchString, '%"')])
-        .then(data => resolve(data))
+        .then(data => resolve(getArray(data)))
         .catch(sqlError => reject(sqlError))
       );
     } else {
@@ -140,7 +140,7 @@ export default function sqlCommands() {
         alasql.promise([stringManipulator.stringConcat('SELECT * FROM ', constants.ENTITIES_FOLDER,
                                                        ' WHERE ', constants.HEADER_FOLDER_FOLDER_NAME,
                                                        ' LIKE "%', searchString, '%"')])
-        .then(data => resolve(data))
+        .then(data => resolve(getArray(data)))
         .catch(sqlError => reject(sqlError))
       );
     } else {
@@ -154,7 +154,7 @@ export default function sqlCommands() {
         alasql.promise([stringManipulator.stringConcat('SELECT * FROM ', constants.ENTITIES_FILE_MANAGER,
                                                        ' WHERE ', constants.HEADER_FILE_MANAGER_FOLDER_ID,
                                                        ' = ', folderId)])
-        .then(data => resolve(data))
+        .then(data => resolve(getArray(data)))
         .catch(sqlError => reject(sqlError))
       );
     } else {
@@ -167,10 +167,8 @@ export default function sqlCommands() {
       return new Promise((resolve, reject) =>
         alasql.promise([stringManipulator.stringConcat('SELECT * FROM ', constants.ENTITIES_FOLDER,
                                                        ' WHERE ', constants.HEADER_FOLDER_PARENT_FOLDER_ID,
-                                                       ' = ', folderId,
-                                                       ' AND ', constants.HEADER_FOLDER_PARENT_FOLDER_ID,
-                                                       ' != NULL')])
-        .then(data => resolve(data))
+                                                       ' = ', folderId)])
+        .then(data => resolve(getArray(data)))
         .catch(sqlError => reject(sqlError))
       );
     } else {
@@ -185,7 +183,7 @@ export default function sqlCommands() {
                                                        ' FROM ', constants.ENTITIES_FILE_MANAGER,
                                                        ' WHERE ', constants.HEADER_FILE_MANAGER_FILE_ID,
                                                        ' = ', fileId)])
-        .then(data => resolve(data))
+        .then(data => resolve(getDataOutOfAlasql(data)))
         .catch(sqlError => reject(sqlError))
       );
     } else {
@@ -204,7 +202,7 @@ export default function sqlCommands() {
                                                                    ' = ', fileId)])
           .catch(sqlError => reject(sqlError)))
         .then(() => {
-          const currentDateTime = getFormattedCurrentDateTime();
+          const currentDateTime = dateTime.getCurrentDateTime();
           alasql.promise([stringManipulator.stringConcat('UPDATE ', constants.ENTITIES_FILE_MANAGER,
                                                          ' SET ', constants.HEADER_FILE_MANAGER_LAST_MODIFIED_DATE,
                                                          ' = "', currentDateTime,
@@ -248,11 +246,12 @@ export default function sqlCommands() {
     }
   };
 
+  // external library not functioning so I cannot do anything here
   this.deleteTable = function deleteTable(tableName) {
     if (typeof Promise === 'function') {
       return new Promise((resolve, reject) =>
-        alasql.promise([stringManipulator.stringConcat('DROP TABLE IF EXISTS ', tableName, ';')])
-        .then(data => resolve(true))
+        alasql.promise([stringManipulator.stringConcat('DROP TABLE IF EXISTS ', tableName)])
+        .then(isSuccess => resolve(isSuccess))
         .catch(sqlError => reject(sqlError))
       );
     } else {
