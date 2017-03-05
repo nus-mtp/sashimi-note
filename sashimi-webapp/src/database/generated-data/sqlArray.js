@@ -10,7 +10,7 @@ let sqlObject = {};
 let isAlasqlArrayInitialized = constants.CONST_ALASQL_CREATION_CLOSED;
 
 function endOfCreateAlasqlStringForAlasql() {
-  return [[sqlObject]];
+  return [sqlObject];
 }
 
 export default function sqlArray() {
@@ -23,7 +23,7 @@ export default function sqlArray() {
 
   this.addKeyBasePair = function addKeyBasePair(key, value) {
     if (isAlasqlArrayInitialized) {
-      sqlObject.key = value;
+      sqlObject[key] = value;
     }
   };
 
