@@ -6,19 +6,49 @@ import SqlCommands from '../sql-related/sqlCommands';
 
 const sqlCommands = new SqlCommands();
 
+// dummy function to init sequence running
+function initPromiseSequence() {
+  if (typeof Promise === 'function') {
+    return new Promise((resolve, reject) => {
+      resolve(true);
+    });
+  } else {
+    throw new exceptions.PromiseFunctionNotDefined();
+  }
+}
+
 export default class dataDelete {
   static constructor() {}
 
-  static deleteAllEntities(index) {
+  /*
+   * external library not functioning so I cannot do anything here
+   * link of bug: https://github.com/agershun/alasql/issues/414
+   * force delete
+   */
+  static deleteAllEntities() {
     if (typeof Promise === 'function') {
-      return new Promise((resolve, reject) => {
-        if (index < constants.ARRAY_ENTITIES_NAME.length -1) {
-          sqlCommands.deleteTable(constants.ARRAY_ENTITIES_NAME[index])
-          .then(data => this.deleteAllEntities(index+1))
-          .catch(sqlError => reject(sqlError));
-          resolve(true);
-        }
-      });
+      return new Promise((resolve, reject) =>
+        initPromiseSequence()
+        .then(() =>
+          sqlCommands.deleteTable(constants.ENTITIES_USER)
+          .then(isSuccess => isSuccess)
+          .catch(sqlErr => reject(sqlErr)))
+        .then(() =>
+          sqlCommands.deleteTable(constants.ENTITIES_ORGANIZATION)
+          .then(isSuccess => isSuccess)
+          .catch(sqlErr => reject(sqlErr)))
+        .then(() =>
+          sqlCommands.deleteTable(constants.ENTITIES_FILE_MANAGER)
+          .then(isSuccess => isSuccess)
+          .catch(sqlErr => reject(sqlErr)))
+        .then(() =>
+          sqlCommands.deleteTable(constants.ENTITIES_FOLDER)
+          .then(isSuccess => isSuccess)
+          .catch(sqlErr => reject(sqlErr)))
+        .then(() => window.indexedDB.deleteDatabase('lectureNote')) // brute-force delete
+        .then(() => resolve(true))
+        .catch(sqlErr => reject(sqlErr))
+      );
     } else {
       throw new exceptions.PromiseFunctionNotDefined();
     }
