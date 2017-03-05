@@ -99,28 +99,35 @@ function creationOfTables() {
         query.isTableExistsInDatabase(constants.ENTITIES_USER)
         .then(isUserTableFirstInitialize =>
           createUserTable(isUserTableFirstInitialize)
+          .then(isSuccess => isSuccess)
           .catch(sqlError => reject(sqlError))
           )
         .catch(sqlError => reject(sqlError))
       )
-      .then(isSuccess => query.isTableExistsInDatabase(constants.ENTITIES_ORGANIZATION)
+      .then(() =>
+        query.isTableExistsInDatabase(constants.ENTITIES_ORGANIZATION)
         .then(isOrganizationTableFirstInitialize =>
           createOrganizationTable(isOrganizationTableFirstInitialize))
+          .then(isSuccess => isSuccess)
           .catch(sqlError => reject(sqlError))
         .catch(sqlError => reject(sqlError))
       )
       .then(() => query.isTableExistsInDatabase(constants.ENTITIES_FOLDER)
         .then(isFolderTableFirstInitialize =>
           createFolderTable(isFolderTableFirstInitialize))
+          .then(isSuccess => isSuccess)
           .catch(sqlError => reject(sqlError))
         .catch(sqlError => reject(sqlError))
       )
       .then(() => query.isTableExistsInDatabase(constants.ENTITIES_FILE_MANAGER)
         .then(isFileTableFirstInitialize =>
           createFileManagerTable(isFileTableFirstInitialize)
-          .then(success => resolve(success))
+          .then(isSuccess => isSuccess)
+          .catch(sqlError => reject(sqlError)))
         .catch(sqlError => reject(sqlError))
-      ));
+      .then(isSuccess => resolve(isSuccess))
+      .catch(sqlError => reject(sqlError))
+      );
     });
   } else {
     throw new exceptions.PromiseFunctionNotDefined();
@@ -132,20 +139,22 @@ export default class storage {
 
   static initializeDatabase() {
     if (typeof Promise === 'function') {
-      return new Promise((resolve, reject) =>
-      entitiesCreator.initializeDatabase()
-      .then(step1 => creationOfTables()
-          .then((isFirstInstance) => {
-            if (typeof isFirstInstance === 'boolean') {
-              return entitiesCreator.fillUpDefaultData()
-              .then(isFilledUp => resolve(isFilledUp))
-              .catch(sqlErr => reject(sqlErr));
-            } else {
-              return resolve(true);
-            }
-          })
-      )
-      .catch(sqlError => reject(sqlError)));
+      return new Promise((resolve, reject) => {
+        entitiesCreator.initializeDatabase()
+        .then(step1 => creationOfTables()
+          .then(isFirstInstance => isFirstInstance)
+          .catch(sqlErr => reject(sqlErr)))
+        .then((isFirstInstance) => {
+          if (typeof isFirstInstance === 'boolean') {
+            return entitiesCreator.fillUpDefaultData()
+            .then(isFilledUp => resolve(isFilledUp))
+            .catch(sqlErr => reject(sqlErr));
+          } else {
+            return resolve(true);
+          }
+        })
+        .catch(sqlError => reject(sqlError));
+      });
     } else {
       throw new exceptions.PromiseFunctionNotDefined();
     }
