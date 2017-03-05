@@ -56,17 +56,14 @@ export default class query {
         const promiseArr = [];
 
         initPromiseSequence()
-        .then(() => sqlCommands.partialSearchFile(searchString)
-          .then(fileArr => promiseArr.push(promiseArr))
+        .then(() => sqlCommands.partialSearchFileName(searchString)
+          .then(fileArr => promiseArr.push(fileArr))
           .catch(sqlError => reject(sqlError)))
-        .then(() => sqlCommands.partialSearchFolder(searchString)
-          .then(folderArr => promiseArr.push(promiseArr))
+        .then(() => sqlCommands.partialSearchFolderName(searchString)
+          .then(folderArr => promiseArr.push(folderArr))
           .catch(sqlError => reject(sqlError)))
+        .then(() => resolve(promiseArr))
         .catch(sqlErr => reject(sqlErr));
-
-        return Promise.all(promiseArr)
-          .then(([fileArr, folderArr]) => resolve([fileArr, folderArr]))
-          .catch(sqlErr => reject(sqlErr));
       });
     } else {
       throw new exceptions.PromiseFunctionNotDefined();
@@ -80,16 +77,13 @@ export default class query {
 
         initPromiseSequence()
         .then(() => sqlCommands.loadFilesFromFolder(folderId)
-          .then(fileArr => promiseArr.push(promiseArr))
+          .then(fileArr => promiseArr.push(fileArr))
           .catch(sqlError => reject(sqlError)))
         .then(() => sqlCommands.loadFoldersFromFolder(folderId)
-          .then(folderArr => promiseArr.push(promiseArr))
+          .then(folderArr => promiseArr.push(folderArr))
           .catch(sqlError => reject(sqlError)))
+        .then(() => resolve(promiseArr))
         .catch(sqlError => reject(sqlError));
-
-        return Promise.all(promiseArr)
-          .then(([fileArr, folderArr]) => resolve([fileArr, folderArr]))
-          .catch(sqlErr => reject(sqlErr));
       });
     } else {
       throw new exceptions.PromiseFunctionNotDefined();
