@@ -97,10 +97,7 @@ export default class tableCreator {
           sqlCreateTableString = endOfCreateTableStringForAlasql(sqlCreateTableString);
           isTableInitializedForCreation = constants.CONST_TABLE_CREATION_CLOSED;
           return sqlCommands.createTable(sqlCreateTableString)
-            .then(data =>
-              sqlCommands.insertDefaultArray(headerName, alasqlArrayObject)
-              .then(insertSuccess => resolve(insertSuccess))
-              .catch(sqlErr => reject(sqlErr)))
+            .then(data => resolve(data))
             .catch(sqlError => reject(sqlError));
         } else {
           return null;
