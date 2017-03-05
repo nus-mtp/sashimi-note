@@ -15,7 +15,7 @@ export default class dataModifier {
   static deleteAllEntities() {
     if (typeof Promise === 'function') {
       return new Promise((resolve, reject) =>
-        dataDelete.deleteAllEntities(0)
+        dataDelete.deleteAllEntities()
         .then(data => resolve(data))
         .catch(sqlErr => reject(sqlErr))
       );
