@@ -21,8 +21,8 @@ function isTableExists(tableName) {
   if (typeof Promise === 'function') {
     return new Promise((resolve, reject) => {
       sqlCommands.getFullTableData(tableName)
-        .then(resolve(true))
-        .catch(sqlErr => reject(false));
+      .then(resolve(true))
+      .catch(sqlErr => reject(false));
     });
   } else {
     throw new exceptions.PromiseFunctionNotDefined();
@@ -31,14 +31,15 @@ function isTableExists(tableName) {
 
 function defaultFillUpUserTable() {
   if (typeof Promise === 'function') {
-    return new Promise((resolve, reject) => {
-      if (isTableExists(constants.ENTITIES_USER)) {
+    return new Promise((resolve, reject) =>
+      isTableExists(constants.ENTITIES_USER)
+      .then(isExist =>
         sqlCommands.insertContent(constants.ENTITIES_USER,
           initDataGenerator.getInitDataUser())
         .then(data => resolve(data))
-        .catch(sqlErr => reject(sqlErr));
-      }
-    });
+        .catch(sqlErr => reject(sqlErr))
+      )
+    );
   } else {
     throw new exceptions.PromiseFunctionNotDefined();
   }
@@ -46,14 +47,15 @@ function defaultFillUpUserTable() {
 
 function defaultFillUpOrganizationTable() {
   if (typeof Promise === 'function') {
-    return new Promise((resolve, reject) => {
-      if (isTableExists(constants.ENTITIES_ORGANIZATION)) {
+    return new Promise((resolve, reject) =>
+      isTableExists(constants.ENTITIES_ORGANIZATION)
+      .then(isExist =>
         sqlCommands.insertContent(constants.ENTITIES_ORGANIZATION,
           initDataGenerator.getInitDataOrganization())
         .then(data => resolve(data))
-        .catch(sqlErr => reject(sqlErr));
-      }
-    });
+        .catch(sqlErr => reject(sqlErr))
+      )
+    );
   } else {
     throw new exceptions.PromiseFunctionNotDefined();
   }
@@ -61,14 +63,15 @@ function defaultFillUpOrganizationTable() {
 
 function defaultFillUpFileManagerTable() {
   if (typeof Promise === 'function') {
-    return new Promise((resolve, reject) => {
-      if (isTableExists(constants.ENTITIES_FILE_MANAGER)) {
+    return new Promise((resolve, reject) =>
+      isTableExists(constants.ENTITIES_FILE_MANAGER)
+      .then(isExist =>
         sqlCommands.insertContent(constants.ENTITIES_FILE_MANAGER,
           initDataGenerator.getInitDataFileManager())
         .then(data => resolve(data))
-        .catch(sqlErr => reject(sqlErr));
-      }
-    });
+        .catch(sqlErr => reject(sqlErr))
+      )
+    );
   } else {
     throw new exceptions.PromiseFunctionNotDefined();
   }
@@ -76,14 +79,15 @@ function defaultFillUpFileManagerTable() {
 
 function defaultFillUpFolderTable() {
   if (typeof Promise === 'function') {
-    return new Promise((resolve, reject) => {
-      if (isTableExists(constants.ENTITIES_FOLDER)) {
+    return new Promise((resolve, reject) =>
+      isTableExists(constants.ENTITIES_FOLDER)
+      .then(isExist =>
         sqlCommands.insertContent(constants.ENTITIES_FOLDER,
           initDataGenerator.getInitDataFolder())
         .then(data => resolve(data))
-        .catch(sqlErr => reject(sqlErr));
-      }
-    });
+        .catch(sqlErr => reject(sqlErr))
+      )
+    );
   } else {
     throw new exceptions.PromiseFunctionNotDefined();
   }
@@ -205,13 +209,19 @@ export default class entitiesCreator {
   static fillUpDefaultData() {
     if (typeof Promise === 'function') {
       return new Promise((resolve, reject) => initFillUpDefaultDatas()
-          .then(data => defaultFillUpUserTable()
+          .then(() =>
+            defaultFillUpUserTable()
             .catch(sqlErr => reject(sqlErr)))
-          .then(data => defaultFillUpOrganizationTable()
+          .then(() =>
+            defaultFillUpOrganizationTable()
             .catch(sqlErr => reject(sqlErr)))
-          .then(data => defaultFillUpFolderTable()
+          .then(() =>
+            defaultFillUpFolderTable()
             .catch(sqlErr => reject(sqlErr)))
-          .then(data => resolve(true))
+          .then(() =>
+            defaultFillUpFileManagerTable()
+            .catch(sqlErr => reject(sqlErr)))
+          .then(isSuccess => resolve(isSuccess))
           .catch(sqlError => reject(sqlError)));
     } else {
       throw new exceptions.PromiseFunctionNotDefined();
