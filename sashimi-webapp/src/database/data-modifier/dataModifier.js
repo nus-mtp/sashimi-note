@@ -4,7 +4,6 @@
  *
  */
 
-import constants from '../constants';
 import dataAdd from './dataAdd';
 import dataDelete from './dataDelete';
 import dataUpdate from './dataUpdate';
