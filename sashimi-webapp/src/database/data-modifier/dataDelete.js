@@ -45,7 +45,12 @@ export default class dataDelete {
           sqlCommands.deleteTable(constants.ENTITIES_FOLDER)
           .then(isSuccess => isSuccess)
           .catch(sqlErr => reject(sqlErr)))
-        .then(() => window.indexedDB.deleteDatabase('lectureNote')) // brute-force delete
+        .then(() => { // brute-force delete
+          if (!window.indexedDB) {
+            reject(exceptions.IndexedDBNotSupported);
+          }
+          return window.indexedDB.deleteDatabase(databaseName);
+        })
         .then(() => resolve(true))
         .catch(sqlErr => reject(sqlErr)));
     } else {
