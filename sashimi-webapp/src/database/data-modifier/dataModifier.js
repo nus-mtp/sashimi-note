@@ -4,6 +4,7 @@
  *
  */
 
+import constants from '../constants';
 import dataAdd from './dataAdd';
 import dataDelete from './dataDelete';
 import dataUpdate from './dataUpdate';
@@ -12,10 +13,10 @@ import exceptions from '../exceptions';
 export default class dataModifier {
   static constructor() {}
 
-  static deleteAllEntities() {
+  static deleteAllEntities(databaseName) {
     if (typeof Promise === 'function') {
       return new Promise((resolve, reject) =>
-        dataDelete.deleteAllEntities()
+        dataDelete.deleteAllEntities(databaseName)
         .then(data => resolve(data))
         .catch(sqlErr => reject(sqlErr))
       );

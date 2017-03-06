@@ -25,7 +25,7 @@ export default class dataDelete {
    * link of bug: https://github.com/agershun/alasql/issues/414
    * force delete
    */
-  static deleteAllEntities() {
+  static deleteAllEntities(databaseName) {
     if (typeof Promise === 'function') {
       return new Promise((resolve, reject) =>
         initPromiseSequence()
@@ -47,8 +47,7 @@ export default class dataDelete {
           .catch(sqlErr => reject(sqlErr)))
         .then(() => window.indexedDB.deleteDatabase('lectureNote')) // brute-force delete
         .then(() => resolve(true))
-        .catch(sqlErr => reject(sqlErr))
-      );
+        .catch(sqlErr => reject(sqlErr)));
     } else {
       throw new exceptions.PromiseFunctionNotDefined();
     }

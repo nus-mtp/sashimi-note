@@ -97,10 +97,10 @@ export default class entitiesCreator {
 
   static constuctor() {}
 
-  static initializeDatabase() {
+  static initializeDatabase(databaseName) {
     if (typeof Promise === 'function') {
       return new Promise((resolve, reject) =>
-        tableCreator.callSqlToLinkToDatabase(constants.INDEXEDDB_NAME)
+        tableCreator.callSqlToLinkToDatabase(databaseName)
         .then(data => resolve(data))
         .catch(sqlError => reject(sqlError))
       );

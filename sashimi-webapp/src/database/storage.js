@@ -16,6 +16,8 @@ import dataModifier from './data-modifier/dataModifier';
 
 import exceptions from './exceptions';
 
+let databaseName = constants.INDEXEDDB_NAME;
+
 // dummy function to initialize createTables promises
 function initCreateTable() {
   if (typeof Promise === 'function') {
@@ -140,7 +142,7 @@ export default class storage {
   static initializeDatabase() {
     if (typeof Promise === 'function') {
       return new Promise((resolve, reject) => {
-        entitiesCreator.initializeDatabase()
+        entitiesCreator.initializeDatabase(databaseName)
         .then(step1 => creationOfTables()
           .then(isFirstInstance => isFirstInstance)
           .catch(sqlErr => reject(sqlErr)))
@@ -158,6 +160,10 @@ export default class storage {
     } else {
       throw new exceptions.PromiseFunctionNotDefined();
     }
+  }
+
+  static changeDatabaseName(newDatabaseName) {
+    databaseName = newDatabaseName;
   }
 
   // Searching the filename and foldername ONLY
@@ -261,7 +267,7 @@ export default class storage {
   static deleteAll() {
     if (typeof Promise === 'function') {
       return new Promise((resolve, reject) =>
-        dataModifier.deleteAllEntities()
+        dataModifier.deleteAllEntities(databaseName)
         .then(data => resolve(true))
         .catch(sqlError => reject(sqlError))
       );

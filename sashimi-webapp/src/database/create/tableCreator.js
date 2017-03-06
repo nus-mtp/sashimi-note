@@ -24,7 +24,7 @@ export default class tableCreator {
   static callSqlToLinkToDatabase(databaseName) {
     if (typeof Promise === 'function') {
       return new Promise((resolve, reject) => {
-        const thisDatabaseName = databaseName || 'lectureNote';
+        const thisDatabaseName = databaseName;
         return sqlCommands.linkDatabaseToIndexedDB(thisDatabaseName)
           .then(data => resolve(data))
           .catch(sqlError => reject(sqlError));
