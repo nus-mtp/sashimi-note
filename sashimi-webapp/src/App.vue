@@ -5,7 +5,6 @@
 </template>
 
 <script>
-
 export default {
   name: 'app',
 
@@ -24,13 +23,26 @@ body {
 }
 
 #app {
-  font-family: $font;
+  font-family: $general-font;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   -webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
 	-moz-box-sizing: border-box;    /* Firefox, other Gecko */
 	box-sizing: border-box;
   color: black;
+}
+
+img {
+  user-drag: none; 
+  user-select: none;
+  -moz-user-select: none;
+  -webkit-user-drag: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+}
+
+:focus {
+  outline: 0;
 }
 
 .float-left {
@@ -45,65 +57,110 @@ body {
   display: inline-block;
 }
 
+.span_0_of_12 {
+  width: 0;
+}
+
 .navbar {
   overflow: hidden;
   box-sizing: border-box;
-  padding: 8px 20px;
+  padding: 10px 20px;
   text-align: left;
 }
 
-button {
-  &.navbar-buttons {
-    background-color: transparent;
-    border: none;
-    display: inline-block;
-    box-sizing: border-box;
-  }
+.material-icons { 
 
-  &.navbar-buttons:focus {
+  &.md-54 { 
+    font-size: 54px; 
+  }
+  &.md-120 { 
+    font-size: 120px; 
+  }
+  &.folder-blue {
+    color: #77CBFF;
+  }
+  &.md-dark {
+    color: rgba(0, 0, 0, 0.54); 
+
+    &.md-inactive { 
+      color: rgba(0, 0, 0, 0.26); 
+    }
+  }
+}
+
+.navbar-buttons {
+  background-color: transparent;
+  border: none;
+  display: inline-block;
+  box-sizing: border-box;
+
+  &:focus {
     outline: 0;
+  }
+  
+  &.active {
+    transform: scale(1.3);
+    -webkit-filter: drop-shadow(1px 1px 2px pink);
+    filter: drop-shadow(1px 1px 2px pink);
+  }
+}
+
+.hover-grow {
+  &:hover {
+    transform: scale(1.2);
+    transition: transform 0.5s;
+    -webkit-transition: transform 0.5s;
   }
 }
 
 .button {
-  &-back {
-    width: $back-button-width;
-  }
-
-  &-margin {
+  &-group-margin {
     margin-left: $left-margin-navbar-elements;
   }
 
   &-img {
-    width: 38px;
+    width: $button-img-width;
   }
 }
 
+.button-logo {
+  text-align: left;
+  position: relative;
+  width: $button-logo-width;
 
-.CodeMirror {
-  box-shadow: 5px 0 5px -2px #e6e6e6;
-  
-  .CodeMirror-gutters {
-    background-color: white;
+  a {
+    font-size: 14px;
+    font-family: $general-font;
+    text-decoration: none;
+    color: #95989A;
+
+    &:focus,
+    &:visited {
+      color: #95989A;;
+    }
+
+    &:hover {
+      color: darkorange;
+    }
+
+    img {
+      width: 40px;
+    }
+    
+    p {
+      margin-left: 5px;
+    }
   }
 }
 
-.CodeMirror.cm-s-base16-dark {
-  height: calc(100vh - #{$navbar-height});
-}
-
-.CodeMirror-lines {
-  overflow-wrap: break-word;
-  
-  .CodeMirror-code {
-    line-height: 1.4em;
-    color: #dedede;
-    font-family: monospace;
-  }
-}
-
-vertical-align-child > * {
+.vertical-align-child > * {
   vertical-align: middle;
+}
+
+@media screen and (max-width: 480px) {
+  .col {
+    margin: 0;
+  }
 }
 
 </style>

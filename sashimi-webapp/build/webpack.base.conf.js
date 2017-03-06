@@ -7,7 +7,7 @@ function resolve(dir) {
   return path.join(__dirname, '..', dir);
 }
 
-module.exports = {
+module.exports = {  
   entry: {
     app: './src/main.js'
   },
@@ -67,6 +67,14 @@ module.exports = {
           limit: 10000,
           name: utils.assetsPath('fonts/[name].[hash:7].[ext]')
         }
+      },
+      {
+        test: /\.txt$/,
+        use: 'raw-loader'
+      },
+      {
+        test: /\.html$/,
+        use: 'html-loader'
       }
     ],
     noParse: [/alasql/]

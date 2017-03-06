@@ -39,6 +39,7 @@ whiteList.mn = [];
 whiteList.mi = [];
 whiteList.mo = [];
 whiteList.msup = [];
+whiteList.pagebreak = [];
 
 // Custom safeAttrValue function for whiteList
 function safeAttrValue(tag, name, value, cssFilter) {
