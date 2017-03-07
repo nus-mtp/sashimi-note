@@ -1,6 +1,7 @@
 // Place your settings in this file to overwrite default and user settings.
 {
-   "editor.tabSize": 2,
+  "editor.tabSize": 2,
+  "editor.renderWhitespace": "boundary",
 
    //-------- ESLint configuration --------
   "eslint.workingDirectories": [
@@ -17,5 +18,6 @@
   },
   "eslint.validate": [
     "javascript", "html"
-  ]
+  ],
+  "vsicons.presets.angular": false
 }
