@@ -132,11 +132,11 @@ img {
     font-size: 14px;
     font-family: $general-font;
     text-decoration: none;
-    color: #95989A;
+    color: $navbar-logo-color;
 
     &:focus,
     &:visited {
-      color: #95989A;;
+      color: $navbar-logo-color;;
     }
 
     &:hover {
