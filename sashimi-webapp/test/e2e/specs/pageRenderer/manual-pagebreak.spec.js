@@ -19,23 +19,23 @@ module.exports = {
   'change fileFormat to Pages mode': (browser) => {
     browser
       .click('#manage-file')
-      .pause(1000)
+      .pause(500)
       .click('button[data-format="pages"]')
-      .pause(1000)
+      .pause(500)
       .assert.elementPresent('.viewer[data-fileformat="pages"]');
   },
 
   'write to codemirror': (browser) => {
     browser
       .click('.CodeMirror')
-      .pause(1000)
-      .keys(textLoader.load('references/pagebreak-between-elements'))
-      .pause(3000)
-      .assert.elementCount('.page-view', 4);
+      .pause(500)
+      .keys(textLoader.load('references/pagebreak-between-elements'), () => {
+        browser.pause(2000)
+        .assert.elementCount('.page-view', 4);
+      });
   },
 
-  'after': function(browser) {
-    console.log('Closing down...');
+  'after': (browser) => {
     browser.end();
   },
 
