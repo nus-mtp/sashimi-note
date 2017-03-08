@@ -78,6 +78,9 @@ export default {
         // Increment image load count as long as the image is processed.
         imageArray[i].onload = increateLoadedImageCount;
         imageArray[i].onerror = increateLoadedImageCount;
+
+        // Handle case where image does not have a src attribute
+        if (!imageArray[i].getAttribute.src) increateLoadedImageCount();
       }
       checkForLoadingCompletion();
     });
