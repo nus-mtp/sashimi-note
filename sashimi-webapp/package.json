@@ -9,7 +9,7 @@
     "build": "node build/build.js",
     "unit": "cross-env BABEL_ENV=test karma start test/unit/karma.conf.js --single-run",
     "unit-watch": "cross-env BABEL_ENV=test karma start test/unit/karma.conf.js",
-    "e2e": "node test/e2e/runner.js",
+    "e2e": "cross-env PORT=8081 node test/e2e/runner.js",
     "test": "npm run unit && npm run e2e",
     "test-travis": "npm run unit",
     "lint": "eslint --ext .js,.vue src test/unit/specs test/e2e/specs"
@@ -24,6 +24,7 @@
     "babel-preset-es2015": "^6.22.0",
     "babel-preset-stage-2": "^6.22.0",
     "babel-register": "^6.22.0",
+    "callsite": "^1.0.0",
     "chai": "^3.5.0",
     "chalk": "^1.1.3",
     "chromedriver": "^2.27.2",
