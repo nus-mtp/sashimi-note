@@ -103,7 +103,7 @@ export default {
     const childHeights =
       childArray.filter(childNode => (childNode.nodeName !== '#text'))
                 .map((childNode) => {
-                  const nodeStyle = childNode.currentStyle || getComputedStyle(childNode);
+                  const nodeStyle = helper.getComputedStyle(childNode);
 
                   // Get node's height
                   const nodeStyleHeight = parseFloat(nodeStyle.height, 10) || 0;
