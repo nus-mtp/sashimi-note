@@ -11,7 +11,8 @@ const checkShouldPageBreak = function checkShouldPageBreak(childHeights, index) 
   const BREAK_PAGE = true;
   const DO_NOTHING = false;
 
-  const eleName = childHeights[index].ele.tagName;
+  const element = childHeights[index].ele;
+  const eleName = element.tagName;
 
   switch (eleName) {
     case 'H1': {
@@ -32,8 +33,13 @@ const checkShouldPageBreak = function checkShouldPageBreak(childHeights, index) 
         return BREAK_PAGE;
       }
     }
-    default:
-      return ['PAGEBREAK'].some(name => name === eleName);
+    case 'PAGEBREAK': {
+      return BREAK_PAGE;
+    }
+    default: {
+      const eleStyles = helper.getComputedStyle(element);
+      return eleStyles.pageBreakBefore === 'always';
+    }
   }
 };
 
