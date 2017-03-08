@@ -33,8 +33,9 @@ const checkShouldPageBreak = function checkShouldPageBreak(childHeights, index) 
         return BREAK_PAGE;
       }
     }
-    case 'PAGEBREAK': {
-      return BREAK_PAGE;
+    case 'BR': {
+      // Special break page syntax on <br page>
+      return (element.getAttribute('page') === '');
     }
     default: {
       const eleStyles = helper.getComputedStyle(element);
