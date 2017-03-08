@@ -59,6 +59,7 @@ PageRenderer.prototype.getReferenceFrame = function getReferenceFrame() {
       visibility: 'hidden',
       overflow: 'hidden',
       height: 0,
+      boxSizing: 'border-box',
 
       // CSS to set up the page sizing
       width: this.page.width,

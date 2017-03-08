@@ -119,13 +119,13 @@
   }
 
   #viewer-container {
-    overflow-wrap: break-word;
-    line-height: 1.6em;
     transform-origin: top center;
   }
   
   #viewer-container,
   #reference-frame-of-viewer-container {
+    overflow-wrap: break-word;
+    line-height: 1.6em;
     font-family: "Avenir", Helvetica, Arial, sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
