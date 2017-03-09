@@ -49,6 +49,7 @@ export default {
 @import 'src/assets/styles/loader.scss';
 .login-management {
   text-align: center;
+  background-color: $navbar-background-color;
 }
 
 .button-logo {
