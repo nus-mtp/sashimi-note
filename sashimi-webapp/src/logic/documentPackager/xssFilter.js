@@ -42,7 +42,7 @@ whiteList.li = ['value'];
 whiteList.style = [];
 // allow kbd tag
 whiteList.kbd = [];
-// allow ifram tag with some safe attributes
+// allow iframe tag with some safe attributes
 whiteList.iframe = ['allowfullscreen', 'name', 'referrerpolicy', 'sandbox', 'src', 'srcdoc', 'width', 'height'];
 // allow summary tag
 whiteList.summary = [];
