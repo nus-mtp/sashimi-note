@@ -75,10 +75,7 @@ export default {
 .login {
   width: 500px;
   margin: 0 auto;
-  background-color: $navbar-background-color;
   padding: 20px;
-  border-radius: 12px;
-  box-shadow: 1px 3px 5px rgba(0,0,0,0.2);
 
   label {
     display: inline-block;
