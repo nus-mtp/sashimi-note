@@ -9,58 +9,56 @@
           </p>
         </router-link>
       </div>
-      <div class="col searchBar inline-block">
+      <!--Waiting for file-manager api to be completed to implement buttons-->
+      <!--<div class="col searchBar inline-block">
         <input type="text" placeholder="Search...">
-      </div>
+      </div>-->
     </div>
-    <div class="section group navbar userActions vertical-align-child">
-      <table class="col breadcrumb float-left">
+    <div class="navbar userActions vertical-align-child">
+      <table>
         <tr>
-          <td>
+          <td class="breadcrumb float-left">
             <ul class="navbar-breadcrumb">
-              <li><a href="#">Home</a></li>
-              <li><a href="#">Blah</a></li>
-              <li>Blah</li>
+              <li><a href="\">Home</a></li>
             </ul>
           </td>
-        </tr>
-      </table>
-      <table class="vertical-align-child float-right">
-        <tr>
-          <div class="col buttons">
-            <td>
-              <button class="navbar-buttons hover-grow">
-                <img src="../../assets/images/buttons/button-upload-file.svg" class="button-img" alt="delete">
-              </button>
-            </td>
-            <td>
-              <button class="navbar-buttons hover-grow">
-                <img src="../../assets/images/buttons/button-add-new.svg" class="button-img" alt="delete">
-              </button>
-            </td>
-            <td>
-              <button class="navbar-buttons hover-grow">
-                <img src="../../assets/images/buttons/button-duplicate.svg" class="button-img" alt="delete">
-              </button>
-            </td>
-            <td>
-              <button class="navbar-buttons hover-grow">
-                <img src="../../assets/images/buttons/button-download.svg" class="button-img" alt="delete">
-              </button>
-            </td>
-            <td>
-              <button class="navbar-buttons hover-grow">
-                <img src="../../assets/images/buttons/button-delete.svg" class="button-img" alt="delete">
-              </button>
-            </td>
-          </div>
-          <td>
-            <div class="col vertical-align-child view">
-              <button class="navbar-buttons hover-grow" v-on:click="setAction('iconView')">Icon</button>|
-              <button class="navbar-buttons hover-grow" v-on:click="setAction('listView')">List</button>
+            <!--Waiting for file-manager api to be completed to implement buttons-->
+            <div class="float-right">
+              <!--<div class="vertical-align-child buttons-right inline-block">
+                <td>
+                  <button class="navbar-buttons hover-grow">
+                    <i class="material-icons md-dark">file_upload</i>
+                  </button>
+                </td>
+                <td>
+                  <button class="navbar-buttons hover-grow">
+                    <i class="material-icons md-dark">note_add</i>
+                  </button>
+                </td>
+                <td>
+                  <button class="navbar-buttons" v-bind:class="{'hover-grow': buttonEffect}">
+                  <i class="material-icons md-dark" v-bind:class="{'md-inactive': buttonDisabled}">content_copy</i>
+                  </button>
+                </td>
+                <td>
+                  <button class="navbar-buttons" v-bind:class="{'hover-grow': buttonEffect}">
+                    <i class="material-icons md-dark" v-bind:class="{'md-inactive': buttonDisabled}">file_download</i>
+                  </button>
+                </td>
+                <td>
+                  <button class="navbar-buttons" v-bind:class="{'hover-grow': buttonEffect}">
+                    <i class="material-icons md-dark" v-bind:class="{'md-inactive': buttonDisabled}">delete</i>
+                  </button>
+                </td>
+              </div>-->
+              <div class="view-type inline-block">
+                <td class="vertical-align-child">
+                  <button class="navbar-buttons hover-grow" v-on:click="setAction('iconView')">Icon</button>|
+                  <button class="navbar-buttons hover-grow" v-on:click="setAction('listView')">List</button>
+                </td>
+              </div>
             </div>
-          </td>
-        </tr>
+          </tr>
       </table>
     </div>
   </div>
@@ -69,6 +67,12 @@
 <script>
 export default {
   props: ['value'],
+  data() {
+    return {
+      buttonDisabled: true,
+      buttonEffect: false,
+    };
+  },
   methods: {
     setAction(action) {
       this.$emit('input', action);
@@ -105,11 +109,28 @@ export default {
 }
 
 .userActions {
-  background-color: #F7F7F7;
+  background-color: $navbar-background-color;
   box-shadow: 0 2px 10px rgba(0,0,0,0.2);
   padding-top: 3px;
   padding-bottom: 3px;
+
+  table {
+    width: 100%;
+    
+    td {
+      vertical-align: middle;
+    }
+  }
 }
+
+.buttons-right {
+  display: none;
+
+  td {
+    width: $button-img-width;
+  }
+}
+
 
 .navbar-breadcrumb {
   list-style: none;
@@ -138,17 +159,9 @@ export default {
 
 .navbar-buttons {
   margin: 0 2px; 
-
-  img {
-    width: 26px;
-  }
 }
 
-.buttons {
-  border-right: 1px solid $navbar-border-color;
-}
-
-.view {
+.view-type {
   font-size: $navbar-font-size;
 
   a {
@@ -158,10 +171,10 @@ export default {
       color: black;
     }
   }
-}
 
-td {
-  vertical-align: middle;
+  td {
+    width: 100px;
+  }
 }
 
 @media screen and (min-width: 768px) {
@@ -175,6 +188,13 @@ td {
 
     input {
       width: 70%;
+    }
+  }
+
+  .userActions  {
+    .buttons-right {
+      display: inline-block;
+      border-right: 1px solid $navbar-border-color;
     }
   }
 }

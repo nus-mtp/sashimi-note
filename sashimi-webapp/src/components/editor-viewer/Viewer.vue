@@ -59,8 +59,8 @@
     },
     mounted() {
       const PAGE_A6 = {
-        width: '14.8cm',
-        height: '10.5cm',
+        width: '16.51cm',
+        height: '13.159cm',
         padding: {
           top: '1.2cm',
           bottom: '1.2cm',
@@ -109,18 +109,19 @@
 
     #viewer-container {
       transform: scale(0.75);
+
+      .page-view {
+        overflow: hidden;
+        margin: 0 auto;
+        margin-top: 50px;
+      }
     }
   }
 
   #viewer-container {
     overflow-wrap: break-word;
     line-height: 1.6em;
-    transform-origin: top left;
-
-    .page-view {
-      margin: 50px;
-      overflow: hidden;
-    }
+    transform-origin: top center;
   }
   
   #viewer-container,
@@ -136,10 +137,40 @@
       box-sizing: border-box;
       background-color: white;
     }
-    
-    img {
-      height: auto;
-      width: auto;
+  }
+
+  @media print {
+    @page {
+      size: auto;
+      margin: 0;
+    }
+
+    #app > div > div.section.group.content > div:nth-child(2) {
+      width: 100%;
+    }
+
+    .viewer {
+      height: 100%;
+    }
+
+    .navbar, .editor {
+      display: none;
+    }
+
+    .viewer[data-fileFormat="slides"],
+    .viewer[data-fileFormat="pages"] {
+      background: none;
+
+      #viewer-container {
+        transform: scale(1);
+        overflow: hidden;
+
+        .page-view {
+          overflow: hidden;
+          margin: 0;
+          margin-top: 0;
+        }
+      }
     }
   }
 </style>

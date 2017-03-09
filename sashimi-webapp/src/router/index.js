@@ -25,5 +25,9 @@ export default new Router({
       name: 'Content',
       component: Content,
     },
+    {
+      path: '*',
+      redirect: '/'
+    },
   ],
 });

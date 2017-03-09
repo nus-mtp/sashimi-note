@@ -68,6 +68,26 @@ img {
   text-align: left;
 }
 
+.material-icons { 
+
+  &.md-54 { 
+    font-size: 54px; 
+  }
+  &.md-120 { 
+    font-size: 120px; 
+  }
+  &.folder-blue {
+    color: #77CBFF;
+  }
+  &.md-dark {
+    color: rgba(0, 0, 0, 0.54); 
+
+    &.md-inactive { 
+      color: rgba(0, 0, 0, 0.26); 
+    }
+  }
+}
+
 .navbar-buttons {
   background-color: transparent;
   border: none;
@@ -99,7 +119,7 @@ img {
   }
 
   &-img {
-    width: 38px;
+    width: $button-img-width;
   }
 }
 
@@ -135,6 +155,12 @@ img {
 
 .vertical-align-child > * {
   vertical-align: middle;
+}
+
+@media screen and (max-width: 480px) {
+  .col {
+    margin: 0;
+  }
 }
 
 </style>

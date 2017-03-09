@@ -1,7 +1,7 @@
 <template>
   <div>
     <navbar v-model="action"></navbar>
-    <div class="section group">
+    <div class="section group content">
       <div class="col" v-bind:class="editorCols">
         <editor 
           v-model="mdContent"
@@ -31,7 +31,9 @@ export default {
   },
   data() {
     return {
-      mdContent: '',
+      // TODO: Temporary solution for presistence storage
+      //       to be remove when file manager is implemented.
+      mdContent: localStorage.getItem('mdContent'),
       action: '',
       fileFormat: 'html',
       editorCols: {
@@ -79,7 +81,12 @@ export default {
             break;
         }
       }
-    }
+    },
+    mdContent(value) {
+      // TODO: Temporary solution for presistence storage
+      //       to be remove when file manager is implemented.
+      localStorage.setItem('mdContent', value);
+    },
   },
   method: {
   },
@@ -106,7 +113,7 @@ export default {
   transition: width 0.7s;
 }
 
-@media screen and (min-width: 768px) {
-  
+.content {
+  overflow-x: hidden;
 }
 </style>

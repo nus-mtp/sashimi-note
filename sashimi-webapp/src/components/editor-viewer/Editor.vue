@@ -7,8 +7,6 @@
 
 <script>
 import { codemirror } from 'vue-codemirror';
-import navbar from './Navbar';
-import viewer from './Viewer';
 
 /* eslint no-unused-vars: 0 */
 let codeMirrorInstance = null;
@@ -16,9 +14,7 @@ let codeMirrorInstance = null;
 /* eslint prefer-const: 0 */
 export default {
   components: {
-    codemirror,
-    navbar,
-    viewer,
+    codemirror
   },
   props: ['value'],
   data() {

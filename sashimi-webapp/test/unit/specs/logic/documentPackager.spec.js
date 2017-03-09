@@ -18,6 +18,10 @@ function base64(data) {
   );
 }
 
+function newlineFilter(data) {
+  return data.replace(/[\r]/g, '');
+}
+
 describe('Document Packager', () => {
   describe('getHtmlData', () => {
     it('should handle empty data', (done) => {
@@ -55,7 +59,7 @@ describe('Document Packager', () => {
 
     it('should handle conditional hiding data', (done) => {
       documentPackager.getHtmlData(conditionalInput).then((output) => {
-        expect(output).to.equal(conditionalOutput);
+        expect(output).to.equal(newlineFilter(conditionalOutput));
         done();
       })
       .catch((error) => {
@@ -89,7 +93,7 @@ describe('Document Packager', () => {
 
     it('should handle HTML XSS threats', (done) => {
       documentPackager.getHtmlData(xssInput).then((output) => {
-        expect(output).to.equal(xssOutput);
+        expect(output).to.equal(newlineFilter(xssOutput));
         done();
       })
       .catch((error) => {
@@ -99,7 +103,7 @@ describe('Document Packager', () => {
 
     it('should handle generation of TOC', (done) => {
       documentPackager.getHtmlData(tocInput).then((output) => {
-        expect(output).to.equal(tocOutput);
+        expect(output).to.equal(newlineFilter(tocOutput));
         done();
       })
       .catch((error) => {

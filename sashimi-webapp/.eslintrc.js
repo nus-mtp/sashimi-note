@@ -88,5 +88,6 @@ module.exports = {
     "prefer-arrow-callback": "warn",
     "object-shorthand": "warn",
     "prefer-const": "warn",
+    "arrow-body-style": "warn",
   }
 }

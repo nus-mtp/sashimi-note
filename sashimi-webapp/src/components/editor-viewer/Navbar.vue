@@ -9,10 +9,11 @@
             </p>
         </a>
     </div>
-    <div class="col float-left vertical-align-child button-group-margin">
+    <!--Waiting for file-manager api to be completed to implement buttons-->
+    <!--<div class="col float-left vertical-align-child button-group-margin">
       <div class="image-upload">
         <label for="file-input" class="navbar-buttons hover-grow" id="upload-image">
-          <img src="../../assets/images/buttons/button-upload-image.svg" class="button-img" alt="upload-image">
+          <i class="material-icons md-dark">photo_camera</i>
         </label>
         <input type="file" id="file-input">
       </div>
@@ -23,12 +24,13 @@
         <img src="../../assets/images/buttons/button-annotate.svg" class="button-img" alt="annotate">
       </button>
       <button class="navbar-buttons hover-grow" id="share-file">
-        <img src="../../assets/images/buttons/button-share-file.svg" class="button-img" alt="share">
+        <i class="material-icons md-dark">share</i>
       </button>
-    </div>
+    </div>-->
     <div class="float-right">
       <div class="col inline-block">
-        <div class="navbar-dropdown inline-block">
+        <!--Waiting for file-manager api to be completed to implement buttons-->    
+        <!--<div class="navbar-dropdown inline-block">
           <button class="button-dropdown button-group-margin vertical-align-child navbar-buttons hover-grow" id="new-file">
             <img class="inline-block" src="../../assets/images/symbols/symbol-add.svg" alt="add"> 
             <p class="inline-block">New</p>  
@@ -37,28 +39,29 @@
             <a href="">New File</a>
             <a href="">Duplicate File</a>
           </div>
-        </div>
+        </div>-->
         <div class="navbar-dropdown inline-block">
           <button class="button-dropdown button-group-margin vertical-align-child navbar-buttons hover-grow" id="manage-file">
             <p class="inline-block">Manage</p> 
             <img class="inline-block" src="../../assets/images/symbols/symbol-arrow-down.svg" alt="add">
           </button>
-          <div class="dropdown-content">
-            <button v-on:click="updateParent('pages')">Pages</button>
-            <button v-on:click="updateParent('slides')">Slides</button>
-            <button v-on:click="updateParent('html')">HTML</button>
+          <div class="dropdown-content" :data-active="value">
+            <button v-on:click="updateParent('pages')" data-format="pages">Pages</button>
+            <button v-on:click="updateParent('slides')" data-format="slides">Slides</button>
+            <button v-on:click="updateParent('html')" data-format="html">HTML</button>
           </div>
         </div>
       </div>
       <div class="col vertical-align-child button-group-margin">
         <button v-on:click="updateParent('editor')" class="navbar-buttons hover-grow" id="button-editor">
-          <img src="../../assets/images/buttons/button-edit.svg" class="button-img" alt="editor">
+        <i class="material-icons md-dark md-dark">edit</i>
         </button>
         <button v-on:click="updateParent('split')" class="navbar-buttons hover-grow" id="button-viewer">
-          <img src="../../assets/images/buttons/button-split-screen.svg" class="button-img" alt="split-view">
+        <!--<i class="material-icons md-dark md-dark">chrome_reader_mode</i>-->
+        <img src="../../assets/images/buttons/button-split-screen.svg" class="button-img" alt="plugins">
         </button>
         <button v-on:click="updateParent('viewer')" class="navbar-buttons hover-grow" id="button-split-screen">
-          <img src="../../assets/images/buttons/button-view.svg" class="button-img" alt="viewer">
+        <i class="material-icons md-dark md-dark md-dark">remove_red_eye</i>
         </button>
       </div>
     </div>
@@ -130,26 +133,40 @@ export default {
 .navbar-dropdown {
   box-sizing: border-box;
 
+  .button-dropdown {
+    border: 1px solid transparent;  
+    transition: border 0.5s;
+    width: 140px;
+  }
+
   &:hover {
     .button-dropdown {
-      transform: scale(1.1);
+      transform: scale(1);
       border: 1px solid black;
     }
     .dropdown-content {
-      display:block;
+      opacity:1;
+      visibility: visible;
+      transition: opacity 0.5s,
+                  visibility 0.5s;
     }
   }
 }
 
 .dropdown-content {
-  display: none;
+  opacity:0;
+  visibility: hidden;
   position: absolute;
-  min-width: 140px;
+  width: 140px;
+  box-sizing: border-box;
   border: 1px solid black;
   text-align: left;
-  padding: 10px;
   background-color: white;
   z-index: 999;
+  margin-left: 18px;
+  margin-top: -1px;
+  transition: opacity 0.5s,
+              visibility 0.5s;
 
   button {
     border: none;
@@ -158,7 +175,23 @@ export default {
     font-family: $general-font;
     font-size: $navbar-font-size;
     display: block;
-    padding: 8px;
+    padding: 12px;
+    width: 100%;
+    text-align: left;
+
+    &:hover {
+      background-color: rgba(0,0,0,0.05);
+      color: #333;
+    }
+  }
+
+  // Dropdown button active conditions
+  &[data-active="slides"] button[data-format="slides"],
+  &[data-active="pages"] button[data-format="pages"],
+  &[data-active=""] button[data-format="html"],
+  &[data-active="html"] button[data-format="html"] {
+    background-color: rgba(0,0,0,0.2);
+    font-weight: 600;
   }
 }
 </style>
