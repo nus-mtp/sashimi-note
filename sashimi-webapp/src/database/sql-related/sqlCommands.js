@@ -53,7 +53,7 @@ export default function sqlCommands() {
     if (typeof Promise === 'function') {
       return new Promise((resolve, reject) =>
         alasql.promise([stringManipulator.stringConcat('SELECT * FROM ', tableName)])
-        .then(data => resolve(data))
+        .then(data => resolve(getArray(data)))
         .catch(sqlError => reject(sqlError)));
     } else {
       throw new exceptions.PromiseFunctionNotDefined();
