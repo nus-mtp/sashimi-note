@@ -33,6 +33,30 @@ describe('sqlCommands', () => {
       .catch(sqlErr => done(sqlErr));
     });
   });
+
+  describe('creation', () => {
+    it('should create table', (done) => {
+      if (!window.indexedDB) {
+        done(exceptions.IndexedDBNotSupported);
+      }
+      sqlCommands.linkDatabaseToIndexedDB(testDatabaseName) // link to database
+      .then(() => { // create table
+        const createTableString = 'abc(a NUMBER, b STRING, c DATE)';
+        return sqlCommands.createTable(createTableString)
+        .then(() => { // test for table exists in database
+          const request = window.indexedDB.open(testDatabaseName);
+          request.onsuccess = function onsuccess(event) {
+            const transaction = request.result.transaction([testDatabaseName], 'read');
+            const tableStore = transaction.objectStore(testDatabaseName).get('abc');
+            tableStore.onsuccess = function suceed(data) {
+              expect(data).to.equal([]);
+            };
+          };
+        }).catch(sqlErr => done(sqlErr));
+      }).then(() => {
+        cleanTestCase();
+        done();
+      }).catch(sqlErr => done(sqlErr));
     });
   });
 });
