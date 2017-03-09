@@ -1,4 +1,4 @@
-// import storage from '../../database/storage';
+import storage from '../../database/storage';
 import Folder from './folder';
 
 /**
@@ -30,12 +30,15 @@ File.prototype.remove = function remove() {
   // Case 1b: file exist, file not removed (error)
   // Case 2: file does not exist (nothing removed)
 
-  // storage.deleteFile(this.path);
-  const parentFolder = this.parentFolder;
-  const index = parentFolder.childFileList.findIndex((childFile) => {
-    return childFile.id === this.id;
-  });
-  parentFolder.childFileList.splice(index, 1);
+  return storage.deleteFile(this.path)
+    .then(() => {
+      const parentFolder = this.parentFolder;
+      const index = parentFolder.childFileList.findIndex(childFile => childFile.id === this.id);
+      parentFolder.childFileList.splice(index, 1);
+    })
+    .catch((error) => {
+      throw error;
+    });
 };
 
 /**
@@ -50,7 +53,7 @@ File.prototype.save = function save(data) {
   // Case 1b: file exist, file not saved (error)
   // Case 2: file does not exist (nothing saved)
 
-  // return storage_api.saveFile(this.id, data);
+  return storage.saveFile(this.id, data);
 };
 
 /**
@@ -60,11 +63,12 @@ File.prototype.save = function save(data) {
  * @return {String} data loaded from file
  */
 File.prototype.load = function load() {
+  console.log('file.load');
   // Case 1a: file exist, file loaded
   // Case 1b: file exist, file not loaded (error)
   // Case 2: file does not exist (nothing loaded)
 
-  // return storage_api.loadFile(this.id);
+  return storage.loadFile(this.id);
 };
 
 /**
