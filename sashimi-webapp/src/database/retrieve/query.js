@@ -10,6 +10,8 @@ import SqlCommands from '../sql-related/sqlCommands';
 
 import exceptions from '../exceptions';
 
+import constants from '../constants';
+
 const sqlCommands = new SqlCommands();
 
 // dummy function to init sequence running
@@ -25,6 +27,25 @@ function initPromiseSequence() {
 
 export default class query {
   static constructor() {}
+
+  static getAllFilesAndFolders() {
+    if (typeof Promise === 'function') {
+      return new Promise((resolve, reject) => {
+        const promiseArr = [];
+        initPromiseSequence()
+        .then(() => sqlCommands.getFullTableData(constants.ENTITIES_FILE_MANAGER)
+          .then(fileArr => promiseArr.push(fileArr))
+          .catch(sqlError => reject(sqlError)))
+        .then(() => sqlCommands.getFullTableData(constants.ENTITIES_FOLDER)
+          .then(folderArr => promiseArr.push(folderArr))
+          .catch(sqlError => reject(sqlError)))
+        .then(() => resolve(promiseArr))
+        .catch(sqlErr => reject(sqlErr));
+      });
+    } else {
+      throw new exceptions.PromiseFunctionNotDefined();
+    }
+  }
 
   static isTableExistsInDatabase(tableName) {
     if (typeof Promise === 'function') {
