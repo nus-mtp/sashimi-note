@@ -2,6 +2,7 @@ import Vue from 'vue';
 import Router from 'vue-router';
 import FileManager from 'components/file-manager/FileManager';
 import Content from 'components/editor-viewer/Content';
+import Login from 'components/login-management/Login';
 
 Vue.use(Router);
 
@@ -17,6 +18,11 @@ export default new Router({
   routes: [
     {
       path: '/',
+      name: 'login',
+      component: Login,
+    },
+    {
+      path: '/files',
       name: 'fileManager',
       component: FileManager,
     },
