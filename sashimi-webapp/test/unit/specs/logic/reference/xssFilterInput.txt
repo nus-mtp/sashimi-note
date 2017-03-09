@@ -10,3 +10,9 @@ hello <a name="n" href="javascript:alert('xss')">*you*</a>
 # Mixed HTML/Markdown XSS attack
 hello <a name="n"
 href="javascript:alert('xss')">*you*</a>
+
+%3Cscript%3Ealert%28document.cookie%29%3B%3C%2Fscript%3E
+
+<img src="" onerror="alert('xss');"/>
+
+<img src="abc.jpg" onerror="alert('xss');"/>
