@@ -1,7 +1,14 @@
-import sqlCommands from '../../../../../../database/sql-related/sqlCommands';
-import dataDelete from '../../../../../../database/data-modifier/dataDelete';
+import SqlCommands from 'src/database/sql-related/sqlCommands';
+
+import SqlArray from 'src/database/generated-data/sqlArray';
+
+import dataDelete from 'src/database/data-modifier/dataDelete';
+
+import exceptions from 'src/database/exceptions';
 
 const testDatabaseName = 'test';
+const sqlCommands = new SqlCommands();
+const alasqlArray = new SqlArray();
 
 function cleanTestCase() {
   dataDelete.deleteAllEntities(testDatabaseName);
@@ -9,13 +16,23 @@ function cleanTestCase() {
 
 describe('sqlCommands', () => {
   describe('link to indexeddb database', () => {
-    it('should link to indexeddb database', () => {
-      expect(sqlCommands.linkDatabaseToIndexedDB(testDatabaseName)
-      .then((data) => {
+    it('should link to indexeddb database', (done) => {
+      if (!window.indexedDB) {
+        done(exceptions.IndexedDBNotSupported);
+      }
+      sqlCommands.linkDatabaseToIndexedDB(testDatabaseName)
+      .then(() => {
         const request = window.indexedDB.open(testDatabaseName);
-        expect(request.result.version).to.not.equal(1);
-      })).to.not.throw(Error);
-      cleanTestCase();
+        request.onsuccess = function onsuccess(event) {
+          expect(event.target.result).to.not.equal(1);
+        };
+      }).then(() => {
+        cleanTestCase();
+        done();
+      })
+      .catch(sqlErr => done(sqlErr));
+    });
+  });
     });
   });
 });
