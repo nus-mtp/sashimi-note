@@ -54,8 +54,8 @@ function safeAttrValue(tag, name, value) {
   if (/^javascript:/ig.test(value)) {
     return '';
   } else {
-    // use the default safeAttrValue function to process it
-    return xssFilter.safeAttrValue(tag, name, value);
+    // else just return value
+    return value;
   }
 }
 
