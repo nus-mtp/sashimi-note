@@ -162,6 +162,18 @@ export default class storage {
     }
   }
 
+  static loadAllFilesAndFolders() {
+    if (typeof Promise === 'function') {
+      return new Promise((resolve, reject) =>
+        query.getAllFilesAndFolders()
+        .then(returnedArr => resolve(returnedArr))
+        .catch(sqlError => reject(sqlError))
+      );
+    } else {
+      throw new exceptions.PromiseFunctionNotDefined();
+    }
+  }
+
   static changeDatabaseName(newDatabaseName) {
     databaseName = newDatabaseName;
   }
