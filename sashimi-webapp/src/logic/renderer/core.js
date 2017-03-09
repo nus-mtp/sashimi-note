@@ -11,7 +11,8 @@ const checkShouldPageBreak = function checkShouldPageBreak(childHeights, index) 
   const BREAK_PAGE = true;
   const DO_NOTHING = false;
 
-  const eleName = childHeights[index].ele.tagName;
+  const element = childHeights[index].ele;
+  const eleName = element.tagName;
 
   switch (eleName) {
     case 'H1': {
@@ -32,8 +33,14 @@ const checkShouldPageBreak = function checkShouldPageBreak(childHeights, index) 
         return BREAK_PAGE;
       }
     }
-    default:
-      return ['PAGEBREAK'].some(name => name === eleName);
+    case 'BR': {
+      // Special break page syntax on <br page>
+      return (element.getAttribute('page') === '');
+    }
+    default: {
+      const eleStyles = helper.getComputedStyle(element);
+      return eleStyles.pageBreakBefore === 'always';
+    }
   }
 };
 
@@ -78,6 +85,9 @@ export default {
         // Increment image load count as long as the image is processed.
         imageArray[i].onload = increateLoadedImageCount;
         imageArray[i].onerror = increateLoadedImageCount;
+
+        // Handle case where image does not have a src attribute
+        if (!imageArray[i].getAttribute.src) increateLoadedImageCount();
       }
       checkForLoadingCompletion();
     });
@@ -94,7 +104,7 @@ export default {
     const childHeights =
       childArray.filter(childNode => (childNode.nodeName !== '#text'))
                 .map((childNode) => {
-                  const nodeStyle = childNode.currentStyle || getComputedStyle(childNode);
+                  const nodeStyle = helper.getComputedStyle(childNode);
 
                   // Get node's height
                   const nodeStyleHeight = parseFloat(nodeStyle.height, 10) || 0;

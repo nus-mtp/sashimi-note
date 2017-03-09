@@ -21,4 +21,13 @@ export default {
            parseFloat(unitConverter.get(page.padding.bottom, 'px'), 10)
          );
   },
+
+  /**
+   * Get computed style of an element.
+   * @param {Element} element
+   * @return {Object} computerd style object
+   */
+  getComputedStyle(element) {
+    return element.currentStyle || getComputedStyle(element);
+  }
 };

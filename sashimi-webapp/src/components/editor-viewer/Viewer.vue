@@ -137,11 +137,6 @@
       box-sizing: border-box;
       background-color: white;
     }
-    
-    img {
-      height: auto;
-      width: auto;
-    }
   }
 
   @media print {
