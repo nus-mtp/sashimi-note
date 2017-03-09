@@ -131,10 +131,10 @@ export default {
 
     button {
       border: none;
-      background-color: $navbar-background-color;
+      background-color: #d8d8d8;
       font-family: $general-font;
       padding: 10px 25px;
-      box-shadow: 0 3px 6px rgba(0,0,0,0.2);
+      box-shadow: 2px 2px 2px rgba(0,0,0,0.4);
     }
   }
 }
