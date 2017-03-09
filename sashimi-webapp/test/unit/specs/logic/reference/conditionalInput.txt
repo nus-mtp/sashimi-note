@@ -1,0 +1,44 @@
+fileName:waha
+
+This is the question:
+What is the first app you make from all coding tutorials?
+
+=>hide Ans: Hello World! <=
+
+This is the second question:
+What is 1+1?
+
+Ans: 
+
+==>hide Test
+2
+<==
+
+==>hide:waha
+```
+Like this can
+```
+<==
+
+==>hide
+```
+Like this also can!
+```
+<==
+
+==>hide
+This unclosed block and its hide syntax wont hide!
+
+==>hide:waha
+This unclosed categorised block and its hide syntax wont hide too!
+
+==>hide:waha
+This will hide!
+<==
+
+==>hide:nowaha
+This won't hide, but its hide syntax will be removed!
+<==
+
+==>hide
+This unclosed block wont hide! the hide start syntax should stay too

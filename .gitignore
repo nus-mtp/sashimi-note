@@ -121,3 +121,4 @@ $RECYCLE.BIN/
 *.lnk
 
 # End of https://www.gitignore.io/api/node,windows,macos,linux
+sashimi-webapp/src/yarn.lock

@@ -1,0 +1,15 @@
+<svg id="button-download-file" xmlns="http://www.w3.org/2000/svg" viewBox="1045 138 41 41">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: #939393;
+      }
+
+      .cls-2 {
+        fill: none;
+      }
+    </style>
+  </defs>
+  <path id="Path_11" data-name="Path 11" class="cls-1" d="M28.917,13.25H22.083V3H11.833V13.25H5L16.958,25.208ZM5,28.625v3.417H28.917V28.625Z" transform="translate(1048.542 140.125)"/>
+  <path id="Path_12" data-name="Path 12" class="cls-2" d="M0,0H41V41H0Z" transform="translate(1045 138)"/>
+</svg>

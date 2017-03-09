@@ -7,19 +7,23 @@
 <script>
 export default {
   name: 'app',
+
+  resolve: {
+    extensions: ['', '.css', '.scss'],
+  },
 };
 </script>
 
 <style lang="scss">
-@import 'assets/vendors/styles/responsive-grid-system.scss';
+@import 'assets/styles/loader.scss';
 
 body {
   margin: 0;
-  font-size: 20px;
+  font-size: 18px;
 }
 
 #app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
+  font-family: $general-font;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   -webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
@@ -28,38 +32,135 @@ body {
   color: black;
 }
 
-.no-padding {
-  padding: 0;
+img {
+  user-drag: none; 
+  user-select: none;
+  -moz-user-select: none;
+  -webkit-user-drag: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
 }
 
-button {
-  background-color: transparent;
-  border: none;
-}
-
-button:focus {
+:focus {
   outline: 0;
 }
 
-.CodeMirror {
-  box-shadow: 5px 0 5px -2px #e6e6e6;
-  
-  .CodeMirror-gutters {
-    background-color: white;
+.float-left {
+  float: left;
+}
+
+.float-right {
+  float: right;
+}
+
+.inline-block {
+  display: inline-block;
+}
+
+.span_0_of_12 {
+  width: 0;
+}
+
+.navbar {
+  overflow: hidden;
+  box-sizing: border-box;
+  padding: 10px 20px;
+  text-align: left;
+}
+
+.material-icons { 
+
+  &.md-54 { 
+    font-size: 54px; 
+  }
+  &.md-120 { 
+    font-size: 120px; 
+  }
+  &.folder-blue {
+    color: #77CBFF;
+  }
+  &.md-dark {
+    color: rgba(0, 0, 0, 0.54); 
+
+    &.md-inactive { 
+      color: rgba(0, 0, 0, 0.26); 
+    }
   }
 }
 
-.CodeMirror.cm-s-base16-dark {
-  height: calc(100vh - 67px);
-}
+.navbar-buttons {
+  background-color: transparent;
+  border: none;
+  display: inline-block;
+  box-sizing: border-box;
 
-.CodeMirror-lines {
-  overflow-wrap: break-word;
+  &:focus {
+    outline: 0;
+  }
   
-  .CodeMirror-code {
-    line-height: 1.4em;
-    color: #dedede;
-    font-family: monospace;
+  &.active {
+    transform: scale(1.3);
+    -webkit-filter: drop-shadow(1px 1px 2px pink);
+    filter: drop-shadow(1px 1px 2px pink);
   }
 }
+
+.hover-grow {
+  &:hover {
+    transform: scale(1.2);
+    transition: transform 0.5s;
+    -webkit-transition: transform 0.5s;
+  }
+}
+
+.button {
+  &-group-margin {
+    margin-left: $left-margin-navbar-elements;
+  }
+
+  &-img {
+    width: $button-img-width;
+  }
+}
+
+.button-logo {
+  text-align: left;
+  position: relative;
+  width: $button-logo-width;
+
+  a {
+    font-size: 14px;
+    font-family: $general-font;
+    text-decoration: none;
+    color: #95989A;
+
+    &:focus,
+    &:visited {
+      color: #95989A;;
+    }
+
+    &:hover {
+      color: darkorange;
+    }
+
+    img {
+      width: 40px;
+    }
+    
+    p {
+      margin-left: 5px;
+    }
+  }
+}
+
+.vertical-align-child > * {
+  vertical-align: middle;
+}
+
+@media screen and (max-width: 480px) {
+  .col {
+    margin: 0;
+  }
+}
+
 </style>
