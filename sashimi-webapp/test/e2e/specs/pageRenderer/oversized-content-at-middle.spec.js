@@ -27,12 +27,13 @@ module.exports = {
 
   'write to codemirror': (browser) => {
     browser
-      .click('.CodeMirror')
-      .pause(500)
-      .keys(textLoader.load('references/oversized-content-at-middle'), () => {
-        browser.pause(2000)
-        .assert.elementCount('.page-view', 4)
-        .assert.elementPresent('.page-view:nth-child(3) pre code');
+      .execute((data) => {
+        const codeMirrorInstance = document.getElementsByClassName('CodeMirror')[0].CodeMirror;
+        codeMirrorInstance.setValue(data);
+      }, [textLoader.load('references/oversized-content-at-middle')], () => {
+        browser
+          .waitForElementPresent('.page-view:nth-child(4)', 5000, '4 pages are rendered')
+          .waitForElementPresent('.page-view:nth-child(3) pre code', 5000, 'Code block is rendered in page 3');
       });
   },
 

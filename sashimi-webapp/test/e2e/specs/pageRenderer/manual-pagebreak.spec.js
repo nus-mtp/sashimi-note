@@ -27,11 +27,12 @@ module.exports = {
 
   'write to codemirror': (browser) => {
     browser
-      .click('.CodeMirror')
-      .pause(500)
-      .keys(textLoader.load('references/pagebreak-between-elements'), () => {
-        browser.pause(2000)
-        .assert.elementCount('.page-view', 4);
+      .execute(function(data) {
+        const codeMirrorInstance = document.getElementsByClassName('CodeMirror')[0].CodeMirror;
+        codeMirrorInstance.setValue(data);
+      }, [textLoader.load('references/pagebreak-between-elements')], function(codeMirrorInstance) {
+        browser
+          .waitForElementPresent('.page-view:nth-child(4)', 5000, '4 pages are rendered');
       });
   },
 
