@@ -8,33 +8,42 @@
         </p>
       </a>
     </div>
-    <div class="toggle-view" :data-active="view">
-      <button class="navbar-buttons" v-on:click="toggleView('login')" data-format="login">
-        Login</button>|
-      <button class="navbar-buttons" v-on:click="toggleView('sign-up')" data-format="sign-up">
-        Sign Up</button>
+    <div class="login">
+      <div class="username">
+        <label for="username">Username:</label>
+        <input type="text">
+      </div>
+      <div class="password">
+        <label for="username">Password:</label>
+        <input type="password">
+      </div>
+      <a href="#" class="forget-password">
+        <p>Forget Password?</p>
+      </a>
+      <div class="login-button">
+        <button>
+          <a href="#">
+            Login
+          </a>
+        </button>
     </div>
-    <div v-if="view === 'login'" class="login">
-      <label for="username">Username:</label>
-      <input type="text" placeholder="Username">
     </div>
-    <div class="sign-up"></div>
   </div>
 </template>
 
 <script>
 export default {
-  data() {
-    return {
-      view: 'login',
-    };
-  },
-  methods: {
-    toggleView(data) {
-      this.view = data;
-      console.log(this.view);
-    }
-  }
+  // data() {
+  //   return {
+  //     view: 'login',
+  //   };
+  // },
+  // methods: {
+  //   toggleView(data) {
+  //     this.view = data;
+  //     // console.log(this.view);
+  //   }
+  // }
 };
 </script>
 
@@ -45,36 +54,88 @@ export default {
 }
 
 .button-logo {
-  text-align: center;
-  width: auto;
-
+  width: 515px;
+  margin: 0 auto;
+  padding: 10px;
   a {
     &:hover {
       color: $navbar-logo-color;
     }
-  }
 
-  img {
-    transform: scale(2.2);
-  }
-  
-  p {
-    margin-left: 40px;
-    font-size: 50px;
+    img {
+      width: 100px;
+    }
+    p {
+      font-size: 50px;
+      margin-left: 25px;
+      letter-spacing: 3px;
+    }
   }
 }
 
 .login {
+  width: 490px;
+  margin: 0 auto;
+  background-color: $navbar-background-color;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 1px 1px 5px rgba(0,0,0,0.2);
+
+  label {
+    display: inline-block;
+    width: 100px;
+    text-align: right;
+  }
+
   input {
     font-family: $general-font;
-    border: 1px solid black;
-  }
-}
+    border: 1px solid $navbar-border-color;
+    width: 350px;
+    padding: 10px;
+    margin-left: 20px;
 
-.toggle-view {
-  &[data-active='login'] button[data-format='login'], 
-  &[data-active='sign-up'] button[data-format='sign-up']{
-    font-weight: bold;
+    &:focus {
+      border: 1px solid #f7994c;
+      box-shadow: inset 1px 1px 2px rgba(0,0,0,0.2);
+    }
+  }
+
+  a {
+    text-decoration: none;
+
+    &:visited,
+    &:active {
+      color: black;
+    }
+  }
+
+  .forget-password {
+    text-align: right;
+    margin-top: 10px;
+    text-decoration: none;
+
+    p {
+      font-size: 14px;
+      color: #afafaf;
+    }
+  }
+
+  .username,
+  .password {
+    margin-top: 40px;
+  }
+
+  .login-button {
+    text-align: right;
+    margin-top: 40px;
+
+    button {
+      border: none;
+      background-color: $navbar-background-color;
+      font-family: $general-font;
+      padding: 10px 25px;
+      box-shadow: 0 3px 6px rgba(0,0,0,0.2);
+    }
   }
 }
 </style>
