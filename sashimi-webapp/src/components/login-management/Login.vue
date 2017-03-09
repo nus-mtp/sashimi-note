@@ -10,12 +10,10 @@
     </div>
     <div class="login">
       <div class="username">
-        <label for="username">Username:</label>
-        <input type="text">
+        <input type="text" placeholder="Username">
       </div>
       <div class="password">
-        <label for="username">Password:</label>
-        <input type="password">
+        <input type="password" placeholder="Password">
       </div>
       <a href="#" class="forget-password">
         <p>Forget Password?</p>
