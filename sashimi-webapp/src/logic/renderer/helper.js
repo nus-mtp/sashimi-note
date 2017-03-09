@@ -4,7 +4,7 @@ export default {
   /**
    * Overwrite existing node's style with the given style
    */
-  overwriteStyle: function overwriteStyle(target, source) {
+  overwriteStyle(target, source) {
     Object.keys(source).forEach((styleKey) => {
       target[styleKey] = source[styleKey];
     });
@@ -15,7 +15,7 @@ export default {
    * substracting the page height with the top and bottom
    * paddings
    */
-  computeRenderHeight: function computeRenderHeight(page) {
+  computeRenderHeight(page) {
     return parseFloat(unitConverter.get(page.height, 'px'), 10) - (
            parseFloat(unitConverter.get(page.padding.top, 'px'), 10) +
            parseFloat(unitConverter.get(page.padding.bottom, 'px'), 10)
