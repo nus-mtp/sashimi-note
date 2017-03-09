@@ -46,7 +46,6 @@ First page, line 23
 
 First page, line 24
 
-First page, line 25
 
 
 
@@ -151,5 +150,3 @@ Third page, line 22
 Third page, line 23
 
 Third page, line 24
-
-Third page, line 25
