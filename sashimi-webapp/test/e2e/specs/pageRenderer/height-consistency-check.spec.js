@@ -57,7 +57,7 @@ module.exports = {
 
             // Tolerate small difference in height
             if (Math.abs(actualHeight - expectedHeight) > ACCEPTANCE_THRESHOLD_PX) {
-              results.push({ element, expectedHeight, actualHeight });
+              results.push({ name: element.tagName, expectedHeight, actualHeight });
             }
             processedElementCount += 1;
           }
@@ -69,8 +69,14 @@ module.exports = {
 
         return results;
       }, [], (results) => {
-        browser.assert.equal(results.value.length, 0,
-          (results.value.length === 0) ? 'All elements have consistent height' : results.value);
+        const assertReport =
+          (results.value.length === 0)
+          ? 'All elements have consistent height'
+          : results.value.map((result, index) => {
+            return `\n ${index+1}. \t ${result.name} \t ${result.expectedHeight} \t ${result.actualHeight}`;
+          });
+
+        browser.assert.equal(results.value.length, 0, assertReport);
       });
   },
 
