@@ -144,7 +144,7 @@ img {
     }
 
     img {
-      width: 40px;
+      width: 35px;
     }
     
     p {
