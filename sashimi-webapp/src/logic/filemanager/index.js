@@ -1,5 +1,6 @@
 import Folder from './folder';
 import history from './history';
+import search from './search';
 
 const fileManager = {
 
@@ -11,18 +12,27 @@ const fileManager = {
     return Folder.getRootFolder();
   },
 
-  /* Search Operation */
+  /* Search Operations */
+
   /**
    * Return a list of files and folders containing the search string
    *
    * @param {String} searchString
    * @return {List} Contains files and folders
    */
-  search: function search(searchString) {
-    // return storage.partialSearch(searchString)
+  searchAll: function searchAll(searchString) {
+    // return search.all(searchString)
   },
 
-  /* History Operation */
+  searchFileOnly: function searchFileOnly(searchString) {
+    // return search.fileOnly(searchString)
+  },
+
+  searchFolderOnly: function searchFolderOnly(searchString) {
+    // return search.folderOnly(searchString)
+  },
+
+  /* History Operations */
 
   update: function update(folder) {
     return history.update(folder);
