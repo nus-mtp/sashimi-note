@@ -43,6 +43,33 @@ const checkShouldPageBreak = function checkShouldPageBreak(childHeights, index) 
   }
 };
 
+const addElementToPage = function addElementToPage(element, page, book, eleArray, index) {
+  try {
+    if (checkShouldPageBreak(eleArray, index)) {
+      // Create a new page if page should be broken here
+      page = book.newPage();
+    }
+
+    page.add(element);
+  } catch (error) {
+    if (error.message === 'Element is larger than page') {
+      if (page.filledHeight > 0) {
+        // if currently not at the beginning of page,
+        // create new page before inserting.
+        // TODO: Consider breaking element into smaller chunk
+        page = book.newPage();
+      }
+      page.forceAdd(element);
+    } else if (error.message === 'Page is full') {
+      page = book.newPage();
+      page = addElementToPage(element, page, book, eleArray, index);
+    } else {
+      throw error;
+    }
+  }
+  return page;
+};
+
 export default {
   /**
    * Render pageRenderer's HTML content into its referenceFrame.
@@ -133,29 +160,7 @@ export default {
 
     // Allocate element in pages within the render height
     childHeights.forEach((element, index) => {
-      try {
-        if (checkShouldPageBreak(childHeights, index)) {
-          // Create a new page if page should be broken here
-          virtualPage = virtualBook.newPage();
-        }
-
-        virtualPage.add(element);
-      } catch (error) {
-        if (error.message === 'Element is larger than page') {
-          if (virtualPage.filledHeight > 0) {
-            // if currently not at the beginning of page,
-            // create new page before inserting.
-            // TODO: Consider breaking element into smaller chunk
-            virtualPage = virtualBook.newPage();
-          }
-          virtualPage.forceAdd(element);
-        } else if (error.message === 'Page is full') {
-          virtualPage = virtualBook.newPage();
-          virtualPage.add(element);
-        } else {
-          throw error;
-        }
-      }
+      virtualPage = addElementToPage(element, virtualPage, virtualBook, childHeights, index);
     });
 
     return virtualBook.pages;
