@@ -10,6 +10,7 @@
     "arrow-body-style": "off",
     "prefer-arrow-callback": "off",
     "func-names": "off",
-    "no-unused-expressions": "off"
+    "no-unused-expressions": "off",
+    "no-console": "off"
   }
 }
