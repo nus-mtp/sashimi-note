@@ -1,10 +1,9 @@
 const textLoader = require('../../helpers/textLoader');
 const pagesModeActivation = require('./pages-mode-activation');
 
-module.exports = {
-  'should activate Pages mode': pagesModeActivation['should activate Pages mode'],
-
-  'should render "full-documents.txt" into 24 pages': (browser) => {
+describe('Content transfer', () => {
+  it('should render all elements in "full-documents.txt"', (browser) => {
+    pagesModeActivation(browser);
     browser
       .execute((data) => {
         const codeMirrorInstance = document.getElementsByClassName('CodeMirror')[0].CodeMirror;
@@ -12,9 +11,7 @@ module.exports = {
       }, [textLoader.load('references/full-documents')], () => {
         browser.expect.element('.page-view:nth-child(24)').to.be.present.before(5000);
       });
-  },
 
-  'should render all elements in "full-documents.txt"': (browser) => {
     browser
       .assert.elementCount('p', 130)
       .assert.elementCount('a', 40)
@@ -33,10 +30,9 @@ module.exports = {
       .assert.elementCount('h6', 0)
       .assert.elementCount('strong', 2)
       .assert.elementCount('hr', 4);
-  },
+  });
 
-  'after': (browser) => {
-    browser.end();
-  },
-
-};
+  afterEach((browser, done) => {
+    browser.end(() => done());
+  });
+});

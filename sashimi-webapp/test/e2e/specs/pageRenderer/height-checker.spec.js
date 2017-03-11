@@ -1,21 +1,16 @@
 const textLoader = require('../../helpers/textLoader');
 const pagesModeActivation = require('./pages-mode-activation');
 
-module.exports = {
-  'should activate Pages mode': pagesModeActivation['should activate Pages mode'],
-
-  'should render "full-documents.txt" into 24 pages': (browser) => {
+describe('Height checker', () => {
+  it('should contain elements of the same heights in both reference and render frame', (browser) => {
+    pagesModeActivation(browser);
     browser
       .execute((data) => {
         const codeMirrorInstance = document.getElementsByClassName('CodeMirror')[0].CodeMirror;
         codeMirrorInstance.setValue(data);
       }, [textLoader.load('references/full-documents')], () => {
-        browser
-          .waitForElementPresent('.page-view:nth-child(24)', 5000, '24 pages are rendered');
+        browser.expect.element('.page-view:nth-child(24)').to.be.present.before(5000);
       });
-  },
-
-  'should contain elements of the same heights in both reference and render frame ': (browser) => {
     browser
       .execute(() => {
         const ACCEPTANCE_THRESHOLD_PX = 2;
@@ -55,12 +50,12 @@ module.exports = {
             return `\n ${index+1}. \t ${result.name} \t ${result.expectedHeight} \t ${result.actualHeight}`;
           });
 
-        browser.assert.equal(results.value.length, 0, assertReport);
+        browser.expect(results.value.length).to.equal(0);
+        console.log(assertReport);
       });
-  },
+  });
 
-  'after': (browser) => {
-    browser.end();
-  },
-
-};
+  afterEach((browser, done) => {
+    browser.end(() => done());
+  });
+});

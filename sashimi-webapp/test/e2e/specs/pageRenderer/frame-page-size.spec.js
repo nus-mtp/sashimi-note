@@ -12,19 +12,17 @@ const compareCssProperty = (browser, propertyName) => {
   });
 };
 
-module.exports = {
-  'should activate Pages mode': pagesModeActivation['should activate Pages mode'],
-
-  'should have the same page size for reference and renderer frame ': (browser) => {
+describe('Frame page size', () => {
+  it('should have the same page size for reference and renderer frame', (browser) => {
+    pagesModeActivation(browser);
     compareCssProperty(browser, 'width');
     compareCssProperty(browser, 'padding-top');
     compareCssProperty(browser, 'padding-bottom');
     compareCssProperty(browser, 'padding-left');
     compareCssProperty(browser, 'padding-right');
-  },
+  });
 
-  'after': (browser) => {
-    browser.end();
-  },
-
-};
+  afterEach((browser, done) => {
+    browser.end(() => done());
+  });
+});
