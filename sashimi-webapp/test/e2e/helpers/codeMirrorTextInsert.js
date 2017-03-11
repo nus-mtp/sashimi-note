@@ -1,6 +1,6 @@
-module.exports = (browser, data) {
-  browser.execute((data) => {
+module.exports = (browser, data) => {
+  browser.execute((browserData) => {
     const codeMirrorInstance = document.getElementsByClassName('CodeMirror')[0].CodeMirror;
-    codeMirrorInstance.setValue(data);
+    codeMirrorInstance.setValue(browserData);
   }, [data]);
 };

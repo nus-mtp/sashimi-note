@@ -7,11 +7,10 @@ describe('Page breaker ', () => {
     it('should push element subsequent to pagebreak to the next page', (browser) => {
       pagesModeActivation(browser);
       codeMirrorTextInsert(browser, textLoader.load('references/pagebreak-between-elements'));
-      
+
       browser
         .expect.element('.page-view:nth-child(4)')
         .to.be.present.before(5000);
-      });
     });
   });
 
@@ -19,7 +18,7 @@ describe('Page breaker ', () => {
     it('should render dangling oversized content to the next page', (browser) => {
       pagesModeActivation(browser);
       codeMirrorTextInsert(browser, textLoader.load('references/oversized-content-at-middle'));
-      
+
       browser
         .expect.element('.page-view:nth-child(4)')
         .to.be.present.before(5000);
@@ -31,7 +30,7 @@ describe('Page breaker ', () => {
     it('should render oversized content that begins on a new page to the same page', (browser) => {
       pagesModeActivation(browser);
       codeMirrorTextInsert(browser, textLoader.load('references/oversized-content-at-beginning'));
-      
+
       browser
         .expect.element('.page-view:nth-child(3)')
         .to.be.present.before(5000);
@@ -40,7 +39,6 @@ describe('Page breaker ', () => {
         .to.be.present.before(5000);
     });
   });
-
 
   afterEach((browser, done) => {
     browser.end(() => done());
