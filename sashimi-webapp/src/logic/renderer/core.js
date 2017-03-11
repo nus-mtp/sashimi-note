@@ -104,24 +104,10 @@ export default {
     const childHeights =
       childArray.filter(childNode => (childNode.nodeName !== '#text'))
                 .map((childNode) => {
-                  const nodeStyle = helper.getComputedStyle(childNode);
+                  const totalHeight = helper.computeElementHeight(childNode);
 
-                  // Get node's height
-                  const nodeStyleHeight = parseFloat(nodeStyle.height, 10) || 0;
-                  const nodeHeight = Math.max(
-                    childNode.clientHeight,
-                    childNode.offsetHeight,
-                    nodeStyleHeight
-                  );
-
-                  // Get node's margin
-                  const nodeMargin = parseFloat(nodeStyle.marginTop, 10) +
-                                    parseFloat(nodeStyle.marginBottom, 10);
-
-                  const totalHeight = nodeHeight + nodeMargin;
-                  if (isNaN(totalHeight)) {
-                    throw new Error('Error calculating element\'s height');
-                  }
+                  // Add debug infomation into the dom element
+                  childNode.pageRenderer = { totalHeight };
 
                   return ({
                     height: totalHeight,
