@@ -1,50 +1,26 @@
 const pagesModeActivation = require('./pages-mode-activation');
 
+const CSS_SELECTOR_REFERENCE_FRAME = '#reference-frame-of-viewer-container';
+const CSS_SELECTOR_RENDER_FRAME = '.page-view';
+
+const compareCssProperty = (browser, propertyName) => {
+  browser.getCssProperty(CSS_SELECTOR_RENDER_FRAME, propertyName, (renderResult) => {
+    browser
+      .expect.element(CSS_SELECTOR_REFERENCE_FRAME)
+      .to.have.css(propertyName)
+      .which.equal(renderResult.value);
+  });
+};
+
 module.exports = {
   'should activate Pages mode': pagesModeActivation['should activate Pages mode'],
 
   'should have the same page size for reference and renderer frame ': (browser) => {
-    browser
-      .getElementSize('#reference-frame-of-viewer-container', (referenceResult) => {
-        browser
-          .getElementSize('.page-view', (renderResult) => {
-            const referenceSize = referenceResult.value;
-            const renderSize = renderResult.value;
-            browser.assert.equal(referenceSize.width, renderSize.width);
-          });
-      })
-      .getCssProperty('#reference-frame-of-viewer-container', 'padding-top', (referenceResult) => {
-        browser
-          .getCssProperty('.page-view', 'padding', (renderResult) => {
-            const referenceStyle = referenceResult.value;
-            const renderStyle = renderResult.value;
-            browser.assert.equal(referenceStyle, renderStyle);
-          });
-      })
-      .getCssProperty('#reference-frame-of-viewer-container', 'padding-bottom', (referenceResult) => {
-        browser
-          .getCssProperty('.page-view', 'padding', (renderResult) => {
-            const referenceStyle = referenceResult.value;
-            const renderStyle = renderResult.value;
-            browser.assert.equal(referenceStyle, renderStyle);
-          });
-      })
-      .getCssProperty('#reference-frame-of-viewer-container', 'padding-left', (referenceResult) => {
-        browser
-          .getCssProperty('.page-view', 'padding', (renderResult) => {
-            const referenceStyle = referenceResult.value;
-            const renderStyle = renderResult.value;
-            browser.assert.equal(referenceStyle, renderStyle);
-          });
-      })
-      .getCssProperty('#reference-frame-of-viewer-container', 'padding-right', (referenceResult) => {
-        browser
-          .getCssProperty('.page-view', 'padding', (renderResult) => {
-            const referenceStyle = referenceResult.value;
-            const renderStyle = renderResult.value;
-            browser.assert.equal(referenceStyle, renderStyle);
-          });
-      });
+    compareCssProperty(browser, 'width');
+    compareCssProperty(browser, 'padding-top');
+    compareCssProperty(browser, 'padding-bottom');
+    compareCssProperty(browser, 'padding-left');
+    compareCssProperty(browser, 'padding-right');
   },
 
   'after': (browser) => {
