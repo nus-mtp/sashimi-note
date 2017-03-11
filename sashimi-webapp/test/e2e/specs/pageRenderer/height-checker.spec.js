@@ -1,5 +1,6 @@
 const textLoader = require('../../helpers/textLoader');
 const pagesModeActivation = require('./pages-mode-activation');
+const expect = require('chai').expect;
 
 describe('Height checker', () => {
   it('should contain elements of the same heights in both reference and render frame', (browser) => {
@@ -43,15 +44,14 @@ describe('Height checker', () => {
 
         return results;
       }, [], (results) => {
-        const assertReport =
-          (results.value.length === 0)
-          ? 'All elements have consistent height'
-          : results.value.map((result, index) => {
+        try {
+          expect(results.value.length).to.equal(0);
+        } catch (error) {
+          const errorReport = results.value.map((result, index) => {
             return `\n ${index+1}. \t ${result.name} \t ${result.expectedHeight} \t ${result.actualHeight}`;
           });
-
-        browser.expect(results.value.length).to.equal(0);
-        console.log(assertReport);
+          browser.assert.fail('some inconsistency', 'All element heights to be consistent', errorReport);
+        }
       });
   });
 
