@@ -1,5 +1,4 @@
 import VirtualBook from './VirtualBook';
-import VirtualPage from './VirtualPage';
 import helper from './helper';
 
 const CLASS_NAME_PREFIX = 'page-view';
@@ -128,36 +127,30 @@ export default {
   getPaginationVirtualDom: function getPaginationVirtualDom(pageRenderer, childHeights) {
     const pr = pageRenderer;
 
-    const virtualBook = new VirtualBook();
-    let virtualPage = new VirtualPage(pr.renderHeight);
+    // Create a new book and insert a page into the book
+    const virtualBook = new VirtualBook(pr.renderHeight);
+    let virtualPage = virtualBook.newPage();
 
     // Allocate element in pages within the render height
     childHeights.forEach((element, index) => {
       try {
         if (checkShouldPageBreak(childHeights, index)) {
-          // Create a new page is page should be broken here
-          virtualBook.add(virtualPage);
-          virtualPage = new VirtualPage(pr.renderHeight);
+          // Create a new page if page should be broken here
+          virtualPage = virtualBook.newPage();
         }
 
         virtualPage.add(element);
       } catch (error) {
-        // Store existing page first
-        virtualBook.add(virtualPage);
-
         if (error.message === 'Element is larger than page') {
           if (virtualPage.filledHeight > 0) {
             // if currently not at the beginning of page,
             // create new page before inserting.
             // TODO: Consider breaking element into smaller chunk
-            virtualPage = new VirtualPage(pr.renderHeight);
+            virtualPage = virtualBook.newPage();
           }
           virtualPage.forceAdd(element);
-        } else if (error.message === 'Page should break here') {
-          virtualPage = new VirtualPage(pr.renderHeight);
-          virtualPage.forceAdd(element);
         } else if (error.message === 'Page is full') {
-          virtualPage = new VirtualPage(pr.renderHeight);
+          virtualPage = virtualBook.newPage();
           virtualPage.add(element);
         } else {
           throw error;
@@ -165,7 +158,6 @@ export default {
       }
     });
 
-    virtualBook.add(virtualPage);
     return virtualBook.pages;
   },
 
