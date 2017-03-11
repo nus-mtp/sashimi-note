@@ -21,50 +21,60 @@ const constructChildHeightsArray = function constructChildHeightsArray(childNode
   return childHeights;
 };
 
-// Setting up page-break-before mechanism
-// These page-break-before are hardcoded for now.
-// TODO: Refactor this code
-const checkShouldPageBreak = function checkShouldPageBreak(childHeights, index) {
+/**
+ * Checker whether a page break should be applied.
+ * When to break a page? https://github.com/nus-mtp/lecture-note-2.0/issues/233
+ * @return {boolean}
+ */
+const shouldPageBreak = function shouldPageBreak(eleHeightArray, index, page) {
   const BREAK_PAGE = true;
   const DO_NOTHING = false;
 
-  const element = childHeights[index].ele;
+  const element = eleHeightArray[index].ele;
   const eleName = element.tagName;
 
-  switch (eleName) {
-    case 'H1': {
-      // If this H1 is at the beginning of the page, do not break
-      if (index === 0) {
-        return DO_NOTHING;
-      } else {
-        return BREAK_PAGE;
-      }
-    }
-    case 'H2': {
-      // If a H2 was immediately preceeded by H1,
-      // then, this H2 will not have a page-before-break
-      if (childHeights[index - 1] &&
-          childHeights[index - 1].ele.tagName === 'H1') {
-        return DO_NOTHING;
-      } else {
-        return BREAK_PAGE;
-      }
-    }
-    case 'BR': {
-      // Special break page syntax on <br page>
-      return (element.getAttribute('page') === '');
-    }
-    default: {
-      const eleStyles = helper.getComputedStyle(element);
-      return eleStyles.pageBreakBefore === 'always';
-    }
+  // CSS page-break-before is presence
+  const eleStyles = helper.getComputedStyle(element);
+  if (eleStyles.pageBreakBefore === 'always') {
+    return BREAK_PAGE;
   }
+
+  // Starting of a new topic/chapter
+  if (eleName === 'H1') {
+    if (page.elements.length > 0) {
+      return BREAK_PAGE;
+    }
+    return DO_NOTHING;
+  }
+
+  // Match header tag
+  if (eleName.match(/^H\d$/)) {
+    // If a header tag is located at the bottom of the page, break page
+    const percentRemainingHeight = (page.maxHeight - page.filledHeight)/page.maxHeight;
+    if (percentRemainingHeight > 0.82) {
+      return BREAK_PAGE;
+    }
+
+    // If a header tag is going to be the last element in a page, break page
+    const nextHeight = eleHeightArray[index + 1].height;
+    const selfHeight = eleHeightArray[index].height;
+    if (nextHeight + selfHeight + page.filledHeight > page.maxHeight) {
+      return BREAK_PAGE;
+    }
+    return DO_NOTHING;
+  }
+
+  if (eleName === 'BR') {
+    return (element.getAttribute('page') === '');
+  }
+
+  return DO_NOTHING;
 };
 
 const addElementToPage = function addElementToPage(page, book, eleArray, index) {
   const element = eleArray[index];
   try {
-    if (checkShouldPageBreak(eleArray, index)) {
+    if (shouldPageBreak(eleArray, index, page)) {
       // Create a new page if page should be broken here
       page = book.newPage();
     }
