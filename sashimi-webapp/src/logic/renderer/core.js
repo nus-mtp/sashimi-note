@@ -62,26 +62,50 @@ const checkShouldPageBreak = function checkShouldPageBreak(childHeights, index) 
 };
 
 const addElementToPage = function addElementToPage(page, book, eleArray, index) {
-  const element = eleArray[index];
+  const elePackage = eleArray[index];
+  const element = elePackage.ele;
+
   try {
     if (checkShouldPageBreak(eleArray, index)) {
       // Create a new page if page should be broken here
       page = book.newPage();
     }
 
-    page.add(element);
+    page.add(elePackage);
   } catch (error) {
+    const childrens = element.childNodes;
+    let worthBreaking = true;
+    if (childrens.length === 1 && childrens[0].nodeName === '#text') {
+      worthBreaking = false;
+    }
+
     if (error.message === 'Element is larger than page') {
-      if (page.filledHeight > 0) {
-        // if currently not at the beginning of page,
-        // create new page before inserting.
-        // TODO: Consider breaking element into smaller chunk
-        page = book.newPage();
+      if (worthBreaking) {
+        // Element is breakable into smaller pieces
+        const subEleArray = constructChildHeightsArray(childrens);
+        subEleArray.forEach((subElement, subIndex) => {
+          page = addElementToPage(page, book, subEleArray, subIndex);
+        });
+      } else {
+        if (page.filledHeight > 0) {
+          // if currently not at the beginning of page,
+          // create new page before inserting.
+          // TODO: Consider breaking element into smaller chunk
+          page = book.newPage();
+        }
+        page.forceAdd(element);
       }
-      page.forceAdd(element);
     } else if (error.message === 'Page is full') {
-      page = book.newPage();
-      page = addElementToPage(page, book, eleArray, index);
+      if (worthBreaking) {
+        // Element is breakable into smaller pieces
+        const subEleArray = constructChildHeightsArray(element.childNodes);
+        subEleArray.forEach((subElement, subIndex) => {
+          page = addElementToPage(page, book, subEleArray, subIndex);
+        });
+      } else {
+        page = book.newPage();
+        page = addElementToPage(page, book, eleArray, index);
+      }
     } else {
       throw error;
     }
