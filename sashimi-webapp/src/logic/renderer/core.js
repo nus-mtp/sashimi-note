@@ -3,6 +3,24 @@ import helper from './helper';
 
 const CLASS_NAME_PREFIX = 'page-view';
 
+const constructChildHeightsArray = function constructChildHeightsArray(childNodes) {
+  const childArray = Object.keys(childNodes).map(key => childNodes[key]);
+  const childHeights =
+    childArray.filter(childNode => (childNode.nodeName !== '#text'))
+              .map((childNode) => {
+                const totalHeight = helper.computeElementHeight(childNode);
+
+                // Add debug infomation into the dom element
+                childNode.pageRenderer = { totalHeight };
+
+                return ({
+                  height: totalHeight,
+                  ele: childNode
+                });
+              });
+  return childHeights;
+};
+
 // Setting up page-break-before mechanism
 // These page-break-before are hardcoded for now.
 // TODO: Refactor this code
@@ -125,23 +143,7 @@ export default {
    */
   getChildHeights: function getChildHeights(referenceFrame) {
     const childNodes = referenceFrame.childNodes;
-    const childArray = Object.keys(childNodes).map(key => childNodes[key]);
-
-    const childHeights =
-      childArray.filter(childNode => (childNode.nodeName !== '#text'))
-                .map((childNode) => {
-                  const totalHeight = helper.computeElementHeight(childNode);
-
-                  // Add debug infomation into the dom element
-                  childNode.pageRenderer = { totalHeight };
-
-                  return ({
-                    height: totalHeight,
-                    ele: childNode
-                  });
-                });
-
-    return childHeights;
+    return constructChildHeightsArray(childNodes);
   },
 
   /**
