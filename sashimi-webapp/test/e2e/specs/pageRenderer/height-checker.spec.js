@@ -1,17 +1,14 @@
 const textLoader = require('../../helpers/textLoader');
 const pagesModeActivation = require('./pages-mode-activation');
+const codeMirrorTextInsert = require('../../helpers/codeMirrorTextInsert');
+
 const expect = require('chai').expect;
 
 describe('Height checker', () => {
   it('should contain elements of the same heights in both reference and render frame', (browser) => {
     pagesModeActivation(browser);
-    browser
-      .execute((data) => {
-        const codeMirrorInstance = document.getElementsByClassName('CodeMirror')[0].CodeMirror;
-        codeMirrorInstance.setValue(data);
-      }, [textLoader.load('references/full-documents')], () => {
-        browser.expect.element('.page-view:nth-child(24)').to.be.present.before(5000);
-      });
+    codeMirrorTextInsert(browser, textLoader.load('references/full-documents'));
+
     browser
       .execute(() => {
         const ACCEPTANCE_THRESHOLD_PX = 2;

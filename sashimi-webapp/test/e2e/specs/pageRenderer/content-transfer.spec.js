@@ -1,16 +1,11 @@
 const textLoader = require('../../helpers/textLoader');
 const pagesModeActivation = require('./pages-mode-activation');
+const codeMirrorTextInsert = require('../../helpers/codeMirrorTextInsert');
 
 describe('Content transfer', () => {
   it('should render all elements in "full-documents.txt"', (browser) => {
     pagesModeActivation(browser);
-    browser
-      .execute((data) => {
-        const codeMirrorInstance = document.getElementsByClassName('CodeMirror')[0].CodeMirror;
-        codeMirrorInstance.setValue(data);
-      }, [textLoader.load('references/full-documents')], () => {
-        browser.expect.element('.page-view:nth-child(24)').to.be.present.before(5000);
-      });
+    codeMirrorTextInsert(browser, textLoader.load('references/full-documents'));
 
     browser
       .assert.elementCount('p', 130)
