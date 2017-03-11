@@ -2,9 +2,9 @@ const textLoader = require('../../helpers/textLoader');
 const pagesModeActivation = require('./pages-mode-activation');
 
 module.exports = {
-  'navigate to /content': pagesModeActivation['should activate Pages mode'],
+  'should activate Pages mode': pagesModeActivation['should activate Pages mode'],
 
-  'write to codemirror': (browser) => {
+  'should render oversized content in the next page if it is not the first item in the page': (browser) => {
     browser
       .execute((data) => {
         const codeMirrorInstance = document.getElementsByClassName('CodeMirror')[0].CodeMirror;

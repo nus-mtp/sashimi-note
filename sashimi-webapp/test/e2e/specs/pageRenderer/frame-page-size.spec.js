@@ -1,9 +1,9 @@
 const pagesModeActivation = require('./pages-mode-activation');
 
 module.exports = {
-  'navigate to /content': pagesModeActivation['should activate Pages mode'],
+  'should activate Pages mode': pagesModeActivation['should activate Pages mode'],
 
-  'check size of reference and renderer frame ': (browser) => {
+  'should have the same page size for reference and renderer frame ': (browser) => {
     browser
       .getElementSize('#reference-frame-of-viewer-container', (referenceResult) => {
         browser

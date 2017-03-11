@@ -2,9 +2,9 @@ const textLoader = require('../../helpers/textLoader');
 const pagesModeActivation = require('./pages-mode-activation');
 
 module.exports = {
-  'navigate to /content': pagesModeActivation['should activate Pages mode'],
+  'should activate Pages mode': pagesModeActivation['should activate Pages mode'],
 
-  'write to codemirror': (browser) => {
+  'should render "full-documents.txt" into 24 pages': (browser) => {
     browser
       .execute((data) => {
         const codeMirrorInstance = document.getElementsByClassName('CodeMirror')[0].CodeMirror;
@@ -15,7 +15,7 @@ module.exports = {
       });
   },
 
-  'check height of element': (browser) => {
+  'should contain elements of the same heights in both reference and render frame ': (browser) => {
     browser
       .execute(() => {
         const ACCEPTANCE_THRESHOLD_PX = 2;
