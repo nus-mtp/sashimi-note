@@ -61,7 +61,8 @@ const checkShouldPageBreak = function checkShouldPageBreak(childHeights, index) 
   }
 };
 
-const addElementToPage = function addElementToPage(element, page, book, eleArray, index) {
+const addElementToPage = function addElementToPage(page, book, eleArray, index) {
+  const element = eleArray[index];
   try {
     if (checkShouldPageBreak(eleArray, index)) {
       // Create a new page if page should be broken here
@@ -80,7 +81,7 @@ const addElementToPage = function addElementToPage(element, page, book, eleArray
       page.forceAdd(element);
     } else if (error.message === 'Page is full') {
       page = book.newPage();
-      page = addElementToPage(element, page, book, eleArray, index);
+      page = addElementToPage(page, book, eleArray, index);
     } else {
       throw error;
     }
@@ -162,7 +163,7 @@ export default {
 
     // Allocate element in pages within the render height
     childHeights.forEach((element, index) => {
-      virtualPage = addElementToPage(element, virtualPage, virtualBook, childHeights, index);
+      virtualPage = addElementToPage(virtualPage, virtualBook, childHeights, index);
     });
 
     return virtualBook.pages;
