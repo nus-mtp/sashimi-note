@@ -28,4 +28,6 @@ describe('Viewer\'s manage file button', function() {
   });
 });
 
+// Exporting this function since other test
+// will need to activate page mode before testng
 module.exports = activatePagesMode;

@@ -7,6 +7,8 @@ describe('Content transfer', () => {
     pagesModeActivation(browser);
     codeMirrorTextInsert(browser, textLoader.load('references/full-documents'));
 
+    // A hardcoded test for the specific 'full-documents.txt'
+    // TODO: need to included test for MathJax too.
     browser
       .assert.elementCount('p', 130)
       .assert.elementCount('a', 40)

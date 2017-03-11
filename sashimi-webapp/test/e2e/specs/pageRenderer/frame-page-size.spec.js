@@ -20,6 +20,10 @@ describe('Frame page size', () => {
     compareCssProperty(browser, 'padding-bottom');
     compareCssProperty(browser, 'padding-left');
     compareCssProperty(browser, 'padding-right');
+
+    // Comparison for height of the frames are not checked
+    // as the reference frame does not make use of the page height.
+    // For more details, see pageRenderer's implementation
   });
 
   afterEach((browser, done) => {
