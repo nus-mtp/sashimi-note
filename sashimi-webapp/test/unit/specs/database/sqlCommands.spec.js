@@ -56,6 +56,14 @@ function cleanTestCase() {
 }
 
 describe('sqlCommands', () => {
+  before(() => {
+    sqlCommands.linkDatabaseToIndexedDB(testDatabaseName);
+  });
+
+  after(() => {
+    cleanTestCase();
+  });
+
   describe('link to indexeddb database', () => {
     it('should link to indexeddb database', (done) => {
       if (!window.indexedDB) {
