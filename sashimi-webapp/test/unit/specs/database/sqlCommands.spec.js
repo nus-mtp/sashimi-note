@@ -100,5 +100,33 @@ describe('sqlCommands', () => {
       })
       .catch(sqlErr => done(sqlErr));
     });
+
+    it('should insert content with correct datatype', (done) => {
+      const createTableString = 'bcd(a NUMBER, b STRING, c DATE)';
+      sqlCommands.createTable(createTableString)
+      .then(() => { // insert data
+        alasqlArray.initializeAlasqlArray();
+        alasqlArray.addKeyBasePair('a', 123);
+        alasqlArray.addKeyBasePair('b', 'hello string here');
+        alasqlArray.addKeyBasePair('c', '2017.03.07 15:52:33');
+        const correctArray = alasqlArray.endAlasqlArray();
+        alasqlArray.initializeAlasqlArray();
+        alasqlArray.addKeyBasePair('a', 123);
+        alasqlArray.addKeyBasePair('b', '2017.03.07 15:52:33');
+        alasqlArray.addKeyBasePair('c', 'hello string here');
+        const incorrectArray = alasqlArray.endAlasqlArray();
+        sqlCommands.insertContent('bcd', correctArray)
+        .then(() =>
+          sqlCommands.getFullTableData('bcd')
+          .then((data) => {
+            expect(data).to.deep.equal(correctArray);
+            expect(data).to.not.deep.equal(incorrectArray);
+            done();
+          })
+          .catch(err => done(err)))
+        .catch(sqlErr => done(sqlErr));
+      })
+      .catch(sqlErr => done(sqlErr));
+    }).timeout(20000);
   });
 });
