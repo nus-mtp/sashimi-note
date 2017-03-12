@@ -1,5 +1,11 @@
-import storage from '../../database/storage';
+import storage from 'src/database/storage';
 import File from './file';
+
+/* Constants */
+const ORGANIZATION_ID = 0;
+const ROOT_FOLDER_ID = 0;
+const NO_PARENT_ID = -1;
+
 
 /**
 * Folder Object
@@ -28,8 +34,7 @@ function Folder(folderID, folderName, folderPath) {
 Folder.prototype.createFolder = function createFolder(folderName) {
   console.log('folder.createFolder');
   const newFolderPath = `${this.folderPath}/${folderName}`;
-  // const dbFolderObj = storage_api.createFolder(0, newFolderPath, this.id)
-  return storage.createFolder(0, newFolderPath, this.id)
+  return storage.createFolder(ORGANIZATION_ID, newFolderPath, this.id)
   .then((dbFolderObj) => {
     const newFolder = new Folder(dbFolderObj.folder_ID, dbFolderObj.folderName, dbFolderObj.folderPath);
     newFolder.parentFolder = this;
@@ -50,7 +55,7 @@ Folder.prototype.createFolder = function createFolder(folderName) {
 Folder.prototype.createFile = function createFile(fileName) {
   console.log('folder.createFile');
   const newFilePath = `${this.folderPath}/${fileName}`;
-  return storage.createFile(0, newFilePath, this.id)
+  return storage.createFile(ORGANIZATION_ID, newFilePath, this.id)
   .then((dbFileObj) => {
     const newFile = new File(dbFileObj.file_id, dbFileObj.file_name, dbFileObj.file_path, this);
     this.childFileList.push(newFile);
@@ -68,14 +73,14 @@ Folder.prototype.createFile = function createFile(fileName) {
  */
 Folder.prototype.remove = function remove() {
   console.log('folder.remove');
+  if (this.id === ROOT_FOLDER_ID) {
+    throw new Error('Cannot remove root folder.');
+  }
   return storage.deleteFolder(this.id)
   .then(() => {
     const parentFolder = this.parentFolder;
     const index = parentFolder.childFolderList.findIndex(childFolder => childFolder.id === this.id);
     parentFolder.childFolderList.splice(index, 1);
-  })
-  .catch((error) => {
-    throw error;
   });
 };
 
@@ -97,7 +102,7 @@ function queueIsEmpty(queue) {
 }
 
 function removeElementAtIndex(queue, index) {
-  if (index === -1) {
+  if (index === NO_PARENT_ID) {
     return null;
   } else {
     return queue.splice(index, 1);
@@ -105,13 +110,13 @@ function removeElementAtIndex(queue, index) {
 }
 
 function getChildFile(queue, parentID) {
-  parentID = parentID || -1; // -1 = no parentID (only root has no parent)
+  parentID = parentID || NO_PARENT_ID;
   const index = queue.findIndex(dbFileObj => dbFileObj.folder_ID === parentID);
   return removeElementAtIndex(queue, index);
 }
 
 function getChildFolder(queue, parentID) {
-  parentID = parentID || -1; // -1 = no parentID (only root has no parent)
+  parentID = parentID || NO_PARENT_ID;
   const index = queue.findIndex(dbFolderObj => dbFolderObj.parent_folder_ID === parentID);
   return removeElementAtIndex(queue, index);
 }
