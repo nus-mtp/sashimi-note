@@ -66,9 +66,15 @@
   .viewer[data-fileFormat="pages"] {
     background-color: #FAFAFA;
     padding: 0;
+    overflow: hidden;
 
     #viewer-container {
-      transform: scale(0.75);
+      cursor: pointer;
+      transform: scale(1);
+      transition: transform 0.1s;
+      width: 1px;
+      margin: 0 auto;
+      position: relative;
 
       .page-view {
         overflow: hidden;
@@ -79,7 +85,7 @@
   }
 
   #viewer-container {
-    transform-origin: top center;
+    transform-origin: 50% 0%;
   }
   
   #viewer-container,

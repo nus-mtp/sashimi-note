@@ -204,6 +204,7 @@ export default {
         // CSS to set up the page sizing
         width: pr.page.width,
         height: pr.page.height,
+        left: `calc(-${pr.page.width} / 2)`,
         paddingTop: pr.page.padding.top,
         paddingBottom: pr.page.padding.bottom,
         paddingLeft: pr.page.padding.left,
