@@ -139,9 +139,10 @@ function creationOfTables() {
 export default class storage {
   static constructor() {}
 
-  static initializeDatabase() {
+  static initializeDatabase(newDatabaseName) {
     if (typeof Promise === 'function') {
       return new Promise((resolve, reject) => {
+        databaseName = newDatabaseName || databaseName;
         entitiesCreator.initializeDatabase(databaseName)
         .then(step1 => creationOfTables()
           .then(isFirstInstance => isFirstInstance)
@@ -172,10 +173,6 @@ export default class storage {
     } else {
       throw new exceptions.PromiseFunctionNotDefined();
     }
-  }
-
-  static changeDatabaseName(newDatabaseName) {
-    databaseName = newDatabaseName;
   }
 
   // Searching the filename and foldername ONLY
@@ -276,13 +273,14 @@ export default class storage {
     }
   }
 
-  static deleteAll() {
+  static deleteAll(newDatabaseName) {
     if (typeof Promise === 'function') {
-      return new Promise((resolve, reject) =>
-        dataModifier.deleteAllEntities(databaseName)
+      return new Promise((resolve, reject) => {
+        databaseName = newDatabaseName || databaseName;
+        return dataModifier.deleteAllEntities(databaseName)
         .then(data => resolve(true))
-        .catch(sqlError => reject(sqlError))
-      );
+        .catch(sqlError => reject(sqlError));
+      });
     } else {
       throw new exceptions.PromiseFunctionNotDefined();
     }
