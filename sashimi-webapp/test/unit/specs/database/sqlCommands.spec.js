@@ -10,6 +10,20 @@ const testDatabaseName = 'test';
 const sqlCommands = new SqlCommands();
 const alasqlArray = new SqlArray();
 
+function isDatabaseExists(databaseName, callback) {
+  const req = indexedDB.open(databaseName);
+  let existed = true;
+  req.onsuccess = function onSuccess() {
+    req.result.close();
+    if (!existed) {
+      indexedDB.deleteDatabase(databaseName);
+    }
+    callback(existed);
+  };
+  req.onupgradeneeded = function onUpgradeNeeded() {
+    existed = false;
+  };
+}
 function cleanTestCase() {
   dataDelete.deleteAllEntities(testDatabaseName);
 }
