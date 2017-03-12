@@ -89,7 +89,7 @@ export default class tableCreator {
     }
   }
 
-  static endCreateTable(headerName, alasqlArrayObject) {
+  static endCreateTable(headerName) {
     if (typeof Promise === 'function') {
       return new Promise((resolve, reject) => {
         if (isTableInitializedForCreation) {

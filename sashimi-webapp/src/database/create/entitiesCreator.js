@@ -198,7 +198,7 @@ export default class entitiesCreator {
 
         tableCreator.setPrimaryKeys(constants.HEADER_FOLDER_ORGANIZATION_ID,
                                       constants.HEADER_FOLDER_FOLDER_ID);
-        return tableCreator.endCreateTable(constants.ENTITIES_FOLDER, initDataGenerator.getInitDataFolder())
+        return tableCreator.endCreateTable(constants.ENTITIES_FOLDER)
           .then(data => resolve(data))
           .catch(sqlError => reject(sqlError));
       });
