@@ -84,24 +84,21 @@ describe('sqlCommands', () => {
       if (!window.indexedDB) {
         done(exceptions.IndexedDBNotSupported);
       }
-      sqlCommands.linkDatabaseToIndexedDB(testDatabaseName) // link to database
-      .then(() => { // create table
-        const createTableString = 'abc(a NUMBER, b STRING, c DATE)';
-        return sqlCommands.createTable(createTableString)
-        .then(() => { // test for table exists in database
-          const request = window.indexedDB.open(testDatabaseName);
-          request.onsuccess = function onsuccess(event) {
-            const transaction = request.result.transaction([testDatabaseName], 'read');
-            const tableStore = transaction.objectStore(testDatabaseName).get('abc');
-            tableStore.onsuccess = function suceed(data) {
-              expect(data).to.equal([]);
-            };
-          };
-        }).catch(sqlErr => done(sqlErr));
-      }).then(() => {
-        cleanTestCase();
-        done();
-      }).catch(sqlErr => done(sqlErr));
+      const createTableString = 'abc(a NUMBER, b STRING, c DATE)';
+      sqlCommands.createTable(createTableString)
+      .then(() => {
+        sqlCommands.insertContent('abc', [{ a: 123, b: 'hello', c: '2017.03.07 15:52:33' }])
+        .catch(sqlErr => done(sqlErr));
+      })
+      .then(() => { // test for table exists in database
+        isTableExistsInDatabase('abc', (isTableExist) => {
+          /*eslint-disable */
+          expect(isTableExist).to.be.true;
+          /*eslint-enable */
+          done();
+        });
+      })
+      .catch(sqlErr => done(sqlErr));
     });
   });
 });
