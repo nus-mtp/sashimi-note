@@ -31,12 +31,12 @@
                   </button>
                 </td>
                 <td>
-                  <button class="navbar-buttons hover-grow">
+                  <button class="navbar-buttons hover-grow" v-on:click="execute('createFolder')">
                     <i class="material-icons md-dark">create_new_folder</i>
                   </button>
                 </td>
                 <td>
-                  <button class="navbar-buttons hover-grow">
+                  <button class="navbar-buttons hover-grow" v-on:click="execute('createFile')">
                     <i class="material-icons md-dark">note_add</i>
                   </button>
                 </td>
@@ -58,8 +58,8 @@
               </div>
               <div class="view-type inline-block">
                 <td class="vertical-align-child">
-                  <button class="navbar-buttons hover-grow" v-on:click="setAction('iconView')">Icon</button>|
-                  <button class="navbar-buttons hover-grow" v-on:click="setAction('listView')">List</button>
+                  <button class="navbar-buttons hover-grow" v-on:click="setViewMode('iconView')">Icon</button>|
+                  <button class="navbar-buttons hover-grow" v-on:click="setViewMode('listView')">List</button>
                 </td>
               </div>
             </div>
@@ -70,10 +70,9 @@
 </template>
 
 <script>
-import fileManager from 'src/logic/filemanager';
+import eventHub from './EventHub';
 
 export default {
-  props: ['value'],
   data() {
     return {
       buttonDisabled: true,
@@ -81,8 +80,11 @@ export default {
     };
   },
   methods: {
-    setAction(action) {
-      this.$emit('input', action);
+    execute(action) {
+      eventHub.$emit('execute', action);
+    },
+    setViewMode(viewMode) {
+      this.$emit('changeViewMode', viewMode);
     }
   }
 };
