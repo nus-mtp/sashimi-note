@@ -40,7 +40,7 @@ function createNewFile(organizationId, filePath, folderId, newFileId) {
       const newFileData = alasqlArray.endAlasqlArray();
 
       return sqlCommands.insertContent(constants.ENTITIES_FILE_MANAGER, newFileData)
-      .then(success => resolve(true))
+      .then(success => resolve(newFileData[0]))
       .catch(err => reject(err));
     });
   } else {
@@ -74,7 +74,7 @@ function createNewFolder(organizationId, folderPath, currentFolderId, newFolderI
       const newFolderData = alasqlArray.endAlasqlArray();
 
       return sqlCommands.insertContent(constants.ENTITIES_FOLDER, newFolderData)
-      .then(success => resolve(true))
+      .then(success => resolve(newFolderData[0]))
       .catch(err => reject(err));
     });
   } else {
