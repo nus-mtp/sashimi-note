@@ -33,10 +33,10 @@ function Folder(folderID, folderName, folderPath) {
  */
 Folder.prototype.createFolder = function createFolder(folderName) {
   console.log('folder.createFolder');
-  const newFolderPath = `${this.folderPath}/${folderName}`;
+  const newFolderPath = `${this.path}/${folderName}`;
   return storage.createFolder(ORGANIZATION_ID, newFolderPath, this.id)
   .then((dbFolderObj) => {
-    const newFolder = new Folder(dbFolderObj.folder_ID, dbFolderObj.folderName, dbFolderObj.folderPath);
+    const newFolder = new Folder(dbFolderObj.folder_ID, dbFolderObj.folder_name, dbFolderObj.folder_path);
     newFolder.parentFolder = this;
     this.childFolderList.push(newFolder);
     return newFolder;
@@ -54,7 +54,7 @@ Folder.prototype.createFolder = function createFolder(folderName) {
  */
 Folder.prototype.createFile = function createFile(fileName) {
   console.log('folder.createFile');
-  const newFilePath = `${this.folderPath}/${fileName}`;
+  const newFilePath = `${this.path}/${fileName}`;
   return storage.createFile(ORGANIZATION_ID, newFilePath, this.id)
   .then((dbFileObj) => {
     const newFile = new File(dbFileObj.file_id, dbFileObj.file_name, dbFileObj.file_path, this);
@@ -140,7 +140,7 @@ const folderOperation = {
 
         const processingQueue = [];
         const rootFolder = getChildFolder(dbFolderList);
-        processingQueue.push(new Folder(rootFolder.folder_ID, rootFolder.folder_name, rootFolder.folder_path));
+        processingQueue.push(new Folder(rootFolder.folder_ID, rootFolder.folder_name, rootFolder.folder_path || ''));
 
         let currFolder;
         let dbFileObj;
