@@ -10,9 +10,9 @@
         </router-link>
       </div>
       <!--Waiting for file-manager api to be completed to implement buttons-->
-      <!--<div class="col searchBar inline-block">
+      <div class="col searchBar inline-block">
         <input type="text" placeholder="Search...">
-      </div>-->
+      </div>
     </div>
     <div class="navbar userActions vertical-align-child">
       <table>
@@ -24,10 +24,15 @@
           </td>
             <!--Waiting for file-manager api to be completed to implement buttons-->
             <div class="float-right">
-              <!--<div class="vertical-align-child buttons-right inline-block">
+              <div class="vertical-align-child buttons-right inline-block">
                 <td>
                   <button class="navbar-buttons hover-grow">
                     <i class="material-icons md-dark">file_upload</i>
+                  </button>
+                </td>
+                <td>
+                  <button class="navbar-buttons hover-grow">
+                    <i class="material-icons md-dark">create_new_folder</i>
                   </button>
                 </td>
                 <td>
@@ -50,7 +55,7 @@
                     <i class="material-icons md-dark" v-bind:class="{'md-inactive': buttonDisabled}">delete</i>
                   </button>
                 </td>
-              </div>-->
+              </div>
               <div class="view-type inline-block">
                 <td class="vertical-align-child">
                   <button class="navbar-buttons hover-grow" v-on:click="setAction('iconView')">Icon</button>|
@@ -65,6 +70,8 @@
 </template>
 
 <script>
+import fileManager from 'src/logic/filemanager';
+
 export default {
   props: ['value'],
   data() {
