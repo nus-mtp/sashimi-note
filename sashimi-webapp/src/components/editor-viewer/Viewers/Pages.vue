@@ -21,6 +21,16 @@
     if (translateY > 0) translateY = 0;
     return translateY;
   }
+
+  function translateXGuard(translateX, parentEle) {
+    const sideLimit = (() => {
+      const pageWidth = unitConverter.get(parentEle.childNodes[0].style.width, 'px', false);
+      return pageWidth/2;
+    })();
+    if (translateX < -sideLimit) translateX = -sideLimit;
+    if (translateX > sideLimit) translateX = sideLimit;
+    return translateX;
+  }
   
   // Throttle function used to limit the rate which
   // the render function is called
@@ -60,6 +70,7 @@
           currentScale = stuff.scale || currentScale;
           translateX = (stuff.x != null) ? stuff.x : translateX;
           translateY = (stuff.y != null) ? stuff.y : translateY;
+          console.log(`scale(${currentScale}) translate(${translateX}, ${translateY})`);
           return `scale(${currentScale}) translate(${translateX}px, ${translateY}px)`;
         }
 
@@ -98,11 +109,13 @@
           event.preventDefault();
           if (isMouseDown) {
             let toTranslateY = translateY + event.movementY;
+            let toTranslateX = translateX + event.movementX;
             toTranslateY = translateYGuard(toTranslateY, parentEle);
+            toTranslateX = translateXGuard(toTranslateX, parentEle);
 
             parentEle.style.transform = setTransform({
               y: toTranslateY,
-              x: (translateX + event.movementX)
+              x: toTranslateX
             });
           }
         });
