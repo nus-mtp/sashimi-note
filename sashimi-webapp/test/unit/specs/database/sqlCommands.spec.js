@@ -1,9 +1,6 @@
 import SqlCommands from 'src/database/sql-related/sqlCommands';
-
 import SqlArray from 'src/database/generated-data/sqlArray';
-
 import dataDelete from 'src/database/data-modifier/dataDelete';
-
 import exceptions from 'src/database/exceptions';
 
 const testDatabaseName = 'test';
@@ -79,7 +76,7 @@ describe('sqlCommands', () => {
         cleanTestCase();
         done();
       })
-      .catch(sqlErr => done(sqlErr));
+      .catch(err => done(err));
     });
   });
 
