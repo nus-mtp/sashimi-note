@@ -7,9 +7,7 @@
  */
 
 import SqlCommands from '../sql-related/sqlCommands';
-
 import exceptions from '../exceptions';
-
 import constants from '../constants';
 
 const sqlCommands = new SqlCommands();

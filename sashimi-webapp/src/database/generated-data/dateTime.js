@@ -1,7 +1,6 @@
 import StringManipulator from '../stringManipulation';
 
 const date = new Date();
-
 const stringManipulator = new StringManipulator();
 
 export default function dateTime() {

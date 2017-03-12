@@ -1,13 +1,9 @@
 import constants from '../constants';
-
 import SqlCommands from '../sql-related/sqlCommands';
-
 import StringManipulator from '../stringManipulation';
-
 import exceptions from '../exceptions';
 
 const sqlCommands = new SqlCommands();
-
 const stringManipulator = new StringManipulator();
 
 let isTableInitializedForCreation = constants.CONST_TABLE_CREATION_CLOSED;

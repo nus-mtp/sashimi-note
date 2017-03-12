@@ -7,13 +7,9 @@
  */
 
 import constants from './constants';
-
 import entitiesCreator from './create/entitiesCreator';
-
 import query from './retrieve/query';
-
 import dataModifier from './data-modifier/dataModifier';
-
 import exceptions from './exceptions';
 
 let databaseName = constants.INDEXEDDB_NAME;

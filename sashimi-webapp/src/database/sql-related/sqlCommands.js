@@ -1,15 +1,11 @@
 import StringManipulator from '../stringManipulation';
-
 import exceptions from '../exceptions';
-
 import constants from '../constants';
-
 import DateTime from '../generated-data/dateTime';
 
 const alasql = require('alasql');
 
 const stringManipulator = new StringManipulator();
-
 const dateTime = new DateTime();
 
 function getDataOutOfAlasql(data) {
