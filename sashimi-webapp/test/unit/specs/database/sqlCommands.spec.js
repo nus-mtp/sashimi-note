@@ -64,16 +64,15 @@ describe('sqlCommands', () => {
   describe('link to indexeddb database', () => {
     it('should link to indexeddb database', (done) => {
       if (!window.indexedDB) {
-        done(exceptions.IndexedDBNotSupported);
+        throw new exceptions.IndexedDBNotSupported();
       }
       sqlCommands.linkDatabaseToIndexedDB(testDatabaseName)
       .then(() => {
-        const request = window.indexedDB.open(testDatabaseName);
-        request.onsuccess = function onsuccess(event) {
-          expect(event.target.result).to.not.equal(1);
-        };
-      }).then(() => {
-        cleanTestCase();
+        isDatabaseExists(testDatabaseName, (isDBExists) => {
+          /*eslint-disable */
+          expect(isDBExists).to.be.true;
+          /*eslint-enable */
+        });
         done();
       })
       .catch(err => done(err));
