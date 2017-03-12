@@ -40,7 +40,7 @@ export default class dataModifier {
     if (typeof Promise === 'function') {
       return new Promise((resolve, reject) =>
         dataAdd.createNewFolder(organizationId, folderPath, folderId)
-        .then(data => resolve(true))
+        .then(data => resolve(data))
         .catch(sqlErr => reject(sqlErr))
       );
     } else {
