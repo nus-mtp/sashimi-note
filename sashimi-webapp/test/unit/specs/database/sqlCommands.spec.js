@@ -25,7 +25,15 @@ function isDatabaseExists(databaseName, callback) {
   };
 }
 function cleanTestCase() {
-  dataDelete.deleteAllEntities(testDatabaseName);
+  if (typeof Promise === 'function') {
+    return new Promise((resolve, reject) =>
+      dataDelete.deleteAllEntities(testDatabaseName)
+      .then(isDeleted => resolve(isDeleted))
+      .catch(sqlErr => reject(sqlErr))
+    );
+  } else {
+    throw new exceptions.PromiseFunctionNotDefined();
+  }
 }
 
 describe('sqlCommands', () => {
