@@ -105,18 +105,18 @@ function removeElementAtIndex(queue, index) {
   if (index === NO_PARENT_ID) {
     return null;
   } else {
-    return queue.splice(index, 1);
+    return queue.splice(index, 1)[0];
   }
 }
 
 function getChildFile(queue, parentID) {
-  parentID = parentID || NO_PARENT_ID;
+  parentID = (parentID == null) ? NO_PARENT_ID: parentID;
   const index = queue.findIndex(dbFileObj => dbFileObj.folder_ID === parentID);
   return removeElementAtIndex(queue, index);
 }
 
 function getChildFolder(queue, parentID) {
-  parentID = parentID || NO_PARENT_ID;
+  parentID = (parentID == null) ? NO_PARENT_ID: parentID;
   const index = queue.findIndex(dbFolderObj => dbFolderObj.parent_folder_ID === parentID);
   return removeElementAtIndex(queue, index);
 }
