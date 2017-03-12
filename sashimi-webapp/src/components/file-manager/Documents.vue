@@ -1,39 +1,44 @@
 <template>
-  <div class="group section documents" v-bind:class="view">
-    <file :view="action"></file>
+  <div class="group section documents" 
+    v-bind:class="viewMode"
+  >
+    <div class="modal" v-show="modal">
+      <div class="modal-content">
+        <span class="close">&times;</span>
+        <h3>New {{value}}</h3>
+      </div>
+    </div>
+    <file></file>
   </div>
 </template>
 
 <script>
+import eventHub from './EventHub';
 import folder from './Folder';
 import file from './File';
 
 export default {
-  props: ['action'],
+  props: ['viewMode'],
   data() {
     return {
-      view: {
-        iconView: false,
-        listView: true
-      },
+      modal: false,
+      value: ''
     };
-  },
-  watch: {
-    action(value) {
-      // compute action based on value
-      if (value === 'iconView') {
-        this.view.iconView = true;
-        this.view.listView = false;
-      } else {
-        this.view.iconView = false;
-        this.view.listView = true;
-      }
-    },
   },
   components: {
     folder,
     file,
   },
+  mounted() {
+    eventHub.$on('execute', (action) => {
+      console.log(action);
+      if (action === 'createFolder') {
+        this.value = 'Folder';
+      } else if (action === 'createFile') {
+        this.value = 'File';
+      }
+    });
+  }
 };
 </script>
 
