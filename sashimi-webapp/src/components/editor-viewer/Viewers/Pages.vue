@@ -33,9 +33,6 @@
       Vue.nextTick(() => {
         this.pageRenderer = new PageRenderer('viewer-container');
         renderThrottleFn(this.htmlData, this.pageRenderer);
-      });
-
-      setTimeout(() => {
         const page = this.pageRenderer.page;
         const parentEle = document.getElementById('viewer-container');
 
@@ -46,7 +43,18 @@
         const ratio = (parentWidth - 80)/childWidth;
 
         let currentScale = ratio;
-        parentEle.style.transform = `scale(${currentScale})`;
+        let translateX = 0;
+        let translateY = 0;
+
+        function setTransform(stuff) {
+          currentScale = stuff.scale || currentScale;
+          translateX = (stuff.x != null) ? stuff.x : translateX;
+          translateY = (stuff.y != null) ? stuff.y : translateY;
+          console.log(`scale(${currentScale}) translate(${translateX}, ${translateY})`);
+          return `scale(${currentScale}) translate(${translateX}px, ${translateY}px)`;
+        }
+
+        parentEle.style.transform = setTransform({ scale: currentScale, x: translateX, y: translateY });
 
         // attach event listener
         parentEle.parentNode.addEventListener('mousewheel', (event) => {
@@ -54,41 +62,33 @@
           if (event.ctrlKey) {
             let nowScale = parseFloat(parentEle.style.transform.substring(6));
             let toScale = nowScale * (1 - (event.deltaY / 1000));
-            parentEle.style.transform = `scale(${toScale})`;
+            parentEle.style.transform = setTransform({ scale: toScale });
           } else {
-            parentEle.style.top = (parseFloat((parentEle.style.top || 0)) + (-event.deltaY / 2)) + 'px';
+            parentEle.style.transform = setTransform({ y: (translateY - (event.deltaY/4)) });
           }
         }, false);
 
         let isMouseDown = false;
-        let initialX = -1;
-        let initialY = -1;
 
         parentEle.parentNode.addEventListener('mousedown', (event) => {
-          console.log(event.offsetX, parentEle.parentNode.clientLeft, event.offsetY, parentEle.parentNode.clientTop);
-          // console.log(parentEle.offsetLeft, parentEle.offsetTop);
+          event.preventDefault();
           isMouseDown = true;
-
-          if (initialX < 0) initialX = event.offsetX;
-          if (initialY < 0) initialY = event.offsetY;
         });
 
         parentEle.parentNode.addEventListener('mousemove', (event) => {
           event.preventDefault();
           if (isMouseDown) {
-            /* eslint prefer-template: 0 */
-            parentEle.style.left = (parseFloat((parentEle.style.left || 0)) + event.movementX) + 'px';
-            parentEle.style.top = (parseFloat((parentEle.style.top || 0)) + event.movementY) + 'px';
-
-            console.log(parentEle.style.top);
-            console.log(event.movementX, event.movementY);
+            parentEle.style.transform = setTransform({
+              y: (translateY + event.movementY),
+              x: (translateX + event.movementX)
+            });
           }
         });
 
         parentEle.parentNode.addEventListener('mouseup', (event) => {
           isMouseDown = false;
         });
-      }, 300);
+      });
     }
   };
 
