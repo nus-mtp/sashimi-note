@@ -24,6 +24,25 @@ function isDatabaseExists(databaseName, callback) {
     existed = false;
   };
 }
+
+function isTableExistsInDatabase(tableName, callback) {
+  const req = indexedDB.open(testDatabaseName);
+  req.onsuccess = function onSuccess(event) {
+    const tableNames = event.target.result.objectStoreNames;
+    if (tableNames.contains(tableName) === false) {
+      req.result.close();
+      callback(false);
+    } else {
+      req.result.close();
+      callback(true);
+    }
+  };
+  req.onupgradeneeded = function onUpgradeNeeded(event) {
+    callback(false);
+  };
+}
+
+
 function cleanTestCase() {
   if (typeof Promise === 'function') {
     return new Promise((resolve, reject) =>
