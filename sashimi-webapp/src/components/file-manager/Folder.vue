@@ -2,10 +2,10 @@
   <div class="col vertical-align-child" 
     v-on:dblclick="openFolder"
     id="123">
-      <button class="folder">
-        <img src="../../assets/images/icons/icon-folder.svg" alt="folder">
-        <p class="inline-block">CS3244 Project</p>
-      </button>
+    <button class="folder">
+      <img src="../../assets/images/icons/icon-folder.svg" alt="folder">
+      <p class="inline-block">CS3244 Project</p>
+    </button>
   </div>
 </template>
 
