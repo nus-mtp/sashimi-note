@@ -51,12 +51,12 @@ const shouldPageBreak = function shouldPageBreak(eleHeightArray, index, page) {
   if (eleName.match(/^H\d$/)) {
     // If a header tag is located at the bottom of the page, break page
     const percentRemainingHeight = (page.maxHeight - page.filledHeight)/page.maxHeight;
-    if (percentRemainingHeight > 0.82) {
+    if (percentRemainingHeight < 0.18) {
       return BREAK_PAGE;
     }
 
     // If a header tag is going to be the last element in a page, break page
-    const nextHeight = eleHeightArray[index + 1].height;
+    const nextHeight = (eleHeightArray[index + 1]) ? eleHeightArray[index + 1].height : 0;
     const selfHeight = eleHeightArray[index].height;
     if (nextHeight + selfHeight + page.filledHeight > page.maxHeight) {
       return BREAK_PAGE;
