@@ -2,27 +2,18 @@
   <div>
     <userInputs 
       v-on:changeViewMode="changeViewMode"
-      v-on:execute="executeAction"
     ></userInputs>
     <documents 
-      :viewMode="viewMode"
+      :view-mode="viewMode"
+      :docs="docs"
     ></documents>
   </div>
 </template>
 
 <script>
-// import fileManager from 'src/logic/filemanager';
+import fileManager from 'src/logic/filemanager';
 import documents from './Documents';
 import userInputs from './UserInputs';
-
-// const mockFolder = {
-//   id: 0,
-//   name: 'root',
-//   path: '/',
-//   parentFolder: null,
-//   childFolderList: [], // list of folders in current folder
-//   childFileList: [], // list of files in current folder
-// };
 
 export default {
   components: {
