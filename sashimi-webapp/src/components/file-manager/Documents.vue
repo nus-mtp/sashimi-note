@@ -8,7 +8,16 @@
         <h3>New {{value}}</h3>
       </div>
     </div>
-    <file></file>
+    <div id="files" v-for="file in docs.childFileList">
+      <file 
+        :file-name="file.name"
+      ></file>
+    </div>
+    <div id="folder" v-for="folder in docs.childFolderList">
+      <folder
+        :folder-name="folder.name"
+      ></folder>
+    </div>
   </div>
 </template>
 
@@ -18,7 +27,7 @@ import folder from './Folder';
 import file from './File';
 
 export default {
-  props: ['viewMode'],
+  props: ['viewMode', 'docs'],
   data() {
     return {
       modal: false,
@@ -29,9 +38,13 @@ export default {
     folder,
     file,
   },
+  watch: {
+    docs(data) {
+      console.log(data);
+    }
+  },
   mounted() {
     eventHub.$on('execute', (action) => {
-      console.log(action);
       if (action === 'createFolder') {
         this.value = 'Folder';
       } else if (action === 'createFile') {
