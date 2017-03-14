@@ -1,3 +1,4 @@
+import interact from 'interactjs';
 import domUtils from 'src/helpers/domUtils';
 import unitConverter from 'src/helpers/unitConverter';
 
@@ -16,7 +17,7 @@ function translateYGuard(translateY, parentEle) {
 function translateXGuard(translateX, parentEle) {
   const sideLimit = (() => {
     const pageWidth = unitConverter.get(parentEle.childNodes[0].style.width, 'px', false);
-    return pageWidth/2;
+    return (pageWidth / 2);
   })();
   if (translateX < -sideLimit) translateX = -sideLimit;
   if (translateX > sideLimit) translateX = sideLimit;
@@ -70,42 +71,29 @@ const windowResize = function windowResize(event) {
   this.transform.set({ scale: (this.width.container - 60) / this.width.element });
 };
 
-const pointers = {};
-const pointersPrev = {};
-
-const pointerdown = function pointerdown(event) {
-  event.preventDefault();
-  pointers[event.pointerId] = event;
-  pointersPrev[event.pointerId] = {
-    x: event.x,
-    y: event.y
-  };
-};
-const pointerup = function pointerup(event) {
-  event.preventDefault();
-  delete pointers[event.pointerId];
-};
 const pointermove = function pointermove(event) {
-  if (Object.keys(pointers).length > 0) {
-    pointers[event.pointerId] = event;
-    const moveX = pointers[event.pointerId].x - pointersPrev[event.pointerId].x;
-    const moveY = pointers[event.pointerId].y - pointersPrev[event.pointerId].y;
-    pointersPrev[event.pointerId].x = pointers[event.pointerId].x;
-    pointersPrev[event.pointerId].y = pointers[event.pointerId].y;
-
-    const moveSpeed = (1/this.transform.scale);
-    const translateX = translateXGuard(this.transform.translateX + (moveX * moveSpeed), this.el.container);
-    const translateY = translateYGuard(this.transform.translateY + (moveY * moveSpeed), this.el.container);
-
-    this.transform.set({ translateX, translateY });
+  const moveSpeed = (1/this.transform.scale);
+  const translateY = translateYGuard(this.transform.translateY + (event.dy * moveSpeed), this.el.container);
+  let translateX = 0;
+  if ((this.width.container) < this.width.element * this.transform.scale) {
+    translateX = translateXGuard(this.transform.translateX + (event.dx * moveSpeed), this.el.container);
   }
+
+  // translate the element
+  this.transform.set({ translateX, translateY });
 };
+
+const interactZoom = function interactZoom(event) {
+  if (!event.ds) event.ds = (-event.deltaY / 1000);
+  let scale = this.transform.scale * (1 + event.ds);
+  scale = scaleGuard(scale);
+  this.transform.set({ scale });
+};
+
 const mousewheel = function mousewheel(event) {
   event.preventDefault();
   if (event.ctrlKey) {
-    let scale = this.transform.scale * (1 - (event.deltaY / 1000));
-    scale = scaleGuard(scale);
-    this.transform.set({ scale });
+    interactZoom.call(this, event);
   } else {
     let translateY = this.transform.translateY - ((event.deltaY/4) * (1 / this.transform.scale));
     translateY = translateYGuard(translateY, this.el.container);
@@ -128,8 +116,9 @@ const DocumentNavigator = function DocumentNavigator(page, containerCssSelector,
 
   if (!this.el.container) throw new Error(`Unable to query "${containerCssSelector}"`);
   if (!this.el.element) throw new Error(`Unable to query "${elementCssSelector}"`);
+  this.el.parent = this.el.container.parentNode;
 
-  this.el.container.computedStyle = domUtils.getComputedStyle(this.el.container.parentNode);
+  this.el.container.computedStyle = domUtils.getComputedStyle(this.el.parent);
   this.el.element.computedStyle = domUtils.getComputedStyle(this.el.element);
 
   // Builds document properties
@@ -147,12 +136,45 @@ const DocumentNavigator = function DocumentNavigator(page, containerCssSelector,
   windowResize.call(this);
 
   // 2. Attach event listener;
-  this.el.container.parentNode.addEventListener('mousewheel', mousewheel.bind(this), false);
-  this.el.container.parentNode.addEventListener('pointerdown', pointerdown.bind(this));
-  this.el.container.parentNode.addEventListener('pointerleave', pointerup.bind(this));
-  this.el.container.parentNode.addEventListener('pointerup', pointerup.bind(this));
-  this.el.container.parentNode.addEventListener('pointermove', pointermove.bind(this));
-  window.addEventListener('resize', windowResize.bind(this));
+  this.eventListeners = [{
+    event: 'resize',
+    fn: windowResize.bind(this),
+    target: window,
+  }, {
+    event: 'mousewheel',
+    fn: mousewheel.bind(this),
+    target: this.el.parent,
+    boolean: false
+  }];
+  this.addListeners();
+};
+
+DocumentNavigator.prototype.addListeners = function addListeners() {
+  this.el.parent.setAttribute('touch-event', 'none');
+  this.eventListeners.forEach((listener) => {
+    listener.target.addEventListener(listener.event, listener.fn, listener.boolean);
+  });
+  this.interactable = interact(this.el.parent)
+  .draggable({
+    inertia: {
+      resistance: 5,
+      minSpeed: 400,
+      endSpeed: 20
+    },
+    onmove: pointermove.bind(this),
+  })
+  .gesturable({
+    onmove: interactZoom.bind(this),
+  });
+};
+
+DocumentNavigator.prototype.removeListeners = function removeListeners() {
+  this.el.parent.removeAttribute('touch-event');
+  this.interactable.unset();
+
+  this.eventListeners.forEach((listener) => {
+    listener.target.removeEventListener(listener.event, listener.fn);
+  });
 };
 
 export default DocumentNavigator;

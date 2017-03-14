@@ -1,5 +1,5 @@
 <template>
-  <div id='viewer-container' touch-action="none">
+  <div id='viewer-container'>
     <div class="page-view"></div>
   </div>
 </template>
@@ -40,7 +40,11 @@
           '#viewer-container',
           '.page-view'
         );
+        console.log(this.documentNavigator);
       });
+    },
+    beforeDestroy() {
+      this.documentNavigator.removeListeners();
     }
   };
 
