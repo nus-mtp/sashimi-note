@@ -23,6 +23,7 @@ export default {
   data() {
     return {
       viewMode: 'listView',
+      docs: ''
     };
   },
   watch: {
@@ -31,21 +32,18 @@ export default {
     changeViewMode(viewMode) {
       this.viewMode = viewMode;
     },
-    executeAction(action) {
-      this.$emit('executeAction', action);
-    }
-  }
-  // mounted() {
-  //   const startPromise = fileManager.start();
+  },
+  mounted() {
+    const startPromise = fileManager.start();
 
-  //   startPromise
-  //   .then((rootFolder) => {
-  //     console.log(rootFolder, 'rootFolder');
-  //   })
-  //   .catch((error) => {
-  //     console.log(error);
-  //   });
-  // }
+    startPromise
+    .then((rootFolder) => {
+      this.docs = rootFolder;
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+  }
 };
 
 </script>
