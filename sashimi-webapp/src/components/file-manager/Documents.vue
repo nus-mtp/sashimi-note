@@ -78,7 +78,7 @@ export default {
     }
 
     p {
-      font-family: $general-font;
+      font-family: $font-primary;
       
       &::selection {
         background-color: white;

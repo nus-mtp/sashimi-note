@@ -126,7 +126,7 @@ export default {
 
   p {
     margin: 0;
-    font-family: $general-font;
+    font-family: $font-primary;
   }
 }
 
@@ -172,7 +172,7 @@ export default {
     border: none;
     background-color: transparent;
     cursor: pointer;
-    font-family: $general-font;
+    font-family: $font-primary;
     font-size: $navbar-font-size;
     display: block;
     padding: 12px;

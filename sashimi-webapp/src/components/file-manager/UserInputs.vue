@@ -112,7 +112,7 @@ export default {
     border: 1px solid $navbar-border-color;
     width: 80%;
     padding: 8px;
-    font-family: $general-font;
+    font-family: $font-primary;
     font-size: 15px;
   }
 }
@@ -139,7 +139,6 @@ export default {
     width: $button-img-width;
   }
 }
-
 
 .navbar-breadcrumb {
   list-style: none;
