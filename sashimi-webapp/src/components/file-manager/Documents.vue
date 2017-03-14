@@ -44,6 +44,11 @@ export default {
       console.log(data);
     }
   },
+  methods: {
+    focus(event) {
+      console.log(event);
+    }
+  },
   mounted() {
     eventHub.$on('execute', (action) => {
       if (action === 'createFolder') {
