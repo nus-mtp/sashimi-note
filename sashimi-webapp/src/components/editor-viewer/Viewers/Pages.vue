@@ -40,7 +40,6 @@
           '#viewer-container',
           '.page-view'
         );
-        console.log(this.documentNavigator);
       });
     },
     beforeDestroy() {
