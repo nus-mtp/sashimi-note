@@ -4,13 +4,16 @@
     id="123">
     <button class="file">
       <img src="../../assets/images/icons/icon-file.svg" alt="file">
-      <p class="inline-block">Your first document</p>
+      <p class="inline-block">{{fileName}}</p>
     </button>
   </div>
 </template>
 
 <script>
 export default {
+  props: ['fileName'],
+  data() {
+  },
   methods: {
     openFile() {
       const fileId = this.$el.id;
