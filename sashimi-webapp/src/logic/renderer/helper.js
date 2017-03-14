@@ -16,9 +16,9 @@ export default {
    * paddings
    */
   computeRenderHeight(page) {
-    return parseFloat(unitConverter.get(page.height, 'px'), 10) - (
-           parseFloat(unitConverter.get(page.padding.top, 'px'), 10) +
-           parseFloat(unitConverter.get(page.padding.bottom, 'px'), 10)
+    return unitConverter.get(page.height, 'px', false) - (
+           unitConverter.get(page.padding.top, 'px', false) +
+           unitConverter.get(page.padding.bottom, 'px', false)
          );
   },
 
