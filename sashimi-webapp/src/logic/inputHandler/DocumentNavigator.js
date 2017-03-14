@@ -137,18 +137,7 @@ const DocumentNavigator = function DocumentNavigator(page, containerCssSelector,
 
   // Initialise pointers information
   this.transform = new CssTransform(this.el.container);
-  this.pointerData = {
-    pointer: {
-      prev: {
-        x: 0,
-        y: 0
-      },
-      now: {
-        x: 0,
-        y: 0
-      }
-    }
-  };
+
   // Initialise document navigator
   // 1. Set viewport on init;
   windowResize.call(this);
