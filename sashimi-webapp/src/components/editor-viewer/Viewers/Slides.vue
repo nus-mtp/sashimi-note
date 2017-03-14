@@ -1,11 +1,14 @@
 <template>
-  <div id='viewer-container'></div>
+  <div id='viewer-container'>
+    <div class="page-view"></div>
+  </div>
 </template>
 
 <script>
   import Vue from 'vue';
   import _ from 'lodash';
   import PageRenderer from 'src/logic/renderer';
+  import DocumentNavigator from 'src/logic/inputHandler/DocumentNavigator';
   
   // Throttle function used to limit the rate which
   // the render function is called
@@ -16,7 +19,8 @@
     props: ['htmlData'],
     data() {
       return {
-        pageRenderer: null
+        pageRenderer: null,
+        documentNavigator: null
       };
     },
     watch: {
@@ -40,8 +44,19 @@
       Vue.nextTick(() => {
         this.pageRenderer = new PageRenderer('viewer-container', PAGE_A6);
         renderThrottleFn(this.htmlData, this.pageRenderer);
+
+        // Initialise navigation for Slide mode
+        this.documentNavigator = new DocumentNavigator(
+          this.pageRenderer.page,
+          '#viewer-container',
+          '.page-view'
+        );
       });
+    },
+    beforeDestroy() {
+      this.documentNavigator.removeListeners();
     }
   };
 
 </script>
+
