@@ -4,13 +4,14 @@
     id="123">
     <button class="folder">
       <img src="../../assets/images/icons/icon-folder.svg" alt="folder">
-      <p class="inline-block">CS3244 Project</p>
+      <p class="inline-block">{{folderName}}</p>
     </button>
   </div>
 </template>
 
 <script>
   export default {
+    props: ['folderName'],
     data() {
     },
     methods: {
