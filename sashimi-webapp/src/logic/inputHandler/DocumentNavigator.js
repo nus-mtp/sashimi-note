@@ -125,6 +125,10 @@ const DocumentNavigator = function DocumentNavigator(page, containerCssSelector,
     container: document.querySelector(containerCssSelector),
     element: document.querySelector(elementCssSelector)
   };
+
+  if (!this.el.container) throw new Error(`Unable to query "${containerCssSelector}"`);
+  if (!this.el.element) throw new Error(`Unable to query "${elementCssSelector}"`);
+
   this.el.container.computedStyle = domUtils.getComputedStyle(this.el.container.parentNode);
   this.el.element.computedStyle = domUtils.getComputedStyle(this.el.element);
 
