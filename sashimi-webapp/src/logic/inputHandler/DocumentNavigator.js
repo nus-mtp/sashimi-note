@@ -29,14 +29,19 @@ function scaleGuard(scale) {
   return scale;
 }
 
-const CssTransform = function CssTransform(settings) {
-  if (settings == null) {
-    this.scale = 1;
-    this.translateX = 0;
-    this.translateY = 0;
-  } else {
-    this.set(settings);
+const CssTransform = function CssTransform(element) {
+  let elementToApply = element;
+  if (typeof element === 'string') {
+    elementToApply = document.querySelector(element);
   }
+
+  // Check if element can be resolved
+  if (!elementToApply) throw new Error(`Cannot find reference to element > ${element}`);
+
+  this.elementRef = elementToApply;
+  this.scale = 1;
+  this.translateX = 0;
+  this.translateY = 0;
   return this.get();
 };
 
@@ -51,12 +56,8 @@ CssTransform.prototype.set = function set(settings) {
   return this.get();
 };
 
-CssTransform.prototype.applyTransformation = function applyTransformation(element) {
-  let elementToApply = element;
-  if (typeof element === 'string') {
-    elementToApply = document.querySelector(element);
-  }
-  elementToApply.style.transform = this.get();
+CssTransform.prototype.applyTransformation = function applyTransformation() {
+  this.elementRef.style.transform = this.get();
 };
 
 
@@ -72,7 +73,7 @@ const windowResize = function windowResize(event) {
   };
 
   this.transform.set({ scale: (this.width.container - 60) / this.width.element });
-  this.transform.applyTransformation(this.el.container);
+  this.transform.applyTransformation();
 };
 
 const pointers = {};
@@ -103,7 +104,7 @@ const pointermove = function pointermove(event) {
     const translateY = translateYGuard(this.transform.translateY + (moveY * moveSpeed), this.el.container);
 
     this.transform.set({ translateX, translateY });
-    this.transform.applyTransformation(this.el.container);
+    this.transform.applyTransformation();
   }
 };
 const mousewheel = function mousewheel(event) {
@@ -112,12 +113,12 @@ const mousewheel = function mousewheel(event) {
     let scale = this.transform.scale * (1 - (event.deltaY / 1000));
     scale = scaleGuard(scale);
     this.transform.set({ scale });
-    this.transform.applyTransformation(this.el.container);
+    this.transform.applyTransformation();
   } else {
     let translateY = this.transform.translateY - ((event.deltaY/4) * (1 / this.transform.scale));
     translateY = translateYGuard(translateY, this.el.container);
     this.transform.set({ translateY });
-    this.transform.applyTransformation(this.el.container);
+    this.transform.applyTransformation();
   }
 };
 
@@ -144,7 +145,7 @@ const DocumentNavigator = function DocumentNavigator(page, containerCssSelector,
   };
 
   // Initialise pointers information
-  this.transform = new CssTransform();
+  this.transform = new CssTransform(this.el.container);
   this.pointerData = {
     pointer: {
       prev: {
