@@ -82,6 +82,7 @@ export default {
   methods: {
     execute(action) {
       eventHub.$emit('execute', action);
+      this.$emit('execute', action);
     },
     setViewMode(viewMode) {
       this.$emit('changeViewMode', viewMode);

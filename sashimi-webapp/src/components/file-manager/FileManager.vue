@@ -2,6 +2,7 @@
   <div>
     <userInputs 
       v-on:changeViewMode="changeViewMode"
+      v-on:execute="executeAction"
     ></userInputs>
     <documents 
       :view-mode="viewMode"
@@ -32,12 +33,20 @@ export default {
     changeViewMode(viewMode) {
       this.viewMode = viewMode;
     },
+    executeAction(action) {
+      if (action === 'createFolder') {
+        this.docs.createFolder('Folder');
+      } else if (action === 'createFile') {
+        this.docs.createFile('File');
+      }
+    }
   },
   mounted() {
     const startPromise = fileManager.start();
 
     startPromise
     .then((rootFolder) => {
+      console.log(rootFolder);
       this.docs = rootFolder;
     })
     .catch((error) => {
