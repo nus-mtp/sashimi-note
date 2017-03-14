@@ -8,12 +8,12 @@
         <h3>New {{value}}</h3>
       </div>
     </div>
-    <div id="files" v-for="file in docs.childFileList">
+    <div v-for="file in docs.childFileList">
       <file 
         :file-name="file.name"
       ></file>
     </div>
-    <div id="folder" v-for="folder in docs.childFolderList">
+    <div v-for="folder in docs.childFolderList">
       <folder
         :folder-name="folder.name"
       ></folder>
@@ -74,7 +74,7 @@ export default {
     }
 
     &:focus {
-      background-color: #d3e2e2;
+      background-color: $documents-focus-color;
     }
 
     p {
@@ -104,7 +104,7 @@ export default {
     }
 
     p {
-      font-size: 13px;
+      font-size: $documents-name-font-size;
       position: absolute;
       top: 15px;
       left: 0;
@@ -126,10 +126,8 @@ export default {
   .folder,
   .file {
     width: 100%;
-    border-bottom: 1px solid $navbar-border-color;
-    vertical-align: middle;
-    padding: 10px 20px;
-    padding-top: 16px;
+    border-bottom: 1px solid $grey-border;
+    padding: 8px 18px;
     text-overflow: ellipsis;
     overflow: hidden;
     white-space: nowrap;
@@ -141,7 +139,7 @@ export default {
     }
 
     p {
-      font-size: 16px;
+      font-size: $documents-name-font-size;
       width: 95%;
       overflow: hidden;
       text-overflow: ellipsis;

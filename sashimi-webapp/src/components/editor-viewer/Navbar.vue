@@ -116,7 +116,7 @@ export default {
 }
 
 .button-dropdown {
-  font-size: $navbar-font-size;
+  font-size: $logo-font-size;
   padding: 10px;
   box-sizing: border-box;
 
@@ -136,7 +136,7 @@ export default {
   .button-dropdown {
     border: 1px solid transparent;  
     transition: border 0.5s;
-    width: 140px;
+    width: $navbar-button-dropdown-width;
   }
 
   &:hover {
@@ -157,7 +157,7 @@ export default {
   opacity:0;
   visibility: hidden;
   position: absolute;
-  width: 140px;
+  width: $navbar-button-dropdown-width;
   box-sizing: border-box;
   border: 1px solid black;
   text-align: left;
@@ -173,7 +173,7 @@ export default {
     background-color: transparent;
     cursor: pointer;
     font-family: $font-primary;
-    font-size: $navbar-font-size;
+    font-size: $logo-font-size;
     display: block;
     padding: 12px;
     width: 100%;

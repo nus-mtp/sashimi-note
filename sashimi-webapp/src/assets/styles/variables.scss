@@ -1,21 +1,30 @@
-// $font 
+// $fonts
 $font-primary: 'Avenir', Helvetica, Arial, sans-serif;
+$font-size-primary: 15px;
+$font-size-secondary: 14px;
 
-// navbar width, height
+$logo-font-size: $font-size-primary;
+$navbar-font-size: $font-size-primary;
+$documents-name-font-size: 13px;
+
+// widths and heights
 $content-navbar-height: 71px;
 $file-manager-navbar-height: 119px;
 $file-manager-navbar-height-mobile: 157px;
-$left-margin-navbar-elements: 18px;
-$button-logo-width: 150px;
+
+$button-logo-width: 155px;
 $button-img-width: 35px;
 
+$navbar-elements-left-margin: 18px;
+$navbar-button-dropdown-width: 140px;
+
 // colors
+$grey-background: #F7F7F7;
+$grey-border: #D5D5D5;
+$grey-font: #95989A;
+$green: #d3e2e2;
+$orange: #ff8c00;
 
-$grey: #D5D5D5;
-
-$navbar-background-color: #F7F7F7;
-$navbar-border-color: $grey;
-
-// navbar font size
-$navbar-font-size: 15px;
-
+$navbar-background-color: $grey-background;
+$navbar-border-color: $grey-border;
+$documents-focus-color: $green;

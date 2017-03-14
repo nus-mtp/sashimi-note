@@ -113,7 +113,7 @@ export default {
     width: 80%;
     padding: 8px;
     font-family: $font-primary;
-    font-size: 15px;
+    font-size: $font-size-secondary;
   }
 }
 
