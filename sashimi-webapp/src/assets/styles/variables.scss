@@ -1,5 +1,5 @@
 // $font 
-$general-font: 'Avenir', Helvetica, Arial, sans-serif;
+$font-primary: 'Avenir', Helvetica, Arial, sans-serif;
 
 // navbar width, height
 $content-navbar-height: 71px;
@@ -9,9 +9,12 @@ $left-margin-navbar-elements: 18px;
 $button-logo-width: 150px;
 $button-img-width: 35px;
 
-// navbar colors
+// colors
+
+$grey: #D5D5D5;
+
 $navbar-background-color: #F7F7F7;
-$navbar-border-color: #D5D5D5;
+$navbar-border-color: $grey;
 
 // navbar font size
 $navbar-font-size: 15px;
