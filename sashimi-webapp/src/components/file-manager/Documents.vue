@@ -8,16 +8,17 @@
         <h3>New {{value}}</h3>
       </div>
     </div>
-    <div v-for="file in docs.childFileList">
-      <file 
-        :file-name="file.name"
-      ></file>
-    </div>
-    <div v-for="folder in docs.childFolderList">
-      <folder
-        :folder-name="folder.name"
-      ></folder>
-    </div>
+    <file 
+      v-for="file in docs.childFileList"
+      v-on:focusFile="focus"
+          :file-name="file.name"
+          :id="file.id">
+    </file>
+    <folder 
+      v-for="folder in docs.childFolderList"
+          :id="folder.id"
+          :folder-name="folder.name">
+    </folder>
   </div>
 </template>
 
