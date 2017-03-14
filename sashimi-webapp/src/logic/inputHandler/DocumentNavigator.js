@@ -2,33 +2,33 @@ import interact from 'interactjs';
 import domUtils from 'src/helpers/domUtils';
 import unitConverter from 'src/helpers/unitConverter';
 
-function translateYGuard(translateY, parentEle) {
-  const bottomLimit = (() => {
-    const numberOfElement = parentEle.childNodes.length;
-    const pageHeight = unitConverter.get(parentEle.childNodes[0].style.height, 'px', false);
-    const pageMargin = unitConverter.get(getComputedStyle(parentEle.childNodes[0]).marginTop, 'px', false);
-    return -(numberOfElement) * (pageHeight + pageMargin);
-  })();
-  if (translateY < bottomLimit) translateY = bottomLimit;
-  if (translateY > 0) translateY = 0;
-  return translateY;
-}
-
-function translateXGuard(translateX, parentEle) {
-  const sideLimit = (() => {
-    const pageWidth = unitConverter.get(parentEle.childNodes[0].style.width, 'px', false);
-    return (pageWidth / 2);
-  })();
-  if (translateX < -sideLimit) translateX = -sideLimit;
-  if (translateX > sideLimit) translateX = sideLimit;
-  return translateX;
-}
-
-function scaleGuard(scale) {
-  if (scale < 0.05) scale = 0.05;
-  if (scale > 15) scale = 15;
-  return scale;
-}
+const guard = {
+  translateY(translateY, parentEle) {
+    const bottomLimit = (() => {
+      const numberOfElement = parentEle.childNodes.length;
+      const pageHeight = unitConverter.get(parentEle.childNodes[0].style.height, 'px', false);
+      const pageMargin = unitConverter.get(getComputedStyle(parentEle.childNodes[0]).marginTop, 'px', false);
+      return -(numberOfElement) * (pageHeight + pageMargin);
+    })();
+    if (translateY < bottomLimit) translateY = bottomLimit;
+    if (translateY > 0) translateY = 0;
+    return translateY;
+  },
+  translateX(translateX, parentEle) {
+    const sideLimit = (() => {
+      const pageWidth = unitConverter.get(parentEle.childNodes[0].style.width, 'px', false);
+      return (pageWidth / 2);
+    })();
+    if (translateX < -sideLimit) translateX = -sideLimit;
+    if (translateX > sideLimit) translateX = sideLimit;
+    return translateX;
+  },
+  scale(scale) {
+    if (scale < 0.05) scale = 0.05;
+    if (scale > 15) scale = 15;
+    return scale;
+  }
+};
 
 const CssTransform = function CssTransform(element) {
   let elementToApply = element;
@@ -73,10 +73,10 @@ const windowResize = function windowResize(event) {
 
 const pointermove = function pointermove(event) {
   const moveSpeed = (1/this.transform.scale);
-  const translateY = translateYGuard(this.transform.translateY + (event.dy * moveSpeed), this.el.container);
+  const translateY = guard.translateY(this.transform.translateY + (event.dy * moveSpeed), this.el.container);
   let translateX = 0;
   if ((this.width.container) < this.width.element * this.transform.scale) {
-    translateX = translateXGuard(this.transform.translateX + (event.dx * moveSpeed), this.el.container);
+    translateX = guard.translateX(this.transform.translateX + (event.dx * moveSpeed), this.el.container);
   }
 
   // translate the element
@@ -86,7 +86,7 @@ const pointermove = function pointermove(event) {
 const interactZoom = function interactZoom(event) {
   if (!event.ds) event.ds = (-event.deltaY / 1000);
   let scale = this.transform.scale * (1 + event.ds);
-  scale = scaleGuard(scale);
+  scale = guard.scale(scale);
   this.transform.set({ scale });
 };
 
@@ -96,7 +96,7 @@ const mousewheel = function mousewheel(event) {
     interactZoom.call(this, event);
   } else {
     let translateY = this.transform.translateY - ((event.deltaY/4) * (1 / this.transform.scale));
-    translateY = translateYGuard(translateY, this.el.container);
+    translateY = guard.translateY(translateY, this.el.container);
     this.transform.set({ translateY });
   }
 };
