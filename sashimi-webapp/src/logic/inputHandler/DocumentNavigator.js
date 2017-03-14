@@ -53,13 +53,8 @@ CssTransform.prototype.set = function set(settings) {
   this.scale = settings.scale || this.scale;
   this.translateX = (settings.translateX != null) ? settings.translateX : this.translateX;
   this.translateY = (settings.translateY != null) ? settings.translateY : this.translateY;
-  return this.get();
-};
-
-CssTransform.prototype.applyTransformation = function applyTransformation() {
   this.elementRef.style.transform = this.get();
 };
-
 
 // Needed interaction
 // 1. Panning
@@ -73,7 +68,6 @@ const windowResize = function windowResize(event) {
   };
 
   this.transform.set({ scale: (this.width.container - 60) / this.width.element });
-  this.transform.applyTransformation();
 };
 
 const pointers = {};
@@ -104,7 +98,6 @@ const pointermove = function pointermove(event) {
     const translateY = translateYGuard(this.transform.translateY + (moveY * moveSpeed), this.el.container);
 
     this.transform.set({ translateX, translateY });
-    this.transform.applyTransformation();
   }
 };
 const mousewheel = function mousewheel(event) {
@@ -113,12 +106,10 @@ const mousewheel = function mousewheel(event) {
     let scale = this.transform.scale * (1 - (event.deltaY / 1000));
     scale = scaleGuard(scale);
     this.transform.set({ scale });
-    this.transform.applyTransformation();
   } else {
     let translateY = this.transform.translateY - ((event.deltaY/4) * (1 / this.transform.scale));
     translateY = translateYGuard(translateY, this.el.container);
     this.transform.set({ translateY });
-    this.transform.applyTransformation();
   }
 };
 
