@@ -57,10 +57,7 @@ CssTransform.prototype.set = function set(settings) {
   this.elementRef.style.transform = this.get();
 };
 
-// Needed interaction
-// 1. Panning
-// 2. Zomming
-// 3. Fit width to page
+// Interactions
 const windowResize = function windowResize(event) {
   // recompute parent and child width
   this.width = {
