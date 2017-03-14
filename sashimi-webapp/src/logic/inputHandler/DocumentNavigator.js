@@ -71,9 +71,8 @@ const windowResize = function windowResize(event) {
     container: unitConverter.get(this.el.container.computedStyle.width, 'px', false)
   };
 
-  this.pointerData.transform.scale = (this.width.container - 60) / this.width.element;
-  this.cssTransformer.set(this.pointerData.transform);
-  this.cssTransformer.applyTransformation(this.el.container);
+  this.transform.set({ scale: (this.width.container - 60) / this.width.element });
+  this.transform.applyTransformation(this.el.container);
 };
 
 const pointers = {};
@@ -99,31 +98,26 @@ const pointermove = function pointermove(event) {
     pointersPrev[event.pointerId].x = pointers[event.pointerId].x;
     pointersPrev[event.pointerId].y = pointers[event.pointerId].y;
 
-    const moveSpeed = (1/this.cssTransformer.scale);
-    const newX = translateXGuard(this.cssTransformer.translateX + (moveX * moveSpeed), this.el.container);
-    const newY = translateYGuard(this.cssTransformer.translateY + (moveY * moveSpeed), this.el.container);
-    this.pointerData.transform.translateX = newX;
-    this.pointerData.transform.translateY = newY;
+    const moveSpeed = (1/this.transform.scale);
+    const translateX = translateXGuard(this.transform.translateX + (moveX * moveSpeed), this.el.container);
+    const translateY = translateYGuard(this.transform.translateY + (moveY * moveSpeed), this.el.container);
 
-    this.cssTransformer.set({
-      translateX: newX,
-      translateY: newY
-    });
-    this.cssTransformer.applyTransformation(this.el.container);
+    this.transform.set({ translateX, translateY });
+    this.transform.applyTransformation(this.el.container);
   }
 };
 const mousewheel = function mousewheel(event) {
   event.preventDefault();
   if (event.ctrlKey) {
-    this.pointerData.transform.scale *= (1 - (event.deltaY / 1000));
-    this.pointerData.transform.scale = scaleGuard(this.pointerData.transform.scale);
-    this.cssTransformer.set(this.pointerData.transform);
-    this.cssTransformer.applyTransformation(this.el.container);
+    let scale = this.transform.scale * (1 - (event.deltaY / 1000));
+    scale = scaleGuard(scale);
+    this.transform.set({ scale });
+    this.transform.applyTransformation(this.el.container);
   } else {
-    this.pointerData.transform.translateY -= (event.deltaY/4) * (1/this.cssTransformer.scale);
-    this.pointerData.transform.translateY = translateYGuard(this.pointerData.transform.translateY, this.el.container);
-    this.cssTransformer.set(this.pointerData.transform);
-    this.cssTransformer.applyTransformation(this.el.container);
+    let translateY = this.transform.translateY - ((event.deltaY/4) * (1 / this.transform.scale));
+    translateY = translateYGuard(translateY, this.el.container);
+    this.transform.set({ translateY });
+    this.transform.applyTransformation(this.el.container);
   }
 };
 
@@ -150,12 +144,8 @@ const DocumentNavigator = function DocumentNavigator(page, containerCssSelector,
   };
 
   // Initialise pointers information
+  this.transform = new CssTransform();
   this.pointerData = {
-    transform: {
-      scale: 1,
-      translateX: 0,
-      translateY: 0
-    },
     pointer: {
       prev: {
         x: 0,
@@ -167,8 +157,6 @@ const DocumentNavigator = function DocumentNavigator(page, containerCssSelector,
       }
     }
   };
-  this.cssTransformer = new CssTransform(this.pointerData.transform);
-
   // Initialise document navigator
   // 1. Set viewport on init;
   windowResize.call(this);
