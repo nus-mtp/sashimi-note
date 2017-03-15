@@ -19,6 +19,7 @@
 </template>
 
 <script>
+import storage from 'src/database/storage';
 import navbar from './Navbar';
 import viewer from './Viewer';
 import editor from './Editor';
@@ -33,7 +34,7 @@ export default {
     return {
       // TODO: Temporary solution for presistence storage
       //       to be remove when file manager is implemented.
-      mdContent: localStorage.getItem('mdContent'),
+      mdContent: '',
       action: '',
       fileFormat: 'html',
       editorCols: {
@@ -83,9 +84,7 @@ export default {
       }
     },
     mdContent(value) {
-      // TODO: Temporary solution for presistence storage
-      //       to be remove when file manager is implemented.
-      localStorage.setItem('mdContent', value);
+      storage.saveFile(this.$route.query.id, value);
     },
   },
   method: {
@@ -93,10 +92,10 @@ export default {
   computed: {
   },
   mounted() {
-    // console.log(this.$route.query.id);
-
-    // if id != null
-    //  load content
+    storage.loadFile(this.$route.query.id)
+    .then((data) => {
+      this.mdContent = data;
+    });
   }
 };
 
