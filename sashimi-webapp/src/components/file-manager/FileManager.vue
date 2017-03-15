@@ -24,7 +24,7 @@ export default {
   data() {
     return {
       viewMode: 'listView',
-      docs: ''
+      docs: {}
     };
   },
   watch: {
@@ -42,11 +42,9 @@ export default {
     }
   },
   mounted() {
-    const startPromise = fileManager.start();
-
-    startPromise
+    fileManager
+    .start()
     .then((rootFolder) => {
-      console.log(rootFolder);
       this.docs = rootFolder;
     })
     .catch((error) => {
