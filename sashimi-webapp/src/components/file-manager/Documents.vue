@@ -8,17 +8,17 @@
         <h3>New {{value}}</h3>
       </div>
     </div>
+    <folder 
+      v-for="folder in docs.childFolderList"
+          :id="folder.id"
+          :folder-name="folder.name">
+    </folder>
     <file 
       v-for="file in docs.childFileList"
       v-on:focusFile="focus"
           :file-name="file.name"
           :id="file.id">
     </file>
-    <folder 
-      v-for="folder in docs.childFolderList"
-          :id="folder.id"
-          :folder-name="folder.name">
-    </folder>
   </div>
 </template>
 
@@ -76,7 +76,7 @@ export default {
     padding: 0;
 
     &:hover {
-      background-color: rgba(0,0,0,0.02);      
+      background-color: rgba(0,0,0,0.02);
     }
 
     &:focus {
@@ -85,7 +85,7 @@ export default {
 
     p {
       font-family: $font-primary;
-      
+
       &::selection {
         background-color: white;
       }
