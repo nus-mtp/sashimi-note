@@ -1,5 +1,4 @@
-import storage from '../../database/storage';
-import Folder from './folder';
+import storage from 'src/database/storage';
 
 /**
 * File Object
@@ -15,7 +14,6 @@ export default function File(fileID, fileName, filePath, parentFolder) {
   this.name = fileName;
   this.path = filePath;
   this.parentFolder = parentFolder;
-  console.log('new File created');
 }
 
 /**
@@ -48,11 +46,6 @@ File.prototype.remove = function remove() {
  * @return {}
  */
 File.prototype.save = function save(data) {
-  console.log('file.save');
-  // Case 1a: file exist, file saved
-  // Case 1b: file exist, file not saved (error)
-  // Case 2: file does not exist (nothing saved)
-
   return storage.saveFile(this.id, data);
 };
 
@@ -63,11 +56,6 @@ File.prototype.save = function save(data) {
  * @return {String} data loaded from file
  */
 File.prototype.load = function load() {
-  console.log('file.load');
-  // Case 1a: file exist, file loaded
-  // Case 1b: file exist, file not loaded (error)
-  // Case 2: file does not exist (nothing loaded)
-
   return storage.loadFile(this.id);
 };
 
