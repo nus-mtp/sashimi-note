@@ -21,15 +21,15 @@ const fileManager = {
    * @return {List} Contains files and folders
    */
   searchAll: function searchAll(searchString) {
-    // return search.all(searchString)
+    return search.all(searchString);
   },
 
   searchFileOnly: function searchFileOnly(searchString) {
-    // return search.fileOnly(searchString)
+    return search.fileOnly(searchString);
   },
 
   searchFolderOnly: function searchFolderOnly(searchString) {
-    // return search.folderOnly(searchString)
+    return search.folderOnly(searchString);
   },
 
   /* History Operations */
@@ -48,5 +48,4 @@ const fileManager = {
 
 };
 
-// module.exports = fileManager;
 export default fileManager;
