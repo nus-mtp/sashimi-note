@@ -1,25 +1,28 @@
 <template>
   <div class="col vertical-align-child" 
     v-on:dblclick="openFolder"
-    id="123">
+  >
     <button class="folder">
       <img src="../../assets/images/icons/icon-folder.svg" alt="folder">
-      <p class="inline-block">{{folderName}}</p>
+      <p class="inline-block">{{folder.name}}</p>
     </button>
   </div>
 </template>
 
 <script>
   export default {
-    props: ['folderName'],
+    props: ['folder'],
     data() {
     },
     methods: {
       openFolder() {
-        const folderId = this.$el.id;
+        const folderId = this.folder.id;
+        // TODO:
+        // path should not be content, it should
+        // replace the filemanger doc to this folder instead.
         this.$router.push({ path: 'content', query: { id: folderId } });
       },
-    }
+    },
   };
 </script>
 

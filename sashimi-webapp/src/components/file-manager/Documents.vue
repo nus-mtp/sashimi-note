@@ -10,14 +10,14 @@
     </div>
     <folder 
       v-for="folder in docs.childFolderList"
-          :id="folder.id"
-          :folder-name="folder.name">
+        :folder="folder"
+    >
     </folder>
     <file 
       v-for="file in docs.childFileList"
-      v-on:focusFile="focus"
-          :file-name="file.name"
-          :id="file.id">
+        v-on:focusFile="focus"
+        :file="file"
+    >
     </file>
   </div>
 </template>

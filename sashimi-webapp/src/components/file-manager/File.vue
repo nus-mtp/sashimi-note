@@ -4,20 +4,19 @@
     v-on:click="focusFile($event)">
     <button class="file">
       <img src="../../assets/images/icons/icon-file.svg" alt="file">
-      <p class="inline-block">{{fileName}}</p>
+      <p class="inline-block">{{file.name}}</p>
     </button>
   </div>
 </template>
 
 <script>
 export default {
-  props: ['fileName'],
+  props: ['file'],
   data() {
   },
   methods: {
     openFile() {
-      const fileId = this.$el.id;
-      this.$router.push({ path: 'content', query: { id: fileId } });
+      this.$router.push({ path: 'content', query: { id: this.file.id } });
     },
     focusFile(event) {
       this.$emit('focusFile', event);
