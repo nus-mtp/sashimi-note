@@ -3,7 +3,8 @@ import Folder from './folder';
 
 /* Constants */
 
-const RENAME_ERROR_MSG = `Another file in "${this.parentFolder.path}" has the same file name`;
+// const RENAME_ERROR_MSG = `Another file in "${this.parentFolder.path}" has the same file name`;
+const RENAME_ERROR_MSG = 'Another file in the current folder has the same name';
 const MOVE_SAME_FOLDER_ERROR_MSG = 'Attempting to move to current folder';
 const MOVE_INVALID_FODLER_ERROR_MSG = 'Attempting to move to an invalid folder';
 

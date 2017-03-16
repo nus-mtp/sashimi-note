@@ -2,8 +2,11 @@ import storage from 'src/database/storage';
 import File from './file';
 
 /* Constants */
-const RENAME_ERROR_MSG = `Another folder in "${this.parentFolder.path}" has the same file name`;
-const RENAME_ROOTFOLDER_ERROR_MSG = `"${this.name}" cannot be renamed`;
+// const RENAME_ERROR_MSG = `Another folder in "${this.parentFolder.path}" has the same file name`;
+// const RENAME_ROOTFOLDER_ERROR_MSG = `"${this.name}" cannot be renamed`;
+const RENAME_ERROR_MSG = 'Another folder in the current folder has the same name';
+const RENAME_ROOTFOLDER_ERROR_MSG = 'Root folder cannot be renamed';
+
 
 const ORGANIZATION_ID = 1;
 const ROOT_FOLDER_ID = 0;
