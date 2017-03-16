@@ -5,6 +5,7 @@
       v-on:execute="executeAction"
     ></userInputs>
     <documents 
+      v-on:changeFolder="changeFolder"
       :view-mode="viewMode"
       :docs="docs"
     ></documents>
@@ -30,6 +31,10 @@ export default {
   watch: {
   },
   methods: {
+    changeFolder(newFolder) {
+      this.docs = newFolder;
+      console.log(this.docs);
+    },
     changeViewMode(viewMode) {
       this.viewMode = viewMode;
     },

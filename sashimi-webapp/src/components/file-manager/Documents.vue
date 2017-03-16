@@ -10,6 +10,7 @@
     </div>
     <folder 
       v-for="folder in docs.childFolderList"
+        v-on:openFolder="changeFolder"
         :folder="folder"
     >
     </folder>
@@ -47,6 +48,9 @@ export default {
   methods: {
     focus(event) {
       console.log(event);
+    },
+    changeFolder(newFolder) {
+      this.$emit('changeFolder', newFolder);
     }
   },
   mounted() {

@@ -16,11 +16,7 @@
     },
     methods: {
       openFolder() {
-        const folderId = this.folder.id;
-        // TODO:
-        // path should not be content, it should
-        // replace the filemanger doc to this folder instead.
-        this.$router.push({ path: 'content', query: { id: folderId } });
+        this.$emit('openFolder', this.folder);
       },
     },
   };
