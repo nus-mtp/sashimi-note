@@ -4,30 +4,65 @@ import search from './search';
 
 const fileManager = {
 
-  /** Initialize database
+  /**
+   * Initialize Filemanager and Database
    *
-   * @return {Folder} root folder
+   * @return {Promise}
    */
   start: function start() {
-    return Folder.getRootFolder();
+    return Folder.init();
+  },
+
+  /* Get Operations */
+
+  /**
+   * Given an ID, return the File
+   *
+   * @param {Integer} fileID
+   * @return {File}
+   */
+  getFileByID: function getFileByID(fileID) {
+    return Folder.getFile(fileID);
+  },
+
+  /**
+   * Given an ID, return the Folder
+   *
+   * @param {Integer} folderID
+   * @return {Folder}
+   */
+  getFolderByID: function getFolderByID(folderID) {
+    return Folder.getFolder(folderID);
   },
 
   /* Search Operations */
 
   /**
-   * Return a list of files and folders containing the search string
+   * Return a Folder containing files and folders matching the search string
    *
    * @param {String} searchString
-   * @return {List} Contains files and folders
+   * @return {Folder}
    */
   searchAll: function searchAll(searchString) {
     return search.all(searchString);
   },
 
+  /**
+   * Return a Folder containing files matching the search string
+   *
+   * @param {String} searchString
+   * @return {Folder}
+   */
   searchFileOnly: function searchFileOnly(searchString) {
     return search.fileOnly(searchString);
   },
 
+  /**
+   * Return a Folder containing folders matching the search string
+   *
+   * @param {String} searchString
+   * @return {Folder}
+   */
   searchFolderOnly: function searchFolderOnly(searchString) {
     return search.folderOnly(searchString);
   },

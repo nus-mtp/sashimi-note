@@ -27,6 +27,29 @@ function hasSameFolderName(newFolderName) {
   return sameFolderName;
 }
 
+function queueIsEmpty(queue) {
+  return queue.length <= 0;
+}
+
+function removeElementAtIndex(queue, index) {
+  if (index === NO_PARENT_ID) {
+    return null;
+  } else {
+    return queue.splice(index, 1)[0];
+  }
+}
+
+function getChildFile(queue, parentID) {
+  parentID = (parentID == null) ? NO_PARENT_ID: parentID;
+  const index = queue.findIndex(dbFileObj => dbFileObj.folder_id === parentID);
+  return removeElementAtIndex(queue, index);
+}
+
+function getChildFolder(queue, parentID) {
+  parentID = (parentID == null) ? NO_PARENT_ID: parentID;
+  const index = queue.findIndex(dbFolderObj => dbFolderObj.parent_folder_id === parentID);
+  return removeElementAtIndex(queue, index);
+}
 
 /**
 * Folder Object
@@ -35,7 +58,6 @@ function hasSameFolderName(newFolderName) {
 * @param {String} folderName
 * @param {String} folderPath
 */
-
 function Folder(folderID, folderName, folderPath) {
   this.id = folderID;
   this.name = folderName;
@@ -96,6 +118,7 @@ Folder.prototype.remove = function remove() {
   }
   return storage.deleteFolder(this.id)
   .then(() => {
+    delete idtoFolderMap[this.id];
     const parentFolder = this.parentFolder;
     const index = parentFolder.childFolderList.findIndex(childFolder => childFolder.id === this.id);
     parentFolder.childFolderList.splice(index, 1);
@@ -125,31 +148,6 @@ Folder.prototype.rename = function rename(newFolderName) {
     this.path = this.path.replace(oldFolderName, newFolderName);
   });
 };
-
-/* Private Functions */
-function queueIsEmpty(queue) {
-  return queue.length <= 0;
-}
-
-function removeElementAtIndex(queue, index) {
-  if (index === NO_PARENT_ID) {
-    return null;
-  } else {
-    return queue.splice(index, 1)[0];
-  }
-}
-
-function getChildFile(queue, parentID) {
-  parentID = (parentID == null) ? NO_PARENT_ID: parentID;
-  const index = queue.findIndex(dbFileObj => dbFileObj.folder_id === parentID);
-  return removeElementAtIndex(queue, index);
-}
-
-function getChildFolder(queue, parentID) {
-  parentID = (parentID == null) ? NO_PARENT_ID: parentID;
-  const index = queue.findIndex(dbFolderObj => dbFolderObj.parent_folder_id === parentID);
-  return removeElementAtIndex(queue, index);
-}
 
 /* Folder static functions */
 const folderOperation = {
@@ -213,6 +211,10 @@ const folderOperation = {
 
   getFolder: function getFolder(id) {
     return idtoFolderMap[id];
+  },
+
+  removeFileByID: function removeFileByID(id) {
+    delete idtoFileMap[id];
   }
 
 };
