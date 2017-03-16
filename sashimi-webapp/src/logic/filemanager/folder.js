@@ -2,12 +2,31 @@ import storage from 'src/database/storage';
 import File from './file';
 
 /* Constants */
-const ORGANIZATION_ID = 0;
+const RENAME_ERROR_MSG = `Another folder in "${this.parentFolder.path}" has the same file name`;
+const RENAME_ROOTFOLDER_ERROR_MSG = `"${this.name}" cannot be renamed`;
+
+const ORGANIZATION_ID = 1;
 const ROOT_FOLDER_ID = 0;
 const NO_PARENT_ID = -1;
 
 const idtoFileMap = {}; // key: id, value: File
 const idtoFolderMap = {}; // key: id, value: Folder
+
+/* Private Functions */
+function hasSameFolderName(newFolderName) {
+  const currParentFolder = this.parentFolder;
+  let currFolder;
+  let sameFolderName = false;
+  for (let i = 0; currParentFolder.childFolderList.length; i += 1) {
+    currFolder = currParentFolder.childFolderList[i];
+    if (newFolderName === currFolder.name) {
+      sameFolderName = true;
+      break;
+    }
+  }
+  return sameFolderName;
+}
+
 
 /**
 * Folder Object
@@ -84,18 +103,27 @@ Folder.prototype.remove = function remove() {
 };
 
 /**
- * Rename the folder in the database
+ * Rename folder
  *
  * @param {String} newFolderName
- * @return {}
+ * @return {Promise}
  */
 Folder.prototype.rename = function rename(newFolderName) {
-  // storage.renameFolder(newFolderName, this.id);
-  const oldFolderName = this.name;
-  this.name = newFolderName;
-  this.path = this.path.replace(oldFolderName, newFolderName);
-
-  // update folder name in database
+  return new Promise((resolve, reject) => {
+    if (this.id === ROOT_FOLDER_ID) {
+      reject(RENAME_ROOTFOLDER_ERROR_MSG);
+    }
+    if (hasSameFolderName(newFolderName)) {
+      reject(RENAME_ERROR_MSG);
+    }
+    resolve();
+  })
+  .then(() => storage.renameFolder(newFolderName, this.id))
+  .then(() => {
+    const oldFolderName = this.name;
+    this.name = newFolderName;
+    this.path = this.path.replace(oldFolderName, newFolderName);
+  });
 };
 
 /* Private Functions */
