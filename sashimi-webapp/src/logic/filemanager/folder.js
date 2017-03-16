@@ -191,8 +191,8 @@ const folderOperation = {
 
       /* Process dbFolderList for child folder */
           while ((dbFolderObj = getChildFolder(dbFolderList, currFolder.id)) !== null) {
-            processingQueue.push(dbFolderObj);
             childFolder = new Folder(dbFolderObj.folder_id, dbFolderObj.folder_name, dbFolderObj.folder_path);
+            processingQueue.push(childFolder);
             idtoFolderMap[childFolder.id] = childFolder;
             childFolder.parentFolder = currFolder;
             currFolder.childFolderList.push(childFolder);
