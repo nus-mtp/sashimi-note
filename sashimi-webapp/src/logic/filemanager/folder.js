@@ -24,7 +24,6 @@ function Folder(folderID, folderName, folderPath) {
   this.parentFolder = null;
   this.childFolderList = []; // list of folders in current folder
   this.childFileList = []; // list of files in current folder
-  console.log('new Folder created');
 }
 
 /**
@@ -34,7 +33,6 @@ function Folder(folderID, folderName, folderPath) {
  * @return {Folder}
  */
 Folder.prototype.createFolder = function createFolder() {
-  console.log('folder.createFolder');
   return storage.createFolder(ORGANIZATION_ID, this.path, this.id)
   .then((dbFolderObj) => {
     const newFolder = new Folder(dbFolderObj.folder_id, dbFolderObj.folder_name, dbFolderObj.folder_path);
@@ -55,7 +53,6 @@ Folder.prototype.createFolder = function createFolder() {
  * @return {File}
  */
 Folder.prototype.createFile = function createFile() {
-  console.log('folder.createFile');
   return storage.createFile(ORGANIZATION_ID, this.path, this.id)
   .then((dbFileObj) => {
     const newFile = new File(dbFileObj.file_id, dbFileObj.file_name, dbFileObj.file_path, this);
@@ -75,7 +72,6 @@ Folder.prototype.createFile = function createFile() {
  * @return {}
  */
 Folder.prototype.remove = function remove() {
-  console.log('folder.remove');
   if (this.id === ROOT_FOLDER_ID) {
     throw new Error('Cannot remove root folder.');
   }
@@ -94,7 +90,6 @@ Folder.prototype.remove = function remove() {
  * @return {}
  */
 Folder.prototype.rename = function rename(newFolderName) {
-  console.log('folder.next');
   // storage.renameFolder(newFolderName, this.id);
   const oldFolderName = this.name;
   this.name = newFolderName;
@@ -131,12 +126,11 @@ function getChildFolder(queue, parentID) {
 /* Folder static functions */
 const folderOperation = {
   /**
-   * Returns the root folder
+   * Initialize database and all files and folders
    *
-   * @return {Folder}
+   * @return {Promise}
    */
-  getRootFolder: function getRootFolder() {
-    console.log('folderOperation.getRootFolder');
+  init: function init() {
     // to be changed when online platform is implemented
 
     return storage.initializeDatabase()
