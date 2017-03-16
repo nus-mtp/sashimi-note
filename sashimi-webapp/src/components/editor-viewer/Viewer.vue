@@ -1,82 +1,42 @@
 <template>
   <div class="viewer" v-bind:data-fileFormat='fileFormat'>
-    <div v-if="fileFormat === 'pages' || fileFormat === 'slides'">
-      <div id='viewer-container'></div>
-    </div>
-    <div v-else>
-      <div id="viewer-container" v-html="getHtmlData">
-      </div>
-    </div>
+    <viewerPages 
+      v-if="fileFormat === 'pages'"
+      v-bind:htmlData="getHtmlData"
+    ></viewerPages>
+    <viewerSlides 
+      v-else-if="fileFormat === 'slides'"
+      v-bind:htmlData="getHtmlData"
+    ></viewerSlides>
+    <viewerHtml 
+      v-else 
+      v-bind:htmlData="getHtmlData"
+    ></viewerHtml>
   </div>
 </template>
 
 <script>
   import Vue from 'vue';
   import AsyncComputed from 'vue-async-computed';
-  import _ from 'lodash';
   import documentPackager from 'src/logic/documentPackager';
-  import PageRenderer from 'src/logic/renderer';
-  
+  import viewerPages from './Viewers/Pages';
+  import viewerSlides from './Viewers/Slides';
+  import viewerHtml from './Viewers/Html';
+
   Vue.use(AsyncComputed);
 
-  // Declare page renderers instance. These renderer
-  // will be initialised when this component is mounted.
-  const pageRendererList = {
-    slides: null,
-    pages: null,
-  };
-
-  // Throttle function used to limit the rate which
-  // the render function is called
-  const throttleTime = 600;
-  const renderThrottleFn = _.throttle((markdownString, pageRenderer) => {
-    documentPackager.getHtmlData(markdownString)
-    .then(htmlString => pageRenderer.write(htmlString));
-  }, throttleTime);
-
-  const updateViewer = ((component) => {
-    const pr = pageRendererList[component.fileFormat];
-    if (pr) renderThrottleFn(component.editorContent, pr);
-  });
-
   export default {
+    components: {
+      viewerPages,
+      viewerSlides,
+      viewerHtml,
+    },
     props: ['editorContent', 'fileFormat'],
-    data() {
-      return {};
-    },
-    watch: {
-      editorContent() {
-        updateViewer(this);
-      },
-      fileFormat() {
-        updateViewer(this);
-      }
-    },
     asyncComputed: {
       getHtmlData() {
         return documentPackager.getHtmlData(this.editorContent);
       }
     },
-    mounted() {
-      const PAGE_A6 = {
-        width: '16.51cm',
-        height: '13.159cm',
-        padding: {
-          top: '1.2cm',
-          bottom: '1.2cm',
-          right: '1.2cm',
-          left: '1.2cm'
-        }
-      };
-
-      // Mount does not gurrantee DOM to be ready, thus nextTick is used
-      const self = this;
-      Vue.nextTick(() => {
-        pageRendererList.pages = new PageRenderer('viewer-container');
-        pageRendererList.slides = new PageRenderer('viewer-container', PAGE_A6);
-        updateViewer(self);
-      });
-    }
   };
 
 </script>
@@ -106,9 +66,14 @@
   .viewer[data-fileFormat="pages"] {
     background-color: #FAFAFA;
     padding: 0;
+    overflow: hidden;
 
     #viewer-container {
-      transform: scale(0.75);
+      cursor: pointer;
+      transform: scale(1) translate(0, 0);
+      width: 1px;
+      margin: 0 auto;
+      position: relative;
 
       .page-view {
         overflow: hidden;
@@ -119,13 +84,13 @@
   }
 
   #viewer-container {
-    overflow-wrap: break-word;
-    line-height: 1.6em;
-    transform-origin: top center;
+    transform-origin: 50% 0%;
   }
   
   #viewer-container,
   #reference-frame-of-viewer-container {
+    overflow-wrap: break-word;
+    line-height: 1.6em;
     font-family: "Avenir", Helvetica, Arial, sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
@@ -136,11 +101,6 @@
       position: relative;
       box-sizing: border-box;
       background-color: white;
-    }
-    
-    img {
-      height: auto;
-      width: auto;
     }
   }
 

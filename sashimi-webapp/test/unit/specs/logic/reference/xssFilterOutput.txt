@@ -6,3 +6,6 @@
 <p>[some text](javascript:alert(‘xss’))</p>
 <h1 id="mixed-htmlmarkdown-xss-attack">Mixed HTML/Markdown XSS attack</h1>
 <p>hello <a href><em>you</em></a></p>
+<p>%3Cscript%3Ealert%28document.cookie%29%3B%3C%2Fscript%3E</p>
+<img src />
+<img src="abc.jpg" />

@@ -9,8 +9,11 @@ import mdKatex from 'markdown-it-katex';
 // Table of Contents plugins
 import mdAnchor from 'markdown-it-anchor';
 import mdTOC from 'markdown-it-table-of-contents';
+// Sequence Diagram plugin
+// import mdSeqDiagram from 'js-sequence-diagrams';
 // Custom conditional plugin
 import mdConditional from './conditionalProcessor';
+
 
 const md = new MarkdownIt({
   html: true,
@@ -37,6 +40,8 @@ md.use(mdHighlight, { auto: true, code: true });
 // For TOC generation
 md.use(mdAnchor);
 md.use(mdTOC);
+// For Sequence diagrams
+// md.use(mdSeqDiagram);
 // For custom conditional plugin
 md.use(mdConditional);
 
