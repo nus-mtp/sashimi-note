@@ -6,6 +6,8 @@ const ORGANIZATION_ID = 0;
 const ROOT_FOLDER_ID = 0;
 const NO_PARENT_ID = -1;
 
+const idtoFileMap = {}; // key: id, value: File
+const idtoFolderMap = {}; // key: id, value: Folder
 
 /**
 * Folder Object
@@ -31,13 +33,13 @@ function Folder(folderID, folderName, folderPath) {
  * @param {String} folderName
  * @return {Folder}
  */
-Folder.prototype.createFolder = function createFolder(folderName) {
+Folder.prototype.createFolder = function createFolder() {
   console.log('folder.createFolder');
-  const newFolderPath = `${this.path}/${folderName}`;
-  return storage.createFolder(ORGANIZATION_ID, newFolderPath, this.id)
+  return storage.createFolder(ORGANIZATION_ID, this.path, this.id)
   .then((dbFolderObj) => {
-    const newFolder = new Folder(dbFolderObj.folder_ID, dbFolderObj.folder_name, dbFolderObj.folder_path);
+    const newFolder = new Folder(dbFolderObj.folder_id, dbFolderObj.folder_name, dbFolderObj.folder_path);
     newFolder.parentFolder = this;
+    idtoFolderMap[newFolder.id] = newFolder;
     this.childFolderList.push(newFolder);
     return newFolder;
   })
@@ -52,13 +54,14 @@ Folder.prototype.createFolder = function createFolder(folderName) {
  * @param {String} fileName
  * @return {File}
  */
-Folder.prototype.createFile = function createFile(fileName) {
+Folder.prototype.createFile = function createFile() {
   console.log('folder.createFile');
-  const newFilePath = `${this.path}/${fileName}`;
-  return storage.createFile(ORGANIZATION_ID, newFilePath, this.id)
+  return storage.createFile(ORGANIZATION_ID, this.path, this.id)
   .then((dbFileObj) => {
     const newFile = new File(dbFileObj.file_id, dbFileObj.file_name, dbFileObj.file_path, this);
+    idtoFileMap[newFile.id] = newFile;
     this.childFileList.push(newFile);
+    return newFile;
   })
   .catch((error) => {
     throw error;
@@ -92,7 +95,11 @@ Folder.prototype.remove = function remove() {
  */
 Folder.prototype.rename = function rename(newFolderName) {
   console.log('folder.next');
-  this.folderName = newFolderName;
+  // storage.renameFolder(newFolderName, this.id);
+  const oldFolderName = this.name;
+  this.name = newFolderName;
+  this.path = this.path.replace(oldFolderName, newFolderName);
+
   // update folder name in database
 };
 
@@ -111,17 +118,17 @@ function removeElementAtIndex(queue, index) {
 
 function getChildFile(queue, parentID) {
   parentID = (parentID == null) ? NO_PARENT_ID: parentID;
-  const index = queue.findIndex(dbFileObj => dbFileObj.folder_ID === parentID);
+  const index = queue.findIndex(dbFileObj => dbFileObj.folder_id === parentID);
   return removeElementAtIndex(queue, index);
 }
 
 function getChildFolder(queue, parentID) {
   parentID = (parentID == null) ? NO_PARENT_ID: parentID;
-  const index = queue.findIndex(dbFolderObj => dbFolderObj.parent_folder_ID === parentID);
+  const index = queue.findIndex(dbFolderObj => dbFolderObj.parent_folder_id === parentID);
   return removeElementAtIndex(queue, index);
 }
 
-/* Folder static function */
+/* Folder static functions */
 const folderOperation = {
   /**
    * Returns the root folder
@@ -139,8 +146,10 @@ const folderOperation = {
         const dbFolderList = dbList.shift(); // list of Folder from datbase list
 
         const processingQueue = [];
-        const rootFolder = getChildFolder(dbFolderList);
-        processingQueue.push(new Folder(rootFolder.folder_ID, rootFolder.folder_name, rootFolder.folder_path || ''));
+        const dbRootFolderObj = getChildFolder(dbFolderList);
+        const rootFolder = new Folder(dbRootFolderObj.folder_id, dbRootFolderObj.folder_name, dbRootFolderObj.folder_path || '');
+        processingQueue.push(rootFolder);
+        idtoFolderMap[rootFolder.id] = rootFolder;
 
         let currFolder;
         let dbFileObj;
@@ -152,14 +161,16 @@ const folderOperation = {
 
       /* Process dbFileList for child file */
           while ((dbFileObj = getChildFile(dbFileList, currFolder.id)) !== null) {
-            childFile = new File(dbFileObj.file_ID, dbFileObj.file_name, dbFileObj.file_path);
+            childFile = new File(dbFileObj.file_id, dbFileObj.file_name, dbFileObj.file_path);
+            idtoFileMap[childFile.id] = childFile;
             currFolder.childFileList.push(childFile);
           }
 
       /* Process dbFolderList for child folder */
           while ((dbFolderObj = getChildFolder(dbFolderList, currFolder.id)) !== null) {
             processingQueue.push(dbFolderObj);
-            childFolder = new Folder(dbFolderObj.folder_ID, dbFolderObj.folder_name, dbFolderObj.folder_path);
+            childFolder = new Folder(dbFolderObj.folder_id, dbFolderObj.folder_name, dbFolderObj.folder_path);
+            idtoFolderMap[childFolder.id] = childFolder;
             childFolder.parentFolder = currFolder;
             currFolder.childFolderList.push(childFolder);
           }
@@ -172,6 +183,14 @@ const folderOperation = {
     .catch((error) => {
       throw error;
     });
+  },
+
+  getFile: function getFile(id) {
+    return idtoFileMap[id];
+  },
+
+  getFolder: function getFolder(id) {
+    return idtoFolderMap[id];
   }
 
 };
