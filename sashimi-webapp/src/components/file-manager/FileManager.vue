@@ -33,16 +33,31 @@ export default {
   methods: {
     changeFolder(newFolder) {
       this.docs = newFolder;
+      fileManager.update(this.docs);
       console.log(this.docs);
     },
     changeViewMode(viewMode) {
       this.viewMode = viewMode;
     },
     executeAction(action) {
-      if (action === 'createFolder') {
-        this.docs.createFolder('Folder');
-      } else if (action === 'createFile') {
-        this.docs.createFile('File');
+      switch (action) {
+        case 'createFolder': {
+          this.docs.createFolder('Folder');
+          break;
+        }
+        case 'createFile': {
+          this.docs.createFile('File');
+          break;
+        }
+        case 'history back': {
+          this.docs = fileManager.previous();
+          break;
+        }
+        case 'history forward': {
+          this.docs = fileManager.next();
+          break;
+        }
+        default: break;
       }
     }
   },
@@ -51,6 +66,7 @@ export default {
     .start()
     .then((rootFolder) => {
       this.docs = rootFolder;
+      fileManager.update(this.docs);
     })
     .catch((error) => {
       console.log(error);
