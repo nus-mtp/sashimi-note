@@ -1,17 +1,33 @@
 import storage from 'src/database/storage';
+import Folder from './folder';
 
 /* Constants */
 
-const RENAME_ERROR_MSG = `Another file in ${this.parentFolder.path} has the same file name`;
+const RENAME_ERROR_MSG = `Another file in "${this.parentFolder.path}" has the same file name`;
+const MOVE_SAME_FOLDER_ERROR_MSG = 'Attempting to move to current folder';
+const MOVE_INVALID_FODLER_ERROR_MSG = 'Attempting to move to an invalid folder';
 
 /* Private Functions */
+
+function isCurrentFolder(destFolder) {
+  return destFolder.id === this.parentFolder.id;
+}
+
+function isInvalidFolder(destFolder) {
+  if (Folder.getFolder(destFolder.id) === undefined) {
+    return true;
+  } else {
+    return false;
+  }
+}
+
 function hasSameFileName(newFileName) {
-  const currFolder = this.parentFolder;
+  const currParentFolder = this.parentFolder;
   let currFile;
   let sameFileName = false;
-  for (let i = 0; i< currFolder.childFileList.length; i += 1) {
-    currFile = currFolder.childFileList[i];
-    if (newFileName === currFile.fileName) {
+  for (let i = 0; i< currParentFolder.childFileList.length; i += 1) {
+    currFile = currParentFolder.childFileList[i];
+    if (newFileName === currFile.name) {
       sameFileName = true;
       break;
     }
@@ -42,8 +58,10 @@ export default function File(fileID, fileName, filePath, parentFolder) {
 File.prototype.remove = function remove() {
   return storage.deleteFile(this.path)
     .then(() => {
+      Folder.removeFileByID(this.id);
       const parentFolder = this.parentFolder;
-      const index = parentFolder.childFileList.findIndex(childFile => childFile.id === this.id);
+      // const index = parentFolder.childFileList.findIndex(childFile => childFile.id === this.id);
+      const index = parentFolder.childFileList.indexOf(this);
       parentFolder.childFileList.splice(index, 1);
     })
     .catch((error) => {
@@ -76,19 +94,37 @@ File.prototype.load = function load() {
  *
  * @param {Folder} folder default: currentFolder
  * @return {}
- */
+
 File.prototype.copy = function copy(folder) {
 
 };
+*/
 
 /**
  * Move file to a specified folder
  *
- * @param {Folder} folder
- * @return {}
+ * @param {Folder} destFolder
+ * @return {Promise}
  */
-File.prototype.move = function move() {
+File.prototype.move = function move(destFolder) {
+  return new Promise((resolve, reject) => {
+    if (isCurrentFolder(destFolder)) {
+      reject(MOVE_SAME_FOLDER_ERROR_MSG);
+    }
 
+    if (isInvalidFolder(destFolder)) {
+      reject(MOVE_INVALID_FODLER_ERROR_MSG);
+    }
+
+    resolve();
+  })
+  .then(() => storage.moveFile(this.id, destFolder.id))
+  .then(() => {
+    destFolder.childFileList.push(this);
+    const index = this.parentFolder.childFileList.indexOf(this);
+    this.parentFolder.childFileList.splice(index, 1);
+    this.parentFolder = destFolder;
+  });
 };
 
 /**
