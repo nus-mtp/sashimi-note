@@ -1,5 +1,24 @@
 import storage from 'src/database/storage';
 
+/* Constants */
+
+const RENAME_ERROR_MSG = `Another file in ${this.parentFolder.path} has the same file name`;
+
+/* Private Functions */
+function hasSameFileName(newFileName) {
+  const currFolder = this.parentFolder;
+  let currFile;
+  let sameFileName = false;
+  for (let i = 0; i< currFolder.childFileList.length; i += 1) {
+    currFile = currFolder.childFileList[i];
+    if (newFileName === currFile.fileName) {
+      sameFileName = true;
+      break;
+    }
+  }
+  return sameFileName;
+}
+
 /**
 * File Object
 *
@@ -7,8 +26,6 @@ import storage from 'src/database/storage';
 * @param {String} fileName
 * @param {String} filePath
 */
-
-
 export default function File(fileID, fileName, filePath, parentFolder) {
   this.id = fileID;
   this.name = fileName;
@@ -23,11 +40,6 @@ export default function File(fileID, fileName, filePath, parentFolder) {
  * @return {}
  */
 File.prototype.remove = function remove() {
-  console.log('file.remove');
-  // Case 1a: file exist, file removed
-  // Case 1b: file exist, file not removed (error)
-  // Case 2: file does not exist (nothing removed)
-
   return storage.deleteFile(this.path)
     .then(() => {
       const parentFolder = this.parentFolder;
@@ -66,11 +78,7 @@ File.prototype.load = function load() {
  * @return {}
  */
 File.prototype.copy = function copy(folder) {
-  console.log('file.copy');
-  // Case 1a: file exist, valid folder, file copied
-  // Case 1b: file exist, invalid folder, file not copied (error)
-  // Case 2: file does not exist (not copied)
-  // Case 3: file exist, folder not specified, default: current folder used
+
 };
 
 /**
@@ -80,22 +88,40 @@ File.prototype.copy = function copy(folder) {
  * @return {}
  */
 File.prototype.move = function move() {
-  console.log('file.move');
-  // Changing file path
-  // Case 1a: file exist, valid folder, file moved
-  // Case 1b: file exist, invalid folder, file not moved (error)
-  // Case 1c: file exist, folder is where file currently reside in (not moved)
-  // Case 2: file does not exist (not moved)
+
 };
+
+/**
+ * Rename file
+ *
+ * @param {String} newFileName
+ * @return {Promise}
+ */
+File.prototype.rename = function rename(newFileName) {
+  return new Promise((resolve, reject) => {
+    if (hasSameFileName(newFileName)) {
+      reject(RENAME_ERROR_MSG);
+    }
+
+    resolve();
+  })
+  .then(() => storage.renameFile(newFileName, this.id))
+  .then(() => {
+    const oldFileName = this.name;
+    this.name = newFileName;
+    this.path = this.path.replace(oldFileName, newFileName);
+  });
+};
+
 
 /**
  * Download file from database to drive
  *
  * @param {String} fileFormat deafult: md format
  * @return {}
- */
+
 File.prototype.download = function download() {
-  console.log('file.download');
+
 };
 
 /**
@@ -103,19 +129,9 @@ File.prototype.download = function download() {
  *
  * @param {}
  * @return {}
- */
+
 File.prototype.upload = function upload() {
-  console.log('file.upload');
+
 };
 
-/**
- * Rename file
- *
- * @param {String} newFileName
- * @return {}
- */
-File.prototype.rename = function rename(newFileName) {
-  console.log('file.rename');
-  this.fileName = newFileName;
-  // update database
-};
+*/
