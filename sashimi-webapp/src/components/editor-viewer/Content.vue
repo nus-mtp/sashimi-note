@@ -32,8 +32,6 @@ export default {
   },
   data() {
     return {
-      // TODO: Temporary solution for presistence storage
-      //       to be remove when file manager is implemented.
       mdContent: '',
       action: '',
       fileFormat: 'html',
