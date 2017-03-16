@@ -1,47 +1,102 @@
 import VirtualBook from './VirtualBook';
-import VirtualPage from './VirtualPage';
 import helper from './helper';
 
 const CLASS_NAME_PREFIX = 'page-view';
 
-// Setting up page-break-before mechanism
-// These page-break-before are hardcoded for now.
-// TODO: Refactor this code
-const checkShouldPageBreak = function checkShouldPageBreak(childHeights, index) {
+const constructChildHeightsArray = function constructChildHeightsArray(childNodes) {
+  const childArray = Object.keys(childNodes).map(key => childNodes[key]);
+  const childHeights =
+    childArray.filter(childNode => (childNode.nodeName !== '#text'))
+              .map((childNode) => {
+                const totalHeight = helper.computeElementHeight(childNode);
+
+                // Add debug infomation into the dom element
+                childNode.pageRenderer = { totalHeight };
+
+                return ({
+                  height: totalHeight,
+                  ele: childNode
+                });
+              });
+  return childHeights;
+};
+
+/**
+ * Checker whether a page break should be applied.
+ * When to break a page? https://github.com/nus-mtp/lecture-note-2.0/issues/233
+ * @return {boolean}
+ */
+const shouldPageBreak = function shouldPageBreak(eleHeightArray, index, page) {
   const BREAK_PAGE = true;
   const DO_NOTHING = false;
 
-  const element = childHeights[index].ele;
+  const element = eleHeightArray[index].ele;
   const eleName = element.tagName;
 
-  switch (eleName) {
-    case 'H1': {
-      // If this H1 is at the beginning of the page, do not break
-      if (index === 0) {
-        return DO_NOTHING;
-      } else {
-        return BREAK_PAGE;
+  // CSS page-break-before is presence
+  const eleStyles = helper.getComputedStyle(element);
+  if (eleStyles.pageBreakBefore === 'always') {
+    return BREAK_PAGE;
+  }
+
+  // Starting of a new topic/chapter
+  if (eleName === 'H1') {
+    if (page.elements.length > 0) {
+      return BREAK_PAGE;
+    }
+    return DO_NOTHING;
+  }
+
+  // Match header tag
+  if (eleName.match(/^H\d$/)) {
+    // If a header tag is located at the bottom of the page, break page
+    const percentRemainingHeight = (page.maxHeight - page.filledHeight)/page.maxHeight;
+    if (percentRemainingHeight < 0.18) {
+      return BREAK_PAGE;
+    }
+
+    // If a header tag is going to be the last element in a page, break page
+    const nextHeight = (eleHeightArray[index + 1]) ? eleHeightArray[index + 1].height : 0;
+    const selfHeight = eleHeightArray[index].height;
+    if (nextHeight + selfHeight + page.filledHeight > page.maxHeight) {
+      return BREAK_PAGE;
+    }
+    return DO_NOTHING;
+  }
+
+  if (eleName === 'BR') {
+    return (element.getAttribute('page') === '');
+  }
+
+  return DO_NOTHING;
+};
+
+const addElementToPage = function addElementToPage(page, book, eleArray, index) {
+  const element = eleArray[index];
+  try {
+    if (shouldPageBreak(eleArray, index, page)) {
+      // Create a new page if page should be broken here
+      page = book.newPage();
+    }
+
+    page.add(element);
+  } catch (error) {
+    if (error.message === 'Element is larger than page') {
+      if (page.filledHeight > 0) {
+        // if currently not at the beginning of page,
+        // create new page before inserting.
+        // TODO: Consider breaking element into smaller chunk
+        page = book.newPage();
       }
-    }
-    case 'H2': {
-      // If a H2 was immediately preceeded by H1,
-      // then, this H2 will not have a page-before-break
-      if (childHeights[index - 1] &&
-          childHeights[index - 1].ele.tagName === 'H1') {
-        return DO_NOTHING;
-      } else {
-        return BREAK_PAGE;
-      }
-    }
-    case 'BR': {
-      // Special break page syntax on <br page>
-      return (element.getAttribute('page') === '');
-    }
-    default: {
-      const eleStyles = helper.getComputedStyle(element);
-      return eleStyles.pageBreakBefore === 'always';
+      page.forceAdd(element);
+    } else if (error.message === 'Page is full') {
+      page = book.newPage();
+      page = addElementToPage(page, book, eleArray, index);
+    } else {
+      throw error;
     }
   }
+  return page;
 };
 
 export default {
@@ -99,23 +154,7 @@ export default {
    */
   getChildHeights: function getChildHeights(referenceFrame) {
     const childNodes = referenceFrame.childNodes;
-    const childArray = Object.keys(childNodes).map(key => childNodes[key]);
-
-    const childHeights =
-      childArray.filter(childNode => (childNode.nodeName !== '#text'))
-                .map((childNode) => {
-                  const totalHeight = helper.computeElementHeight(childNode);
-
-                  // Add debug infomation into the dom element
-                  childNode.pageRenderer = { totalHeight };
-
-                  return ({
-                    height: totalHeight,
-                    ele: childNode
-                  });
-                });
-
-    return childHeights;
+    return constructChildHeightsArray(childNodes);
   },
 
   /**
@@ -128,44 +167,15 @@ export default {
   getPaginationVirtualDom: function getPaginationVirtualDom(pageRenderer, childHeights) {
     const pr = pageRenderer;
 
-    const virtualBook = new VirtualBook();
-    let virtualPage = new VirtualPage(pr.renderHeight);
+    // Create a new book and insert a page into the book
+    const virtualBook = new VirtualBook(pr.renderHeight);
+    let virtualPage = virtualBook.newPage();
 
     // Allocate element in pages within the render height
     childHeights.forEach((element, index) => {
-      try {
-        if (checkShouldPageBreak(childHeights, index)) {
-          // Create a new page is page should be broken here
-          virtualBook.add(virtualPage);
-          virtualPage = new VirtualPage(pr.renderHeight);
-        }
-
-        virtualPage.add(element);
-      } catch (error) {
-        // Store existing page first
-        virtualBook.add(virtualPage);
-
-        if (error.message === 'Element is larger than page') {
-          if (virtualPage.filledHeight > 0) {
-            // if currently not at the beginning of page,
-            // create new page before inserting.
-            // TODO: Consider breaking element into smaller chunk
-            virtualPage = new VirtualPage(pr.renderHeight);
-          }
-          virtualPage.forceAdd(element);
-        } else if (error.message === 'Page should break here') {
-          virtualPage = new VirtualPage(pr.renderHeight);
-          virtualPage.forceAdd(element);
-        } else if (error.message === 'Page is full') {
-          virtualPage = new VirtualPage(pr.renderHeight);
-          virtualPage.add(element);
-        } else {
-          throw error;
-        }
-      }
+      virtualPage = addElementToPage(virtualPage, virtualBook, childHeights, index);
     });
 
-    virtualBook.add(virtualPage);
     return virtualBook.pages;
   },
 
@@ -194,6 +204,7 @@ export default {
         // CSS to set up the page sizing
         width: pr.page.width,
         height: pr.page.height,
+        left: `calc(-${pr.page.width} / 2)`,
         paddingTop: pr.page.padding.top,
         paddingBottom: pr.page.padding.bottom,
         paddingLeft: pr.page.padding.left,
