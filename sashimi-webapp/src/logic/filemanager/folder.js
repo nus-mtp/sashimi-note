@@ -218,6 +218,10 @@ const folderOperation = {
 
   removeFileByID: function removeFileByID(id) {
     delete idtoFileMap[id];
+  },
+
+  createEmptyFolder: function createEmptyFolder() {
+    return new Folder();
   }
 
 };
