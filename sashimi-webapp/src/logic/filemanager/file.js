@@ -1,5 +1,39 @@
-import storage from '../../database/storage';
+import storage from 'src/database/storage';
 import Folder from './folder';
+
+/* Constants */
+
+const RENAME_ERROR_MSG = `Another file in "${this.parentFolder.path}" has the same file name`;
+const MOVE_SAME_FOLDER_ERROR_MSG = 'Attempting to move to current folder';
+const MOVE_INVALID_FODLER_ERROR_MSG = 'Attempting to move to an invalid folder';
+
+/* Private Functions */
+
+function isCurrentFolder(destFolder) {
+  return destFolder.id === this.parentFolder.id;
+}
+
+function isInvalidFolder(destFolder) {
+  if (Folder.getFolder(destFolder.id) === undefined) {
+    return true;
+  } else {
+    return false;
+  }
+}
+
+function hasSameFileName(newFileName) {
+  const currParentFolder = this.parentFolder;
+  let currFile;
+  let sameFileName = false;
+  for (let i = 0; i< currParentFolder.childFileList.length; i += 1) {
+    currFile = currParentFolder.childFileList[i];
+    if (newFileName === currFile.name) {
+      sameFileName = true;
+      break;
+    }
+  }
+  return sameFileName;
+}
 
 /**
 * File Object
@@ -8,14 +42,11 @@ import Folder from './folder';
 * @param {String} fileName
 * @param {String} filePath
 */
-
-
 export default function File(fileID, fileName, filePath, parentFolder) {
   this.id = fileID;
   this.name = fileName;
   this.path = filePath;
   this.parentFolder = parentFolder;
-  console.log('new File created');
 }
 
 /**
@@ -25,15 +56,12 @@ export default function File(fileID, fileName, filePath, parentFolder) {
  * @return {}
  */
 File.prototype.remove = function remove() {
-  console.log('file.remove');
-  // Case 1a: file exist, file removed
-  // Case 1b: file exist, file not removed (error)
-  // Case 2: file does not exist (nothing removed)
-
   return storage.deleteFile(this.path)
     .then(() => {
+      Folder.removeFileByID(this.id);
       const parentFolder = this.parentFolder;
-      const index = parentFolder.childFileList.findIndex(childFile => childFile.id === this.id);
+      // const index = parentFolder.childFileList.findIndex(childFile => childFile.id === this.id);
+      const index = parentFolder.childFileList.indexOf(this);
       parentFolder.childFileList.splice(index, 1);
     })
     .catch((error) => {
@@ -48,11 +76,6 @@ File.prototype.remove = function remove() {
  * @return {}
  */
 File.prototype.save = function save(data) {
-  console.log('file.save');
-  // Case 1a: file exist, file saved
-  // Case 1b: file exist, file not saved (error)
-  // Case 2: file does not exist (nothing saved)
-
   return storage.saveFile(this.id, data);
 };
 
@@ -63,11 +86,6 @@ File.prototype.save = function save(data) {
  * @return {String} data loaded from file
  */
 File.prototype.load = function load() {
-  console.log('file.load');
-  // Case 1a: file exist, file loaded
-  // Case 1b: file exist, file not loaded (error)
-  // Case 2: file does not exist (nothing loaded)
-
   return storage.loadFile(this.id);
 };
 
@@ -76,38 +94,70 @@ File.prototype.load = function load() {
  *
  * @param {Folder} folder default: currentFolder
  * @return {}
- */
+
 File.prototype.copy = function copy(folder) {
-  console.log('file.copy');
-  // Case 1a: file exist, valid folder, file copied
-  // Case 1b: file exist, invalid folder, file not copied (error)
-  // Case 2: file does not exist (not copied)
-  // Case 3: file exist, folder not specified, default: current folder used
+
 };
+*/
 
 /**
  * Move file to a specified folder
  *
- * @param {Folder} folder
- * @return {}
+ * @param {Folder} destFolder
+ * @return {Promise}
  */
-File.prototype.move = function move() {
-  console.log('file.move');
-  // Changing file path
-  // Case 1a: file exist, valid folder, file moved
-  // Case 1b: file exist, invalid folder, file not moved (error)
-  // Case 1c: file exist, folder is where file currently reside in (not moved)
-  // Case 2: file does not exist (not moved)
+File.prototype.move = function move(destFolder) {
+  return new Promise((resolve, reject) => {
+    if (isCurrentFolder(destFolder)) {
+      reject(MOVE_SAME_FOLDER_ERROR_MSG);
+    }
+
+    if (isInvalidFolder(destFolder)) {
+      reject(MOVE_INVALID_FODLER_ERROR_MSG);
+    }
+
+    resolve();
+  })
+  .then(() => storage.moveFile(this.id, destFolder.id))
+  .then(() => {
+    destFolder.childFileList.push(this);
+    const index = this.parentFolder.childFileList.indexOf(this);
+    this.parentFolder.childFileList.splice(index, 1);
+    this.parentFolder = destFolder;
+  });
 };
+
+/**
+ * Rename file
+ *
+ * @param {String} newFileName
+ * @return {Promise}
+ */
+File.prototype.rename = function rename(newFileName) {
+  return new Promise((resolve, reject) => {
+    if (hasSameFileName(newFileName)) {
+      reject(RENAME_ERROR_MSG);
+    }
+
+    resolve();
+  })
+  .then(() => storage.renameFile(newFileName, this.id))
+  .then(() => {
+    const oldFileName = this.name;
+    this.name = newFileName;
+    this.path = this.path.replace(oldFileName, newFileName);
+  });
+};
+
 
 /**
  * Download file from database to drive
  *
  * @param {String} fileFormat deafult: md format
  * @return {}
- */
+
 File.prototype.download = function download() {
-  console.log('file.download');
+
 };
 
 /**
@@ -115,19 +165,9 @@ File.prototype.download = function download() {
  *
  * @param {}
  * @return {}
- */
+
 File.prototype.upload = function upload() {
-  console.log('file.upload');
+
 };
 
-/**
- * Rename file
- *
- * @param {String} newFileName
- * @return {}
- */
-File.prototype.rename = function rename(newFileName) {
-  console.log('file.rename');
-  this.fileName = newFileName;
-  // update database
-};
+*/
