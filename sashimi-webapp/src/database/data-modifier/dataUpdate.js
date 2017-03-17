@@ -9,6 +9,8 @@ export default class dataUpdate {
   static saveFile(fileId, markdownFile) {
     if (typeof Promise === 'function') {
       return new Promise((resolve, reject) =>
+        sqlCommands.saveFile(fileId, markdownFile)
+        .then(() => resolve())
         .catch(sqlError => reject(sqlError))
       );
     } else {
