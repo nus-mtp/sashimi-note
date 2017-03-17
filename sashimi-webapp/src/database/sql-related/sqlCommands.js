@@ -221,8 +221,8 @@ export default function sqlCommands() {
           'ATTACH INDEXEDDB DATABASE ', databaseName, ';',
           'USE ', databaseName, ';');
         return alasql.promise([databaseRequestStr])
-          .then(data => resolve(true))
-          .catch(sqlError => reject(sqlError));
+        .then(() => resolve(true))
+        .catch(sqlError => reject(sqlError));
       });
     } else {
       throw new exceptions.PromiseFunctionNotDefined();
@@ -245,7 +245,7 @@ export default function sqlCommands() {
     if (typeof Promise === 'function') {
       return new Promise((resolve, reject) =>
         alasql.promise([stringManipulator.stringConcat('CREATE TABLE IF NOT EXISTS ', sqlStatement)])
-        .then(data => resolve(true))
+        .then(() => resolve(true))
         .catch(sqlError => reject(sqlError))
       );
     } else {
@@ -385,8 +385,7 @@ export default function sqlCommands() {
           .catch(sqlError => reject(sqlError));
         })
         .then(() => resolve(true))
-        .catch(sqlErr => reject(sqlErr));
-      });
+        .catch(sqlErr => reject(sqlErr)));
     } else {
       throw new exceptions.PromiseFunctionNotDefined();
     }
@@ -412,7 +411,7 @@ export default function sqlCommands() {
         alasql.promise([stringManipulator.stringConcat('DELETE FROM ', constants.ENTITIES_FOLDER,
                                                        ' WHERE ', constants.HEADER_FOLDER_FOLDER_ID,
                                                        ' = ', folderId)])
-        .then(data => resolve(true))
+        .then(() => resolve())
         .catch(sqlError => reject(sqlError))
       );
     } else {
