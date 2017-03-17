@@ -7,7 +7,6 @@
  * @param {Element} ele - HTML element containing data parsed and rendered by markdown-it
  * @return {Promise} promise after the diagrams are rendered
  */
-// import mermaid from 'mermaid';
 
 export default function diagramsRenderer(ele) {
   const observerConfig = { childList: true };
@@ -73,6 +72,23 @@ export default function diagramsRenderer(ele) {
     content = content.replace(/\&gt\;/g, '>');
     /* eslint no-undef: 0 */
     graphviz[i].innerHTML = Viz(content);
+  }
+
+  // Draws all the mermaid diagrams found
+  mermaidAPI.initialize({ startOnLoad: false });
+  for (let i = 0; i < mermaidDiagrams.length; i+=1) {
+    let content = mermaidDiagrams[i].innerHTML;
+    /* eslint no-useless-escape: 0*/
+    content = content.replace(/\&gt\;/g, '>');
+    /* eslint no-undef: 0 */
+    if (window.mermaidAPI.parse(content)) {
+      const cb = (html) => {
+        mermaidDiagrams[i].innerHTML = html;
+      };
+      mermaidAPI.render('pre', content, cb);
+    } else {
+      throw (error);
+    }
   }
 
   // returns resolved if all the promises are resolved, otherwise returns rejected

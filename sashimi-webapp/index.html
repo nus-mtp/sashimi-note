@@ -40,6 +40,11 @@
     <!-- Author mention to use this unconventional/bad way of creating fake fs -->
     <script>window.fs = {};</script>
     <script src="./vendors/viz.js"></script>
+    <!-- mermaid does not support markdown-it, hence we are doing this -->
+    <script src="./vendors/mermaidAPI.js"></script>
+    <!-- Customised mermaid.css taken from hackmd.io, this custom CSS resolves the issue of -->
+    <!-- the styling applying to the whole HTML document -->
+    <link href="./vendors/mermaid.css" rel="stylesheet">
     <div id="app"></div>
     <!-- built files will be auto injected -->
     <script src="https://code.jquery.com/pep/0.4.2/pep.js"></script>
