@@ -42,6 +42,19 @@ function getCurrentFolderPath(folderId) {
   );
 }
 
+// duplicate private function to help with cascadeChangeFilePath
+function changeSingleFilePath(fileId, newPath) {
+  return new Promise((resolve, reject) =>
+    alasql.promise([stringManipulator.stringConcat('UPDATE ', constants.ENTITIES_FILE_MANAGER,
+                                                   ' SET ', constants.HEADER_FILE_MANAGER_PATH,
+                                                   ' = "', newPath,
+                                                   '" WHERE ', constants.HEADER_FILE_MANAGER_FILE_ID,
+                                                   ' = ', fileId)])
+    .then(() => resolve())
+    .catch(sqlError => reject(sqlError))
+  );
+}
+
 }
 
 export default function sqlCommands() {
