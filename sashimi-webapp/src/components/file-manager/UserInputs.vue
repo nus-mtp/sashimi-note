@@ -19,14 +19,14 @@
         <ul class="navbar-breadcrumb inline-block">
           <li>
             <button class="navbar-buttons hover-grow" 
-                    v-on:click="execute('history back')"
+                    v-on:click="execute('history back', '')"
             >
               <i class="material-icons">arrow_back</i>
             </button>
           </li>
           <li>
             <button class="navbar-buttons hover-grow" 
-                    v-on:click="execute('history forward')"
+                    v-on:click="execute('history forward', '')"
             >
               <i class="material-icons">arrow_forward</i>
             </button>
@@ -43,12 +43,12 @@
             <i class="material-icons md-dark">file_upload</i>
           </button>
           <button class="navbar-buttons hover-grow" 
-                  v-on:click="execute('createFolder')"
+                  v-on:click="execute('createFolder', '')"
           >
             <i class="material-icons md-dark">create_new_folder</i>
           </button>
           <button class="navbar-buttons hover-grow" 
-                  v-on:click="execute('createFile')"
+                  v-on:click="execute('createFile', '')"
           >
             <i class="material-icons md-dark">note_add</i>
           </button>
@@ -67,6 +67,7 @@
           </button>
           <button class="navbar-buttons" 
                   v-bind:class="{'hover-grow': buttonEffect}"
+                  v-on:click="execute('delete')"
           >
             <i class="material-icons md-dark" 
                 v-bind:class="{'md-inactive': buttonDisabled}"
@@ -94,22 +95,29 @@ export default {
     return {
       buttonDisabled: true,
       buttonEffect: false,
+      focusedDocId: '',
     };
   },
   methods: {
-    execute(action) {
+    execute(action, data) {
       eventHub.$emit('execute', action);
-      this.$emit('execute', action);
+      this.$emit('execute', action, data);
     },
     setViewMode(viewMode) {
       this.$emit('changeViewMode', viewMode);
     },
   },
+  watch: {},
   mounted() {
-    eventHub.$on('focusFolder', (focusedFolder) => {
-      console.log(focusedFolder, 'navbar');
+    eventHub.$on('focus', (focusedDoc) => {
       this.buttonDisabled = false;
       this.buttonEffect = true;
+      this.focusedDocId = focusedDoc.id;
+    });
+    eventHub.$on('blur', () => {
+      this.buttonDisabled = true;
+      this.buttonEffect = false;
+      this.focusedDocId = '';
     });
   },
 };

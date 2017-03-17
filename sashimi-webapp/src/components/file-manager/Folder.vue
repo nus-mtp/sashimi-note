@@ -1,9 +1,11 @@
 <template>
   <div class="col vertical-align-child" 
     v-on:dblclick="openFolder"
-    v-on:click="focusFolder"
   >
-    <button class="folder">
+    <button class="folder"
+            v-on:focus="focusFolder"
+            v-on:blur="blurFolder"
+    >
       <img src="../../assets/images/icons/icon-folder.svg" alt="folder">
       <p class="inline-block">{{folder.name}}</p>
     </button>
@@ -21,6 +23,9 @@
       },
       focusFolder() {
         this.$emit('focusFolder', this.folder);
+      },
+      blurFolder() {
+        this.$emit('blurFolder');
       }
     },
   };

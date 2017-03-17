@@ -11,7 +11,8 @@
     <folder 
       v-for="folder in docs.childFolderList"
       v-on:openFolder="changeFolder"
-      v-on:focusFolder="focusFolder"
+      v-on:focusFolder="focus"
+      v-on:blurFolder="blur"
           :folder="folder"
     >
     </folder>
@@ -42,15 +43,18 @@ export default {
   },
   watch: {},
   methods: {
-    focusFolder(focusedFolder) {
-      eventHub.$emit('focusFolder', focusedFolder);
+    focus(focusedDoc) {
+      eventHub.$emit('focus', focusedDoc);
+    },
+    blur() {
+      eventHub.$emit('blur');
     },
     changeFolder(newFolder) {
       this.$emit('changeFolder', newFolder);
     },
   },
   mounted() {
-    eventHub.$on('execute', (action) => {
+    eventHub.$on('execute', (action, data) => {
       if (action === 'createFolder') {
         this.value = 'Folder';
       } else if (action === 'createFile') {
