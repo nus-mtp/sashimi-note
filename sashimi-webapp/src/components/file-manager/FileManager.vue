@@ -62,15 +62,9 @@ export default {
     }
   },
   mounted() {
-    fileManager
-    .start()
-    .then((rootFolder) => {
-      this.docs = rootFolder;
-      fileManager.update(this.docs);
-    })
-    .catch((error) => {
-      console.log(error);
-    });
+    const ROOT_FOLDER_ID = 0;
+    this.docs = fileManager.getFolderByID(ROOT_FOLDER_ID);
+    fileManager.update(this.docs);
   }
 };
 

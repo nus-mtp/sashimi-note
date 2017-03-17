@@ -19,7 +19,8 @@
 </template>
 
 <script>
-import storage from 'src/database/storage';
+import _ from 'lodash';
+import fileManager from 'src/logic/filemanager';
 import navbar from './Navbar';
 import viewer from './Viewer';
 import editor from './Editor';
@@ -35,6 +36,7 @@ export default {
       mdContent: '',
       action: '',
       fileFormat: 'html',
+      file: null,
       editorCols: {
         span_6_of_12: true,
         span_12_of_12: false,
@@ -81,16 +83,18 @@ export default {
         }
       }
     },
-    mdContent(value) {
-      storage.saveFile(this.$route.query.id, value);
-    },
+    mdContent: _.debounce(function saveFile(value) {
+      console.log(value, this.file);
+      this.file.save(value);
+    }, 1000),
   },
   method: {
   },
   computed: {
   },
   mounted() {
-    storage.loadFile(this.$route.query.id)
+    this.file = fileManager.getFileByID(this.$route.query.id);
+    this.file.load()
     .then((data) => {
       this.mdContent = data;
     });
