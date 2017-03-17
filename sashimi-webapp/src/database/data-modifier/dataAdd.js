@@ -10,6 +10,11 @@ const dateTime = new DateTime();
 const alasqlArray = new SqlArray();
 
 function createNewFile(organizationId, filePath, folderId, newFileId) {
+function isLowerUpperBoundWithinRange(lowerBound, upperBound, givenArray) {
+  return lowerBound < upperBound
+    && lowerBound >= 0
+    && upperBound < givenArray.length;
+}
   if (typeof Promise === 'function') {
     return new Promise((resolve, reject) => {
       const currentDateTime = dateTime.getCurrentDateTime();
