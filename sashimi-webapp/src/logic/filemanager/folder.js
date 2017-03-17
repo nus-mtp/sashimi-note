@@ -6,6 +6,7 @@ import File from './file';
 // const RENAME_ROOTFOLDER_ERROR_MSG = `"${this.name}" cannot be renamed`;
 const RENAME_ERROR_MSG = 'Another folder in the current folder has the same name';
 const RENAME_ROOTFOLDER_ERROR_MSG = 'Root folder cannot be renamed';
+const NOT_FOLDER_INSTANCE_ERROR_MSG = '"this" is not an instance of "Folder"';
 
 
 const ORGANIZATION_ID = 1;
@@ -15,8 +16,27 @@ const NO_PARENT_ID = -1;
 const idtoFileMap = {}; // key: id, value: File
 const idtoFolderMap = {}; // key: id, value: Folder
 
+/**
+* Folder Object
+*
+* @param {Number} folderID
+* @param {String} folderName
+* @param {String} folderPath
+*/
+function Folder(folderID, folderName, folderPath) {
+  this.id = folderID;
+  this.name = folderName;
+  this.path = folderPath;
+  this.parentFolder = null;
+  this.childFolderList = []; // list of folders in current folder
+  this.childFileList = []; // list of files in current folder
+}
+
 /* Private Functions */
 function hasSameFolderName(newFolderName) {
+  if (!(this instanceof Folder)) {
+    throw new Error(NOT_FOLDER_INSTANCE_ERROR_MSG);
+  }
   const currParentFolder = this.parentFolder;
   let currFolder;
   let sameFolderName = false;
@@ -52,22 +72,6 @@ function getChildFolder(queue, parentID) {
   parentID = (parentID == null) ? NO_PARENT_ID: parentID;
   const index = queue.findIndex(dbFolderObj => dbFolderObj.parent_folder_id === parentID);
   return removeElementAtIndex(queue, index);
-}
-
-/**
-* Folder Object
-*
-* @param {Number} folderID
-* @param {String} folderName
-* @param {String} folderPath
-*/
-function Folder(folderID, folderName, folderPath) {
-  this.id = folderID;
-  this.name = folderName;
-  this.path = folderPath;
-  this.parentFolder = null;
-  this.childFolderList = []; // list of folders in current folder
-  this.childFileList = []; // list of files in current folder
 }
 
 /**
@@ -139,7 +143,7 @@ Folder.prototype.rename = function rename(newFolderName) {
     if (this.id === ROOT_FOLDER_ID) {
       reject(RENAME_ROOTFOLDER_ERROR_MSG);
     }
-    if (hasSameFolderName(newFolderName)) {
+    if (hasSameFolderName.call(this, newFolderName)) {
       reject(RENAME_ERROR_MSG);
     }
     resolve();
