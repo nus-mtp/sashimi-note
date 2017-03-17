@@ -70,6 +70,19 @@ export default class dataModifier {
     }
   }
 
+  static saveFile(fileId, fileContent) {
+    if (typeof Promise === 'function') {
+      return new Promise((resolve, reject) => {
+        fileContent = resolveFileSaving(fileContent);
+        dataUpdate.saveFile(fileId, fileContent)
+        .then(() => resolve())
+        .catch(sqlError => reject(sqlError));
+      });
+    } else {
+      throw new exceptions.PromiseFunctionNotDefined();
+    }
+  }
+
   static deleteFile(fileId) {
     if (typeof Promise === 'function') {
       return new Promise((resolve, reject) =>
