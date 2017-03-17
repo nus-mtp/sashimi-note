@@ -22,5 +22,11 @@ export default Object.freeze({
     this.message = message || 'Exception: IndexedDB not supported on this browser.';
     this.name = 'IndexedDBNotSupported';
     this.stack = (new Error()).stack;
+  },
+
+  IndexedDBOnBlock: function IndexedDBOnBlock(message) {
+    this.message = message || 'Exception: IndexedDB thread blocked.';
+    this.name = 'IndexedDBOnBlock';
+    this.stack = (new Error()).stack;
   }
 });
