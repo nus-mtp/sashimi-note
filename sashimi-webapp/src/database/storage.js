@@ -220,6 +220,18 @@ export default class storage {
       throw new exceptions.PromiseFunctionNotDefined();
     }
   }
+
+  static moveFile(fileId, newPath) {
+    if (typeof Promise === 'function') {
+      return new Promise((resolve, reject) =>
+        dataModifier.moveFile(fileId, newPath)
+        .then(() => resolve())
+        .catch(sqlErr => reject(sqlErr))
+      );
+    } else {
+      throw new exceptions.PromiseFunctionNotDefined();
+    }
+  }
         .catch(err => reject(err))
       );
     } else {
