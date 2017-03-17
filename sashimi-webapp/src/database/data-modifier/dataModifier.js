@@ -64,6 +64,12 @@ export default class dataModifier {
         dataUpdate.saveFile(fileId, file)
         .then(() => resolve())
         .catch(sqlError => reject(sqlError))
+  static renameFolderName(folderId, newFolderName) {
+    if (typeof Promise === 'function') {
+      return new Promise((resolve, reject) =>
+        sqlCommands.changeFolderName(folderId, newFolderName)
+        .then(() => resolve())
+        .catch(sqlErr => reject(sqlErr))
       );
     } else {
       throw new exceptions.PromiseFunctionNotDefined();
