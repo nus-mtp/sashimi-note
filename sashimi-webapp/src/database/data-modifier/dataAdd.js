@@ -21,6 +21,17 @@ function exchange(givenArray, currIndex, thenIndex) {
   givenArray[currIndex] = givenArray[thenIndex];
   givenArray[thenIndex] = tempObject;
 }
+
+function bubbleUp(givenArray, lowerBound, upperBound) {
+  if (isLowerUpperBoundWithinRange(lowerBound, upperBound, givenArray)) {
+    let prev = lowerBound;
+    for (let index = lowerBound + 1; index <= upperBound; index+=1) {
+      exchange(givenArray, prev, index);
+      prev = index;
+    }
+  }
+}
+
   if (typeof Promise === 'function') {
     return new Promise((resolve, reject) => {
       const currentDateTime = dateTime.getCurrentDateTime();
