@@ -39,7 +39,19 @@ function getUnitInch(value) {
 }
 
 export default {
-  get(value, targetUnit) {
+  /**
+   * Convert a number of a given unit to another
+   * Usage: get('50cm', 'px')
+   *
+   * @param {string} value
+   * @param {string} targetUnit
+   * @param {boolean} shouldPrintUnit - optional, default to true
+   */
+  get(value, targetUnit, shouldPrintUnit) {
+    if (shouldPrintUnit == null) {
+      shouldPrintUnit = true;
+    }
+
     if (!value || !targetUnit) {
       // if either one of the param is missing, throw error
       throw new Error('Input value parameter is empty');
@@ -51,6 +63,11 @@ export default {
     if (Number.isNaN(result)) {
       throw new Error(`Cannot parse "${result}" into a number`);
     }
-    return `${result}${targetUnit}`;
+
+    if (shouldPrintUnit) {
+      return `${result}${targetUnit}`;
+    } else {
+      return parseFloat(result);
+    }
   }
 };

@@ -8,17 +8,18 @@
         <h3>New {{value}}</h3>
       </div>
     </div>
-    <file 
-      v-for="file in docs.childFileList"
-      v-on:focusFile="focus"
-          :file-name="file.name"
-          :id="file.id">
-    </file>
     <folder 
       v-for="folder in docs.childFolderList"
-          :id="folder.id"
-          :folder-name="folder.name">
+        v-on:openFolder="changeFolder"
+        :folder="folder"
+    >
     </folder>
+    <file 
+      v-for="file in docs.childFileList"
+        v-on:focusFile="focus"
+        :file="file"
+    >
+    </file>
   </div>
 </template>
 
@@ -39,14 +40,11 @@ export default {
     folder,
     file,
   },
-  watch: {
-    docs(data) {
-      console.log(data);
-    }
-  },
+  watch: {},
   methods: {
-    focus(event) {
-      console.log(event);
+    focus(event) {},
+    changeFolder(newFolder) {
+      this.$emit('changeFolder', newFolder);
     }
   },
   mounted() {
@@ -76,7 +74,7 @@ export default {
     padding: 0;
 
     &:hover {
-      background-color: rgba(0,0,0,0.02);      
+      background-color: rgba(0,0,0,0.02);
     }
 
     &:focus {
@@ -85,7 +83,7 @@ export default {
 
     p {
       font-family: $font-primary;
-      
+
       &::selection {
         background-color: white;
       }

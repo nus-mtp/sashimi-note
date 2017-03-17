@@ -5,6 +5,7 @@
       v-on:execute="executeAction"
     ></userInputs>
     <documents 
+      v-on:changeFolder="changeFolder"
       :view-mode="viewMode"
       :docs="docs"
     ></documents>
@@ -24,34 +25,45 @@ export default {
   data() {
     return {
       viewMode: 'listView',
-      docs: ''
+      docs: {}
     };
   },
   watch: {
   },
   methods: {
+    changeFolder(newFolder) {
+      this.docs = newFolder;
+      fileManager.update(this.docs);
+    },
     changeViewMode(viewMode) {
       this.viewMode = viewMode;
     },
     executeAction(action) {
-      if (action === 'createFolder') {
-        this.docs.createFolder('Folder');
-      } else if (action === 'createFile') {
-        this.docs.createFile('File');
+      switch (action) {
+        case 'createFolder': {
+          this.docs.createFolder('Folder');
+          break;
+        }
+        case 'createFile': {
+          this.docs.createFile('File');
+          break;
+        }
+        case 'history back': {
+          this.docs = fileManager.previous();
+          break;
+        }
+        case 'history forward': {
+          this.docs = fileManager.next();
+          break;
+        }
+        default: break;
       }
     }
   },
   mounted() {
-    const startPromise = fileManager.start();
-
-    startPromise
-    .then((rootFolder) => {
-      console.log(rootFolder);
-      this.docs = rootFolder;
-    })
-    .catch((error) => {
-      console.log(error);
-    });
+    const ROOT_FOLDER_ID = 0;
+    this.docs = fileManager.getFolderByID(ROOT_FOLDER_ID);
+    fileManager.update(this.docs);
   }
 };
 
