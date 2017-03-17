@@ -162,6 +162,22 @@ function deleteSingleFile(fileId) {
   );
 }
 
+function cascadeDeleteFile(index, fileArr) {
+  return new Promise((resolve, reject) => {
+    if (index >= fileArr.length) {
+      return true;
+    }
+    const fileToDeleteIndex = Object.values(fileArr[index])[0];
+    return deleteSingleFile(fileToDeleteIndex)
+    .then(() => {
+      cascadeDeleteFile(index + 1, fileArr)
+      .catch(err => reject(err));
+      resolve();
+    })
+    .catch(err => reject(err));
+  });
+}
+
 }
 
 export default function sqlCommands() {
