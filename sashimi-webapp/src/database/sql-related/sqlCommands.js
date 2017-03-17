@@ -296,6 +296,23 @@ export default function sqlCommands() {
     }
   };
 
+  this.exactSearchStartFolderNameInFolder = function exactSearchStartFolderNameInFolder(searchString, parentFolderId) {
+    if (typeof Promise === 'function') {
+      return new Promise((resolve, reject) =>
+        alasql.promise([stringManipulator.stringConcat('SELECT ', constants.HEADER_FOLDER_FOLDER_NAME,
+                                                       ' FROM ', constants.ENTITIES_FOLDER,
+                                                       ' WHERE ', constants.HEADER_FOLDER_PARENT_FOLDER_ID,
+                                                       ' = ', parentFolderId,
+                                                       ' ORDER BY ', constants.HEADER_FOLDER_FOLDER_NAME,
+                                                       ' ASC')])
+        .then(data => resolve(getArray(data)))
+        .catch(sqlError => reject(sqlError))
+      );
+    } else {
+      throw new exceptions.PromiseFunctionNotDefined();
+    }
+  };
+
   this.getMaxFileId = function getMaxFileId() {
     if (typeof Promise === 'function') {
       return new Promise((resolve, reject) =>
