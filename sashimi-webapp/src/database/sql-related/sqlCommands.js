@@ -20,6 +20,17 @@ function getArray(data) {
   return data[0];
 }
 
+function getCurrentFilePath(fileId) {
+  return new Promise((resolve, reject) =>
+    alasql.promise([stringManipulator.stringConcat('SELECT ', constants.HEADER_FILE_MANAGER_PATH,
+                                                   ' FROM ', constants.ENTITIES_FILE_MANAGER,
+                                                   ' WHERE ', constants.HEADER_FILE_MANAGER_FILE_ID,
+                                                   ' = ', fileId)])
+    .then(filePath => resolve(filePath))
+    .catch(sqlErr => reject(sqlErr))
+  );
+}
+
 }
 
 export default function sqlCommands() {
