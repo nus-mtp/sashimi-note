@@ -61,6 +61,7 @@
           </button>
           <button class="navbar-buttons" 
                   v-bind:class="{'hover-grow': buttonEffect}"
+                    v-on:click="execute('download')"
           >
             <i class="material-icons md-dark" 
                 v-bind:class="{'md-inactive': buttonDisabled}">file_download</i>
@@ -101,11 +102,16 @@ export default {
   methods: {
     execute(action) {
       eventHub.$emit('execute', action);
-
-      if (action === 'delete' || action === 'duplicate' || action === 'download') {
-        this.$emit('execute', action, this.focusedDoc);
-      } else {
-        this.$emit('execute', action);
+      switch (action) {
+        case 'delete':
+        case 'duplicate':
+        case 'download': {
+          this.$emit('execute', action, this.focusedDoc);
+          break;
+        }
+        default: {
+          this.$emit('execute', action);
+        }
       }
     },
     setViewMode(viewMode) {
