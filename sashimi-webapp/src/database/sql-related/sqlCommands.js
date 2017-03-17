@@ -525,7 +525,7 @@ export default function sqlCommands() {
         alasql.promise([stringManipulator.stringConcat('DELETE FROM ', constants.ENTITIES_FILE_MANAGER,
                                                        ' WHERE ', constants.HEADER_FILE_MANAGER_FILE_ID,
                                                        ' = ', fileId)])
-        .then(data => resolve(true))
+        .then(() => resolve())
         .catch(sqlError => reject(sqlError))
       );
     } else {
