@@ -22,7 +22,7 @@ function createUserTable(isUserTableFirstInitialize) {
         .then(success => resolve(true))
         .catch(sqlError => reject(sqlError));
       } else {
-        resolve('false');
+        resolve(false);
       }
     });
   } else {
