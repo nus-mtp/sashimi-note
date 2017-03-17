@@ -535,13 +535,48 @@ export default function sqlCommands() {
 
   this.deleteFolder = function deleteFolder(folderId) {
     if (typeof Promise === 'function') {
-      return new Promise((resolve, reject) =>
-        alasql.promise([stringManipulator.stringConcat('DELETE FROM ', constants.ENTITIES_FOLDER,
-                                                       ' WHERE ', constants.HEADER_FOLDER_FOLDER_ID,
-                                                       ' = ', folderId)])
+      return new Promise((resolve, reject) => {
+        let thisFolderPath;
+        let foldersToDelete;
+        let filesToDelete;
+        // step 1: get the folder path and folder name
+        return getFolderPathAndNameFromId(folderId)
+        .then((folderData) => {
+          // step 2: get all the folders to be deleted
+          thisFolderPath = getDataOutOfAlasql(folderData);
+          const thisFolderName = getSecondDataOutOfAlasql(folderData);
+          thisFolderPath = stringManipulator.stringConcat(thisFolderPath, thisFolderName, '/');
+          return getListOfFolderIdsWithSamePath(thisFolderPath)
+          .then((folderIds) => {
+            foldersToDelete = getArray(folderIds);
+            return null; // dummy return
+          })
+          .catch(sqlError => reject(sqlError));
+        })
+        .then(() =>
+          // step 3: get all the files to be deleted
+          getListOfFilesIdsWithSamePath(thisFolderPath)
+          .then((fileIds) => {
+            filesToDelete = getArray(fileIds);
+            return null; // dummy return
+          })
+          .catch(sqlError => reject(sqlError))
+        )
+        .then(() =>
+          // step 4: cascade delete all the current and children folders
+          cascadeDeleteFolder(0, foldersToDelete)
+          .then(() => {})
+          .catch(sqlErr => reject(sqlErr))
+        )
+        .then(() =>
+          // step 5: cascade delete all children files
+          cascadeDeleteFile(0, filesToDelete)
+          .then(() => {})
+          .catch(sqlErr => reject(sqlErr))
+        )
         .then(() => resolve())
-        .catch(sqlError => reject(sqlError))
-      );
+        .catch(sqlError => reject(sqlError));
+      });
     } else {
       throw new exceptions.PromiseFunctionNotDefined();
     }
