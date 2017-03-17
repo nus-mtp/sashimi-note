@@ -113,8 +113,8 @@ export default class entitiesCreator {
         tableCreator.setPrimaryKeys(constants.HEADER_USER_USER_ID);
 
         return tableCreator.endCreateTable(constants.ENTITIES_USER, initDataGenerator.getInitDataUser())
-          .then(data => resolve(data))
-          .catch(sqlError => reject(sqlError));
+        .then(data => resolve(data))
+        .catch(sqlError => reject(sqlError));
       });
     } else {
       throw new exceptions.PromiseFunctionNotDefined();
@@ -134,11 +134,11 @@ export default class entitiesCreator {
         tableCreator.addHeader(constants.HEADER_ORGANIZATION_PARENT_ORGANIZATION_ID, 'NUMBER');
 
         tableCreator.setPrimaryKeys(constants.HEADER_ORGANIZATION_ORGANIZATION_ID,
-                                      constants.HEADER_ORGANIZATION_USER_ID);
+                                    constants.HEADER_ORGANIZATION_USER_ID);
 
         return tableCreator.endCreateTable(constants.ENTITIES_ORGANIZATION, initDataGenerator.getInitDataOrganization())
-          .then(data => resolve(data))
-          .catch(sqlError => reject(sqlError));
+        .then(data => resolve(data))
+        .catch(sqlError => reject(sqlError));
       });
     } else {
       throw new exceptions.PromiseFunctionNotDefined();
@@ -161,10 +161,10 @@ export default class entitiesCreator {
         tableCreator.addHeader(constants.HEADER_FILE_MANAGER_PATH, 'STRING');
 
         tableCreator.setPrimaryKeys(constants.HEADER_FILE_MANAGER_FILE_ID,
-                                      constants.HEADER_FILE_MANAGER_ORGANIZATION_ID);
+                                    constants.HEADER_FILE_MANAGER_ORGANIZATION_ID);
         return tableCreator.endCreateTable(constants.ENTITIES_FILE_MANAGER, initDataGenerator.getInitDataFileManager())
-          .then(data => resolve(data))
-          .catch(sqlError => reject(sqlError));
+        .then(data => resolve(data))
+        .catch(sqlError => reject(sqlError));
       });
     } else {
       throw new exceptions.PromiseFunctionNotDefined();
@@ -186,10 +186,10 @@ export default class entitiesCreator {
         tableCreator.addHeader(constants.HEADER_FOLDER_PATH, 'STRING');
 
         tableCreator.setPrimaryKeys(constants.HEADER_FOLDER_ORGANIZATION_ID,
-                                      constants.HEADER_FOLDER_FOLDER_ID);
+                                    constants.HEADER_FOLDER_FOLDER_ID);
         return tableCreator.endCreateTable(constants.ENTITIES_FOLDER)
-          .then(data => resolve(data))
-          .catch(sqlError => reject(sqlError));
+        .then(data => resolve(data))
+        .catch(sqlError => reject(sqlError));
       });
     } else {
       throw new exceptions.PromiseFunctionNotDefined();

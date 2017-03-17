@@ -22,8 +22,8 @@ export default class tableCreator {
       return new Promise((resolve, reject) => {
         const thisDatabaseName = databaseName;
         return sqlCommands.linkDatabaseToIndexedDB(thisDatabaseName)
-          .then(data => resolve(data))
-          .catch(sqlError => reject(sqlError));
+        .then(data => resolve(data))
+        .catch(sqlError => reject(sqlError));
       });
     } else {
       throw new exceptions.PromiseFunctionNotDefined();
@@ -93,8 +93,8 @@ export default class tableCreator {
           sqlCreateTableString = endOfCreateTableStringForAlasql(sqlCreateTableString);
           isTableInitializedForCreation = constants.CONST_TABLE_CREATION_CLOSED;
           return sqlCommands.createTable(sqlCreateTableString)
-            .then(data => resolve(data))
-            .catch(sqlError => reject(sqlError));
+          .then(data => resolve(data))
+          .catch(sqlError => reject(sqlError));
         } else {
           return null;
         }
