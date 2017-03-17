@@ -494,9 +494,18 @@ export default function sqlCommands() {
     }
   };
 
+  this.saveFile = function saveFile(fileId, markdownFile) {
+    if (typeof Promise === 'function') {
+      return new Promise((resolve, reject) =>
+        alasql.promise([stringManipulator.stringConcat('UPDATE ', constants.ENTITIES_FILE_MANAGER,
+                                                       ' SET ', constants.HEADER_FILE_MANAGER_FILE_MARKDOWN,
+                                                       ' = "', markdownFile,
+                                                       '" WHERE ', constants.HEADER_FILE_MANAGER_FILE_ID,
+                                                       ' = ', fileId)])
+          .catch(sqlError => reject(sqlError))
         .then(() => {
           const currentDateTime = dateTime.getCurrentDateTime();
-          alasql.promise([stringManipulator.stringConcat('UPDATE ', constants.ENTITIES_FILE_MANAGER,
+          return alasql.promise([stringManipulator.stringConcat('UPDATE ', constants.ENTITIES_FILE_MANAGER,
                                                          ' SET ', constants.HEADER_FILE_MANAGER_LAST_MODIFIED_DATE,
                                                          ' = "', currentDateTime,
                                                          '" WHERE ', constants.HEADER_FILE_MANAGER_FILE_ID,
