@@ -31,6 +31,17 @@ function getCurrentFilePath(fileId) {
   );
 }
 
+function getCurrentFolderPath(folderId) {
+  return new Promise((resolve, reject) =>
+    alasql.promise([stringManipulator.stringConcat('SELECT ', constants.HEADER_FOLDER_PATH,
+                                                   ' FROM ', constants.ENTITIES_FOLDER,
+                                                   ' WHERE ', constants.HEADER_FOLDER_FOLDER_ID,
+                                                   ' = ', folderId)])
+    .then(folderPath => resolve(folderPath))
+    .catch(sqlErr => reject(sqlErr))
+  );
+}
+
 }
 
 export default function sqlCommands() {
