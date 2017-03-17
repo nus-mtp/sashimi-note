@@ -11,6 +11,14 @@ import exceptions from 'src/database/exceptions';
 import SqlCommands from 'src/database/sql-related/sqlCommands';
 import StringManipulator from 'src/database/stringManipulation';
 
+const stringManipulator = new StringManipulator();
+
+const sqlCommands = new SqlCommands();
+
+function resolveFileSaving(fileContent) {
+  return stringManipulator.replaceAll(fileContent, '"', '\\"');
+}
+
 export default class dataModifier {
   static constructor() {}
 
