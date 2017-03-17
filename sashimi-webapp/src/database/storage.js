@@ -200,7 +200,7 @@ export default class storage {
     if (typeof Promise === 'function') {
       return new Promise((resolve, reject) =>
         dataModifier.saveFile(fileId, fileString)
-        .then(data => resolve(true))
+        .then(() => resolve())
         .catch(sqlError => reject(sqlError))
       );
     } else {
@@ -224,7 +224,7 @@ export default class storage {
     if (typeof Promise === 'function') {
       return new Promise((resolve, reject) =>
         dataModifier.deleteFile(fileId)
-          .then(data => resolve(true))
+          .then(() => resolve())
           .catch(sqlError => reject(sqlError))
       );
     } else {
@@ -249,7 +249,7 @@ export default class storage {
     if (typeof Promise === 'function') {
       return new Promise((resolve, reject) =>
         dataModifier.deleteFolder(folderId)
-        .then(data => resolve(true))
+        .then(() => resolve())
         .catch(sqlError => reject(sqlError))
       );
     } else {
@@ -262,7 +262,7 @@ export default class storage {
       return new Promise((resolve, reject) => {
         databaseName = newDatabaseName || databaseName;
         return dataModifier.deleteAllEntities(databaseName)
-        .then(data => resolve(true))
+        .then(() => resolve())
         .catch(sqlError => reject(sqlError));
       });
     } else {
