@@ -124,6 +124,17 @@ function cascadeChangeFolderPath(index, prevBasePath, newBasePath, folderArr) {
     .catch(err => reject(err));
   });
 }
+
+function deleteSingleFolder(folderId) {
+  return new Promise((resolve, reject) =>
+    alasql.promise([stringManipulator.stringConcat('DELETE FROM ', constants.ENTITIES_FOLDER,
+                                                   ' WHERE ', constants.HEADER_FOLDER_FOLDER_ID,
+                                                   ' = ', folderId)])
+    .then(() => resolve())
+    .catch(sqlError => reject(sqlError))
+  );
+}
+
 }
 
 export default function sqlCommands() {
