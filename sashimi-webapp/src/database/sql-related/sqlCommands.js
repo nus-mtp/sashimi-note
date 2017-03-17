@@ -102,6 +102,28 @@ function changeSingleFolderName(folderId, newFolderName) {
   );
 }
 
+function cascadeChangeFolderPath(index, prevBasePath, newBasePath, folderArr) {
+  return new Promise((resolve, reject) => {
+    if (index >= folderArr.length) {
+      return true;
+    }
+    const folderToChangePathIndex = Object.values(folderArr[index])[0];
+    let newPath;
+    return getCurrentFolderPath(folderToChangePathIndex)
+    .then((currentFolderPath) => {
+      const childPath = currentFolderPath.toString().split(prevBasePath)[1];
+      newPath = stringManipulator.stringConcat(newBasePath, childPath);
+      return changeSingleFolderPath(folderToChangePathIndex, newPath)
+      .catch(sqlErr => reject(sqlErr));
+    })
+    .then(() => {
+      cascadeChangeFolderPath(index + 1, prevBasePath, newBasePath, folderArr)
+      .catch(err => reject(err));
+      resolve();
+    })
+    .catch(err => reject(err));
+  });
+}
 }
 
 export default function sqlCommands() {
