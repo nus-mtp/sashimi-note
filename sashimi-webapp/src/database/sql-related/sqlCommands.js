@@ -55,6 +55,29 @@ function changeSingleFilePath(fileId, newPath) {
   );
 }
 
+function cascadeChangeFilePath(index, prevBasePath, newBasePath, fileArr) {
+  return new Promise((resolve, reject) => {
+    if (index >= fileArr.length) {
+      return true;
+    }
+    const fileToChangePathIndex = Object.values(fileArr[index])[0];
+    let newPath;
+    return getCurrentFilePath(fileToChangePathIndex)
+    .then((currentFilePath) => {
+      const childPath = currentFilePath.toString().split(prevBasePath)[1];
+      newPath = stringManipulator.stringConcat(newBasePath, childPath);
+      return changeSingleFilePath(fileToChangePathIndex, newPath)
+      .catch(sqlErr => reject(sqlErr));
+    })
+    .then(() => {
+      cascadeChangeFilePath(index + 1, prevBasePath, newBasePath, fileArr)
+      .catch(err => reject(err));
+      resolve();
+    })
+    .catch(err => reject(err));
+  });
+}
+
 }
 
 export default function sqlCommands() {
