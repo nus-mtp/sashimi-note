@@ -6,17 +6,6 @@ import SqlCommands from 'src/database/sql-related/sqlCommands';
 
 const sqlCommands = new SqlCommands();
 
-// a promise to allow sequential running of keying in data
-function initFillUpDefaultDatas() {
-  if (typeof Promise === 'function') {
-    return new Promise((resolve, reject) => {
-      resolve(true);
-    });
-  } else {
-    throw new exceptions.PromiseFunctionNotDefined();
-  }
-}
-
 function isTableExists(tableName) {
   if (typeof Promise === 'function') {
     return new Promise((resolve, reject) => {
@@ -208,10 +197,8 @@ export default class entitiesCreator {
   }
   static fillUpDefaultData() {
     if (typeof Promise === 'function') {
-      return new Promise((resolve, reject) => initFillUpDefaultDatas()
-          .then(() =>
-            defaultFillUpUserTable()
-            .catch(sqlErr => reject(sqlErr)))
+      return new Promise((resolve, reject) =>
+          defaultFillUpUserTable()
           .then(() =>
             defaultFillUpOrganizationTable()
             .catch(sqlErr => reject(sqlErr)))
