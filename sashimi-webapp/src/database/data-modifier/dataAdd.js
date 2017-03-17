@@ -76,7 +76,7 @@ function createNewFile(organizationId, filePath, folderId, newFileId, newFileNam
       const fileOrganizationId = organizationId;
       const fileFolderId = folderId;
       const fileId = newFileId;
-      const fileName = constants.DEFAULT_FILE_NAME;
+      const fileName = newFileName;
       const fileMarkDown = constants.DEFAULT_EMPTY;
       const filePermission = constants.PERMISSION_CREATOR;
       const fileCreationDateTime = currentDateTime;
@@ -104,7 +104,7 @@ function createNewFile(organizationId, filePath, folderId, newFileId, newFileNam
   }
 }
 
-function createNewFolder(organizationId, folderPath, currentFolderId, newFolderId) {
+function createNewFolder(organizationId, folderPath, currentFolderId, newFolderId, newFolderName) {
   if (typeof Promise === 'function') {
     return new Promise((resolve, reject) => {
       const currentDateTime = dateTime.getCurrentDateTime();
@@ -114,7 +114,7 @@ function createNewFolder(organizationId, folderPath, currentFolderId, newFolderI
       const folderpermissionIndex = constants.PERMISSION_CREATOR;
       const folderOrganizationId = organizationId;
       const folderCreationDate = currentDateTime;
-      const folderName = constants.DEFAULT_FOLDER_NAME;
+      const folderName = newFolderName;
       const folderlastModifiedDate = folderCreationDate;
       const folderThisPath = folderPath;
 
@@ -148,9 +148,16 @@ export default class dataAdd {
         sqlCommands.getMaxFileId()
           .then((maxId) => {
             const newFileId = maxId + 1;
-            return createNewFile(organizationId, filePath, folderId, newFileId)
-            .then(data => resolve(data))
-            .catch(err => reject(err));
+            // search all possible identical fileNames
+            return sqlCommands.exactSearchStartFileNameInFolder(
+              constants.DEFAULT_FILE_NAME_OMIT_FILE_TYPE, filePath)
+            .then((queryFiles) => {
+              const newFileName = generateUniqueNewFileName(queryFiles, constants.DEFAULT_FILE_NAME);
+              return createNewFile(organizationId, filePath, folderId, newFileId, newFileName)
+              .then(data => resolve(data))
+              .catch(err => reject(err));
+            })
+            .catch(sqlErr => reject(sqlErr));
           }).catch(sqlError => reject(sqlError))
       );
     } else {
@@ -165,9 +172,17 @@ export default class dataAdd {
         sqlCommands.getMaxFolderId()
         .then((maxId) => {
           const newFolderId = maxId + 1;
-          return createNewFolder(organizationId, folderPath, folderId, newFolderId)
+          // search all possible identical folderNames
+          return sqlCommands.exactSearchStartFolderNameInFolder(
+            constants.DEFAULT_FOLDER_NAME, folderId)
+          .then((queryFiles) => {
+            const newFolderName = generateUniqueNewFolderName(queryFiles, constants.DEFAULT_FOLDER_NAME);
+            const newFolderPath = stringManipulator.stringConcat(folderPath, newFolderName, '/');
+            return createNewFolder(organizationId, newFolderPath, folderId, newFolderId, newFolderName)
             .then(data => resolve(data))
             .catch(err => reject(err));
+          })
+          .catch(sqlErr => reject(sqlErr));
         }).catch(sqlError => reject(sqlError))
       );
     } else {
