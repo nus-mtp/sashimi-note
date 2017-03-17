@@ -78,6 +78,18 @@ function cascadeChangeFilePath(index, prevBasePath, newBasePath, fileArr) {
   });
 }
 
+function changeSingleFolderPath(folderId, newPath) {
+  return new Promise((resolve, reject) =>
+    alasql.promise([stringManipulator.stringConcat('UPDATE ', constants.ENTITIES_FOLDER,
+                                                   ' SET ', constants.HEADER_FOLDER_PATH,
+                                                   ' = "', newPath,
+                                                   '" WHERE ', constants.HEADER_FOLDER_FOLDER_ID,
+                                                   ' = ', folderId)])
+    .then(() => resolve())
+    .catch(sqlError => reject(sqlError))
+  );
+}
+
 }
 
 export default function sqlCommands() {
