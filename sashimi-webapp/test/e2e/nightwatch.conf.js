@@ -17,6 +17,8 @@ module.exports = {
     }
   },
 
+  test_runner: 'mocha',
+
   test_settings: {
     default: {
       selenium_port: 4444,

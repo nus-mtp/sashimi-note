@@ -1,0 +1,13 @@
+### Test for heading at the bottom of a page
+Nam semper mi at neque gravida condimentum. Suspendisse potenti. Nunc neque mauris, sollicitudin vel eros vel, suscipit convallis eros. Nullam imperdiet purus sed massa faucibus dictum. Sed ut felis ultrices, vehicula justo ut, suscipit quam. Quisque dapibus, purus vel elementum efficitur, sapien risus consequat purus, rhoncus gravida ligula dui condimentum tellus. Nam eu est scelerisque, vestibulum ante a, porta arcu. Aenean risus odio, tincidunt in malesuada non, eleifend non felis. Etiam tincidunt ante ipsum, sit amet maximus arcu vestibulum quis. Quisque non nibh et libero sagittis cursus. Phasellus ligula urna, pretium sit amet scelerisque at, tincidunt in erat. Cras in pretium orci.
+
+### Heading inserted at 72.38%
+Mauris sit amet tortor porttitor, ullamcorper tellus id, dictum felis. Ut dictum consequat accumsan. Pellentesque rhoncus non ante eget efficitur. Nunc lorem libero, gravida sed tempor id, iaculis quis felis. Praesent tristique ligula pellentesque, finibus massa at, maximus neque. Maecenas accumsan ut felis ut dictum. Donec pellentesque purus vel vehicula pretium itu semo pito lasna.
+
+#### Heading inserted at 54.64%
+Maecenas ornare posuere lectus, non maximus mi hendrerit id. Proin tincidunt pretium sodales. Curabitur malesuada sapien eu orci bibendum lacinia. Pellentesque a tincidunt ex. Morbi vel dolor tincidunt, pretium mi at, interdum nulla. Nulla facilisis metus a quam molestie consequat. Vestibulum rutrum non risus et imperdiet. Sed efficitur suscipit eros. Sed in porttitor lectus. Maecenas egestas mollis maximus. Nunc vehicula odio sed eros sollicitudin, eu interdum libero aliquam. Quisque quis venenatis magna.
+
+###### Heading inserted at 32.45%
+Vestibulum libero tellus, porttitor in nisi ut, consectetur venenatis ante. Donec dolor urna, bibendum eget imperdiet vitae, pharetra sed massa. The next heading is located at 17.91% from the bottom of the page. Which is just below the 18% threshold.
+
+###### Heading inserted at 17.91%
