@@ -38,7 +38,7 @@ export default class dataModifier {
     if (typeof Promise === 'function') {
       return new Promise((resolve, reject) =>
         dataAdd.createNewFile(organizationId, filePath, folderId)
-        .then(fileId => resolve(fileId))
+        .then(fileObject => resolve(fileObject))
         .catch(sqlErr => reject(sqlErr))
       );
     } else {
@@ -50,7 +50,7 @@ export default class dataModifier {
     if (typeof Promise === 'function') {
       return new Promise((resolve, reject) =>
         dataAdd.createNewFolder(organizationId, folderPath, folderId)
-        .then(data => resolve(data))
+        .then(folderObject => resolve(folderObject))
         .catch(sqlErr => reject(sqlErr))
       );
     } else {
@@ -62,7 +62,7 @@ export default class dataModifier {
     if (typeof Promise === 'function') {
       return new Promise((resolve, reject) =>
         dataUpdate.saveFile(fileId, file)
-        .then(data => resolve(true))
+        .then(() => resolve())
         .catch(sqlError => reject(sqlError))
       );
     } else {
@@ -86,7 +86,7 @@ export default class dataModifier {
     if (typeof Promise === 'function') {
       return new Promise((resolve, reject) =>
         dataDelete.deleteFolder(folderId)
-        .then(data => resolve(true))
+        .then(() => resolve())
         .catch(sqlError => reject(sqlError))
       );
     } else {
