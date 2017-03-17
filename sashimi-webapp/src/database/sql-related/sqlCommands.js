@@ -12,6 +12,10 @@ function getDataOutOfAlasql(data) {
   return Object.values(data[0][0])[0];
 }
 
+function getSecondDataOutOfAlasql(data) {
+  return Object.values(data[0][0])[1];
+}
+
 function getArray(data) {
   return data[0];
 }
