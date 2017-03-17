@@ -135,6 +135,22 @@ function deleteSingleFolder(folderId) {
   );
 }
 
+function cascadeDeleteFolder(index, folderArr) {
+  return new Promise((resolve, reject) => {
+    if (index >= folderArr.length) {
+      return true;
+    }
+    const folderToDeleteIndex = Object.values(folderArr[index])[0];
+    return deleteSingleFolder(folderToDeleteIndex)
+    .then(() => {
+      cascadeDeleteFolder(index + 1, folderArr)
+      .catch(err => reject(err));
+      resolve();
+    })
+    .catch(err => reject(err));
+  });
+}
+
 }
 
 export default function sqlCommands() {
