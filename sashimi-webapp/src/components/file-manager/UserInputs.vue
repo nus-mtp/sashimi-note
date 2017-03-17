@@ -19,14 +19,14 @@
         <ul class="navbar-breadcrumb inline-block">
           <li>
             <button class="navbar-buttons hover-grow" 
-                    v-on:click="execute('history back', '')"
+                    v-on:click="execute('history back')"
             >
               <i class="material-icons">arrow_back</i>
             </button>
           </li>
           <li>
             <button class="navbar-buttons hover-grow" 
-                    v-on:click="execute('history forward', '')"
+                    v-on:click="execute('history forward')"
             >
               <i class="material-icons">arrow_forward</i>
             </button>
@@ -43,12 +43,12 @@
             <i class="material-icons md-dark">file_upload</i>
           </button>
           <button class="navbar-buttons hover-grow" 
-                  v-on:click="execute('createFolder', '')"
+                  v-on:click="execute('createFolder')"
           >
             <i class="material-icons md-dark">create_new_folder</i>
           </button>
           <button class="navbar-buttons hover-grow" 
-                  v-on:click="execute('createFile', '')"
+                  v-on:click="execute('createFile')"
           >
             <i class="material-icons md-dark">note_add</i>
           </button>
@@ -95,13 +95,18 @@ export default {
     return {
       buttonDisabled: true,
       buttonEffect: false,
-      focusedDocId: '',
+      focusedDoc: {},
     };
   },
   methods: {
-    execute(action, data) {
+    execute(action) {
       eventHub.$emit('execute', action);
-      this.$emit('execute', action, data);
+
+      if (action === 'delete' || action === 'duplicate' || action === 'download') {
+        this.$emit('execute', action, this.focusedDoc);
+      } else {
+        this.$emit('execute', action);
+      }
     },
     setViewMode(viewMode) {
       this.$emit('changeViewMode', viewMode);
@@ -112,12 +117,11 @@ export default {
     eventHub.$on('focus', (focusedDoc) => {
       this.buttonDisabled = false;
       this.buttonEffect = true;
-      this.focusedDocId = focusedDoc.id;
+      this.focusedDoc = focusedDoc;
     });
     eventHub.$on('blur', () => {
       this.buttonDisabled = true;
       this.buttonEffect = false;
-      this.focusedDocId = '';
     });
   },
 };

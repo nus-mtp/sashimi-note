@@ -38,7 +38,7 @@ export default {
     changeViewMode(viewMode) {
       this.viewMode = viewMode;
     },
-    executeAction(action) {
+    executeAction(action, doc) {
       switch (action) {
         case 'createFolder': {
           this.docs.createFolder('Folder');
@@ -54,6 +54,11 @@ export default {
         }
         case 'history forward': {
           this.docs = fileManager.next();
+          break;
+        }
+        case 'delete': {
+          console.log(doc);
+          doc.remove();
           break;
         }
         default: break;
