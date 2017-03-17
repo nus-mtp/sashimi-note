@@ -20,15 +20,6 @@ function getArray(data) {
   return data[0];
 }
 
-// dummy function to init sequence running
-function initPromiseSequence() {
-  if (typeof Promise === 'function') {
-    return new Promise((resolve, reject) => {
-      resolve(true);
-    });
-  } else {
-    throw new exceptions.PromiseFunctionNotDefined();
-  }
 }
 
 export default function sqlCommands() {
@@ -194,13 +185,6 @@ export default function sqlCommands() {
   this.saveFile = function saveFile(fileId, markdownFile) {
     if (typeof Promise === 'function') {
       return new Promise((resolve, reject) => {
-        initPromiseSequence()
-        .then(() => alasql.promise([stringManipulator.stringConcat('UPDATE ', constants.ENTITIES_FILE_MANAGER,
-                                                                   ' SET ', constants.HEADER_FILE_MANAGER_FILE_MARKDOWN,
-                                                                   ' = "', markdownFile,
-                                                                   '" WHERE ', constants.HEADER_FILE_MANAGER_FILE_ID,
-                                                                   ' = ', fileId)])
-          .catch(sqlError => reject(sqlError)))
         .then(() => {
           const currentDateTime = dateTime.getCurrentDateTime();
           alasql.promise([stringManipulator.stringConcat('UPDATE ', constants.ENTITIES_FILE_MANAGER,
