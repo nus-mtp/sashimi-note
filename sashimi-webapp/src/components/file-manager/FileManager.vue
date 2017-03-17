@@ -6,8 +6,8 @@
     ></userInputs>
     <documents 
       v-on:changeFolder="changeFolder"
-      :view-mode="viewMode"
-      :docs="docs"
+          :view-mode="viewMode"
+          :docs="docs"
     ></documents>
   </div>
 </template>
@@ -34,6 +34,7 @@ export default {
     changeFolder(newFolder) {
       this.docs = newFolder;
       fileManager.update(this.docs);
+      // change directory
     },
     changeViewMode(viewMode) {
       this.viewMode = viewMode;
@@ -56,13 +57,38 @@ export default {
           this.docs = fileManager.next();
           break;
         }
+        case 'download': {
+          this.downloadDoc(doc);
+          break;
+        }
         case 'delete': {
-          console.log(doc);
           doc.remove();
           break;
         }
         default: break;
       }
+    },
+    downloadDoc(doc) {
+      console.log(doc, 'doc');
+      doc.load()
+      .then((docContent) => {
+        this.download(doc, docContent);
+      });
+    },
+    download(doc, docContent) {
+      const element = document.createElement('a');
+      const href = 'data:text/plain;charset=utf-8,';
+      const content = encodeURIComponent(docContent);
+      element.setAttribute('href', href+content, docContent);
+      const fileName = doc.name;
+      element.setAttribute('download', fileName);
+
+      element.style.display = 'none';
+      document.body.appendChild(element);
+
+      element.click();
+
+      document.body.removeChild(element);
     }
   },
   mounted() {
