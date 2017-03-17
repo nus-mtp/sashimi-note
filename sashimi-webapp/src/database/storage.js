@@ -232,6 +232,12 @@ export default class storage {
       throw new exceptions.PromiseFunctionNotDefined();
     }
   }
+
+  static renameFileName(fileId, newFileName) {
+    if (typeof Promise === 'function') {
+      return new Promise((resolve, reject) =>
+        dataModifier.changeFileName(fileId, newFileName)
+        .then(() => resolve())
         .catch(err => reject(err))
       );
     } else {
