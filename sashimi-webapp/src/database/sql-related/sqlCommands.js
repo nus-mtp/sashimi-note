@@ -90,6 +90,18 @@ function changeSingleFolderPath(folderId, newPath) {
   );
 }
 
+function changeSingleFolderName(folderId, newFolderName) {
+  return new Promise((resolve, reject) =>
+    alasql.promise([stringManipulator.stringConcat('UPDATE ', constants.ENTITIES_FOLDER,
+                                                   ' SET ', constants.HEADER_FOLDER_FOLDER_NAME,
+                                                   ' = "', newFolderName,
+                                                   '" WHERE ', constants.HEADER_FOLDER_FOLDER_ID,
+                                                   ' = ', folderId)])
+    .then(() => resolve())
+    .catch(sqlError => reject(sqlError))
+  );
+}
+
 }
 
 export default function sqlCommands() {
