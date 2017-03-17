@@ -151,7 +151,7 @@ export default class entitiesCreator {
         tableCreator.initCreateTable(constants.ENTITIES_FILE_MANAGER);
 
         tableCreator.addHeader(constants.HEADER_FILE_MANAGER_ORGANIZATION_ID, 'NUMBER');
-        tableCreator.addHeader(constants.HEADER_FILE_MANAGER_FOLDER_ID, 'STRING');
+        tableCreator.addHeader(constants.HEADER_FILE_MANAGER_FOLDER_ID, 'NUMBER');
         tableCreator.addHeader(constants.HEADER_FILE_MANAGER_FILE_ID, 'NUMBER');
         tableCreator.addHeader(constants.HEADER_FILE_MANAGER_FILE_NAME, 'STRING');
         tableCreator.addHeader(constants.HEADER_FILE_MANAGER_FILE_MARKDOWN, 'STRING');
