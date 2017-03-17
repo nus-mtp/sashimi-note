@@ -213,7 +213,13 @@ export default class storage {
     if (typeof Promise === 'function') {
       return new Promise((resolve, reject) =>
         dataModifier.createNewFile(organizationId, filePath, folderId)
-        .then(data => resolve(data))
+        .then(fileObject => resolve(fileObject))
+        .catch(sqlErr => reject(sqlErr))
+      );
+    } else {
+      throw new exceptions.PromiseFunctionNotDefined();
+    }
+  }
         .catch(err => reject(err))
       );
     } else {
