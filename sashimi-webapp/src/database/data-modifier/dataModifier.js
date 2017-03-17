@@ -59,11 +59,20 @@ export default class dataModifier {
   }
 
   static saveFile(fileId, file) {
+  static moveFile(fileId, newPath) {
     if (typeof Promise === 'function') {
       return new Promise((resolve, reject) =>
         dataUpdate.saveFile(fileId, file)
+        sqlCommands.changeFilePath(fileId, newPath)
         .then(() => resolve())
         .catch(sqlError => reject(sqlError))
+        .catch(sqlErr => reject(sqlErr))
+      );
+    } else {
+      throw new exceptions.PromiseFunctionNotDefined();
+    }
+  }
+
   static renameFileName(fileId, newFileName) {
     if (typeof Promise === 'function') {
       return new Promise((resolve, reject) =>
