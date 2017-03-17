@@ -407,7 +407,21 @@ export default function sqlCommands() {
     }
   };
 
-  this.saveFile = function saveFile(fileId, markdownFile) {
+  this.changeFileName = function changeFileName(fileId, newFileName) {
+    if (typeof Promise === 'function') {
+      return new Promise((resolve, reject) =>
+        alasql.promise([stringManipulator.stringConcat('UPDATE ', constants.ENTITIES_FILE_MANAGER,
+                                                       ' SET ', constants.HEADER_FILE_MANAGER_FILE_NAME,
+                                                       ' = "', newFileName,
+                                                       '" WHERE ', constants.HEADER_FILE_MANAGER_FILE_ID,
+                                                       ' = ', fileId)])
+        .then(() => resolve())
+        .catch(sqlError => reject(sqlError))
+      );
+    } else {
+      throw new exceptions.PromiseFunctionNotDefined();
+    }
+  };
     if (typeof Promise === 'function') {
       return new Promise((resolve, reject) => {
         .then(() => {
