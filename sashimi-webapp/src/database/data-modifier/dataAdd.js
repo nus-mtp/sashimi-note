@@ -8,6 +8,7 @@ import StringManipulator from 'src/database/stringManipulation';
 const sqlCommands = new SqlCommands();
 const dateTime = new DateTime();
 const alasqlArray = new SqlArray();
+const stringManipulator = new StringManipulator();
 
 function createNewFile(organizationId, filePath, folderId, newFileId) {
 function isLowerUpperBoundWithinRange(lowerBound, upperBound, givenArray) {
@@ -32,6 +33,23 @@ function bubbleUp(givenArray, lowerBound, upperBound) {
   }
 }
 
+function generateUniqueNewFileName(queryFiles, defaultFileName) {
+  let newFileName = defaultFileName;
+  let duplicateCount = 0;
+  for (let fileIndex = 0; fileIndex < queryFiles.length; fileIndex+=1) {
+    const fileObject = queryFiles[fileIndex];
+    if (fileObject[constants.HEADER_FILE_MANAGER_FILE_NAME] === newFileName) {
+      duplicateCount += 1;
+      // generate new unique file name
+      newFileName = stringManipulator.stringConcat(
+      constants.DEFAULT_FILE_NAME_OMIT_FILE_TYPE, duplicateCount, '.md');
+    } else if (fileIndex < queryFiles.length) {
+      bubbleUp(queryFiles, fileIndex, queryFiles.length -1);
+      fileIndex -= 1;
+    }
+  }
+  return newFileName;
+}
   if (typeof Promise === 'function') {
     return new Promise((resolve, reject) => {
       const currentDateTime = dateTime.getCurrentDateTime();
