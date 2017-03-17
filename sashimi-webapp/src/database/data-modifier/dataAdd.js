@@ -50,6 +50,25 @@ function generateUniqueNewFileName(queryFiles, defaultFileName) {
   }
   return newFileName;
 }
+
+function generateUniqueNewFolderName(queryFolders, defaultFolderName) {
+  let newFolderName = defaultFolderName;
+  let duplicateCount = 0;
+  for (let folderIndex = 0; folderIndex < queryFolders.length; folderIndex+=1) {
+    const folderObject = queryFolders[folderIndex];
+    if (folderObject[constants.HEADER_FOLDER_FOLDER_NAME] === newFolderName) {
+      duplicateCount += 1;
+      // generate new unique folder name
+      newFolderName = stringManipulator.stringConcat(
+      constants.DEFAULT_FOLDER_NAME, duplicateCount.toString());
+    } else if (folderIndex < queryFolders.length) {
+      bubbleUp(queryFolders, folderIndex, queryFolders.length -1);
+      folderIndex -= 1;
+    }
+  }
+  return newFolderName;
+}
+
   if (typeof Promise === 'function') {
     return new Promise((resolve, reject) => {
       const currentDateTime = dateTime.getCurrentDateTime();
