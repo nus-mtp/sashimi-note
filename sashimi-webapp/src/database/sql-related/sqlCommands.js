@@ -151,6 +151,17 @@ function cascadeDeleteFolder(index, folderArr) {
   });
 }
 
+// duplicate private function to help with cascadeDeleteFile
+function deleteSingleFile(fileId) {
+  return new Promise((resolve, reject) =>
+    alasql.promise([stringManipulator.stringConcat('DELETE FROM ', constants.ENTITIES_FILE_MANAGER,
+                                                   ' WHERE ', constants.HEADER_FILE_MANAGER_FILE_ID,
+                                                   ' = ', fileId)])
+    .then(() => resolve())
+    .catch(sqlError => reject(sqlError))
+  );
+}
+
 }
 
 export default function sqlCommands() {
