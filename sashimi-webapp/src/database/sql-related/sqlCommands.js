@@ -178,6 +178,18 @@ function cascadeDeleteFile(index, fileArr) {
   });
 }
 
+function getFolderPathAndNameFromId(folderId) {
+  return new Promise((resolve, reject) =>
+    alasql.promise([stringManipulator.stringConcat('SELECT ', constants.HEADER_FOLDER_PATH,
+                                                   ', ', constants.HEADER_FOLDER_FOLDER_NAME,
+                                                   ' FROM ', constants.ENTITIES_FOLDER,
+                                                   ' WHERE ', constants.HEADER_FOLDER_FOLDER_ID,
+                                                   ' = ', folderId)])
+    .then(data => resolve(data))
+    .catch(sqlErr => reject(sqlErr))
+  );
+}
+
 }
 
 export default function sqlCommands() {
