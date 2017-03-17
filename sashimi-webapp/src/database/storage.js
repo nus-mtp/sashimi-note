@@ -127,8 +127,9 @@ export default class storage {
     if (typeof Promise === 'function') {
       return new Promise((resolve, reject) => {
         databaseName = newDatabaseName || databaseName;
-        entitiesCreator.initializeDatabase(databaseName)
-        .then(step1 => creationOfTables()
+        return entitiesCreator.initializeDatabase(databaseName)
+        .then(step1 =>
+          creationOfTables()
           .then(isFirstInstance => isFirstInstance)
           .catch(sqlErr => reject(sqlErr)))
         .then((isFirstInstance) => {
