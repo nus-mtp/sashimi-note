@@ -14,71 +14,51 @@
         <input type="text" placeholder="Search...">
       </div>
     </div>
-    <div class="navbar userActions vertical-align-child">
-      <table>
-        <tr>
-          <td class="breadcrumb float-left">
-            <ul class="navbar-breadcrumb">
-              <li>
-                <button class="navbar-buttons hover-grow" v-on:click="execute('history back')">
-                  <i class="material-icons">arrow_back</i>
-                </button>
-                </a>
-              </li>
-              <li>
-                <button class="navbar-buttons hover-grow" v-on:click="execute('history forward')">
-                  <i class="material-icons">arrow_forward</i>
-                </button>
-                </a>
-              </li>
-              <li>
-                <a href="\">Home</a>
-              </li>
-            </ul>
-          </td>
-            <!--Waiting for file-manager api to be completed to implement buttons-->
-            <div class="float-right">
-              <div class="vertical-align-child buttons-right inline-block">
-              <td>
-                <button class="navbar-buttons hover-grow">
-                  <i class="material-icons md-dark">file_upload</i>
-                </button>
-              </td>
-              <td>
-                <button class="navbar-buttons hover-grow" v-on:click="execute('createFolder')">
-                  <i class="material-icons md-dark">create_new_folder</i>
-                </button>
-              </td>
-              <td>
-                <button class="navbar-buttons hover-grow" v-on:click="execute('createFile')">
-                  <i class="material-icons md-dark">note_add</i>
-                </button>
-              </td>
-              <td>
-                <button class="navbar-buttons" v-bind:class="{'hover-grow': buttonEffect}">
-                <i class="material-icons md-dark" v-bind:class="{'md-inactive': buttonDisabled}">content_copy</i>
-                </button>
-              </td>
-              <td>
-                <button class="navbar-buttons" v-bind:class="{'hover-grow': buttonEffect}">
-                  <i class="material-icons md-dark" v-bind:class="{'md-inactive': buttonDisabled}">file_download</i>
-                </button>
-              </td>
-              <td>
-                <button class="navbar-buttons" v-bind:class="{'hover-grow': buttonEffect}">
-                  <i class="material-icons md-dark" v-bind:class="{'md-inactive': buttonDisabled}">delete</i>
-                </button>
-              </td>
-            </div>
-            <div class="view-type inline-block">
-              <td class="vertical-align-child">
-                <button class="navbar-buttons hover-grow" v-on:click="setViewMode('iconView')">Icon</button>|
-                <button class="navbar-buttons hover-grow" v-on:click="setViewMode('listView')">List</button>
-              </td>
-            </div>
-          </div>
-        </tr>
-      </table>
+    <div class="section group navbar userActions vertical-align-child">
+      <div class="col float-left">
+        <ul class="navbar-breadcrumb inline-block">
+          <li>
+            <button class="navbar-buttons hover-grow" v-on:click="execute('history back')">
+              <i class="material-icons">arrow_back</i>
+            </button>
+          </li>
+          <li>
+            <button class="navbar-buttons hover-grow" v-on:click="execute('history forward')">
+              <i class="material-icons">arrow_forward</i>
+            </button>
+            </a>
+          </li>
+          <li>
+            <a href="\">Home</a>
+          </li>
+        </ul>
+      </div>
+      <div class="float-right">
+        <div class="col vertical-align-child buttons-right inline-block">
+          <button class="navbar-buttons hover-grow">
+            <i class="material-icons md-dark">file_upload</i>
+          </button>
+          <button class="navbar-buttons hover-grow" v-on:click="execute('createFolder')">
+            <i class="material-icons md-dark">create_new_folder</i>
+          </button>
+          <button class="navbar-buttons hover-grow" v-on:click="execute('createFile')">
+            <i class="material-icons md-dark">note_add</i>
+          </button>
+          <button class="navbar-buttons" v-bind:class="{'hover-grow': buttonEffect}">
+          <i class="material-icons md-dark" v-bind:class="{'md-inactive': buttonDisabled}">content_copy</i>
+          </button>
+          <button class="navbar-buttons" v-bind:class="{'hover-grow': buttonEffect}">
+            <i class="material-icons md-dark" v-bind:class="{'md-inactive': buttonDisabled}">file_download</i>
+          </button>
+          <button class="navbar-buttons" v-bind:class="{'hover-grow': buttonEffect}">
+            <i class="material-icons md-dark" v-bind:class="{'md-inactive': buttonDisabled}" >delete</i>
+          </button>
+      </div>
+      <div class="col view-type inline-block">
+        <button class="navbar-buttons hover-grow" v-on:click="setViewMode('iconView')">Icon</button>|
+        <button class="navbar-buttons hover-grow" v-on:click="setViewMode('listView')">List</button>
+      </div>
+    </div>
     </div>
   </div>
 </template>
