@@ -74,7 +74,7 @@ export default class dataModifier {
     if (typeof Promise === 'function') {
       return new Promise((resolve, reject) =>
         dataDelete.deleteFile(fileId)
-        .then(data => resolve(true))
+        .then(() => resolve())
         .catch(sqlError => reject(sqlError))
       );
     } else {
