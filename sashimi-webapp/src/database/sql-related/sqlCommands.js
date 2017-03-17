@@ -439,8 +439,61 @@ export default function sqlCommands() {
     }
   };
 
+  this.changeFolderName = function changeFolderName(folderId, newFolderName) {
     if (typeof Promise === 'function') {
       return new Promise((resolve, reject) => {
+        let prevFolderPath;
+        let thisFolderPath;
+        let newFolderPath;
+        let foldersToChangePath;
+        let filesToChangePath;
+        // step 1: get the folder path and folder name
+        return getFolderPathAndNameFromId(folderId)
+        .then((folderData) => {
+          // step 2: get all the folders to have their path and name changed
+          prevFolderPath = getDataOutOfAlasql(folderData);
+          const thisFolderName = getSecondDataOutOfAlasql(folderData);
+          thisFolderPath = stringManipulator.stringConcat(prevFolderPath, thisFolderName, '/');
+          newFolderPath = stringManipulator.stringConcat(prevFolderPath, newFolderName, '/');
+          return getListOfFolderIdsWithSamePath(thisFolderPath)
+          .then((folderIds) => {
+            foldersToChangePath = getArray(folderIds);
+            return null;
+          })
+          .catch(sqlError => reject(sqlError));
+        })
+        .then(() =>
+          // step 3: get all the files to be deleted
+          getListOfFilesIdsWithSamePath(thisFolderPath)
+          .then((fileIds) => {
+            filesToChangePath = getArray(fileIds);
+            return '';
+          })
+          .catch(sqlError => reject(sqlError))
+        )
+        .then(() =>
+          // step 6: change current folder name to new name
+          changeSingleFolderName(folderId, newFolderName)
+          .catch(sqlErr => reject(sqlErr))
+        )
+        .then(() =>
+          // step 4: cascade change folder path of all the current and children folders
+          cascadeChangeFolderPath(0, thisFolderPath, newFolderPath, foldersToChangePath)
+          .catch(sqlErr => reject(sqlErr))
+        )
+        .then(() =>
+          // step 5: cascade change folder path of all children files
+          cascadeChangeFilePath(0, thisFolderPath, newFolderPath, filesToChangePath)
+          .catch(sqlErr => reject(sqlErr))
+        )
+        .then(() => resolve())
+        .catch(sqlError => reject(sqlError));
+      });
+    } else {
+      throw new exceptions.PromiseFunctionNotDefined();
+    }
+  };
+
         .then(() => {
           const currentDateTime = dateTime.getCurrentDateTime();
           alasql.promise([stringManipulator.stringConcat('UPDATE ', constants.ENTITIES_FILE_MANAGER,
