@@ -14,17 +14,6 @@ import exceptions from 'src/database/exceptions';
 
 let databaseName = constants.INDEXEDDB_NAME;
 
-// dummy function to initialize createTables promises
-function initCreateTable() {
-  if (typeof Promise === 'function') {
-    return new Promise((resolve, reject) => {
-      resolve(true);
-    });
-  } else {
-    throw new exceptions.PromiseFunctionNotDefined();
-  }
-}
-
 function createUserTable(isUserTableFirstInitialize) {
   if (typeof Promise === 'function') {
     return new Promise((resolve, reject) => {
@@ -92,14 +81,10 @@ function createFileManagerTable(isFileTableFirstInitialize) {
 function creationOfTables() {
   if (typeof Promise === 'function') {
     return new Promise((resolve, reject) => {
-      initCreateTable()
-      .then(() =>
-        query.isTableExistsInDatabase(constants.ENTITIES_USER)
-        .then(isUserTableFirstInitialize =>
-          createUserTable(isUserTableFirstInitialize)
-          .then(isSuccess => isSuccess)
-          .catch(sqlError => reject(sqlError))
-          )
+      query.isTableExistsInDatabase(constants.ENTITIES_USER)
+      .then(isUserTableFirstInitialize =>
+        createUserTable(isUserTableFirstInitialize)
+        .then(isSuccess => isSuccess)
         .catch(sqlError => reject(sqlError))
       )
       .then(() =>
@@ -110,22 +95,25 @@ function creationOfTables() {
           .catch(sqlError => reject(sqlError))
         .catch(sqlError => reject(sqlError))
       )
-      .then(() => query.isTableExistsInDatabase(constants.ENTITIES_FOLDER)
+      .then(() =>
+        query.isTableExistsInDatabase(constants.ENTITIES_FOLDER)
         .then(isFolderTableFirstInitialize =>
           createFolderTable(isFolderTableFirstInitialize))
           .then(isSuccess => isSuccess)
           .catch(sqlError => reject(sqlError))
         .catch(sqlError => reject(sqlError))
       )
-      .then(() => query.isTableExistsInDatabase(constants.ENTITIES_FILE_MANAGER)
+      .then(() =>
+        query.isTableExistsInDatabase(constants.ENTITIES_FILE_MANAGER)
         .then(isFileTableFirstInitialize =>
           createFileManagerTable(isFileTableFirstInitialize)
           .then(isSuccess => isSuccess)
-          .catch(sqlError => reject(sqlError)))
+          .catch(sqlError => reject(sqlError))
+        )
         .catch(sqlError => reject(sqlError))
+      )
       .then(isSuccess => resolve(isSuccess))
-      .catch(sqlError => reject(sqlError))
-      );
+      .catch(sqlError => reject(sqlError));
     });
   } else {
     throw new exceptions.PromiseFunctionNotDefined();
