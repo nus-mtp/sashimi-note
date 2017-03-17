@@ -201,6 +201,15 @@ function getListOfFolderIdsWithSamePath(folderPath) {
   );
 }
 
+function getListOfFilesIdsWithSamePath(folderPath) {
+  return new Promise((resolve, reject) =>
+    alasql.promise([stringManipulator.stringConcat('SELECT ', constants.HEADER_FILE_MANAGER_FILE_ID,
+                                                   ' FROM ', constants.ENTITIES_FILE_MANAGER,
+                                                   ' WHERE ', constants.HEADER_FILE_MANAGER_PATH,
+                                                   ' LIKE "', folderPath, '%"')])
+    .then(fileList => resolve(fileList))
+    .catch(sqlErr => reject(sqlErr))
+  );
 }
 
 export default function sqlCommands() {
