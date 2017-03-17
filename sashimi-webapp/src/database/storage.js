@@ -245,6 +245,18 @@ export default class storage {
     }
   }
 
+  static renameFolderName(folderId, newFolderName) {
+    if (typeof Promise === 'function') {
+      return new Promise((resolve, reject) =>
+        dataModifier.renameFolderName(folderId, newFolderName)
+        .then(() => resolve())
+        .catch(sqlErr => reject(sqlErr))
+      );
+    } else {
+      throw new exceptions.PromiseFunctionNotDefined();
+    }
+  }
+
   static deleteFile(fileId) {
     if (typeof Promise === 'function') {
       return new Promise((resolve, reject) =>
