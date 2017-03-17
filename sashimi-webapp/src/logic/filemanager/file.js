@@ -7,34 +7,7 @@ import Folder from './folder';
 const RENAME_ERROR_MSG = 'Another file in the current folder has the same name';
 const MOVE_SAME_FOLDER_ERROR_MSG = 'Attempting to move to current folder';
 const MOVE_INVALID_FODLER_ERROR_MSG = 'Attempting to move to an invalid folder';
-
-/* Private Functions */
-
-function isCurrentFolder(destFolder) {
-  return destFolder.id === this.parentFolder.id;
-}
-
-function isInvalidFolder(destFolder) {
-  if (Folder.getFolder(destFolder.id) === undefined) {
-    return true;
-  } else {
-    return false;
-  }
-}
-
-function hasSameFileName(newFileName) {
-  const currParentFolder = this.parentFolder;
-  let currFile;
-  let sameFileName = false;
-  for (let i = 0; i< currParentFolder.childFileList.length; i += 1) {
-    currFile = currParentFolder.childFileList[i];
-    if (newFileName === currFile.name) {
-      sameFileName = true;
-      break;
-    }
-  }
-  return sameFileName;
-}
+const NOT_FILE_INSTANCE_ERROR_MSG = '"this" is not an instance of "File"';
 
 /**
 * File Object
@@ -48,6 +21,36 @@ export default function File(fileID, fileName, filePath, parentFolder) {
   this.name = fileName;
   this.path = filePath;
   this.parentFolder = parentFolder;
+}
+
+/* Private Functions */
+
+function isCurrentFolder(destFolder) {
+  if (!(this instanceof File)) {
+    throw new Error(NOT_FILE_INSTANCE_ERROR_MSG);
+  }
+  return destFolder.id === this.parentFolder.id;
+}
+
+function isInvalidFolder(destFolder) {
+  return Folder.getFolder(destFolder.id) == null;
+}
+
+function hasSameFileName(newFileName) {
+  if (!(this instanceof File)) {
+    throw new Error(NOT_FILE_INSTANCE_ERROR_MSG);
+  }
+  const currParentFolder = this.parentFolder;
+  let currFile;
+  let sameFileName = false;
+  for (let i = 0; i< currParentFolder.childFileList.length; i += 1) {
+    currFile = currParentFolder.childFileList[i];
+    if (newFileName === currFile.name) {
+      sameFileName = true;
+      break;
+    }
+  }
+  return sameFileName;
 }
 
 /**
@@ -109,7 +112,7 @@ File.prototype.copy = function copy(folder) {
  */
 File.prototype.move = function move(destFolder) {
   return new Promise((resolve, reject) => {
-    if (isCurrentFolder(destFolder)) {
+    if (isCurrentFolder.call(this, destFolder)) {
       reject(MOVE_SAME_FOLDER_ERROR_MSG);
     }
 
@@ -136,7 +139,7 @@ File.prototype.move = function move(destFolder) {
  */
 File.prototype.rename = function rename(newFileName) {
   return new Promise((resolve, reject) => {
-    if (hasSameFileName(newFileName)) {
+    if (hasSameFileName.call(this, newFileName)) {
       reject(RENAME_ERROR_MSG);
     }
 
