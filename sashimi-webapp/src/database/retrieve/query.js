@@ -15,15 +15,11 @@ const stringManipulator = new StringManipulator();
 
 const sqlCommands = new SqlCommands();
 
-// dummy function to init sequence running
+// dummy function to init sequence running for code aesthetic below
 function initPromiseSequence() {
-  if (typeof Promise === 'function') {
-    return new Promise((resolve, reject) => {
-      resolve(true);
-    });
-  } else {
-    throw new exceptions.PromiseFunctionNotDefined();
-  }
+  return new Promise((resolve, reject) =>
+    resolve()
+  );
 }
 
 export default class query {
@@ -34,10 +30,12 @@ export default class query {
       return new Promise((resolve, reject) => {
         const promiseArr = [];
         initPromiseSequence()
-        .then(() => sqlCommands.getFullTableData(constants.ENTITIES_FILE_MANAGER)
+        .then(() =>
+          sqlCommands.getFullTableData(constants.ENTITIES_FILE_MANAGER)
           .then(fileArr => promiseArr.push(fileArr))
           .catch(sqlError => reject(sqlError)))
-        .then(() => sqlCommands.getFullTableData(constants.ENTITIES_FOLDER)
+        .then(() =>
+          sqlCommands.getFullTableData(constants.ENTITIES_FOLDER)
           .then(folderArr => promiseArr.push(folderArr))
           .catch(sqlError => reject(sqlError)))
         .then(() => resolve(promiseArr))
@@ -52,7 +50,7 @@ export default class query {
     if (typeof Promise === 'function') {
       return new Promise((resolve, reject) =>
         sqlCommands.getFullTableData(tableName)
-        .then(data => resolve(true))
+        .then(() => resolve(true))
         .catch(sqlErr => resolve(false))
       );
     } else {
@@ -123,5 +121,4 @@ export default class query {
       throw new exceptions.PromiseFunctionNotDefined();
     }
   }
-
 }
