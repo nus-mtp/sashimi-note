@@ -422,6 +422,23 @@ export default function sqlCommands() {
       throw new exceptions.PromiseFunctionNotDefined();
     }
   };
+
+  this.changeFilePath = function changeFilePath(fileId, newPath) {
+    if (typeof Promise === 'function') {
+      return new Promise((resolve, reject) =>
+      alasql.promise([stringManipulator.stringConcat('UPDATE ', constants.ENTITIES_FILE_MANAGER,
+                                                    ' SET ', constants.HEADER_FILE_MANAGER_PATH,
+                                                    ' = "', newPath,
+                                                    '" WHERE ', constants.HEADER_FILE_MANAGER_FILE_ID,
+                                                    ' = ', fileId)])
+      .then(() => resolve())
+      .catch(sqlError => reject(sqlError))
+        );
+    } else {
+      throw new exceptions.PromiseFunctionNotDefined();
+    }
+  };
+
     if (typeof Promise === 'function') {
       return new Promise((resolve, reject) => {
         .then(() => {
