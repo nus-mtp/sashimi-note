@@ -10,7 +10,6 @@ const dateTime = new DateTime();
 const alasqlArray = new SqlArray();
 const stringManipulator = new StringManipulator();
 
-function createNewFile(organizationId, filePath, folderId, newFileId) {
 function isLowerUpperBoundWithinRange(lowerBound, upperBound, givenArray) {
   return lowerBound < upperBound
     && lowerBound >= 0
@@ -69,6 +68,7 @@ function generateUniqueNewFolderName(queryFolders, defaultFolderName) {
   return newFolderName;
 }
 
+function createNewFile(organizationId, filePath, folderId, newFileId, newFileName) {
   if (typeof Promise === 'function') {
     return new Promise((resolve, reject) => {
       const currentDateTime = dateTime.getCurrentDateTime();
