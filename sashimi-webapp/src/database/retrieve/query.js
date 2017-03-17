@@ -114,7 +114,10 @@ export default class query {
     if (typeof Promise === 'function') {
       return new Promise((resolve, reject) =>
         sqlCommands.loadFile(fileId)
-        .then(data => resolve(data))
+        .then((fileContent) => {
+          fileContent = stringManipulator.replaceAll(fileContent, '\\"', '"');
+          resolve(fileContent);
+        })
         .catch(sqlError => reject(sqlError))
       );
     } else {
