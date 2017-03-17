@@ -190,6 +190,17 @@ function getFolderPathAndNameFromId(folderId) {
   );
 }
 
+function getListOfFolderIdsWithSamePath(folderPath) {
+  return new Promise((resolve, reject) =>
+    alasql.promise([stringManipulator.stringConcat('SELECT ', constants.HEADER_FOLDER_FOLDER_ID,
+                                                   ' FROM ', constants.ENTITIES_FOLDER,
+                                                   ' WHERE ', constants.HEADER_FOLDER_PATH,
+                                                   ' LIKE "', folderPath, '%"')])
+    .then(folderList => resolve(folderList))
+    .catch(sqlErr => reject(sqlErr))
+  );
+}
+
 }
 
 export default function sqlCommands() {
