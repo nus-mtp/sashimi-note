@@ -278,6 +278,24 @@ export default function sqlCommands() {
       throw new exceptions.PromiseFunctionNotDefined();
     }
   };
+
+  this.exactSearchStartFileNameInFolder = function exactSearchStartFileNameInFolder(searchString, filePath) {
+    if (typeof Promise === 'function') {
+      return new Promise((resolve, reject) =>
+        alasql.promise([stringManipulator.stringConcat('SELECT ', constants.HEADER_FILE_MANAGER_FILE_NAME,
+                                                       ' FROM ', constants.ENTITIES_FILE_MANAGER,
+                                                       ' WHERE ', constants.HEADER_FILE_MANAGER_PATH,
+                                                       ' LIKE "', filePath, '%"',
+                                                       ' ORDER BY ', constants.HEADER_FILE_MANAGER_FILE_NAME,
+                                                       ' ASC')])
+        .then(data => resolve(getArray(data)))
+        .catch(sqlError => reject(sqlError))
+      );
+    } else {
+      throw new exceptions.PromiseFunctionNotDefined();
+    }
+  };
+
   this.getMaxFileId = function getMaxFileId() {
     if (typeof Promise === 'function') {
       return new Promise((resolve, reject) =>
