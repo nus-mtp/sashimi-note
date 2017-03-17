@@ -7,6 +7,7 @@
  * @param {Element} ele - HTML element containing data parsed and rendered by markdown-it
  * @return {Promise} promise after the diagrams are rendered
  */
+// import mermaid from 'mermaid';
 
 export default function diagramsRenderer(ele) {
   const observerConfig = { childList: true };
@@ -15,9 +16,9 @@ export default function diagramsRenderer(ele) {
   // get all pre tags with class name = flow
   const flowCharts = ele.querySelectorAll('pre.flow');
   // get all pre tags with class name = graphviz
-  // const graphviz = ele.querySelectorAll('pre.graphviz');
+  const graphviz = ele.querySelectorAll('pre.graphviz');
   // get all pre tags with class name = mermaid
-  // const mermaid = ele.querySelectorAll('pre.mermaid');
+  const mermaidDiagrams = ele.querySelectorAll('pre.mermaid');
   // array of promises for use by Promise.all
   const promiseArr = [];
 
@@ -42,6 +43,7 @@ export default function diagramsRenderer(ele) {
       diagram.drawSVG(seqDiagrams[i], { theme: 'simple' });
     }));
   }
+
   // Draws all the flowcharts found
   for (let i = 0; i < flowCharts.length; i+=1) {
     /* eslint no-loop-func: 0 */
@@ -63,6 +65,16 @@ export default function diagramsRenderer(ele) {
       diagram.drawSVG(flowCharts[i]);
     }));
   }
+
+  // Draws all the graphviz diagrams found
+  for (let i = 0; i < graphviz.length; i+=1) {
+    let content = graphviz[i].innerHTML;
+    /* eslint no-useless-escape: 0*/
+    content = content.replace(/\&gt\;/g, '>');
+    /* eslint no-undef: 0 */
+    graphviz[i].innerHTML = Viz(content);
+  }
+
   // returns resolved if all the promises are resolved, otherwise returns rejected
   return Promise.all(promiseArr);
 }

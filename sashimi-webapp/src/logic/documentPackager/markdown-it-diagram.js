@@ -8,7 +8,6 @@
 
 export default function setup(md, options) {
   const defaultRender = md.renderer.rules.fence;
-  console.log(options);
 
   /* eslint no-undef: 0 */
   md.renderer.rules.fence = (tokens, idx, opts, env, self) => {
