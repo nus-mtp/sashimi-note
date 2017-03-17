@@ -15,6 +15,12 @@ function isLowerUpperBoundWithinRange(lowerBound, upperBound, givenArray) {
     && lowerBound >= 0
     && upperBound < givenArray.length;
 }
+
+function exchange(givenArray, currIndex, thenIndex) {
+  const tempObject = givenArray[currIndex];
+  givenArray[currIndex] = givenArray[thenIndex];
+  givenArray[thenIndex] = tempObject;
+}
   if (typeof Promise === 'function') {
     return new Promise((resolve, reject) => {
       const currentDateTime = dateTime.getCurrentDateTime();
