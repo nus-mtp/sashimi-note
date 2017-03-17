@@ -1,7 +1,7 @@
-import StringManipulator from '../stringManipulation';
-import exceptions from '../exceptions';
-import constants from '../constants';
-import DateTime from '../generated-data/dateTime';
+import StringManipulator from 'src/database/stringManipulation';
+import exceptions from 'src/database/exceptions';
+import constants from 'src/database/constants';
+import DateTime from 'src/database/generated-data/dateTime';
 
 const alasql = require('alasql');
 

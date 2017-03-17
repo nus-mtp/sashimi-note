@@ -4,10 +4,12 @@
  *
  */
 
-import dataAdd from './dataAdd';
-import dataDelete from './dataDelete';
-import dataUpdate from './dataUpdate';
-import exceptions from '../exceptions';
+import dataAdd from 'src/database/data-modifier/dataAdd';
+import dataDelete from 'src/database/data-modifier/dataDelete';
+import dataUpdate from 'src/database/data-modifier/dataUpdate';
+import exceptions from 'src/database/exceptions';
+import SqlCommands from 'src/database/sql-related/sqlCommands';
+import StringManipulator from 'src/database/stringManipulation';
 
 export default class dataModifier {
   static constructor() {}

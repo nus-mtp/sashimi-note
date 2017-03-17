@@ -4,7 +4,7 @@
  *
  */
 
-import constants from '../constants';
+import constants from 'src/database/constants';
 
 let sqlObject = {};
 let isAlasqlArrayInitialized = constants.CONST_ALASQL_CREATION_CLOSED;

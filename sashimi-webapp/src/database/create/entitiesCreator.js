@@ -1,8 +1,8 @@
-import constants from '../constants';
-import tableCreator from './tableCreator';
-import exceptions from '../exceptions';
-import initDataGenerator from './initDataGenerator';
-import SqlCommands from '../sql-related/sqlCommands';
+import constants from 'src/database/constants';
+import tableCreator from 'src/database/create/tableCreator';
+import exceptions from 'src/database/exceptions';
+import initDataGenerator from 'src/database/create/initDataGenerator';
+import SqlCommands from 'src/database/sql-related/sqlCommands';
 
 const sqlCommands = new SqlCommands();
 

@@ -1,8 +1,9 @@
-import exceptions from '../exceptions';
-import constants from '../constants';
-import SqlCommands from '../sql-related/sqlCommands';
-import DateTime from '../generated-data/dateTime';
-import SqlArray from '../generated-data/sqlArray';
+import exceptions from 'src/database/exceptions';
+import constants from 'src/database/constants';
+import SqlCommands from 'src/database/sql-related/sqlCommands';
+import DateTime from 'src/database/generated-data/dateTime';
+import SqlArray from 'src/database/generated-data/sqlArray';
+import StringManipulator from 'src/database/stringManipulation';
 
 const sqlCommands = new SqlCommands();
 const dateTime = new DateTime();

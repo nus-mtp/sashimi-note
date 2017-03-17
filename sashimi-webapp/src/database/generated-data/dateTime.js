@@ -1,4 +1,4 @@
-import StringManipulator from '../stringManipulation';
+import StringManipulator from 'src/database/stringManipulation';
 
 const date = new Date();
 const stringManipulator = new StringManipulator();

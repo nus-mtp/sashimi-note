@@ -6,11 +6,11 @@
  *
  */
 
-import constants from './constants';
-import entitiesCreator from './create/entitiesCreator';
-import query from './retrieve/query';
-import dataModifier from './data-modifier/dataModifier';
-import exceptions from './exceptions';
+import constants from 'src/database/constants';
+import entitiesCreator from 'src/database/create/entitiesCreator';
+import query from 'src/database/retrieve/query';
+import dataModifier from 'src/database/data-modifier/dataModifier';
+import exceptions from 'src/database/exceptions';
 
 let databaseName = constants.INDEXEDDB_NAME;
 
