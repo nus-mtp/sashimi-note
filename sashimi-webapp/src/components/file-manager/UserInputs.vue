@@ -80,8 +80,15 @@ export default {
     },
     setViewMode(viewMode) {
       this.$emit('changeViewMode', viewMode);
-    }
-  }
+    },
+  },
+  mounted() {
+    eventHub.$on('focusFolder', (focusedFolder) => {
+      console.log(focusedFolder, 'navbar');
+      this.buttonDisabled = false;
+      this.buttonEffect = true;
+    });
+  },
 };
 </script>
 
@@ -115,8 +122,7 @@ export default {
 .userActions {
   background-color: $navbar-background-color;
   box-shadow: 0 2px 10px rgba(0,0,0,0.2);
-  padding-top: 3px;
-  padding-bottom: 3px;
+  padding-top: 10px 0;
 
   table {
     width: 100%;
@@ -137,9 +143,9 @@ export default {
 
 .navbar-breadcrumb {
   list-style: none;
-  margin-top: 10px;
   font-size: $navbar-font-size;
   padding-left: 0;
+  margin: 0;
 
   li {
     display: inline;

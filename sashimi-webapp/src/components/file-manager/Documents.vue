@@ -10,14 +10,14 @@
     </div>
     <folder 
       v-for="folder in docs.childFolderList"
-        v-on:openFolder="changeFolder"
-        :folder="folder"
+      v-on:openFolder="changeFolder"
+      v-on:focusFolder="focusFolder"
+          :folder="folder"
     >
     </folder>
     <file 
       v-for="file in docs.childFileList"
-        v-on:focusFile="focus"
-        :file="file"
+          :file="file"
     >
     </file>
   </div>
@@ -42,10 +42,12 @@ export default {
   },
   watch: {},
   methods: {
-    focus(event) {},
+    focusFolder(focusedFolder) {
+      eventHub.$emit('focusFolder', focusedFolder);
+    },
     changeFolder(newFolder) {
       this.$emit('changeFolder', newFolder);
-    }
+    },
   },
   mounted() {
     eventHub.$on('execute', (action) => {

@@ -1,6 +1,7 @@
 <template>
   <div class="col vertical-align-child" 
     v-on:dblclick="openFolder"
+    v-on:click="focusFolder"
   >
     <button class="folder">
       <img src="../../assets/images/icons/icon-folder.svg" alt="folder">
@@ -18,6 +19,9 @@
       openFolder() {
         this.$emit('openFolder', this.folder);
       },
+      focusFolder() {
+        this.$emit('focusFolder', this.folder);
+      }
     },
   };
 </script>
