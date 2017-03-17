@@ -84,7 +84,6 @@ export default {
       }
     },
     mdContent: _.debounce(function saveFile(value) {
-      console.log(value, this.file);
       this.file.save(value);
     }, 1000),
   },

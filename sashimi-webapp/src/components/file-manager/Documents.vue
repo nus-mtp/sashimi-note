@@ -40,15 +40,9 @@ export default {
     folder,
     file,
   },
-  watch: {
-    docs(data) {
-      console.log(data);
-    }
-  },
+  watch: {},
   methods: {
-    focus(event) {
-      console.log(event);
-    },
+    focus(event) {},
     changeFolder(newFolder) {
       this.$emit('changeFolder', newFolder);
     }

@@ -57,7 +57,6 @@ export default {
   },
   mounted() {
     codeMirrorInstance = this.editor;
-    console.log(codeMirrorInstance);
   }
 };
 

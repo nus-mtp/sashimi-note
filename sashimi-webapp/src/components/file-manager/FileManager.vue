@@ -34,7 +34,6 @@ export default {
     changeFolder(newFolder) {
       this.docs = newFolder;
       fileManager.update(this.docs);
-      console.log(this.docs);
     },
     changeViewMode(viewMode) {
       this.viewMode = viewMode;
