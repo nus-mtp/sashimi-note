@@ -6,28 +6,13 @@
  *
  */
 
-import constants from './constants';
-
-import entitiesCreator from './create/entitiesCreator';
-
-import query from './retrieve/query';
-
-import dataModifier from './data-modifier/dataModifier';
-
-import exceptions from './exceptions';
+import constants from 'src/database/constants';
+import entitiesCreator from 'src/database/create/entitiesCreator';
+import query from 'src/database/retrieve/query';
+import dataModifier from 'src/database/data-modifier/dataModifier';
+import exceptions from 'src/database/exceptions';
 
 let databaseName = constants.INDEXEDDB_NAME;
-
-// dummy function to initialize createTables promises
-function initCreateTable() {
-  if (typeof Promise === 'function') {
-    return new Promise((resolve, reject) => {
-      resolve(true);
-    });
-  } else {
-    throw new exceptions.PromiseFunctionNotDefined();
-  }
-}
 
 function createUserTable(isUserTableFirstInitialize) {
   if (typeof Promise === 'function') {
@@ -37,7 +22,7 @@ function createUserTable(isUserTableFirstInitialize) {
         .then(success => resolve(true))
         .catch(sqlError => reject(sqlError));
       } else {
-        resolve('false');
+        resolve(false);
       }
     });
   } else {
@@ -96,14 +81,10 @@ function createFileManagerTable(isFileTableFirstInitialize) {
 function creationOfTables() {
   if (typeof Promise === 'function') {
     return new Promise((resolve, reject) => {
-      initCreateTable()
-      .then(() =>
-        query.isTableExistsInDatabase(constants.ENTITIES_USER)
-        .then(isUserTableFirstInitialize =>
-          createUserTable(isUserTableFirstInitialize)
-          .then(isSuccess => isSuccess)
-          .catch(sqlError => reject(sqlError))
-          )
+      query.isTableExistsInDatabase(constants.ENTITIES_USER)
+      .then(isUserTableFirstInitialize =>
+        createUserTable(isUserTableFirstInitialize)
+        .then(isSuccess => isSuccess)
         .catch(sqlError => reject(sqlError))
       )
       .then(() =>
@@ -114,22 +95,25 @@ function creationOfTables() {
           .catch(sqlError => reject(sqlError))
         .catch(sqlError => reject(sqlError))
       )
-      .then(() => query.isTableExistsInDatabase(constants.ENTITIES_FOLDER)
+      .then(() =>
+        query.isTableExistsInDatabase(constants.ENTITIES_FOLDER)
         .then(isFolderTableFirstInitialize =>
           createFolderTable(isFolderTableFirstInitialize))
           .then(isSuccess => isSuccess)
           .catch(sqlError => reject(sqlError))
         .catch(sqlError => reject(sqlError))
       )
-      .then(() => query.isTableExistsInDatabase(constants.ENTITIES_FILE_MANAGER)
+      .then(() =>
+        query.isTableExistsInDatabase(constants.ENTITIES_FILE_MANAGER)
         .then(isFileTableFirstInitialize =>
           createFileManagerTable(isFileTableFirstInitialize)
           .then(isSuccess => isSuccess)
-          .catch(sqlError => reject(sqlError)))
+          .catch(sqlError => reject(sqlError))
+        )
         .catch(sqlError => reject(sqlError))
+      )
       .then(isSuccess => resolve(isSuccess))
-      .catch(sqlError => reject(sqlError))
-      );
+      .catch(sqlError => reject(sqlError));
     });
   } else {
     throw new exceptions.PromiseFunctionNotDefined();
@@ -139,11 +123,13 @@ function creationOfTables() {
 export default class storage {
   static constructor() {}
 
-  static initializeDatabase() {
+  static initializeDatabase(newDatabaseName) {
     if (typeof Promise === 'function') {
       return new Promise((resolve, reject) => {
-        entitiesCreator.initializeDatabase(databaseName)
-        .then(step1 => creationOfTables()
+        databaseName = newDatabaseName || databaseName;
+        return entitiesCreator.initializeDatabase(databaseName)
+        .then(step1 =>
+          creationOfTables()
           .then(isFirstInstance => isFirstInstance)
           .catch(sqlErr => reject(sqlErr)))
         .then((isFirstInstance) => {
@@ -172,10 +158,6 @@ export default class storage {
     } else {
       throw new exceptions.PromiseFunctionNotDefined();
     }
-  }
-
-  static changeDatabaseName(newDatabaseName) {
-    databaseName = newDatabaseName;
   }
 
   // Searching the filename and foldername ONLY
@@ -219,7 +201,7 @@ export default class storage {
     if (typeof Promise === 'function') {
       return new Promise((resolve, reject) =>
         dataModifier.saveFile(fileId, fileString)
-        .then(data => resolve(true))
+        .then(() => resolve())
         .catch(sqlError => reject(sqlError))
       );
     } else {
@@ -231,8 +213,44 @@ export default class storage {
     if (typeof Promise === 'function') {
       return new Promise((resolve, reject) =>
         dataModifier.createNewFile(organizationId, filePath, folderId)
-        .then(data => resolve(data))
+        .then(fileObject => resolve(fileObject))
+        .catch(sqlErr => reject(sqlErr))
+      );
+    } else {
+      throw new exceptions.PromiseFunctionNotDefined();
+    }
+  }
+
+  static moveFile(fileId, newPath) {
+    if (typeof Promise === 'function') {
+      return new Promise((resolve, reject) =>
+        dataModifier.moveFile(fileId, newPath)
+        .then(() => resolve())
+        .catch(sqlErr => reject(sqlErr))
+      );
+    } else {
+      throw new exceptions.PromiseFunctionNotDefined();
+    }
+  }
+
+  static renameFileName(fileId, newFileName) {
+    if (typeof Promise === 'function') {
+      return new Promise((resolve, reject) =>
+        dataModifier.changeFileName(fileId, newFileName)
+        .then(() => resolve())
         .catch(err => reject(err))
+      );
+    } else {
+      throw new exceptions.PromiseFunctionNotDefined();
+    }
+  }
+
+  static renameFolderName(folderId, newFolderName) {
+    if (typeof Promise === 'function') {
+      return new Promise((resolve, reject) =>
+        dataModifier.renameFolderName(folderId, newFolderName)
+        .then(() => resolve())
+        .catch(sqlErr => reject(sqlErr))
       );
     } else {
       throw new exceptions.PromiseFunctionNotDefined();
@@ -243,7 +261,7 @@ export default class storage {
     if (typeof Promise === 'function') {
       return new Promise((resolve, reject) =>
         dataModifier.deleteFile(fileId)
-          .then(data => resolve(true))
+          .then(() => resolve())
           .catch(sqlError => reject(sqlError))
       );
     } else {
@@ -268,7 +286,7 @@ export default class storage {
     if (typeof Promise === 'function') {
       return new Promise((resolve, reject) =>
         dataModifier.deleteFolder(folderId)
-        .then(data => resolve(true))
+        .then(() => resolve())
         .catch(sqlError => reject(sqlError))
       );
     } else {
@@ -276,13 +294,14 @@ export default class storage {
     }
   }
 
-  static deleteAll() {
+  static deleteAll(newDatabaseName) {
     if (typeof Promise === 'function') {
-      return new Promise((resolve, reject) =>
-        dataModifier.deleteAllEntities(databaseName)
-        .then(data => resolve(true))
-        .catch(sqlError => reject(sqlError))
-      );
+      return new Promise((resolve, reject) => {
+        databaseName = newDatabaseName || databaseName;
+        return dataModifier.deleteAllEntities(databaseName)
+        .then(() => resolve())
+        .catch(sqlError => reject(sqlError));
+      });
     } else {
       throw new exceptions.PromiseFunctionNotDefined();
     }

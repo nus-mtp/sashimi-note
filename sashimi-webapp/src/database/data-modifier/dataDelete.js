@@ -1,8 +1,6 @@
-import constants from '../constants';
-
-import exceptions from '../exceptions';
-
-import SqlCommands from '../sql-related/sqlCommands';
+import constants from 'src/database/constants';
+import exceptions from 'src/database/exceptions';
+import SqlCommands from 'src/database/sql-related/sqlCommands';
 
 const sqlCommands = new SqlCommands();
 

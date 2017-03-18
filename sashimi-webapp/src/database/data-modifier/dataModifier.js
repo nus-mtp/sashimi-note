@@ -4,10 +4,20 @@
  *
  */
 
-import dataAdd from './dataAdd';
-import dataDelete from './dataDelete';
-import dataUpdate from './dataUpdate';
-import exceptions from '../exceptions';
+import dataAdd from 'src/database/data-modifier/dataAdd';
+import dataDelete from 'src/database/data-modifier/dataDelete';
+import dataUpdate from 'src/database/data-modifier/dataUpdate';
+import exceptions from 'src/database/exceptions';
+import SqlCommands from 'src/database/sql-related/sqlCommands';
+import StringManipulator from 'src/database/stringManipulation';
+
+const stringManipulator = new StringManipulator();
+
+const sqlCommands = new SqlCommands();
+
+function resolveFileSaving(fileContent) {
+  return stringManipulator.replaceAll(fileContent, '"', '\\"');
+}
 
 export default class dataModifier {
   static constructor() {}
@@ -28,7 +38,7 @@ export default class dataModifier {
     if (typeof Promise === 'function') {
       return new Promise((resolve, reject) =>
         dataAdd.createNewFile(organizationId, filePath, folderId)
-        .then(fileId => resolve(fileId))
+        .then(fileObject => resolve(fileObject))
         .catch(sqlErr => reject(sqlErr))
       );
     } else {
@@ -40,7 +50,7 @@ export default class dataModifier {
     if (typeof Promise === 'function') {
       return new Promise((resolve, reject) =>
         dataAdd.createNewFolder(organizationId, folderPath, folderId)
-        .then(data => resolve(data))
+        .then(folderObject => resolve(folderObject))
         .catch(sqlErr => reject(sqlErr))
       );
     } else {
@@ -48,13 +58,50 @@ export default class dataModifier {
     }
   }
 
-  static saveFile(fileId, file) {
+  static moveFile(fileId, newPath) {
     if (typeof Promise === 'function') {
       return new Promise((resolve, reject) =>
-        dataUpdate.saveFile(fileId, file)
-        .then(data => resolve(true))
-        .catch(sqlError => reject(sqlError))
+        sqlCommands.changeFilePath(fileId, newPath)
+        .then(() => resolve())
+        .catch(sqlErr => reject(sqlErr))
       );
+    } else {
+      throw new exceptions.PromiseFunctionNotDefined();
+    }
+  }
+
+  static renameFileName(fileId, newFileName) {
+    if (typeof Promise === 'function') {
+      return new Promise((resolve, reject) =>
+        sqlCommands.changeFileName(fileId, newFileName)
+        .then(() => resolve())
+        .catch(sqlErr => reject(sqlErr))
+      );
+    } else {
+      throw new exceptions.PromiseFunctionNotDefined();
+    }
+  }
+
+  static renameFolderName(folderId, newFolderName) {
+    if (typeof Promise === 'function') {
+      return new Promise((resolve, reject) =>
+        sqlCommands.changeFolderName(folderId, newFolderName)
+        .then(() => resolve())
+        .catch(sqlErr => reject(sqlErr))
+      );
+    } else {
+      throw new exceptions.PromiseFunctionNotDefined();
+    }
+  }
+
+  static saveFile(fileId, fileContent) {
+    if (typeof Promise === 'function') {
+      return new Promise((resolve, reject) => {
+        fileContent = resolveFileSaving(fileContent);
+        dataUpdate.saveFile(fileId, fileContent)
+        .then(() => resolve())
+        .catch(sqlError => reject(sqlError));
+      });
     } else {
       throw new exceptions.PromiseFunctionNotDefined();
     }
@@ -64,7 +111,7 @@ export default class dataModifier {
     if (typeof Promise === 'function') {
       return new Promise((resolve, reject) =>
         dataDelete.deleteFile(fileId)
-        .then(data => resolve(true))
+        .then(() => resolve())
         .catch(sqlError => reject(sqlError))
       );
     } else {
@@ -76,7 +123,7 @@ export default class dataModifier {
     if (typeof Promise === 'function') {
       return new Promise((resolve, reject) =>
         dataDelete.deleteFolder(folderId)
-        .then(data => resolve(true))
+        .then(() => resolve())
         .catch(sqlError => reject(sqlError))
       );
     } else {

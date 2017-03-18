@@ -12,24 +12,6 @@ export default Object.freeze({
     this.stack = (new Error()).stack;
   },
 
-  IllegalAccessToUserTable: function IllegalAccessToUserTable(message) {
-    this.message = message || 'Exception: user table does not exist.';
-    this.name = 'IllegalAccessToUserTable';
-    this.stack = (new Error()).stack;
-  },
-
-  IllegalAccessToOrganizationTable: function IllegalAccessToOrganizationTable(message) {
-    this.message = message || 'Exception: organization table does not exist.';
-    this.name = 'IllegalAccessToOrganizationTable';
-    this.stack = (new Error()).stack;
-  },
-
-  IllegalAccessToFolderTable: function IllegalAccessToFolderTable(message) {
-    this.message = message || 'Exception: folder table does not exist.';
-    this.name = 'IllegalAccessToFolderTable';
-    this.stack = (new Error()).stack;
-  },
-
   PromiseFunctionNotDefined: function PromiseFunctionNotDefined(message) {
     this.message = message || 'Exception: Promise function not defined for this browser.';
     this.name = 'PromiseFunctionNotDefined';
@@ -39,6 +21,12 @@ export default Object.freeze({
   IndexedDBNotSupported: function IndexedDBNotSupported(message) {
     this.message = message || 'Exception: IndexedDB not supported on this browser.';
     this.name = 'IndexedDBNotSupported';
+    this.stack = (new Error()).stack;
+  },
+
+  IndexedDBOnBlock: function IndexedDBOnBlock(message) {
+    this.message = message || 'Exception: IndexedDB thread blocked.';
+    this.name = 'IndexedDBOnBlock';
     this.stack = (new Error()).stack;
   }
 });
