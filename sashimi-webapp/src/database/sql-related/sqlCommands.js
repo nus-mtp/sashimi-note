@@ -279,7 +279,7 @@ export default function sqlCommands() {
     }
   };
 
-  this.exactSearchStartFilePathInFolder = function exactSearchStartFilePathInFolder(filePath) {
+  this.exactSearchStartFileNameInFolder = function exactSearchStartFileNameInFolder(searchString, filePath) {
     if (typeof Promise === 'function') {
       return new Promise((resolve, reject) =>
         alasql.promise([stringManipulator.stringConcat('SELECT ', constants.HEADER_FILE_MANAGER_FILE_NAME,
