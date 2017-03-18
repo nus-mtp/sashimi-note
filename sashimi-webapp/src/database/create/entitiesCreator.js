@@ -8,9 +8,21 @@ let thisDatabaseName = constants.INDEXEDDB_NAME;
 
 function isTableExists(tableName) {
   return new Promise((resolve, reject) => {
-    sqlCommands.getFullTableData(tableName)
-    .then(resolve(true))
-    .catch(sqlErr => reject(false));
+    const requestOpenDatabase = indexedDB.open(thisDatabaseName);
+    requestOpenDatabase.onsuccess = function onSuccess(event) {
+      const tableNames = event.target.result.objectStoreNames;
+      if (tableNames.contains(tableName) === false) {
+        requestOpenDatabase.result.close();
+        resolve(false);
+      } else {
+        requestOpenDatabase.result.close();
+        resolve(true);
+      }
+    };
+    // if database version not supported, implies table does not exists
+    requestOpenDatabase.onupgradeneeded = function onUpgradeNeeded(event) {
+      resolve(false);
+    };
   });
 }
 
