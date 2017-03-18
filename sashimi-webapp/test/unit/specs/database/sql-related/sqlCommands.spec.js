@@ -69,9 +69,7 @@ describe('sqlCommands', () => {
       sqlCommands.linkDatabaseToIndexedDB(testDatabaseName)
       .then(() => {
         isDatabaseExists(testDatabaseName, (isDBExists) => {
-          /*eslint-disable */
           expect(isDBExists).to.be.true;
-          /*eslint-enable */
         });
         done();
       })
@@ -92,9 +90,7 @@ describe('sqlCommands', () => {
       })
       .then(() => { // test for table exists in database
         isTableExistsInDatabase('abc', (isTableExist) => {
-          /*eslint-disable */
           expect(isTableExist).to.be.true;
-          /*eslint-enable */
           done();
         });
       })
