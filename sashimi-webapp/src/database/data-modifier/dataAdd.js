@@ -149,8 +149,7 @@ export default class dataAdd {
           .then((maxId) => {
             const newFileId = maxId + 1;
             // search all possible identical fileNames
-            return sqlCommands.exactSearchStartFileNameInFolder(
-              constants.DEFAULT_FILE_NAME_OMIT_FILE_TYPE, filePath)
+            return sqlCommands.exactSearchStartFileNameInFolder(filePath)
             .then((queryFiles) => {
               const newFileName = generateUniqueNewFileName(queryFiles, constants.DEFAULT_FILE_NAME);
               return createNewFile(organizationId, filePath, folderId, newFileId, newFileName)
@@ -173,8 +172,7 @@ export default class dataAdd {
         .then((maxId) => {
           const newFolderId = maxId + 1;
           // search all possible identical folderNames
-          return sqlCommands.exactSearchStartFolderNameInFolder(
-            constants.DEFAULT_FOLDER_NAME, folderId)
+          return sqlCommands.exactSearchStartFolderNameInFolder(folderId)
           .then((queryFiles) => {
             const newFolderName = generateUniqueNewFolderName(queryFiles, constants.DEFAULT_FOLDER_NAME);
             const newFolderPath = stringManipulator.stringConcat(folderPath, newFolderName, '/');
