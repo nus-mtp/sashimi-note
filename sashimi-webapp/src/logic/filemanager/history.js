@@ -11,8 +11,8 @@ const history = {
    * @return {Object}
    */
   update: function update(item) {
-    if (!currItem) {
-      previousHistory.push(item);
+    if (currItem) {
+      previousHistory.push(currItem);
       nextHistory = [];
     }
     currItem = item;
