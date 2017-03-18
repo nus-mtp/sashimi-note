@@ -1,4 +1,3 @@
-import exceptions from 'src/database/exceptions';
 import constants from 'src/database/constants';
 import SqlCommands from 'src/database/sql-related/sqlCommands';
 import DateTime from 'src/database/generated-data/dateTime';
@@ -76,49 +75,41 @@ export default class dataAdd {
   static constructor() {}
 
   static createNewFile(organizationId, filePath, folderId) {
-    if (typeof Promise === 'function') {
-      return new Promise((resolve, reject) =>
-        // set default new ID if not exist
-        sqlCommands.getMaxFileId()
-          .then((maxId) => {
-            const newFileId = maxId + 1;
-            // search all possible identical fileNames
-            return sqlCommands.exactSearchStartFileNameInFolder(filePath)
-            .then((queryFiles) => {
-              const newFileName = constants.DEFAULT_FILE_NAME;
-              return createNewFile(organizationId, filePath, folderId, newFileId, newFileName)
-              .then(data => resolve(data))
-              .catch(err => reject(err));
-            })
-            .catch(sqlErr => reject(sqlErr));
-          }).catch(sqlError => reject(sqlError))
-      );
-    } else {
-      throw new exceptions.PromiseFunctionNotDefined();
-    }
-  }
-
-  static createNewFolder(organizationId, folderPath, folderId) {
-    if (typeof Promise === 'function') {
-      return new Promise((resolve, reject) =>
-        // set default new ID if not exist (already have 0)
-        sqlCommands.getMaxFolderId()
+    return new Promise((resolve, reject) =>
+      // set default new ID if not exist
+      sqlCommands.getMaxFileId()
         .then((maxId) => {
-          const newFolderId = maxId + 1;
-          // search all possible identical folderNames
-          return sqlCommands.exactSearchStartFolderNameInFolder(folderId)
+          const newFileId = maxId + 1;
+          // search all possible identical fileNames
+          return sqlCommands.exactSearchStartFileNameInFolder(filePath)
           .then((queryFiles) => {
-            const newFolderName = constants.DEFAULT_FOLDER_NAME;
-            const newFolderPath = stringManipulator.stringConcat(folderPath, newFolderName, '/');
-            return createNewFolder(organizationId, newFolderPath, folderId, newFolderId, newFolderName)
+            const newFileName = constants.DEFAULT_FILE_NAME;
+            return createNewFile(organizationId, filePath, folderId, newFileId, newFileName)
             .then(data => resolve(data))
             .catch(err => reject(err));
           })
           .catch(sqlErr => reject(sqlErr));
         }).catch(sqlError => reject(sqlError))
-      );
-    } else {
-      throw new exceptions.PromiseFunctionNotDefined();
-    }
+    );
+  }
+
+  static createNewFolder(organizationId, folderPath, folderId) {
+    return new Promise((resolve, reject) =>
+      // set default new ID if not exist (already have 0)
+      sqlCommands.getMaxFolderId()
+      .then((maxId) => {
+        const newFolderId = maxId + 1;
+        // search all possible identical folderNames
+        return sqlCommands.exactSearchStartFolderNameInFolder(folderId)
+        .then((queryFiles) => {
+          const newFolderName = constants.DEFAULT_FOLDER_NAME;
+          const newFolderPath = stringManipulator.stringConcat(folderPath, newFolderName, '/');
+          return createNewFolder(organizationId, newFolderPath, folderId, newFolderId, newFolderName)
+          .then(data => resolve(data))
+          .catch(err => reject(err));
+        })
+        .catch(sqlErr => reject(sqlErr));
+      }).catch(sqlError => reject(sqlError))
+    );
   }
 }

@@ -1,6 +1,5 @@
 import constants from 'src/database/constants';
 import tableCreator from 'src/database/create/tableCreator';
-import exceptions from 'src/database/exceptions';
 import initDataGenerator from 'src/database/create/initDataGenerator';
 import SqlCommands from 'src/database/sql-related/sqlCommands';
 
