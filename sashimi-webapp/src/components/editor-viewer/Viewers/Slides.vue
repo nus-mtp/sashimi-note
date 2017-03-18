@@ -1,5 +1,5 @@
 <template>
-  <div touch-event="none">
+  <div touch-action="none">
     <!-- A empty parent div is created for documentNavigator -->
     <!--   to remove its dependency on the parent component. -->
     <div id='viewer-container'></div>

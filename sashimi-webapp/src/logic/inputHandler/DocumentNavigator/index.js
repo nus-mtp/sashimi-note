@@ -79,7 +79,7 @@ DocumentNavigator.prototype.addDomStyling = function addDomStyling() {
     right: 0,
     position: 'absolute',
   });
-  parentReference.setAttribute('touch-event', 'none');
+  parentReference.setAttribute('touch-action', 'none');
 };
 
 DocumentNavigator.prototype.removeDomStyling = function removeDomStyling() {
@@ -88,9 +88,9 @@ DocumentNavigator.prototype.removeDomStyling = function removeDomStyling() {
   domUtils.overwriteStyle(parentReference.style, this.defaultProperties.style);
 
   if (this.defaultProperties.attribute.touchEvent) {
-    parentReference.removeAttribute('touch-event');
+    parentReference.removeAttribute('touch-action');
   } else {
-    parentReference.setAttribute('touch-event', this.defaultProperties.attribute);
+    parentReference.setAttribute('touch-action', this.defaultProperties.attribute);
   }
 };
 
