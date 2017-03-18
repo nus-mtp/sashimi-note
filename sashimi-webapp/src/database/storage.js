@@ -216,7 +216,7 @@ export default class storage {
   static renameFileName(fileId, newFileName) {
     if (typeof Promise === 'function') {
       return new Promise((resolve, reject) =>
-        dataModifier.changeFileName(fileId, newFileName)
+        dataModifier.renameFileName(fileId, newFileName)
         .then(() => resolve())
         .catch(err => reject(err))
       );

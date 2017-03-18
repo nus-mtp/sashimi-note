@@ -1,6 +1,13 @@
-import unitConverter from 'src/helpers/unitConverter';
-
 export default {
+  /**
+   * Get computed style of an element.
+   * @param {Element} element
+   * @return {Object} computerd style object
+   */
+  getComputedStyle(element) {
+    return element.currentStyle || getComputedStyle(element);
+  },
+
   /**
    * Overwrite existing node's style with the given style
    */
@@ -8,18 +15,6 @@ export default {
     Object.keys(source).forEach((styleKey) => {
       target[styleKey] = source[styleKey];
     });
-  },
-
-  /**
-   * Complete the render height of the given page by
-   * substracting the page height with the top and bottom
-   * paddings
-   */
-  computeRenderHeight(page) {
-    return unitConverter.get(page.height, 'px', false) - (
-           unitConverter.get(page.padding.top, 'px', false) +
-           unitConverter.get(page.padding.bottom, 'px', false)
-         );
   },
 
   computeElementHeight(element) {
@@ -44,13 +39,4 @@ export default {
 
     return totalHeight;
   },
-
-  /**
-   * Get computed style of an element.
-   * @param {Element} element
-   * @return {Object} computerd style object
-   */
-  getComputedStyle(element) {
-    return element.currentStyle || getComputedStyle(element);
-  }
 };

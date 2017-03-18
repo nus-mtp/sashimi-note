@@ -34,7 +34,7 @@ export default function sqlArray() {
       return returnSqlArrayObject;
     } else {
       // return empty alasql array of array of object
-      return [[{}]];
+      return [{}];
     }
   };
 }
