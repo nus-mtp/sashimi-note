@@ -67,131 +67,107 @@ export default class entitiesCreator {
   static constuctor() {}
 
   static initializeDatabase(databaseName) {
-    if (typeof Promise === 'function') {
-      return new Promise((resolve, reject) =>
-        tableCreator.callSqlToLinkToDatabase(databaseName)
-        .then(data => resolve(data))
-        .catch(sqlError => reject(sqlError))
-      );
-    } else {
-      throw new exceptions.PromiseFunctionNotDefined();
-    }
+    return new Promise((resolve, reject) =>
+      tableCreator.callSqlToLinkToDatabase(databaseName)
+      .then(data => resolve(data))
+      .catch(sqlError => reject(sqlError))
+    );
   }
 
   static createUserTable() {
-    if (typeof Promise === 'function') {
-      return new Promise((resolve, reject) => {
-        tableCreator.initCreateTable(constants.ENTITIES_USER);
+    return new Promise((resolve, reject) => {
+      tableCreator.initCreateTable(constants.ENTITIES_USER);
 
-        tableCreator.addHeader(constants.HEADER_USER_TOKEN, 'STRING');
-        tableCreator.addHeader(constants.HEADER_USER_PASSWORD, 'STRING');
-        tableCreator.addHeader(constants.HEADER_USER_EMAIL, 'STRING');
-        tableCreator.addHeader(constants.HEADER_USER_USERNAME, 'STRING');
-        tableCreator.addHeader(constants.HEADER_USER_USER_ID, 'NUMBER');
-        tableCreator.addHeader(constants.HEADER_USER_CREATION_DATE, 'DATE');
+      tableCreator.addHeader(constants.HEADER_USER_TOKEN, 'STRING');
+      tableCreator.addHeader(constants.HEADER_USER_PASSWORD, 'STRING');
+      tableCreator.addHeader(constants.HEADER_USER_EMAIL, 'STRING');
+      tableCreator.addHeader(constants.HEADER_USER_USERNAME, 'STRING');
+      tableCreator.addHeader(constants.HEADER_USER_USER_ID, 'NUMBER');
+      tableCreator.addHeader(constants.HEADER_USER_CREATION_DATE, 'DATE');
 
-        tableCreator.setPrimaryKeys(constants.HEADER_USER_USER_ID);
+      tableCreator.setPrimaryKeys(constants.HEADER_USER_USER_ID);
 
-        return tableCreator.endCreateTable(constants.ENTITIES_USER, initDataGenerator.getInitDataUser())
-        .then(data => resolve(data))
-        .catch(sqlError => reject(sqlError));
-      });
-    } else {
-      throw new exceptions.PromiseFunctionNotDefined();
-    }
+      return tableCreator.endCreateTable(constants.ENTITIES_USER, initDataGenerator.getInitDataUser())
+      .then(data => resolve(data))
+      .catch(sqlError => reject(sqlError));
+    });
   }
 
   static createOrganizationTable() {
-    if (typeof Promise === 'function') {
-      return new Promise((resolve, reject) => {
-        tableCreator.initCreateTable(constants.ENTITIES_ORGANIZATION);
+    return new Promise((resolve, reject) => {
+      tableCreator.initCreateTable(constants.ENTITIES_ORGANIZATION);
 
-        tableCreator.addHeader(constants.HEADER_ORGANIZATION_ORGANIZATION_NAME, 'STRING');
-        tableCreator.addHeader(constants.HEADER_ORGANIZATION_CREATION_DATE, 'DATE');
-        tableCreator.addHeader(constants.HEADER_ORGANIZATION_ORGANIZATION_TYPE, 'NUMBER');
-        tableCreator.addHeader(constants.HEADER_ORGANIZATION_ORGANIZATION_ID, 'NUMBER');
-        tableCreator.addHeader(constants.HEADER_ORGANIZATION_USER_ID, 'NUMBER');
-        tableCreator.addHeader(constants.HEADER_ORGANIZATION_PARENT_ORGANIZATION_ID, 'NUMBER');
+      tableCreator.addHeader(constants.HEADER_ORGANIZATION_ORGANIZATION_NAME, 'STRING');
+      tableCreator.addHeader(constants.HEADER_ORGANIZATION_CREATION_DATE, 'DATE');
+      tableCreator.addHeader(constants.HEADER_ORGANIZATION_ORGANIZATION_TYPE, 'NUMBER');
+      tableCreator.addHeader(constants.HEADER_ORGANIZATION_ORGANIZATION_ID, 'NUMBER');
+      tableCreator.addHeader(constants.HEADER_ORGANIZATION_USER_ID, 'NUMBER');
+      tableCreator.addHeader(constants.HEADER_ORGANIZATION_PARENT_ORGANIZATION_ID, 'NUMBER');
 
-        tableCreator.setPrimaryKeys(constants.HEADER_ORGANIZATION_ORGANIZATION_ID,
-                                    constants.HEADER_ORGANIZATION_USER_ID);
+      tableCreator.setPrimaryKeys(constants.HEADER_ORGANIZATION_ORGANIZATION_ID,
+                                  constants.HEADER_ORGANIZATION_USER_ID);
 
-        return tableCreator.endCreateTable(constants.ENTITIES_ORGANIZATION, initDataGenerator.getInitDataOrganization())
-        .then(data => resolve(data))
-        .catch(sqlError => reject(sqlError));
-      });
-    } else {
-      throw new exceptions.PromiseFunctionNotDefined();
-    }
+      return tableCreator.endCreateTable(constants.ENTITIES_ORGANIZATION, initDataGenerator.getInitDataOrganization())
+      .then(data => resolve(data))
+      .catch(sqlError => reject(sqlError));
+    });
   }
 
   static createFileManagerTable() {
-    if (typeof Promise === 'function') {
-      return new Promise((resolve, reject) => {
-        tableCreator.initCreateTable(constants.ENTITIES_FILE_MANAGER);
+    return new Promise((resolve, reject) => {
+      tableCreator.initCreateTable(constants.ENTITIES_FILE_MANAGER);
 
-        tableCreator.addHeader(constants.HEADER_FILE_MANAGER_ORGANIZATION_ID, 'NUMBER');
-        tableCreator.addHeader(constants.HEADER_FILE_MANAGER_FOLDER_ID, 'NUMBER');
-        tableCreator.addHeader(constants.HEADER_FILE_MANAGER_FILE_ID, 'NUMBER');
-        tableCreator.addHeader(constants.HEADER_FILE_MANAGER_FILE_NAME, 'STRING');
-        tableCreator.addHeader(constants.HEADER_FILE_MANAGER_FILE_MARKDOWN, 'STRING');
-        tableCreator.addHeader(constants.HEADER_FILE_MANAGER_PERMISSION_INDEX, 'NUMBER');
-        tableCreator.addHeader(constants.HEADER_FILE_MANAGER_CREATION_DATE, 'DATE');
-        tableCreator.addHeader(constants.HEADER_FILE_MANAGER_LAST_MODIFIED_DATE, 'DATE');
-        tableCreator.addHeader(constants.HEADER_FILE_MANAGER_PATH, 'STRING');
+      tableCreator.addHeader(constants.HEADER_FILE_MANAGER_ORGANIZATION_ID, 'NUMBER');
+      tableCreator.addHeader(constants.HEADER_FILE_MANAGER_FOLDER_ID, 'NUMBER');
+      tableCreator.addHeader(constants.HEADER_FILE_MANAGER_FILE_ID, 'NUMBER');
+      tableCreator.addHeader(constants.HEADER_FILE_MANAGER_FILE_NAME, 'STRING');
+      tableCreator.addHeader(constants.HEADER_FILE_MANAGER_FILE_MARKDOWN, 'STRING');
+      tableCreator.addHeader(constants.HEADER_FILE_MANAGER_PERMISSION_INDEX, 'NUMBER');
+      tableCreator.addHeader(constants.HEADER_FILE_MANAGER_CREATION_DATE, 'DATE');
+      tableCreator.addHeader(constants.HEADER_FILE_MANAGER_LAST_MODIFIED_DATE, 'DATE');
+      tableCreator.addHeader(constants.HEADER_FILE_MANAGER_PATH, 'STRING');
 
-        tableCreator.setPrimaryKeys(constants.HEADER_FILE_MANAGER_FILE_ID,
-                                    constants.HEADER_FILE_MANAGER_ORGANIZATION_ID);
-        return tableCreator.endCreateTable(constants.ENTITIES_FILE_MANAGER, initDataGenerator.getInitDataFileManager())
-        .then(data => resolve(data))
-        .catch(sqlError => reject(sqlError));
-      });
-    } else {
-      throw new exceptions.PromiseFunctionNotDefined();
-    }
+      tableCreator.setPrimaryKeys(constants.HEADER_FILE_MANAGER_FILE_ID,
+                                  constants.HEADER_FILE_MANAGER_ORGANIZATION_ID);
+      return tableCreator.endCreateTable(constants.ENTITIES_FILE_MANAGER, initDataGenerator.getInitDataFileManager())
+      .then(data => resolve(data))
+      .catch(sqlError => reject(sqlError));
+    });
   }
 
   static createFolderTable() {
-    if (typeof Promise === 'function') {
-      return new Promise((resolve, reject) => {
-        tableCreator.initCreateTable(constants.ENTITIES_FOLDER);
+    return new Promise((resolve, reject) => {
+      tableCreator.initCreateTable(constants.ENTITIES_FOLDER);
 
-        tableCreator.addHeader(constants.HEADER_FOLDER_FOLDER_ID, 'NUMBER');
-        tableCreator.addHeader(constants.HEADER_FOLDER_PARENT_FOLDER_ID, 'NUMBER');
-        tableCreator.addHeader(constants.HEADER_FOLDER_PERMISSION_INDEX, 'NUMBER');
-        tableCreator.addHeader(constants.HEADER_FOLDER_ORGANIZATION_ID, 'NUMBER');
-        tableCreator.addHeader(constants.HEADER_FOLDER_CREATION_DATE, 'DATE');
-        tableCreator.addHeader(constants.HEADER_FOLDER_FOLDER_NAME, 'STRING');
-        tableCreator.addHeader(constants.HEADER_FOLDER_LAST_MODIFIED_DATE, 'DATE');
-        tableCreator.addHeader(constants.HEADER_FOLDER_PATH, 'STRING');
+      tableCreator.addHeader(constants.HEADER_FOLDER_FOLDER_ID, 'NUMBER');
+      tableCreator.addHeader(constants.HEADER_FOLDER_PARENT_FOLDER_ID, 'NUMBER');
+      tableCreator.addHeader(constants.HEADER_FOLDER_PERMISSION_INDEX, 'NUMBER');
+      tableCreator.addHeader(constants.HEADER_FOLDER_ORGANIZATION_ID, 'NUMBER');
+      tableCreator.addHeader(constants.HEADER_FOLDER_CREATION_DATE, 'DATE');
+      tableCreator.addHeader(constants.HEADER_FOLDER_FOLDER_NAME, 'STRING');
+      tableCreator.addHeader(constants.HEADER_FOLDER_LAST_MODIFIED_DATE, 'DATE');
+      tableCreator.addHeader(constants.HEADER_FOLDER_PATH, 'STRING');
 
-        tableCreator.setPrimaryKeys(constants.HEADER_FOLDER_ORGANIZATION_ID,
-                                    constants.HEADER_FOLDER_FOLDER_ID);
-        return tableCreator.endCreateTable(constants.ENTITIES_FOLDER)
-        .then(data => resolve(data))
-        .catch(sqlError => reject(sqlError));
-      });
-    } else {
-      throw new exceptions.PromiseFunctionNotDefined();
-    }
+      tableCreator.setPrimaryKeys(constants.HEADER_FOLDER_ORGANIZATION_ID,
+                                  constants.HEADER_FOLDER_FOLDER_ID);
+      return tableCreator.endCreateTable(constants.ENTITIES_FOLDER)
+      .then(data => resolve(data))
+      .catch(sqlError => reject(sqlError));
+    });
   }
   static fillUpDefaultData() {
-    if (typeof Promise === 'function') {
-      return new Promise((resolve, reject) =>
-          defaultFillUpUserTable()
-          .then(() =>
-            defaultFillUpOrganizationTable()
-            .catch(sqlErr => reject(sqlErr)))
-          .then(() =>
-            defaultFillUpFolderTable()
-            .catch(sqlErr => reject(sqlErr)))
-          .then(() =>
-            defaultFillUpFileManagerTable()
-            .catch(sqlErr => reject(sqlErr)))
-          .then(isSuccess => resolve(isSuccess))
-          .catch(sqlError => reject(sqlError)));
-    } else {
-      throw new exceptions.PromiseFunctionNotDefined();
-    }
+    return new Promise((resolve, reject) =>
+        defaultFillUpUserTable()
+        .then(() =>
+          defaultFillUpOrganizationTable()
+          .catch(sqlErr => reject(sqlErr)))
+        .then(() =>
+          defaultFillUpFolderTable()
+          .catch(sqlErr => reject(sqlErr)))
+        .then(() =>
+          defaultFillUpFileManagerTable()
+          .catch(sqlErr => reject(sqlErr)))
+        .then(isSuccess => resolve(isSuccess))
+        .catch(sqlError => reject(sqlError)));
   }
 }
