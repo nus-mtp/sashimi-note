@@ -95,6 +95,11 @@ DocumentNavigator.prototype.removeDomStyling = function removeDomStyling() {
 };
 
 DocumentNavigator.prototype.addEventListeners = function addEventListeners() {
+  this.eventInstance = {
+    pointers: {},
+    numPointers: 0
+  };
+
   this.eventListeners = [{
     event: 'resize',
     fn: this.updateElementWidth,
@@ -104,6 +109,20 @@ DocumentNavigator.prototype.addEventListeners = function addEventListeners() {
     fn: core.mousewheel.bind(this),
     target: this.el.parent,
     boolean: false
+  }, {
+    event: 'pointerdown',
+    fn: (event) => {
+      this.eventInstance.pointers[event.pointerId] = true;
+      this.eventInstance.numPointers = Object.keys(this.eventInstance.pointers).length;
+    },
+    target: this.el.parent,
+  }, {
+    event: 'pointerup',
+    fn: (event) => {
+      delete this.eventInstance.pointers[event.pointerId];
+      this.eventInstance.numPointers = Object.keys(this.eventInstance.pointers).length;
+    },
+    target: this.el.parent,
   }];
 
   this.interactable = interact(this.el.parent)

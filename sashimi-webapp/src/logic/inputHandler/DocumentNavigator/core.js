@@ -37,6 +37,9 @@ const core = {
   },
 
   pointermove(event) {
+    if (this.eventInstance.numPointers > 1) {
+      return; // Panning is restricted with using 1 finger only
+    }
     const moveSpeed = (1/this.transform.scale);
     const translateY = guard.translateY(this.transform.translateY + (event.dy * moveSpeed), this.el.container);
     let translateX = 0;
@@ -49,6 +52,11 @@ const core = {
   },
 
   interactZoom(event) {
+    if (event.type === 'gesturemove' && this.eventInstance.numPointers !== 2) {
+      // The event is a gesture, but is it not executed by two fingers
+      return;
+    }
+
     if (!event.ds) event.ds = (-event.deltaY / 1000);
     let scale = this.transform.scale * (1 + event.ds);
     scale = guard.scale(scale);
