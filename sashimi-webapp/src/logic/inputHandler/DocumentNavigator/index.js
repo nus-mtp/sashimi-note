@@ -1,5 +1,6 @@
 import interact from 'interactjs';
 import domUtils from 'src/helpers/domUtils';
+import unitConverter from 'src/helpers/unitConverter';
 import core from './core';
 import CssTransformer from './CssTransformer';
 
@@ -13,14 +14,13 @@ const DocumentNavigator = function DocumentNavigator(page, containerCssSelector,
   this.updateElementReference(containerCssSelector);
   this.transform = new CssTransformer(this.el.container);
 
-  // Initialise document navigator
   // 1. Set viewport on init;
-  core.updateWindowSize.call(this);
+  this.updateElementWidth();
 
   // 2. Attach event listener;
   this.eventListeners = [{
     event: 'resize',
-    fn: core.updateWindowSize.bind(this),
+    fn: this.updateElementWidth,
     target: window,
   }, {
     event: 'mousewheel',
@@ -40,16 +40,17 @@ DocumentNavigator.prototype.updateElementReference = function updateElementRefer
     parent: containerReference.parentNode,
     element: containerReference.childNodes[0],
   };
+};
 
+DocumentNavigator.prototype.updateElementWidth = function updateElementWidth() {
+  if (!this.width) this.width = {};
   Object.keys(this.el).forEach((key) => {
     const elementReference = this.el[key];
-
-    if (!elementReference.DocumentNavigator) {
-      elementReference.DocumentNavigator = {};
-    }
-    const dn = elementReference.DocumentNavigator;
-    dn.computedStyle = domUtils.getComputedStyle(elementReference);
+    const elementWidth = domUtils.getComputedStyle(elementReference).width;
+    this.width[key] = unitConverter.get(elementWidth, 'px', false);
   });
+
+  core.updateWindowSize.call(this);
 };
 
 DocumentNavigator.prototype.addListeners = function addListeners() {

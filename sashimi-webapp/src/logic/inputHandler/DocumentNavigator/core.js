@@ -32,19 +32,15 @@ export default {
   updateWindowSize(event) {
     // Retrieve the resized width
     const marginWidth = 60;
-    const width = {
-      element: unitConverter.get(this.el.element.computedStyle.width, 'px', false),
-      container: unitConverter.get(this.el.container.computedStyle.width, 'px', false)
-    };
     // Resize the element's transformer
-    this.transform.set({ scale: (width.container - marginWidth) / width.element });
+    this.transform.set({ scale: (this.width.parent - marginWidth) / this.width.element });
   },
 
   pointermove(event) {
     const moveSpeed = (1/this.transform.scale);
     const translateY = guard.translateY(this.transform.translateY + (event.dy * moveSpeed), this.el.container);
     let translateX = 0;
-    if ((this.width.container) < this.width.element * this.transform.scale) {
+    if ((this.width.parent) < this.width.element * this.transform.scale) {
       translateX = guard.translateX(this.transform.translateX + (event.dx * moveSpeed), this.el.container);
     }
 
