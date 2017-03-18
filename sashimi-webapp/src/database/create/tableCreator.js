@@ -18,16 +18,12 @@ export default class tableCreator {
   static constructor() {}
 
   static callSqlToLinkToDatabase(databaseName) {
-    if (typeof Promise === 'function') {
-      return new Promise((resolve, reject) => {
-        const thisDatabaseName = databaseName;
-        return sqlCommands.linkDatabaseToIndexedDB(thisDatabaseName)
-        .then(data => resolve(data))
-        .catch(sqlError => reject(sqlError));
-      });
-    } else {
-      throw new exceptions.PromiseFunctionNotDefined();
-    }
+    return new Promise((resolve, reject) => {
+      const thisDatabaseName = databaseName;
+      return sqlCommands.linkDatabaseToIndexedDB(thisDatabaseName)
+      .then(data => resolve(data))
+      .catch(sqlError => reject(sqlError));
+    });
   }
 
   static initCreateTable(tableName) {
@@ -86,22 +82,18 @@ export default class tableCreator {
   }
 
   static endCreateTable(headerName) {
-    if (typeof Promise === 'function') {
-      return new Promise((resolve, reject) => {
-        if (isTableInitializedForCreation) {
-          // remove extra characters to input into alasql
-          sqlCreateTableString = endOfCreateTableStringForAlasql(sqlCreateTableString);
-          isTableInitializedForCreation = constants.CONST_TABLE_CREATION_CLOSED;
-          return sqlCommands.createTable(sqlCreateTableString)
-          .then(data => resolve(data))
-          .catch(sqlError => reject(sqlError));
-        } else {
-          return null;
-        }
-      });
-    } else {
-      throw new exceptions.PromiseFunctionNotDefined();
-    }
+    return new Promise((resolve, reject) => {
+      if (isTableInitializedForCreation) {
+        // remove extra characters to input into alasql
+        sqlCreateTableString = endOfCreateTableStringForAlasql(sqlCreateTableString);
+        isTableInitializedForCreation = constants.CONST_TABLE_CREATION_CLOSED;
+        return sqlCommands.createTable(sqlCreateTableString)
+        .then(data => resolve(data))
+        .catch(sqlError => reject(sqlError));
+      } else {
+        return null;
+      }
+    });
   }
 
 }
