@@ -18,12 +18,8 @@ export default class tableCreator {
   static constructor() {}
 
   static callSqlToLinkToDatabase(databaseName) {
-    return new Promise((resolve, reject) => {
-      const thisDatabaseName = databaseName;
-      return sqlCommands.linkDatabaseToIndexedDB(thisDatabaseName)
-      .then(data => resolve(data))
-      .catch(sqlError => reject(sqlError));
-    });
+    const thisDatabaseName = databaseName || constants.INDEXEDDB_NAME;
+    return sqlCommands.linkDatabaseToIndexedDB(thisDatabaseName);
   }
 
   static initCreateTable(tableName) {
