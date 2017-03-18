@@ -6,10 +6,9 @@ import CssTransformer from './CssTransformer';
 
 /**
  * Document Navigator manage the input halding of Pages mode
- * @param {*} page
  * @param {*} containerCssSelector
  */
-const DocumentNavigator = function DocumentNavigator(page, containerCssSelector, elementCssSelector) {
+const DocumentNavigator = function DocumentNavigator(containerCssSelector) {
   // Initialise DocumentNavigator properties
   this.updateElementReference(containerCssSelector);
   this.transform = new CssTransformer(this.el.container);

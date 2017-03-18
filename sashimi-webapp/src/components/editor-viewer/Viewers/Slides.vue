@@ -43,14 +43,11 @@
       // Mount does not gurrantee DOM to be ready, thus nextTick is used
       Vue.nextTick(() => {
         this.pageRenderer = new PageRenderer('viewer-container', PAGE_A6);
-        renderThrottleFn(this.htmlData, this.pageRenderer);
-
-        // Initialise navigation for Slide mode
-        this.documentNavigator = new DocumentNavigator(
-          this.pageRenderer.page,
-          '#viewer-container',
-          '.page-view'
-        );
+        renderThrottleFn(this.htmlData, this.pageRenderer)
+        .then(() => {
+          // Initialise navigation for Slide mode
+          this.documentNavigator = new DocumentNavigator('#viewer-container');
+        });
 
         // create floater
         const Floater = document.createElement('DIV');
