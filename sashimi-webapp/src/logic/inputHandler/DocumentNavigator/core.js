@@ -32,8 +32,13 @@ const core = {
   updateWindowSize(event) {
     // Retrieve the resized width
     const marginWidth = 60;
+    const transitionDuration = 500;
     // Resize the element's transformer
+    this.el.container.style.transition = `transform ${transitionDuration}ms`;
     this.transform.set({ scale: (this.width.parent - marginWidth) / this.width.element });
+    setTimeout(() => {
+      this.el.container.style.transition = '';
+    }, transitionDuration);
   },
 
   pointermove(event) {
