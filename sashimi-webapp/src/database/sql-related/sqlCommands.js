@@ -296,7 +296,7 @@ export default function sqlCommands() {
     }
   };
 
-  this.exactSearchStartFolderNameInFolder = function exactSearchStartFolderNameInFolder(searchString, parentFolderId) {
+  this.exactSearchStartFolderNameInFolder = function exactSearchStartFolderNameInFolder(parentFolderId) {
     if (typeof Promise === 'function') {
       return new Promise((resolve, reject) =>
         alasql.promise([stringManipulator.stringConcat('SELECT ', constants.HEADER_FOLDER_FOLDER_NAME,
