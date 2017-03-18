@@ -1,7 +1,7 @@
-import constants from '../constants';
-import SqlCommands from '../sql-related/sqlCommands';
-import StringManipulator from '../stringManipulation';
-import exceptions from '../exceptions';
+import constants from 'src/database/constants';
+import SqlCommands from 'src/database/sql-related/sqlCommands';
+import StringManipulator from 'src/database/stringManipulation';
+import exceptions from 'src/database/exceptions';
 
 const sqlCommands = new SqlCommands();
 const stringManipulator = new StringManipulator();
