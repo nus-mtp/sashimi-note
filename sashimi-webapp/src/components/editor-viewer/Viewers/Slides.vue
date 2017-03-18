@@ -50,35 +50,10 @@
           // Initialise navigation for Slide mode
           this.documentNavigator = new DocumentNavigator('#viewer-container');
         });
-
-        // create floater
-        const Floater = document.createElement('DIV');
-        Floater.setAttribute('id', 'viewer-floater');
-        this.$el.parentNode.appendChild(Floater);
       });
     },
     beforeDestroy() {
       this.documentNavigator.unsetDomBehaviour();
-      this.$el.parentNode.removeChild(document.getElementById('viewer-floater'));
     }
   };
-
 </script>
-
-<style lang="scss">
-#viewer-floater {
-  opacity: 0;
-  position: fixed;
-  height: 240px;
-  width: 240px;
-  background: grey;
-  bottom: 0;
-  right: 0;
-  transition: opacity 1s;  
-
-  &:hover {
-    transition: opacity 1s;
-    opacity: 1;
-  }
-}
-</style>
