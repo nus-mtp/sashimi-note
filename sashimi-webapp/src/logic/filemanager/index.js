@@ -5,12 +5,13 @@ import History from './operations/history';
 const fileManager = {
 
   /**
-   * Initialize Filemanager and Database
+   * Initialize Filemanager
    *
    * @return {Promise}
    */
   start: function start() {
-    return core.init();
+    return core.loadDB()
+      .then(core.init);
   },
 
   /* Get Operations */

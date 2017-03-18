@@ -1,5 +1,6 @@
 import storage from 'src/database/storage';
 import Folder from '../data/folder';
+import File from '../data/file';
 import idMap from '../data/idmap';
 
 /* Constants */
@@ -32,52 +33,55 @@ function getChildFolder(queue, parentID) {
 
 /* Filemanager core functions */
 const core = {
+
   /**
-   * Initialize Filemanager
+   * Load all files and folders from database
    *
    * @return {Promise}
    */
-  init: function init() {
-    return storage.loadAllFilesAndFolders()
-      .then((dbList) => {
-        const dbFileList = dbList.shift(); // list of File from database list
-        const dbFolderList = dbList.shift(); // list of Folder from datbase list
+  loadDB: function loadDB() {
+    return storage.loadAllFilesAndFolders();
+  },
 
-        const processingQueue = [];
-        const dbRootFolderObj = getChildFolder(dbFolderList);
-        const rootFolder = new Folder(dbRootFolderObj.folder_id, dbRootFolderObj.folder_name, dbRootFolderObj.folder_path);
-        processingQueue.push(rootFolder);
-        idMap.addFolderToMap(rootFolder.id, rootFolder);
+  /**
+   * Initialize Filemanager
+   *
+   * @return {Folder}
+   */
+  init: function init(dbList) {
+    const dbFileList = dbList.shift(); // list of File from database list
+    const dbFolderList = dbList.shift(); // list of Folder from datbase list
 
-        let currFolder;
-        let dbFileObj;
-        let dbFolderObj;
-        let childFile;
-        let childFolder;
-        while (!queueIsEmpty(processingQueue)) {
-          currFolder = processingQueue.shift();
+    const processingQueue = [];
+    const dbRootFolderObj = getChildFolder(dbFolderList);
+    const rootFolder = new Folder(dbRootFolderObj.folder_id, dbRootFolderObj.folder_name, dbRootFolderObj.folder_path);
+    processingQueue.push(rootFolder);
+    idMap.addFolderToMap(rootFolder.id, rootFolder);
 
-          /* Process dbFileList for child file */
-          while ((dbFileObj = getChildFile(dbFileList, currFolder.id)) !== null) {
-            childFile = new File(dbFileObj.file_id, dbFileObj.file_name, dbFileObj.file_path, currFolder);
-            idMap.addFileToMap(childFile.id, childFile);
-            currFolder.childFileList.push(childFile);
-          }
+    let currFolder;
+    let dbFileObj;
+    let dbFolderObj;
+    let childFile;
+    let childFolder;
+    while (!queueIsEmpty(processingQueue)) {
+      currFolder = processingQueue.shift();
+      /* Process dbFileList for child file */
+      while ((dbFileObj = getChildFile(dbFileList, currFolder.id)) !== null) {
+        childFile = new File(dbFileObj.file_id, dbFileObj.file_name, dbFileObj.file_path, currFolder);
+        idMap.addFileToMap(childFile.id, childFile);
+        currFolder.childFileList.push(childFile);
+      }
 
           /* Process dbFolderList for child folder */
-          while ((dbFolderObj = getChildFolder(dbFolderList, currFolder.id)) !== null) {
-            childFolder = new Folder(dbFolderObj.folder_id, dbFolderObj.folder_name, dbFolderObj.folder_path);
-            processingQueue.push(childFolder);
-            idMap.addFolderToMap(childFolder.id, childFolder);
-            childFolder.parentFolder = currFolder;
-            currFolder.childFolderList.push(childFolder);
-          }
-        }
-        return rootFolder;
-      })
-      .catch((error) => {
-        throw error;
-      });
+      while ((dbFolderObj = getChildFolder(dbFolderList, currFolder.id)) !== null) {
+        childFolder = new Folder(dbFolderObj.folder_id, dbFolderObj.folder_name, dbFolderObj.folder_path);
+        processingQueue.push(childFolder);
+        idMap.addFolderToMap(childFolder.id, childFolder);
+        childFolder.parentFolder = currFolder;
+        currFolder.childFolderList.push(childFolder);
+      }
+    }
+    return rootFolder;
   },
 
   getFile: function getFile(id) {
