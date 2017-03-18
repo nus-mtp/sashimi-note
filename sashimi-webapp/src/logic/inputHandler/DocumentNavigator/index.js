@@ -1,6 +1,7 @@
 import interact from 'interactjs';
 import domUtils from 'src/helpers/domUtils';
 import unitConverter from 'src/helpers/unitConverter';
+import CssTransformer from './CssTransformer';
 
 const guard = {
   translateY(translateY, parentEle) {
@@ -28,33 +29,6 @@ const guard = {
     if (scale > 15) scale = 15;
     return scale;
   }
-};
-
-const CssTransform = function CssTransform(element) {
-  let elementToApply = element;
-  if (typeof element === 'string') {
-    elementToApply = document.querySelector(element);
-  }
-
-  // Check if element can be resolved
-  if (!elementToApply) throw new Error(`Cannot find reference to element > ${element}`);
-
-  this.elementRef = elementToApply;
-  this.scale = 1;
-  this.translateX = 0;
-  this.translateY = 0;
-  return this.get();
-};
-
-CssTransform.prototype.get = function get() {
-  return `scale(${this.scale}) translate(${this.translateX}px, ${this.translateY}px)`;
-};
-
-CssTransform.prototype.set = function set(settings) {
-  this.scale = settings.scale || this.scale;
-  this.translateX = (settings.translateX != null) ? settings.translateX : this.translateX;
-  this.translateY = (settings.translateY != null) ? settings.translateY : this.translateY;
-  this.elementRef.style.transform = this.get();
 };
 
 // Interactions
@@ -126,7 +100,7 @@ const DocumentNavigator = function DocumentNavigator(page, containerCssSelector,
   };
 
   // Initialise pointers information
-  this.transform = new CssTransform(this.el.container);
+  this.transform = new CssTransformer(this.el.container);
 
   // Initialise document navigator
   // 1. Set viewport on init;
