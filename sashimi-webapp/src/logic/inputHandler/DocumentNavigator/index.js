@@ -102,7 +102,7 @@ DocumentNavigator.prototype.addEventListeners = function addEventListeners() {
 
   this.eventListeners = [{
     event: 'resize',
-    fn: this.updateElementWidth,
+    fn: this.updateElementWidth.bind(this),
     target: window,
   }, {
     event: 'mousewheel',
