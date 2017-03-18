@@ -1,6 +1,6 @@
-import Folder from './folder';
-import history from './history';
-import search from './search';
+import core from './operations/core';
+import search from './operations/search';
+import History from './operations/history';
 
 const fileManager = {
 
@@ -10,7 +10,7 @@ const fileManager = {
    * @return {Promise}
    */
   start: function start() {
-    return Folder.init();
+    return core.init();
   },
 
   /* Get Operations */
@@ -22,7 +22,7 @@ const fileManager = {
    * @return {File}
    */
   getFileByID: function getFileByID(fileID) {
-    return Folder.getFile(fileID);
+    return core.getFile(fileID);
   },
 
   /**
@@ -32,7 +32,7 @@ const fileManager = {
    * @return {Folder}
    */
   getFolderByID: function getFolderByID(folderID) {
-    return Folder.getFolder(folderID);
+    return core.getFolder(folderID);
   },
 
   /* Search Operations */
@@ -57,7 +57,7 @@ const fileManager = {
     return search.fileOnly(searchString);
   },
 
-  /**
+  /** `
    * Return a Folder containing folders matching the search string
    *
    * @param {String} searchString
@@ -67,18 +67,16 @@ const fileManager = {
     return search.folderOnly(searchString);
   },
 
-  /* History Operations */
+  /* History Operation */
 
-  update: function update(folder) {
-    return history.update(folder);
-  },
-
-  previous: function previous() {
-    return history.previous();
-  },
-
-  next: function next() {
-    return history.next();
+  /**
+   * Return a History with the current folder initialized as the given folder.
+   *
+   * @param {Folder} folder
+   * @return {History}
+   */
+  createHistory: function createHistory(folder) {
+    return new History(folder);
   }
 
 };
