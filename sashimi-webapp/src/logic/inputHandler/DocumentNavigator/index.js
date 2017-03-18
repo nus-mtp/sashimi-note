@@ -32,14 +32,15 @@ const guard = {
 };
 
 // Interactions
-const windowResize = function windowResize(event) {
-  // recompute parent and child width
-  this.width = {
-    element: unitConverter.get(this.page.width, 'px', false),
+const updateWindowSize = function updateWindowSize(event) {
+  // Retrieve the resized width
+  const marginWidth = 60;
+  const width = {
+    element: unitConverter.get(this.el.element.computedStyle.width, 'px', false),
     container: unitConverter.get(this.el.container.computedStyle.width, 'px', false)
   };
-
-  this.transform.set({ scale: (this.width.container - 60) / this.width.element });
+  // Resize the element's transformer
+  this.transform.set({ scale: (width.container - marginWidth) / width.element });
 };
 
 const pointermove = function pointermove(event) {
@@ -76,40 +77,20 @@ const mousewheel = function mousewheel(event) {
  * Document Navigator manage the input halding of Pages mode
  * @param {*} page
  * @param {*} containerCssSelector
- * @param {*} elementCssSelector
  */
 const DocumentNavigator = function DocumentNavigator(page, containerCssSelector, elementCssSelector) {
-  // Obtains document details
-  this.el = {
-    container: document.querySelector(containerCssSelector),
-    element: document.querySelector(elementCssSelector)
-  };
-
-  if (!this.el.container) throw new Error(`Unable to query "${containerCssSelector}"`);
-  if (!this.el.element) throw new Error(`Unable to query "${elementCssSelector}"`);
-  this.el.parent = this.el.container.parentNode;
-
-  this.el.container.computedStyle = domUtils.getComputedStyle(this.el.parent);
-  this.el.element.computedStyle = domUtils.getComputedStyle(this.el.element);
-
-  // Builds document properties
-  this.page = page;
-  this.width = {
-    element: unitConverter.get(this.page.width, 'px', false),
-    container: unitConverter.get(this.el.container.computedStyle.width, 'px', false)
-  };
-
-  // Initialise pointers information
+  // Initialise DocumentNavigator properties
+  this.updateElementReference(containerCssSelector);
   this.transform = new CssTransformer(this.el.container);
 
   // Initialise document navigator
   // 1. Set viewport on init;
-  windowResize.call(this);
+  updateWindowSize.call(this);
 
   // 2. Attach event listener;
   this.eventListeners = [{
     event: 'resize',
-    fn: windowResize.bind(this),
+    fn: updateWindowSize.bind(this),
     target: window,
   }, {
     event: 'mousewheel',
@@ -118,6 +99,27 @@ const DocumentNavigator = function DocumentNavigator(page, containerCssSelector,
     boolean: false
   }];
   this.addListeners();
+};
+
+DocumentNavigator.prototype.updateElementReference = function updateElementReference(containerCssSelector) {
+  const containerReference = document.querySelector(containerCssSelector);
+  if (!containerReference) throw new Error(`Unable to query "${containerCssSelector}"`);
+
+  this.el = {
+    container: containerReference,
+    parent: containerReference.parentNode,
+    element: containerReference.childNodes[0],
+  };
+
+  Object.keys(this.el).forEach((key) => {
+    const elementReference = this.el[key];
+
+    if (!elementReference.DocumentNavigator) {
+      elementReference.DocumentNavigator = {};
+    }
+    const dn = elementReference.DocumentNavigator;
+    dn.computedStyle = domUtils.getComputedStyle(elementReference);
+  });
 };
 
 DocumentNavigator.prototype.addListeners = function addListeners() {
