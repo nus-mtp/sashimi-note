@@ -2,12 +2,12 @@
   <div>
     <navbar v-model="action"></navbar>
     <div class="section group content">
-      <div class="col" v-bind:class="editorCols">
+      <div class="col editor-wrapper" v-bind:class="editorCols">
         <editor 
           v-model="mdContent"
         ></editor>
       </div>
-      <div class="col" v-bind:class="viewerCols">
+      <div class="col viewer-wrapper" v-bind:class="viewerCols">
         <viewer 
           :editor-content="mdContent" 
           :file-format="fileFormat" 
