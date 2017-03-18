@@ -10,9 +10,7 @@ describe('sqlArray.js', () => {
       expect(alaArray).to.deep.equal([{}]);
       expect(typeof alaArray).to.equal('object');
       expect(typeof alaArray[0]).to.equal('object');
-      /* eslint-disable */
       expect(typeof Object.values(alaArray[0])).to.equal.null;
-      /* esline-enable */
     });
 
     it('should fill up an object of object', () => {
