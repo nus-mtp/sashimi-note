@@ -15,8 +15,8 @@ describe('sqlArray.js', () => {
 
     it('should fill up an object of object', () => {
       alasqlArray.initializeAlasqlArray();
-      alasqlArray.addKeyBasePair('a', 123)
-      alasqlArray.addKeyBasePair('b', '123')
+      alasqlArray.addKeyBasePair('a', 123);
+      alasqlArray.addKeyBasePair('b', '123');
       const alaArray = alasqlArray.endAlasqlArray();
       expect(alaArray).to.deep.equal([{a: 123, b: '123'}]);
       expect(typeof alaArray).to.equal('object');
