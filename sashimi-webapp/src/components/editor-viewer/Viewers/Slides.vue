@@ -1,6 +1,8 @@
 <template>
-  <div id='viewer-container'>
-    <div class="page-view"></div>
+  <div touch-event="none">
+    <!-- A empty parent div is created for documentNavigator -->
+    <!--   to remove its dependency on the parent component. -->
+    <div id='viewer-container'></div>
   </div>
 </template>
 
