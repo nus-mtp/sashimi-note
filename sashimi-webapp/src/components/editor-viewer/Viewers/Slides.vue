@@ -9,7 +9,7 @@
   import _ from 'lodash';
   import PageRenderer from 'src/logic/renderer';
   import DocumentNavigator from 'src/logic/inputHandler/DocumentNavigator';
-  
+
   // Throttle function used to limit the rate which
   // the render function is called
   const throttleTime = 600;
@@ -51,12 +51,35 @@
           '#viewer-container',
           '.page-view'
         );
+
+        // create floater
+        const Floater = document.createElement('DIV');
+        Floater.setAttribute('id', 'viewer-floater');
+        this.$el.parentNode.appendChild(Floater);
       });
     },
     beforeDestroy() {
       this.documentNavigator.removeListeners();
+      this.$el.parentNode.removeChild(document.getElementById('viewer-floater'));
     }
   };
 
 </script>
 
+<style lang="scss">
+#viewer-floater {
+  opacity: 0;
+  position: fixed;
+  height: 240px;
+  width: 240px;
+  background: grey;
+  bottom: 0;
+  right: 0;
+  transition: opacity 1s;  
+
+  &:hover {
+    transition: opacity 1s;
+    opacity: 1;
+  }
+}
+</style>
