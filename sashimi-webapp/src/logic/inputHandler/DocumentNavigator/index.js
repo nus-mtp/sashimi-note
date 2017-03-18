@@ -16,18 +16,8 @@ const DocumentNavigator = function DocumentNavigator(containerCssSelector) {
   // 1. Set viewport on init;
   this.updateElementWidth();
 
-  // 2. Attach event listener;
-  this.eventListeners = [{
-    event: 'resize',
-    fn: this.updateElementWidth,
-    target: window,
-  }, {
-    event: 'mousewheel',
-    fn: core.mousewheel.bind(this),
-    target: this.el.parent,
-    boolean: false
-  }];
-  this.addListeners();
+  // 2. Set up event listener and DOM properties;
+  this.setDomBehaviour();
 };
 
 DocumentNavigator.prototype.updateElementReference = function updateElementReference(containerCssSelector) {
@@ -52,11 +42,70 @@ DocumentNavigator.prototype.updateElementWidth = function updateElementWidth() {
   core.updateWindowSize.call(this);
 };
 
-DocumentNavigator.prototype.addListeners = function addListeners() {
-  this.el.parent.setAttribute('touch-event', 'none');
-  this.eventListeners.forEach((listener) => {
-    listener.target.addEventListener(listener.event, listener.fn, listener.boolean);
+DocumentNavigator.prototype.setDomBehaviour = function setDomBehaviour() {
+  this.addDomStyling();
+  this.addEventListeners();
+};
+
+DocumentNavigator.prototype.unsetDomBehaviour = function setDomBehaviour() {
+  this.removeEventListeners();
+  this.removeDomStyling();
+};
+
+
+DocumentNavigator.prototype.addDomStyling = function addDomStyling() {
+  const parentReference = this.el.parent;
+  const computedStyle = domUtils.getComputedStyle(parentReference);
+
+  // Store default parent reference properties before overwriting
+  this.defaultProperties = {
+    style: {
+      top: computedStyle.top,
+      bottom: computedStyle.bottom,
+      left: computedStyle.left,
+      right: computedStyle.right,
+      position: computedStyle.position,
+    },
+    attribute: {
+      touchEvent: parentReference.getAttribute('touch-event'),
+    }
+  };
+
+  // Parent reference properties with the required one
+  domUtils.overwriteStyle(parentReference.style, {
+    top: 0,
+    bottom: 0,
+    left: 0,
+    right: 0,
+    position: 'absolute',
   });
+  parentReference.setAttribute('touch-event', 'none');
+};
+
+DocumentNavigator.prototype.removeDomStyling = function removeDomStyling() {
+  const parentReference = this.el.parent;
+
+  domUtils.overwriteStyle(parentReference.style, this.defaultProperties.style);
+
+  if (this.defaultProperties.attribute.touchEvent) {
+    parentReference.removeAttribute('touch-event');
+  } else {
+    parentReference.setAttribute('touch-event', this.defaultProperties.attribute);
+  }
+};
+
+DocumentNavigator.prototype.addEventListeners = function addEventListeners() {
+  this.eventListeners = [{
+    event: 'resize',
+    fn: this.updateElementWidth,
+    target: window,
+  }, {
+    event: 'mousewheel',
+    fn: core.mousewheel.bind(this),
+    target: this.el.parent,
+    boolean: false
+  }];
+
   this.interactable = interact(this.el.parent)
   .draggable({
     inertia: {
@@ -69,10 +118,13 @@ DocumentNavigator.prototype.addListeners = function addListeners() {
   .gesturable({
     onmove: core.interactZoom.bind(this),
   });
+
+  this.eventListeners.forEach((listener) => {
+    listener.target.addEventListener(listener.event, listener.fn, listener.boolean);
+  });
 };
 
-DocumentNavigator.prototype.removeListeners = function removeListeners() {
-  this.el.parent.removeAttribute('touch-event');
+DocumentNavigator.prototype.removeEventListeners = function removeEventListeners() {
   this.interactable.unset();
 
   this.eventListeners.forEach((listener) => {

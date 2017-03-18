@@ -58,7 +58,7 @@
       });
     },
     beforeDestroy() {
-      this.documentNavigator.removeListeners();
+      this.documentNavigator.unsetDomBehaviour();
       this.$el.parentNode.removeChild(document.getElementById('viewer-floater'));
     }
   };

@@ -42,7 +42,7 @@
       });
     },
     beforeDestroy() {
-      this.documentNavigator.removeListeners();
+      this.documentNavigator.unsetDomBehaviour();
     }
   };
 
