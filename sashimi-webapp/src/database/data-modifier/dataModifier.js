@@ -7,7 +7,6 @@
 import dataAdd from 'src/database/data-modifier/dataAdd';
 import dataDelete from 'src/database/data-modifier/dataDelete';
 import dataUpdate from 'src/database/data-modifier/dataUpdate';
-import exceptions from 'src/database/exceptions';
 import SqlCommands from 'src/database/sql-related/sqlCommands';
 import StringManipulator from 'src/database/stringManipulation';
 
@@ -23,111 +22,39 @@ export default class dataModifier {
   static constructor() {}
 
   static deleteAllEntities(databaseName) {
-    if (typeof Promise === 'function') {
-      return new Promise((resolve, reject) =>
-        dataDelete.deleteAllEntities(databaseName)
-        .then(data => resolve(data))
-        .catch(sqlErr => reject(sqlErr))
-      );
-    } else {
-      throw new exceptions.PromiseFunctionNotDefined();
-    }
+    return dataDelete.deleteAllEntities(databaseName);
   }
 
   static createNewFile(organizationId, filePath, folderId) {
-    if (typeof Promise === 'function') {
-      return new Promise((resolve, reject) =>
-        dataAdd.createNewFile(organizationId, filePath, folderId)
-        .then(fileObject => resolve(fileObject))
-        .catch(sqlErr => reject(sqlErr))
-      );
-    } else {
-      throw new exceptions.PromiseFunctionNotDefined();
-    }
+    return dataAdd.createNewFile(organizationId, filePath, folderId);
   }
 
   static createNewFolder(organizationId, folderPath, folderId) {
-    if (typeof Promise === 'function') {
-      return new Promise((resolve, reject) =>
-        dataAdd.createNewFolder(organizationId, folderPath, folderId)
-        .then(folderObject => resolve(folderObject))
-        .catch(sqlErr => reject(sqlErr))
-      );
-    } else {
-      throw new exceptions.PromiseFunctionNotDefined();
-    }
+    return dataAdd.createNewFolder(organizationId, folderPath, folderId);
   }
 
   static moveFile(fileId, newPath) {
-    if (typeof Promise === 'function') {
-      return new Promise((resolve, reject) =>
-        sqlCommands.changeFilePath(fileId, newPath)
-        .then(() => resolve())
-        .catch(sqlErr => reject(sqlErr))
-      );
-    } else {
-      throw new exceptions.PromiseFunctionNotDefined();
-    }
+    return sqlCommands.changeFilePath(fileId, newPath);
   }
 
   static renameFileName(fileId, newFileName) {
-    if (typeof Promise === 'function') {
-      return new Promise((resolve, reject) =>
-        sqlCommands.changeFileName(fileId, newFileName)
-        .then(() => resolve())
-        .catch(sqlErr => reject(sqlErr))
-      );
-    } else {
-      throw new exceptions.PromiseFunctionNotDefined();
-    }
+    return sqlCommands.changeFileName(fileId, newFileName);
   }
 
   static renameFolderName(folderId, newFolderName) {
-    if (typeof Promise === 'function') {
-      return new Promise((resolve, reject) =>
-        sqlCommands.changeFolderName(folderId, newFolderName)
-        .then(() => resolve())
-        .catch(sqlErr => reject(sqlErr))
-      );
-    } else {
-      throw new exceptions.PromiseFunctionNotDefined();
-    }
+    return sqlCommands.changeFolderName(folderId, newFolderName);
   }
 
   static saveFile(fileId, fileContent) {
-    if (typeof Promise === 'function') {
-      return new Promise((resolve, reject) => {
-        fileContent = resolveFileSaving(fileContent);
-        dataUpdate.saveFile(fileId, fileContent)
-        .then(() => resolve())
-        .catch(sqlError => reject(sqlError));
-      });
-    } else {
-      throw new exceptions.PromiseFunctionNotDefined();
-    }
+    fileContent = resolveFileSaving(fileContent);
+    return dataUpdate.saveFile(fileId, fileContent);
   }
 
   static deleteFile(fileId) {
-    if (typeof Promise === 'function') {
-      return new Promise((resolve, reject) =>
-        dataDelete.deleteFile(fileId)
-        .then(() => resolve())
-        .catch(sqlError => reject(sqlError))
-      );
-    } else {
-      throw new exceptions.PromiseFunctionNotDefined();
-    }
+    return dataDelete.deleteFile(fileId);
   }
 
   static deleteFolder(folderId) {
-    if (typeof Promise === 'function') {
-      return new Promise((resolve, reject) =>
-        dataDelete.deleteFolder(folderId)
-        .then(() => resolve())
-        .catch(sqlError => reject(sqlError))
-      );
-    } else {
-      throw new exceptions.PromiseFunctionNotDefined();
-    }
+    return dataDelete.deleteFolder(folderId);
   }
 }
