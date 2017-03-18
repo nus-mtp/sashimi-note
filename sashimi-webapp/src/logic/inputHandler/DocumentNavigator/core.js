@@ -28,7 +28,7 @@ const guard = {
   }
 };
 
-export default {
+const core = {
   updateWindowSize(event) {
     // Retrieve the resized width
     const marginWidth = 60;
@@ -58,7 +58,7 @@ export default {
   mousewheel(event) {
     event.preventDefault();
     if (event.ctrlKey) {
-      this.interactZoom.call(this, event);
+      core.interactZoom.call(this, event);
     } else {
       let translateY = this.transform.translateY - ((event.deltaY/4) * (1 / this.transform.scale));
       translateY = guard.translateY(translateY, this.el.container);
@@ -66,3 +66,5 @@ export default {
     }
   }
 };
+
+export default core;
