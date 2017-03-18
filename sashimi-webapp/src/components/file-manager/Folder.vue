@@ -7,7 +7,9 @@
             v-on:blur="blurFolder"
     >
       <img src="../../assets/images/icons/icon-folder.svg" alt="folder">
-      <p class="inline-block">{{folder.name}}</p>
+      <p contenteditable="true" tabindex="10" class="inline-block"
+        v-on:blur="blurNameInput"
+      >{{folder.name}}</p>
     </button>
   </div>
 </template>
@@ -26,6 +28,9 @@
       },
       blurFolder() {
         this.$emit('blurFolder');
+      },
+      blurNameInput() {
+        this.$emit('blurNameInput');
       }
     },
   };

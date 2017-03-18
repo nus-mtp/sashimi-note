@@ -13,6 +13,7 @@
       v-on:openFolder="changeFolder"
       v-on:focusFolder="focus"
       v-on:blurFolder="blur"
+      v-on:blurNameInput="blurNameInput"
           :folder="folder"
     >
     </folder>
@@ -54,6 +55,10 @@ export default {
     changeFolder(newFolder) {
       this.$emit('changeFolder', newFolder);
     },
+    blurNameInput() {
+      console.log('blur');
+      // handle rename
+    }
   },
   mounted() {
     eventHub.$on('execute', (action, data) => {
