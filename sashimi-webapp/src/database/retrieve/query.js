@@ -75,16 +75,16 @@ export default class query {
 
   static loadFolder(folderId) {
     return new Promise((resolve, reject) => {
-      const promiseArr = [];
+      const fileAndFolderArray = [];
 
       initPromiseSequence()
       .then(() => sqlCommands.loadFilesFromFolder(folderId)
-        .then(fileArr => promiseArr.push(fileArr))
+        .then(fileArr => fileAndFolderArray.push(fileArr))
         .catch(sqlError => reject(sqlError)))
       .then(() => sqlCommands.loadFoldersFromFolder(folderId)
-        .then(folderArr => promiseArr.push(folderArr))
+        .then(folderArr => fileAndFolderArray.push(folderArr))
         .catch(sqlError => reject(sqlError)))
-      .then(() => resolve(promiseArr))
+      .then(() => resolve(fileAndFolderArray))
       .catch(sqlError => reject(sqlError));
     });
   }
