@@ -7,11 +7,15 @@ import CssTransformer from './CssTransformer';
 /**
  * Document Navigator manage the input halding of Pages mode
  * @param {*} containerCssSelector
+ * @param {Element} resizeObserveTarget - If this element is provided, it will be
+ *                                        used to track the change in document
+ *                                        parent's width
  */
-const DocumentNavigator = function DocumentNavigator(containerCssSelector) {
+const DocumentNavigator = function DocumentNavigator(containerCssSelector, resizeObserveTarget) {
   // Initialise DocumentNavigator properties
   this.updateElementReference(containerCssSelector);
   this.transform = new CssTransformer(this.el.container);
+  this.resizeObserveTarget = resizeObserveTarget || null;
 
   // 1. Set viewport on init;
   this.updateElementWidth();
@@ -100,30 +104,41 @@ DocumentNavigator.prototype.addEventListeners = function addEventListeners() {
     numPointers: 0
   };
 
-  this.eventListeners = [{
-    event: 'resize',
-    fn: this.updateElementWidth.bind(this),
-    target: window,
-  }, {
-    event: 'mousewheel',
-    fn: core.mousewheel.bind(this),
-    target: this.el.parent,
-    boolean: false
-  }, {
-    event: 'pointerdown',
-    fn: (event) => {
-      this.eventInstance.pointers[event.pointerId] = true;
-      this.eventInstance.numPointers = Object.keys(this.eventInstance.pointers).length;
-    },
-    target: this.el.parent,
-  }, {
-    event: 'pointerup',
-    fn: (event) => {
-      delete this.eventInstance.pointers[event.pointerId];
-      this.eventInstance.numPointers = Object.keys(this.eventInstance.pointers).length;
-    },
-    target: this.el.parent,
-  }];
+  this.eventListeners = [
+    {
+      event: 'mousewheel',
+      fn: core.mousewheel.bind(this),
+      target: this.el.parent,
+      boolean: false
+    }, {
+      event: 'pointerdown',
+      fn: (event) => {
+        this.eventInstance.pointers[event.pointerId] = true;
+        this.eventInstance.numPointers = Object.keys(this.eventInstance.pointers).length;
+      },
+      target: this.el.parent,
+    }, {
+      event: 'pointerup',
+      fn: (event) => {
+        delete this.eventInstance.pointers[event.pointerId];
+        this.eventInstance.numPointers = Object.keys(this.eventInstance.pointers).length;
+      },
+      target: this.el.parent,
+    }, {
+      event: 'resize',
+      fn: this.updateElementWidth.bind(this),
+      target: window,
+    }
+  ];
+
+  // Add resize observer if it exist
+  if (this.resizeObserveTarget) {
+    this.eventListeners.push({
+      event: 'transitionend',
+      fn: this.updateElementWidth.bind(this),
+      target: this.resizeObserveTarget
+    });
+  }
 
   this.interactable = interact(this.el.parent)
   .draggable({

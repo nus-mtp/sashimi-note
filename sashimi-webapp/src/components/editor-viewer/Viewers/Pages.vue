@@ -37,7 +37,8 @@
         renderThrottleFn(this.htmlData, this.pageRenderer)
         .then(() => {
           // Initialise navigation for Pages mode
-          this.documentNavigator = new DocumentNavigator('#viewer-container');
+          const resizeObserveTarget = this.$el.parentNode.parentNode;
+          this.documentNavigator = new DocumentNavigator('#viewer-container', resizeObserveTarget);
         });
       });
     },
