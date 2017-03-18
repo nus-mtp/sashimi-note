@@ -6,13 +6,9 @@ const sqlCommands = new SqlCommands();
 
 // dummy function to init sequence running
 function initPromiseSequence() {
-  if (typeof Promise === 'function') {
-    return new Promise((resolve, reject) => {
-      resolve(true);
-    });
-  } else {
-    throw new exceptions.PromiseFunctionNotDefined();
-  }
+  return new Promise((resolve, reject) => {
+    resolve(true);
+  });
 }
 
 export default class dataDelete {

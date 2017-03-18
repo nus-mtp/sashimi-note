@@ -7,79 +7,59 @@ import SqlCommands from 'src/database/sql-related/sqlCommands';
 const sqlCommands = new SqlCommands();
 
 function isTableExists(tableName) {
-  if (typeof Promise === 'function') {
-    return new Promise((resolve, reject) => {
-      sqlCommands.getFullTableData(tableName)
-      .then(resolve(true))
-      .catch(sqlErr => reject(false));
-    });
-  } else {
-    throw new exceptions.PromiseFunctionNotDefined();
-  }
+  return new Promise((resolve, reject) => {
+    sqlCommands.getFullTableData(tableName)
+    .then(resolve(true))
+    .catch(sqlErr => reject(false));
+  });
 }
 
 function defaultFillUpUserTable() {
-  if (typeof Promise === 'function') {
-    return new Promise((resolve, reject) =>
-      isTableExists(constants.ENTITIES_USER)
-      .then(isExist =>
-        sqlCommands.insertContent(constants.ENTITIES_USER,
-          initDataGenerator.getInitDataUser())
-        .then(data => resolve(data))
-        .catch(sqlErr => reject(sqlErr))
-      )
-    );
-  } else {
-    throw new exceptions.PromiseFunctionNotDefined();
-  }
+  return new Promise((resolve, reject) =>
+    isTableExists(constants.ENTITIES_USER)
+    .then(isExist =>
+      sqlCommands.insertContent(constants.ENTITIES_USER,
+        initDataGenerator.getInitDataUser())
+      .then(data => resolve(data))
+      .catch(sqlErr => reject(sqlErr))
+    )
+  );
 }
 
 function defaultFillUpOrganizationTable() {
-  if (typeof Promise === 'function') {
-    return new Promise((resolve, reject) =>
-      isTableExists(constants.ENTITIES_ORGANIZATION)
-      .then(isExist =>
-        sqlCommands.insertContent(constants.ENTITIES_ORGANIZATION,
-          initDataGenerator.getInitDataOrganization())
-        .then(data => resolve(data))
-        .catch(sqlErr => reject(sqlErr))
-      )
-    );
-  } else {
-    throw new exceptions.PromiseFunctionNotDefined();
-  }
+  return new Promise((resolve, reject) =>
+    isTableExists(constants.ENTITIES_ORGANIZATION)
+    .then(isExist =>
+      sqlCommands.insertContent(constants.ENTITIES_ORGANIZATION,
+        initDataGenerator.getInitDataOrganization())
+      .then(data => resolve(data))
+      .catch(sqlErr => reject(sqlErr))
+    )
+  );
 }
 
 function defaultFillUpFileManagerTable() {
-  if (typeof Promise === 'function') {
-    return new Promise((resolve, reject) =>
-      isTableExists(constants.ENTITIES_FILE_MANAGER)
-      .then(isExist =>
-        sqlCommands.insertContent(constants.ENTITIES_FILE_MANAGER,
-          initDataGenerator.getInitDataFileManager())
-        .then(data => resolve(data))
-        .catch(sqlErr => reject(sqlErr))
-      )
-    );
-  } else {
-    throw new exceptions.PromiseFunctionNotDefined();
-  }
+  return new Promise((resolve, reject) =>
+    isTableExists(constants.ENTITIES_FILE_MANAGER)
+    .then(isExist =>
+      sqlCommands.insertContent(constants.ENTITIES_FILE_MANAGER,
+        initDataGenerator.getInitDataFileManager())
+      .then(data => resolve(data))
+      .catch(sqlErr => reject(sqlErr))
+    )
+  );
 }
 
 function defaultFillUpFolderTable() {
-  if (typeof Promise === 'function') {
-    return new Promise((resolve, reject) =>
-      isTableExists(constants.ENTITIES_FOLDER)
-      .then(isExist =>
-        sqlCommands.insertContent(constants.ENTITIES_FOLDER,
-          initDataGenerator.getInitDataFolder())
-        .then(data => resolve(data))
-        .catch(sqlErr => reject(sqlErr))
-      )
-    );
-  } else {
-    throw new exceptions.PromiseFunctionNotDefined();
-  }
+  return new Promise((resolve, reject) =>
+    isTableExists(constants.ENTITIES_FOLDER)
+    .then(isExist =>
+      sqlCommands.insertContent(constants.ENTITIES_FOLDER,
+        initDataGenerator.getInitDataFolder())
+      .then(data => resolve(data))
+      .catch(sqlErr => reject(sqlErr))
+    )
+  );
 }
 
 export default class entitiesCreator {
