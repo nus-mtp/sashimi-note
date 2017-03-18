@@ -1,0 +1,321 @@
+## UML Diagrams
+
+### Sequence Diagrams
+
+You can render sequence diagrams like this:
+
+```sequence
+Alice->Bob: Hello Bob, how are you?
+Note right of Bob: Bob thinks
+Bob-->Alice: I am good thanks!
+Note left of Alice: Alice responds
+Alice->Bob: Where have you been?
+```
+
+```sequence
+participant C
+participant B
+participant A
+Note right of A: By listing the participants\n you can change their order
+```
+
+```sequence
+# Example of a comment.
+Note left of A: Note to the\n left of A
+Note right of A: Note to the\n right of A
+Note over A: Note over A
+Note over A,B: Note over both A and B
+```
+
+```sequence
+Title: Here is a title
+A->B: Normal line
+B-->C: Dashed line
+C->>D: Open arrow
+D-->>A: Dashed open arrow
+```
+
+```sequence
+Andrew->China: Says Hello
+Note right of China: China thinks\nabout it
+China-->Andrew: How are you?
+Andrew->>China: I am good thanks!
+```
+
+### Flow Charts
+
+Flow charts can be specified like this:
+```flow
+st=>start: Start
+e=>end: End
+op=>operation: My Operation
+op2=>operation: lalala
+cond=>condition: Yes or No?
+
+st->op->op2->cond
+cond(yes)->e
+cond(no)->op2
+```
+
+```flow
+st=>start: Start|past:>http://www.google.com[blank]
+e=>end: End|future:>http://www.google.com
+op1=>operation: My Operation|past
+op2=>operation: Stuff|current
+sub1=>subroutine: My Subroutine|invalid
+cond=>condition: Yes
+or No?|approved:>http://www.google.com
+c2=>condition: Good idea|rejected
+io=>inputoutput: catch something...|future
+
+st->op1(right)->cond
+cond(yes, right)->c2
+cond(no)->sub1(left)->op1
+c2(yes)->io->e
+c2(no)->op2->e
+```
+
+### Graphviz
+```graphviz
+graph { 
+		a -- b; 
+		b -- c; 
+		a -- c; 
+		d -- c; 
+		e -- c; 
+		e -- a; 
+	} 
+```
+
+```graphviz
+graph {
+		a -- b;
+		b -- c;
+		c -- d;
+		d -- e;
+		e -- f;
+		a -- f;
+		a -- c;
+		a -- d;
+		a -- e;
+		b -- d;
+		b -- e;
+		b -- f;
+		c -- e;
+		c -- f;
+		d -- f;
+	}
+```
+
+```graphviz
+digraph {
+		a -> b;
+		b -> c;
+		c -> d;
+		d -> a;
+	}
+```
+
+```graphviz
+digraph {
+		a -> b[label="0.2",weight="0.2"];
+		a -> c[label="0.4",weight="0.4"];
+		c -> b[label="0.6",weight="0.6"];
+		c -> e[label="0.6",weight="0.6"];
+		e -> e[label="0.1",weight="0.1"];
+		e -> b[label="0.7",weight="0.7"];
+	}
+```
+
+```graphviz
+graph { 
+		a -- b -- d -- c -- f[color=red,penwidth=3.0];
+		b -- c; 
+		d -- e; 
+		e -- f; 
+		a -- d; 
+	}
+```
+
+```graphviz
+digraph { 
+		subgraph cluster_0 {
+			label="Subgraph A";
+			a -> b;
+			b -> c;
+			c -> d;
+		}
+		
+		subgraph cluster_1 {
+			label="Subgraph B";
+			a -> f;
+			f -> c;
+		}
+	}
+```
+
+```graphviz
+graph { 
+		splines=line; 
+		subgraph cluster_0 { 
+			label="Subgraph A"; 
+			a; b; c
+		} 
+ 
+		subgraph cluster_1 { 
+			label="Subgraph B"; 
+			d; e;
+		}
+
+		a -- e; 
+		a -- d; 
+		b -- d; 
+		b -- e; 
+		c -- d; 
+		c -- e; 
+	}
+```
+
+```graphviz
+graph {
+		rankdir=LR; // Left to Right, instead of Top to Bottom
+		a -- { b c d };
+		b -- { c e };
+		c -- { e f };
+		d -- { f g };
+		e -- h;
+		f -- { h i j g };
+		g -- k;
+		h -- { o l };
+		i -- { l m j };
+		j -- { m n k };
+		k -- { n r };
+		l -- { o m };
+		m -- { o p n };
+		n -- { q r };
+		o -- { s p };
+		p -- { s t q };
+		q -- { t r };
+		r -- t;
+		s -- z; 
+		t -- z;
+	}
+```
+
+```graphviz
+graph { 
+		rankdir=LR;
+		a -- { b c d }; b -- { c e }; c -- { e f }; d -- { f g }; e -- h; 
+		f -- { h i j g }; g -- k; h -- { o l }; i -- { l m j }; j -- { m n k }; 
+		k -- { n r }; l -- { o m }; m -- { o p n }; n -- { q r }; 
+		o -- { s p }; p -- { s t q }; q -- { t r }; r -- t; s -- z; t -- z
+        { rank=same b, c, d }
+        { rank=same e, f, g }
+		{ rank=same h, i, j, k }
+		{ rank=same l, m, n }
+		{ rank=same o, p, q, r }
+		{ rank=same s, t }
+	}
+```
+
+```graphviz
+digraph hierarchy {
+
+                nodesep=1.0 // increases the separation between nodes
+                
+                node [color=Red,fontname=Courier,shape=box] //All nodes will this shape and colour
+                edge [color=Blue, style=dashed] //All the lines look like this
+
+                Headteacher->{Deputy1 Deputy2 BusinessManager}
+                Deputy1->{Teacher1 Teacher2}
+                BusinessManager->ITManager
+                {rank=same;ITManager Teacher1 Teacher2}  // Put them on the same level
+}
+```
+
+### Mermaid
+```mermaid
+gantt
+    title A Gantt Diagram
+
+    section Section
+    A task           :a1, 2014-01-01, 30d
+    Another task     :after a1  , 20d
+    section Another
+    Task in sec      :2014-01-12  , 12d
+    anther task      : 24d
+```
+
+```mermaid
+graph LR
+    A[Square Rect] -- Link text --> B((Circle))
+    A --> C(Round Rect)
+    B --> D{Rhombus}
+    C --> D
+```
+
+```mermaid
+graph TB
+    sq[Square shape] --> ci((Circle shape))
+
+    subgraph A subgraph
+        od>Odd shape]-- Two line<br>edge comment --> ro
+        di{Diamond with <br/> line break} -.-> ro(Rounded<br>square<br>shape)
+        di==>ro2(Rounded square shape)
+    end
+
+    %% Notice that no text in shape are added here instead that is appended further down
+    e --> od3>Really long text with linebreak<br>in an Odd shape]
+
+    %% Comments after double percent signs
+    e((Inner / circle<br>and some odd <br>special characters)) --> f(,.?!+-*ز)
+
+    cyr[Cyrillic]-->cyr2((Circle shape Начало));
+
+     classDef green fill:#9f6,stroke:#333,stroke-width:2px;
+     classDef orange fill:#f96,stroke:#333,stroke-width:4px;
+     class sq,e green
+     class di orange
+```
+
+```mermaid
+sequenceDiagram
+    Alice ->> Bob: Hello Bob, how are you?
+    Bob-->>John: How about you John?
+    Bob--x Alice: I am good thanks!
+    Bob-x John: I am good thanks!
+    Note right of John: Bob thinks a long<br/>long time, so long<br/>that the text does<br/>not fit on a row.
+
+    Bob-->Alice: Checking with John...
+    Alice->John: Yes... John, how are you?
+```
+
+```mermaid
+sequenceDiagram
+    loop Daily query
+        Alice->>Bob: Hello Bob, how are you?
+        alt is sick
+            Bob->>Alice: Not so good :(
+        else is well
+            Bob->>Alice: Feeling fresh like a daisy
+        end
+
+        opt Extra response
+            Bob->>Alice: Thanks for asking
+        end
+    end
+```
+
+```mermaid
+sequenceDiagram
+    participant Alice
+    participant Bob
+    Alice->>John: Hello John, how are you?
+    loop Healthcheck
+        John->>John: Fight against hypochondria
+    end
+    Note right of John: Rational thoughts<br/>prevail...
+    John-->>Alice: Great!
+    John->>Bob: How about you?
+    Bob-->>John: Jolly good!
+```
