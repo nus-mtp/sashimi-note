@@ -1,20 +1,7 @@
-import exceptions from '../exceptions';
-
-import SqlCommands from '../sql-related/sqlCommands';
+import exceptions from 'src/database/exceptions';
+import SqlCommands from 'src/database/sql-related/sqlCommands';
 
 const sqlCommands = new SqlCommands();
-
-function updateFile(fileId, markdownFile) {
-  if (typeof Promise === 'function') {
-    return new Promise((resolve, reject) =>
-      sqlCommands.saveFile(fileId, markdownFile)
-      .then(data => resolve(true))
-      .catch(sqlError => sqlError)
-    );
-  } else {
-    throw new exceptions.PromiseFunctionNotDefined();
-  }
-}
 
 export default class dataUpdate {
   static constructor() {}
@@ -22,8 +9,8 @@ export default class dataUpdate {
   static saveFile(fileId, markdownFile) {
     if (typeof Promise === 'function') {
       return new Promise((resolve, reject) =>
-        updateFile(fileId, markdownFile)
-        .then(data => resolve(data))
+        sqlCommands.saveFile(fileId, markdownFile)
+        .then(() => resolve())
         .catch(sqlError => reject(sqlError))
       );
     } else {

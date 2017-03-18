@@ -1,21 +1,10 @@
-import constants from '../constants';
-import tableCreator from './tableCreator';
-import exceptions from '../exceptions';
-import initDataGenerator from './initDataGenerator';
-import SqlCommands from '../sql-related/sqlCommands';
+import constants from 'src/database/constants';
+import tableCreator from 'src/database/create/tableCreator';
+import exceptions from 'src/database/exceptions';
+import initDataGenerator from 'src/database/create/initDataGenerator';
+import SqlCommands from 'src/database/sql-related/sqlCommands';
 
 const sqlCommands = new SqlCommands();
-
-// a promise to allow sequential running of keying in data
-function initFillUpDefaultDatas() {
-  if (typeof Promise === 'function') {
-    return new Promise((resolve, reject) => {
-      resolve(true);
-    });
-  } else {
-    throw new exceptions.PromiseFunctionNotDefined();
-  }
-}
 
 function isTableExists(tableName) {
   if (typeof Promise === 'function') {
@@ -124,8 +113,8 @@ export default class entitiesCreator {
         tableCreator.setPrimaryKeys(constants.HEADER_USER_USER_ID);
 
         return tableCreator.endCreateTable(constants.ENTITIES_USER, initDataGenerator.getInitDataUser())
-          .then(data => resolve(data))
-          .catch(sqlError => reject(sqlError));
+        .then(data => resolve(data))
+        .catch(sqlError => reject(sqlError));
       });
     } else {
       throw new exceptions.PromiseFunctionNotDefined();
@@ -145,11 +134,11 @@ export default class entitiesCreator {
         tableCreator.addHeader(constants.HEADER_ORGANIZATION_PARENT_ORGANIZATION_ID, 'NUMBER');
 
         tableCreator.setPrimaryKeys(constants.HEADER_ORGANIZATION_ORGANIZATION_ID,
-                                      constants.HEADER_ORGANIZATION_USER_ID);
+                                    constants.HEADER_ORGANIZATION_USER_ID);
 
         return tableCreator.endCreateTable(constants.ENTITIES_ORGANIZATION, initDataGenerator.getInitDataOrganization())
-          .then(data => resolve(data))
-          .catch(sqlError => reject(sqlError));
+        .then(data => resolve(data))
+        .catch(sqlError => reject(sqlError));
       });
     } else {
       throw new exceptions.PromiseFunctionNotDefined();
@@ -162,7 +151,7 @@ export default class entitiesCreator {
         tableCreator.initCreateTable(constants.ENTITIES_FILE_MANAGER);
 
         tableCreator.addHeader(constants.HEADER_FILE_MANAGER_ORGANIZATION_ID, 'NUMBER');
-        tableCreator.addHeader(constants.HEADER_FILE_MANAGER_FOLDER_ID, 'STRING');
+        tableCreator.addHeader(constants.HEADER_FILE_MANAGER_FOLDER_ID, 'NUMBER');
         tableCreator.addHeader(constants.HEADER_FILE_MANAGER_FILE_ID, 'NUMBER');
         tableCreator.addHeader(constants.HEADER_FILE_MANAGER_FILE_NAME, 'STRING');
         tableCreator.addHeader(constants.HEADER_FILE_MANAGER_FILE_MARKDOWN, 'STRING');
@@ -172,10 +161,10 @@ export default class entitiesCreator {
         tableCreator.addHeader(constants.HEADER_FILE_MANAGER_PATH, 'STRING');
 
         tableCreator.setPrimaryKeys(constants.HEADER_FILE_MANAGER_FILE_ID,
-                                      constants.HEADER_FILE_MANAGER_ORGANIZATION_ID);
+                                    constants.HEADER_FILE_MANAGER_ORGANIZATION_ID);
         return tableCreator.endCreateTable(constants.ENTITIES_FILE_MANAGER, initDataGenerator.getInitDataFileManager())
-          .then(data => resolve(data))
-          .catch(sqlError => reject(sqlError));
+        .then(data => resolve(data))
+        .catch(sqlError => reject(sqlError));
       });
     } else {
       throw new exceptions.PromiseFunctionNotDefined();
@@ -197,10 +186,10 @@ export default class entitiesCreator {
         tableCreator.addHeader(constants.HEADER_FOLDER_PATH, 'STRING');
 
         tableCreator.setPrimaryKeys(constants.HEADER_FOLDER_ORGANIZATION_ID,
-                                      constants.HEADER_FOLDER_FOLDER_ID);
-        return tableCreator.endCreateTable(constants.ENTITIES_FOLDER, initDataGenerator.getInitDataFolder())
-          .then(data => resolve(data))
-          .catch(sqlError => reject(sqlError));
+                                    constants.HEADER_FOLDER_FOLDER_ID);
+        return tableCreator.endCreateTable(constants.ENTITIES_FOLDER)
+        .then(data => resolve(data))
+        .catch(sqlError => reject(sqlError));
       });
     } else {
       throw new exceptions.PromiseFunctionNotDefined();
@@ -208,10 +197,8 @@ export default class entitiesCreator {
   }
   static fillUpDefaultData() {
     if (typeof Promise === 'function') {
-      return new Promise((resolve, reject) => initFillUpDefaultDatas()
-          .then(() =>
-            defaultFillUpUserTable()
-            .catch(sqlErr => reject(sqlErr)))
+      return new Promise((resolve, reject) =>
+          defaultFillUpUserTable()
           .then(() =>
             defaultFillUpOrganizationTable()
             .catch(sqlErr => reject(sqlErr)))

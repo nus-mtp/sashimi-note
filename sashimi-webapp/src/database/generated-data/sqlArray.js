@@ -4,7 +4,7 @@
  *
  */
 
-import constants from '../constants';
+import constants from 'src/database/constants';
 
 let sqlObject = {};
 let isAlasqlArrayInitialized = constants.CONST_ALASQL_CREATION_CLOSED;
@@ -34,7 +34,7 @@ export default function sqlArray() {
       return returnSqlArrayObject;
     } else {
       // return empty alasql array of array of object
-      return [[{}]];
+      return [{}];
     }
   };
 }
