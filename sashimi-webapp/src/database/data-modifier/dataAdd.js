@@ -10,64 +10,6 @@ const dateTime = new DateTime();
 const alasqlArray = new SqlArray();
 const stringManipulator = new StringManipulator();
 
-function isLowerUpperBoundWithinRange(lowerBound, upperBound, givenArray) {
-  return lowerBound < upperBound
-    && lowerBound >= 0
-    && upperBound < givenArray.length;
-}
-
-function exchange(givenArray, currIndex, thenIndex) {
-  const tempObject = givenArray[currIndex];
-  givenArray[currIndex] = givenArray[thenIndex];
-  givenArray[thenIndex] = tempObject;
-}
-
-function bubbleUp(givenArray, lowerBound, upperBound) {
-  if (isLowerUpperBoundWithinRange(lowerBound, upperBound, givenArray)) {
-    let prev = lowerBound;
-    for (let index = lowerBound + 1; index <= upperBound; index+=1) {
-      exchange(givenArray, prev, index);
-      prev = index;
-    }
-  }
-}
-
-function generateUniqueNewFileName(queryFiles, defaultFileName) {
-  let newFileName = defaultFileName;
-  let duplicateCount = 0;
-  for (let fileIndex = 0; fileIndex < queryFiles.length; fileIndex+=1) {
-    const fileObject = queryFiles[fileIndex];
-    if (fileObject[constants.HEADER_FILE_MANAGER_FILE_NAME] === newFileName) {
-      duplicateCount += 1;
-      // generate new unique file name
-      newFileName = stringManipulator.stringConcat(
-      constants.DEFAULT_FILE_NAME_OMIT_FILE_TYPE, duplicateCount, '.md');
-    } else if (fileIndex < queryFiles.length) {
-      bubbleUp(queryFiles, fileIndex, queryFiles.length -1);
-      fileIndex -= 1;
-    }
-  }
-  return newFileName;
-}
-
-function generateUniqueNewFolderName(queryFolders, defaultFolderName) {
-  let newFolderName = defaultFolderName;
-  let duplicateCount = 0;
-  for (let folderIndex = 0; folderIndex < queryFolders.length; folderIndex+=1) {
-    const folderObject = queryFolders[folderIndex];
-    if (folderObject[constants.HEADER_FOLDER_FOLDER_NAME] === newFolderName) {
-      duplicateCount += 1;
-      // generate new unique folder name
-      newFolderName = stringManipulator.stringConcat(
-      constants.DEFAULT_FOLDER_NAME, duplicateCount.toString());
-    } else if (folderIndex < queryFolders.length) {
-      bubbleUp(queryFolders, folderIndex, queryFolders.length -1);
-      folderIndex -= 1;
-    }
-  }
-  return newFolderName;
-}
-
 function createNewFile(organizationId, filePath, folderId, newFileId, newFileName) {
   if (typeof Promise === 'function') {
     return new Promise((resolve, reject) => {
@@ -151,7 +93,7 @@ export default class dataAdd {
             // search all possible identical fileNames
             return sqlCommands.exactSearchStartFileNameInFolder(filePath)
             .then((queryFiles) => {
-              const newFileName = generateUniqueNewFileName(queryFiles, constants.DEFAULT_FILE_NAME);
+              const newFileName = constants.DEFAULT_FILE_NAME;
               return createNewFile(organizationId, filePath, folderId, newFileId, newFileName)
               .then(data => resolve(data))
               .catch(err => reject(err));
@@ -174,7 +116,7 @@ export default class dataAdd {
           // search all possible identical folderNames
           return sqlCommands.exactSearchStartFolderNameInFolder(folderId)
           .then((queryFiles) => {
-            const newFolderName = generateUniqueNewFolderName(queryFiles, constants.DEFAULT_FOLDER_NAME);
+            const newFolderName = constants.DEFAULT_FOLDER_NAME;
             const newFolderPath = stringManipulator.stringConcat(folderPath, newFolderName, '/');
             return createNewFolder(organizationId, newFolderPath, folderId, newFolderId, newFolderName)
             .then(data => resolve(data))
