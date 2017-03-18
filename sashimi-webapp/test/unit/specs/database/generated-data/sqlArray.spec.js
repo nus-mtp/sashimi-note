@@ -21,9 +21,7 @@ describe('sqlArray.js', () => {
       expect(alaArray).to.deep.equal([{a: 123, b: '123'}]);
       expect(typeof alaArray).to.equal('object');
       expect(typeof alaArray[0]).to.equal('object');
-      /* eslint-disable */
       expect(typeof Object.values(alaArray[0])).to.equal.null;
-      /* esline-enable */
     });
   });
 });
