@@ -76,10 +76,10 @@
           </button>
       </div>
       <div class="col view-type inline-block">
-        <button class="navbar-buttons hover-grow" 
+        <button id="button-icon-view" class="navbar-buttons hover-grow" 
                 v-on:click="setViewMode('iconView')"
         >Icon</button>|
-        <button class="navbar-buttons hover-grow" 
+        <button id="button-list-view" class="navbar-buttons hover-grow" 
                 v-on:click="setViewMode('listView')"
         >List</button>
       </div>
