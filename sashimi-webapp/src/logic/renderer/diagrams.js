@@ -5,7 +5,7 @@
  * using the mermaid library to draw diagrams, and graphviz for using the graphviz library
  * to draw the diagrams.
  * @param {Element} ele - HTML element containing data parsed and rendered by markdown-it
- * @return {Promise} promise after the diagrams are rendered
+ * @return {Promise<string, error>} Promise - containing the HTML string with rendered diagrams
  */
 
 export default function diagramsRenderer(ele) {
@@ -75,8 +75,12 @@ export default function diagramsRenderer(ele) {
   }
 
   // Draws all the mermaid diagrams found
-  mermaidAPI.initialize({ startOnLoad: false });
+  if (mermaidDiagrams.length !== 0) {
+    mermaidAPI.initialize({ startOnLoad: false });
+  }
   for (let i = 0; i < mermaidDiagrams.length; i+=1) {
+    // Setting id for mermaidAPI to find correct element
+    mermaidDiagrams.id = `mermaidChart${i}`;
     let content = mermaidDiagrams[i].innerHTML;
     /* eslint no-useless-escape: 0*/
     content = content.replace(/\&gt\;/g, '>');
@@ -85,7 +89,7 @@ export default function diagramsRenderer(ele) {
       const cb = (html) => {
         mermaidDiagrams[i].innerHTML = html;
       };
-      mermaidAPI.render('pre', content, cb);
+      mermaidAPI.render(`mermaidChart${i}`, content, cb);
     } else {
       throw (error);
     }
