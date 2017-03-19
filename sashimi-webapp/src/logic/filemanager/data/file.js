@@ -41,8 +41,8 @@ function hasSameFileName(newFileName) {
   const currParentFolder = this.parentFolder;
   let currFile;
   let sameFileName = false;
-  for (let i = 0; i< currParentFolder.childFileList.length; i += 1) {
-    currFile = currParentFolder.childFileList[i];
+  for (let index = 0; index < currParentFolder.childFileList.length; index += 1) {
+    currFile = currParentFolder.childFileList[index];
     if (newFileName === currFile.name) {
       sameFileName = true;
       break;
