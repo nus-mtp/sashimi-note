@@ -2,7 +2,7 @@ import StringManipulation from 'src/database/stringManipulation';
 
 const stringManipulator = new StringManipulation();
 
-describe('stringManipulation.js', () => {
+describe('stringManipulation', () => {
   describe('concatenation of string', () => {
     it('should concat empty string', () => {
       const emptyString = stringManipulator.stringConcat('');
