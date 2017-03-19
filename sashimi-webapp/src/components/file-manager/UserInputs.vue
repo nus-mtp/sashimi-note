@@ -93,6 +93,7 @@
 </template>
 
 <script>
+import _ from 'lodash';
 import eventHub from './EventHub';
 
 export default {
@@ -124,9 +125,9 @@ export default {
     },
   },
   watch: {
-    searchString(value) {
+    searchString: _.debounce((value) => {
       console.log(value);
-    }
+    }, 500)
   },
   mounted() {
     eventHub.$on('focus', (focusedDoc) => {
