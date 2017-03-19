@@ -513,4 +513,12 @@ export default function sqlCommands() {
       .catch(sqlError => reject(sqlError))
     );
   };
+
+  this.cleanTable = function cleanTable(tableName) {
+    return new Promise((resolve, reject) =>
+      alasql.promise([stringManipulator.stringConcat('DELETE * FROM ', tableName)])
+      .then(isSuccess => resolve(isSuccess))
+      .catch(sqlError => reject(sqlError))
+    );
+  };
 }
