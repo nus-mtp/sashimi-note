@@ -41,13 +41,7 @@ function removeElementAtIndex(queue, index) {
  */
 function getChildFile(queue, parentID) {
   parentID = (parentID == null) ? NO_PARENT_ID: parentID;
-  // const index = queue.findIndex(dbFileObj => dbFileObj.folder_id === parentID);
-  let index;
-  for (let i=0; i<queue.length; i+=1) {
-    if (queue[i].folder_id === parentID) {
-      index = i;
-    }
-  }
+  const index = queue.findIndex(dbFileObj => dbFileObj.folder_id === parentID);
   return removeElementAtIndex(queue, index);
 }
 
@@ -60,13 +54,7 @@ function getChildFile(queue, parentID) {
  */
 function getChildFolder(queue, parentID) {
   parentID = (parentID == null) ? NO_PARENT_ID: parentID;
-  // const index = queue.findIndex(dbFolderObj => dbFolderObj.parent_folder_id === parentID);
-  let index;
-  for (let i=0; i<queue.length; i+=1) {
-    if (queue[i].parent_folder_id === parentID) {
-      index = i;
-    }
-  }
+  const index = queue.findIndex(dbFolderObj => dbFolderObj.parent_folder_id === parentID);
   return removeElementAtIndex(queue, index);
 }
 
@@ -89,6 +77,8 @@ const core = {
    * @return {Folder}
    */
   init: function init(dbList) {
+    idMap.clearMap();
+
     const dbFileList = dbList.shift(); // list of File from database list
     const dbFolderList = dbList.shift(); // list of Folder from datbase list
 
