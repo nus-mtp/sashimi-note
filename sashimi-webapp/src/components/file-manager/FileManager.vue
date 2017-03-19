@@ -71,6 +71,10 @@ export default {
           doc.remove();
           break;
         }
+        case 'search': {
+          console.log('say: ', doc);
+          break;
+        }
         default: break;
       }
     },

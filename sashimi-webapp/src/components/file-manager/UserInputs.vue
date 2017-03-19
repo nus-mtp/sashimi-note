@@ -96,6 +96,8 @@
 import _ from 'lodash';
 import eventHub from './EventHub';
 
+let userInputsVue = null;
+
 export default {
   data() {
     return {
@@ -121,15 +123,17 @@ export default {
       }
     },
     setViewMode(viewMode) {
-      this.$emit('changeViewMode', viewMode);
+      userInputsVue.$emit('changeViewMode', viewMode);
     },
   },
   watch: {
-    searchString: _.debounce((value) => {
-      console.log(value);
+    searchString: _.debounce((result) => {
+      userInputsVue.$emit('execute', 'search', result);
     }, 500)
   },
   mounted() {
+    userInputsVue = this;
+
     eventHub.$on('focus', (focusedDoc) => {
       this.buttonDisabled = false;
       this.buttonEffect = true;
