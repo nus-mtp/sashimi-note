@@ -8,7 +8,7 @@ function toggleEditorViewerView(browser, component) {
   const CSS_SELECTOR_RENDER_FRAME = 'body';
   let CSS_SELECTOR_COMPARE_FRAME = '';
 
-  const button = `#button-${component}`;
+  const editorViewerToggleButtons = `#button-${component}`;
   const propertyName = 'width';
 
   if (component === 'editor') {
@@ -18,7 +18,7 @@ function toggleEditorViewerView(browser, component) {
   }
 
   browser
-    .click(button)
+    .click(editorViewerToggleButtons)
     .pause(700);
 
   browser.getCssProperty(CSS_SELECTOR_RENDER_FRAME, propertyName, (renderResult) => {

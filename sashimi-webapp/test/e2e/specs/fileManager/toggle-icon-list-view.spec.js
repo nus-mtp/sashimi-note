@@ -11,10 +11,10 @@ function toggleIconListView(browser, viewType) {
   browser.url(`${devServer}/`);
   browser.expect.element('#app').to.be.visible.before(5000);
 
-  const button = `#button-${viewType}`;
+  const viewTypeButton = `#button-${viewType}`;
 
   browser
-    .click(button)
+    .click(viewTypeButton)
     .pause(700);
 
   const className = `.${toCamelCase(viewType)}`;
@@ -23,6 +23,7 @@ function toggleIconListView(browser, viewType) {
     .expect.element(className)
     .to.be.present;
 }
+
 describe('FileManager\'s toggle icon, list view buttons', function() {
   after((browser, done) => {
     browser.end(() => done());
