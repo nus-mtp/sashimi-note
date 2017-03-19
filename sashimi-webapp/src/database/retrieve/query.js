@@ -50,11 +50,7 @@ export default class query {
   }
 
   static getFullTableData(tableName) {
-    return new Promise((resolve, reject) =>
-      sqlCommands.getFullTableData(tableName)
-      .then(data => resolve(data))
-      .catch(sqlError => reject(sqlError))
-    );
+    return sqlCommands.getFullTableData(tableName);
   }
 
   static searchString(searchString) {
