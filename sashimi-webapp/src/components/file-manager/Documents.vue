@@ -66,7 +66,6 @@ export default {
       this.$emit('changeFolder', newFolder);
     },
     renameDoc(newDocName, docToRename) {
-      console.log(newDocName);
       docToRename.rename(newDocName);
     }
   },

@@ -67,7 +67,6 @@ export default {
           break;
         }
         case 'delete': {
-          console.log(doc);
           doc.remove();
           break;
         }
@@ -93,7 +92,6 @@ export default {
       }
     },
     downloadDoc(doc) {
-      console.log(doc, 'doc');
       doc.load()
       .then((docContent) => {
         this.download(doc, docContent);
@@ -119,7 +117,6 @@ export default {
     const ROOT_FOLDER_ID = 0;
     this.docs = fileManager.getFolderByID(ROOT_FOLDER_ID);
     this.history = fileManager.createHistory(this.docs);
-    console.log(this.history);
   }
 };
 
