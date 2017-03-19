@@ -1,6 +1,6 @@
 import initDataGenerator from 'src/database/create/initDataGenerator';
 
-describe('initDataGenerator.js', () => {
+describe('initDataGenerator', () => {
   describe('generate correct default data', () => {
     it('should create default userData', () => {
       const userData = initDataGenerator.getInitDataUser();
@@ -60,4 +60,3 @@ describe('initDataGenerator.js', () => {
     });
   });
 });
-

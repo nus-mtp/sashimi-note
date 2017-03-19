@@ -2,7 +2,7 @@ import DateTime from 'src/database/generated-data/dateTime';
 
 const dateTime = new DateTime();
 
-describe('dateTime.js', () => {
+describe('dateTime', () => {
   describe('create dateTime string for alasql format', () => {
     it('should be a string', () => {
       const currentDateTime = dateTime.getCurrentDateTime();

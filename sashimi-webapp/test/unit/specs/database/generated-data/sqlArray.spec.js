@@ -2,7 +2,7 @@ import SqlArray from 'src/database/generated-data/sqlArray';
 
 const alasqlArray = new SqlArray();
 
-describe('sqlArray.js', () => {
+describe('sqlArray', () => {
   describe('creation of datastructure for alasql', () => {
     it('should create an empty object of object', () => {
       alasqlArray.initializeAlasqlArray();
