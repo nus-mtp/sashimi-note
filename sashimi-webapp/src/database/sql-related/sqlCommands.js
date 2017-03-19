@@ -57,10 +57,11 @@ function changeSingleFilePath(fileId, newPath) {
 function cascadeChangeFilePath(index, prevBasePath, newBasePath, fileArr) {
   return new Promise((resolve, reject) => {
     if (index >= fileArr.length) {
-      return true;
+      resolve(true);
     }
     const fileToChangePathIndex = Object.values(fileArr[index])[0];
     let newPath;
+    console.log(index);
     return getCurrentFilePath(fileToChangePathIndex)
     .then((currentFilePath) => {
       const childPath = currentFilePath.toString().split(prevBasePath)[1];
@@ -104,8 +105,9 @@ function changeSingleFolderName(folderId, newFolderName) {
 function cascadeChangeFolderPath(index, prevBasePath, newBasePath, folderArr) {
   return new Promise((resolve, reject) => {
     if (index >= folderArr.length) {
-      return true;
+      resolve(true);
     }
+    console.log(index);
     const folderToChangePathIndex = Object.values(folderArr[index])[0];
     let newPath;
     return getCurrentFolderPath(folderToChangePathIndex)
@@ -137,8 +139,9 @@ function deleteSingleFolder(folderId) {
 function cascadeDeleteFolder(index, folderArr) {
   return new Promise((resolve, reject) => {
     if (index >= folderArr.length) {
-      return true;
+      resolve(true);
     }
+    console.log(index);
     const folderToDeleteIndex = Object.values(folderArr[index])[0];
     return deleteSingleFolder(folderToDeleteIndex)
     .then(() => {
@@ -164,8 +167,9 @@ function deleteSingleFile(fileId) {
 function cascadeDeleteFile(index, fileArr) {
   return new Promise((resolve, reject) => {
     if (index >= fileArr.length) {
-      return true;
+      resolve(true);
     }
+    console.log(index);
     const fileToDeleteIndex = Object.values(fileArr[index])[0];
     return deleteSingleFile(fileToDeleteIndex)
     .then(() => {

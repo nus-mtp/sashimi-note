@@ -103,8 +103,7 @@ export default class dataAdd {
         return sqlCommands.exactSearchStartFolderNameInFolder(folderId)
         .then((queryFiles) => {
           const newFolderName = constants.DEFAULT_FOLDER_NAME;
-          const newFolderPath = stringManipulator.stringConcat(folderPath, newFolderName, '/');
-          return createNewFolder(organizationId, newFolderPath, folderId, newFolderId, newFolderName)
+          return createNewFolder(organizationId, folderPath, folderId, newFolderId, newFolderName)
           .then(data => resolve(data))
           .catch(err => reject(err));
         })
