@@ -28,11 +28,11 @@ describe('FileManager\'s download and delete button', function() {
     browser.end(() => done());
   });
 
-  it('should be enable when a file is focused', (browser) => {
+  it('should be enabled when a file is focused', (browser) => {
     focusDoc(browser, 'file');
   });
 
-  it('should be created when a folder is focused', (browser) => {
+  it('should be enabled when a folder is focused', (browser) => {
     focusDoc(browser, 'folder');
   });
 });
