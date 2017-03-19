@@ -41,15 +41,7 @@ function isTableExistsInDatabase(tableName, callback) {
 
 
 function cleanTestCase() {
-  if (typeof Promise === 'function') {
-    return new Promise((resolve, reject) =>
-      dataDelete.deleteAllEntities(testDatabaseName)
-      .then(isDeleted => resolve(isDeleted))
-      .catch(sqlErr => reject(sqlErr))
-    );
-  } else {
-    throw new exceptions.PromiseFunctionNotDefined();
-  }
+  return dataDelete.deleteAllEntities(testDatabaseName);
 }
 
 describe('sqlCommands', () => {
