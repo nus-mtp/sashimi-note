@@ -1,24 +1,38 @@
 <template>
   <div class="col vertical-align-child" 
     v-on:dblclick="openFolder"
-    id="123">
-      <button class="folder">
-        <img src="../../assets/images/icons/icon-folder.svg" alt="folder">
-        <p class="inline-block">CS3244 Project</p>
-      </button>
+  >
+    <button class="folder"
+            v-on:focus="focusFolder"
+            v-on:blur="blurFolder"
+    >
+      <img src="../../assets/images/icons/icon-folder.svg" alt="folder">
+      <p contenteditable="true" tabindex="10" class="inline-block"
+        v-on:blur="blurNameInput"
+      >{{folder.name}}</p>
+    </button>
   </div>
 </template>
 
 <script>
   export default {
+    props: ['folder'],
     data() {
     },
     methods: {
       openFolder() {
-        const folderId = this.$el.id;
-        this.$router.push({ path: 'content', query: { id: folderId } });
+        this.$emit('openFolder', this.folder);
       },
-    }
+      focusFolder() {
+        this.$emit('focusFolder', this.folder);
+      },
+      blurFolder() {
+        this.$emit('blurFolder');
+      },
+      blurNameInput() {
+        this.$emit('blurNameInput');
+      }
+    },
   };
 </script>
 
