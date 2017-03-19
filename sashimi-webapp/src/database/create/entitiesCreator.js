@@ -27,7 +27,7 @@ function isTableExists(tableName) {
 }
 
 function defaultFillUpUserTable() {
-  isTableExists(constants.ENTITIES_USER)
+  return isTableExists(constants.ENTITIES_USER)
   .then(isExist =>
     sqlCommands.insertContent(constants.ENTITIES_USER,
       initDataGenerator.getInitDataUser())
@@ -35,7 +35,7 @@ function defaultFillUpUserTable() {
 }
 
 function defaultFillUpOrganizationTable() {
-  isTableExists(constants.ENTITIES_ORGANIZATION)
+  return isTableExists(constants.ENTITIES_ORGANIZATION)
   .then(isExist =>
     sqlCommands.insertContent(constants.ENTITIES_ORGANIZATION,
       initDataGenerator.getInitDataOrganization())
@@ -43,7 +43,7 @@ function defaultFillUpOrganizationTable() {
 }
 
 function defaultFillUpFileManagerTable() {
-  isTableExists(constants.ENTITIES_FILE_MANAGER)
+  return isTableExists(constants.ENTITIES_FILE_MANAGER)
   .then(isExist =>
     sqlCommands.insertContent(constants.ENTITIES_FILE_MANAGER,
       initDataGenerator.getInitDataFileManager())
@@ -51,7 +51,7 @@ function defaultFillUpFileManagerTable() {
 }
 
 function defaultFillUpFolderTable() {
-  isTableExists(constants.ENTITIES_FOLDER)
+  return isTableExists(constants.ENTITIES_FOLDER)
   .then(isExist =>
     sqlCommands.insertContent(constants.ENTITIES_FOLDER,
       initDataGenerator.getInitDataFolder())
