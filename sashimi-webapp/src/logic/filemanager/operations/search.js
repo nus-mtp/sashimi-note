@@ -1,4 +1,5 @@
 import storage from 'src/database/storage';
+import idMap from '../data/idmap';
 import Folder from '../data/folder';
 
 /* Static Variables */
@@ -24,11 +25,11 @@ function searchDB(searchString) {
       searchFolderList = [];
 
       while ((dbFileObj = dbFileList.shift()) != null) {
-        searchFileList.push(Folder.get(dbFileObj.file_id));
+        searchFileList.push(idMap.getFolderFromMap(dbFileObj.file_id));
       }
 
       while ((dbFolderObj = dbFolderList.shift()) != null) {
-        searchFileList.push(Folder.get(dbFolderObj.folder_id));
+        searchFileList.push(idMap.getFolderFromMap(dbFolderObj.folder_id));
       }
     })
     .catch((error) => {
