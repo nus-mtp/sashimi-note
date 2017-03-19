@@ -132,8 +132,7 @@ describe('entitiesCreator', () => {
   });
 
   describe('fill up default data', () => {
-    it('should fill up table with default data', (done) => {
-      // ensure tables are created first
+    before((done) => { // ensure tables are created first
       entitiesCreator.createFileManagerTable()
       .then(() =>
         entitiesCreator.createFolderTable()
@@ -155,19 +154,22 @@ describe('entitiesCreator', () => {
         )
         .catch(sqlErr => done(sqlErr))
       )
-      .then(() => sqlCommands.getFullTableData(constants.ENTITIES_USER)
-        .then((userData) => {
-          const creationDate = userData[0].creation_date; // cannot be determined
-          return expect(userData).to.deep.equal([{
-            token: 'temporary',
-            password: '',
-            email: 'default@email.com',
-            username: 'owner',
-            user_id: 1,
-            creation_date: creationDate
-          }]);
-        })
-      )
+      .then(() => done());
+    });
+
+    it('should fill up table with default data', (done) => {
+      sqlCommands.getFullTableData(constants.ENTITIES_USER)
+      .then((userData) => {
+        const creationDate = userData[0].creation_date; // cannot be determined
+        return expect(userData).to.deep.equal([{
+          token: 'temporary',
+          password: '',
+          email: 'default@email.com',
+          username: 'owner',
+          user_id: 1,
+          creation_date: creationDate
+        }]);
+      })
       .then(() => sqlCommands.getFullTableData(constants.ENTITIES_ORGANIZATION)
         .then((organizationData) => {
           const creationDate = organizationData[0].creation_date; // cannot be determined
@@ -216,6 +218,6 @@ describe('entitiesCreator', () => {
         done()
       )
       .catch(sqlErr => done(sqlErr));
-    }).timeout(20000);
+    }).timeout(10000);
   });
 });
