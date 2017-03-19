@@ -8,24 +8,23 @@
         <h3>New {{value}}</h3>
       </div>
     </div>-->
-    </div>
-      <folder 
-        v-for="folder in docs.childFolderList"
-        v-on:openFolder="changeFolder"
-        v-on:focusFolder="focus"
-        v-on:blurFolder="blur"
-        v-on:renameFolder="renameDoc"
-            :folder="folder"
-      >
-      </folder>
-      <file 
-        v-for="file in docs.childFileList"
-        v-on:focusFile="focus"
-        v-on:blurFile="blur"
-        v-on:renameFile="renameDoc"
-            :file="file"
-      >
-      </file>
+    <folder 
+      v-for="folder in docs.childFolderList"
+      v-on:openFolder="changeFolder"
+      v-on:focusFolder="focus"
+      v-on:blurFolder="blur"
+      v-on:renameFolder="renameDoc"
+          :folder="folder"
+    >
+    </folder>
+    <file 
+      v-for="file in docs.childFileList"
+      v-on:focusFile="focus"
+      v-on:blurFile="blur"
+      v-on:renameFile="renameDoc"
+          :file="file"
+    >
+    </file>
   </div>
 </template>
 
