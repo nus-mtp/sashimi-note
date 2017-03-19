@@ -37,9 +37,9 @@ describe('FileManager\'s delete file/folder button', function() {
     browser.end(() => done());
   });
 
-  it('should delete a file', (browser) => {
-    deleteDoc(browser, 'file');
-  });
+  // it('should delete a file', (browser) => {
+  //   deleteDoc(browser, 'file');
+  // });
 
   it('should delete a folder', (browser) => {
     deleteDoc(browser, 'folder');
