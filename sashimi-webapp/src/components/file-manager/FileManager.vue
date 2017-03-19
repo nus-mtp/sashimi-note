@@ -32,11 +32,13 @@ export default {
   },
   methods: {
     changeFolder(newFolder) {
+      if (newFolder.id === 0) {
+        this.$router.push({ path: '' });
+      } else {
+        this.$router.push({ path: '', query: { folder: newFolder.id } });
+      }
       this.docs = newFolder;
       fileManager.update(this.docs);
-      console.log(newFolder);
-      this.$router.push({ path: '', query: { folder: newFolder.path } });
-      // change directory
     },
     changeViewMode(viewMode) {
       this.viewMode = viewMode;
