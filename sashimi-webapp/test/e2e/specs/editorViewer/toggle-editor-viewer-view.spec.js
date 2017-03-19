@@ -4,10 +4,11 @@ function toggleEditorViewerView(browser, component) {
   browser.url(`${devServer}/content`);
   browser.expect.element('#app').to.be.visible.before(5000);
 
-  const button = `#button-${component}`;
   const CSS_SELECTOR_REFERENCE_FRAME = `.${component}-wrapper`;
   const CSS_SELECTOR_RENDER_FRAME = 'body';
   let CSS_SELECTOR_COMPARE_FRAME = '';
+
+  const button = `#button-${component}`;
   const propertyName = 'width';
 
   if (component === 'editor') {
