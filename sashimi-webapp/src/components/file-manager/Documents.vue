@@ -13,7 +13,7 @@
         v-on:openFolder="changeFolder"
         v-on:focusFolder="focus"
         v-on:blurFolder="blur"
-        v-on:blurNameInput="blurNameInput"
+        v-on:renameFolder="rename"
             :folder="folder"
       >
       </folder>
@@ -64,9 +64,8 @@ export default {
     changeFolder(newFolder) {
       this.$emit('changeFolder', newFolder);
     },
-    blurNameInput() {
-      // console.log('blur');
-      // handle rename
+    rename(payload) {
+      payload.folderToRename.rename(payload.newFolderName);
     }
   },
   mounted() {

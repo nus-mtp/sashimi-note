@@ -2,13 +2,16 @@
   <div class="col vertical-align-child" 
     v-on:dblclick="openFolder"
   >
-    <button class="folder"
+    <button tabindex="1" class="folder"
             v-on:focus="focusFolder"
             v-on:blur="blurFolder"
     >
       <img src="../../assets/images/icons/icon-folder.svg" alt="folder">
-      <p contenteditable="true" tabindex="10" class="inline-block"
+      <p contenteditable="true" tabindex="2" class="inline-block"
         v-on:blur="blurNameInput"
+        v-on:keypress="onKeyPress($event)"
+        v-on:keyup="onKeyUp($event)"
+            :id="folder.id"
       >{{folder.name}}</p>
     </button>
   </div>
@@ -30,7 +33,30 @@
         this.$emit('blurFolder');
       },
       blurNameInput() {
-        this.$emit('blurNameInput');
+        this.saveFolderName();
+        window.getSelection().removeAllRanges();
+      },
+      saveFolderName() {
+        let newFolderName = document
+                                .getElementById(this.folder.id)
+                                .innerHTML
+                                .trim().replace(/&nbsp;/gi, '');
+        if (newFolderName === '') {
+          newFolderName = 'untitled';
+        }
+        this.$emit('renameFolder', { newFolderName, folderToRename: this.folder });
+      },
+      onKeyPress(event) {
+        const enterKey = 13;
+        if (event.keyCode === enterKey) {
+          event.preventDefault();
+        }
+      },
+      onKeyUp(event) {
+        const enterKey = 13;
+        if (event.keyCode === enterKey) {
+          this.blurNameInput();
+        }
       }
     },
   };
