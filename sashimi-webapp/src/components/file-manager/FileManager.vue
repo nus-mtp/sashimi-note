@@ -25,7 +25,8 @@ export default {
   data() {
     return {
       viewMode: 'listView',
-      docs: {}
+      docs: {},
+      history: null
     };
   },
   watch: {
@@ -38,7 +39,7 @@ export default {
         this.$router.push({ path: '', query: { folder: newFolder.id } });
       }
       this.docs = newFolder;
-      fileManager.update(this.docs);
+      this.history.update(this.docs);
     },
     changeViewMode(viewMode) {
       this.viewMode = viewMode;
@@ -54,11 +55,11 @@ export default {
           break;
         }
         case 'history back': {
-          this.docs = fileManager.previous();
+          this.docs = this.history.previous();
           break;
         }
         case 'history forward': {
-          this.docs = fileManager.next();
+          this.docs = this.history.next();
           break;
         }
         case 'download': {
@@ -66,6 +67,7 @@ export default {
           break;
         }
         case 'delete': {
+          console.log(doc);
           doc.remove();
           break;
         }
@@ -98,7 +100,7 @@ export default {
   mounted() {
     const ROOT_FOLDER_ID = 0;
     this.docs = fileManager.getFolderByID(ROOT_FOLDER_ID);
-    fileManager.update(this.docs);
+    this.history = fileManager.createHistory(this.docs);
   }
 };
 
