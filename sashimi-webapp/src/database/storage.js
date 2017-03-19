@@ -20,7 +20,7 @@ function createUserTable(isUserTableFirstInitialize) {
       .then(success => resolve(true))
       .catch(sqlError => reject(sqlError));
     } else {
-      resolve(false);
+      resolve('false');
     }
   });
 }
@@ -110,6 +110,11 @@ export default class storage {
         creationOfTables()
         .then(isFirstInstance => isFirstInstance)
         .catch(sqlErr => reject(sqlErr)))
+      /*
+       * if table is first created, extra-checking that the data is boolean
+       * it will fill up the table,
+       * otherwise no data will be filled.
+       */
       .then((isFirstInstance) => {
         if (typeof isFirstInstance === 'boolean') {
           return entitiesCreator.fillUpDefaultData()
@@ -124,60 +129,32 @@ export default class storage {
   }
 
   static loadAllFilesAndFolders() {
-    return new Promise((resolve, reject) =>
-      query.getAllFilesAndFolders()
-      .then(returnedArr => resolve(returnedArr))
-      .catch(sqlError => reject(sqlError))
-    );
+    return query.getAllFilesAndFolders();
   }
 
   // Searching the filename and foldername ONLY
   static partialSearch(searchString) {
-    return new Promise((resolve, reject) =>
-      query.searchString(searchString)
-      .then(returnedArr => resolve(returnedArr))
-      .catch(sqlError => reject(sqlError))
-    );
+    return query.searchString(searchString);
   }
 
   static getList(folderId) {
-    return new Promise((resolve, reject) =>
-      query.loadFolder(folderId)
-      .then(returnedArr => resolve(returnedArr))
-      .catch(sqlError => reject(sqlError))
-    );
+    return query.loadFolder(folderId);
   }
 
   static loadFile(fileId) {
-    return new Promise((resolve, reject) =>
-      query.loadFile(fileId)
-      .then(returnedArr => resolve(returnedArr))
-      .catch(sqlError => reject(sqlError))
-    );
+    return query.loadFile(fileId);
   }
 
   static saveFile(fileId, fileString) {
-    return new Promise((resolve, reject) =>
-      dataModifier.saveFile(fileId, fileString)
-      .then(() => resolve())
-      .catch(sqlError => reject(sqlError))
-    );
+    return dataModifier.saveFile(fileId, fileString);
   }
 
   static createFile(organizationId, filePath, folderId) {
-    return new Promise((resolve, reject) =>
-      dataModifier.createNewFile(organizationId, filePath, folderId)
-      .then(fileObject => resolve(fileObject))
-      .catch(sqlErr => reject(sqlErr))
-    );
+    return dataModifier.createNewFile(organizationId, filePath, folderId);
   }
 
   static moveFile(fileId, newPath) {
-    return new Promise((resolve, reject) =>
-      dataModifier.moveFile(fileId, newPath)
-      .then(() => resolve())
-      .catch(sqlErr => reject(sqlErr))
-    );
+    return dataModifier.moveFile(fileId, newPath);
   }
 
   static renameFileName(fileId, newFileName) {
@@ -197,36 +174,20 @@ export default class storage {
   }
 
   static deleteFile(fileId) {
-    return new Promise((resolve, reject) =>
-      dataModifier.deleteFile(fileId)
-        .then(() => resolve())
-        .catch(sqlError => reject(sqlError))
-    );
+    return dataModifier.deleteFile(fileId);
   }
 
   static createFolder(organizationId, folderPath, currentFolderId) {
-    return new Promise((resolve, reject) =>
-      dataModifier.createNewFolder(organizationId, folderPath, currentFolderId)
-      .then(data => resolve(data))
-      .catch(err => reject(err))
-    );
+    return dataModifier.createNewFolder(organizationId, folderPath, currentFolderId);
   }
 
   // only delete folder for now without cascade delete
   static deleteFolder(folderId) {
-    return new Promise((resolve, reject) =>
-      dataModifier.deleteFolder(folderId)
-      .then(() => resolve())
-      .catch(sqlError => reject(sqlError))
-    );
+    return dataModifier.deleteFolder(folderId);
   }
 
   static deleteAll(newDatabaseName) {
-    return new Promise((resolve, reject) => {
-      databaseName = newDatabaseName || databaseName;
-      return dataModifier.deleteAllEntities(databaseName)
-      .then(() => resolve())
-      .catch(sqlError => reject(sqlError));
-    });
+    databaseName = newDatabaseName || databaseName;
+    return dataModifier.deleteAllEntities(databaseName);
   }
 }
