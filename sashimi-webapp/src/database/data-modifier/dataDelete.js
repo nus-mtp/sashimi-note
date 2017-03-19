@@ -49,19 +49,11 @@ export default class dataDelete {
   }
 
   static deleteFile(fileId) {
-    return new Promise((resolve, reject) =>
-      sqlCommands.deleteFile(fileId)
-      .then(data => resolve(data))
-      .catch(sqlError => reject(sqlError))
-    );
+    sqlCommands.deleteFile(fileId);
   }
 
 
   static deleteFolder(folderId) {
-    return new Promise((resolve, reject) =>
-      sqlCommands.deleteFolder(folderId)
-      .then(data => resolve(data))
-      .catch(sqlError => reject(sqlError))
-    );
+    return sqlCommands.deleteFolder(folderId);
   }
 }
