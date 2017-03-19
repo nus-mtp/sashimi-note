@@ -157,20 +157,12 @@ export default class storage {
     return dataModifier.moveFile(fileId, newPath);
   }
 
-  static renameFileName(fileId, newFileName) {
-    return new Promise((resolve, reject) =>
-      dataModifier.renameFileName(fileId, newFileName)
-      .then(() => resolve())
-      .catch(err => reject(err))
-    );
+  static renameFile(fileId, newFileName) {
+    return dataModifier.renameFileName(fileId, newFileName);
   }
 
-  static renameFolderName(folderId, newFolderName) {
-    return new Promise((resolve, reject) =>
-      dataModifier.renameFolderName(folderId, newFolderName)
-      .then(() => resolve())
-      .catch(sqlErr => reject(sqlErr))
-    );
+  static renameFolder(folderId, newFolderName) {
+    return dataModifier.renameFolderName(folderId, newFolderName);
   }
 
   static deleteFile(fileId) {
