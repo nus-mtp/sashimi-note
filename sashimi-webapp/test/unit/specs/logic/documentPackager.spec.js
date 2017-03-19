@@ -1,4 +1,6 @@
 import documentPackager from 'src/logic/documentPackager';
+import diagramsInput from './reference/diagrams/diagramsInput.txt';
+import diagramsBase64Output from './reference/diagrams/diagramsBase64Output.txt';
 import conditionalInput from './reference/conditionalInput.txt';
 import conditionalOutput from './reference/conditionalOutput.txt';
 import highlightjsInput from './reference/highlightjsInput.txt';
@@ -104,6 +106,18 @@ describe('Document Packager', () => {
     it('should handle generation of TOC', (done) => {
       documentPackager.getHtmlData(tocInput).then((output) => {
         expect(output).to.equal(newlineFilter(tocOutput));
+        done();
+      })
+      .catch((error) => {
+        done(error);
+      });
+    });
+
+    it('should handle generation of diagram pre tags for drawing diagrams', (done) => {
+      documentPackager.getHtmlData(diagramsInput).then((output) => {
+        const base64Output = base64(output);
+
+        expect(base64Output).to.equal(diagramsBase64Output);
         done();
       })
       .catch((error) => {
