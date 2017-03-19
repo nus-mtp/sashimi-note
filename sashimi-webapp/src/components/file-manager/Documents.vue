@@ -2,11 +2,12 @@
   <div class="group section documents" 
     v-bind:class="viewMode"
   >
-    <div class="modal" v-show="modal">
+    <!--<div class="modal" v-show="modal">
       <div class="modal-content">
         <span class="close">&times;</span>
         <h3>New {{value}}</h3>
       </div>
+    </div>-->
     </div>
       <folder 
         v-for="folder in docs.childFolderList"

@@ -43,34 +43,34 @@
       </div>
       <div class="float-right">
         <div class="col vertical-align-child buttons-right inline-block">
-          <button class="navbar-buttons hover-grow">
+          <button id="button-file-upload" class="navbar-buttons hover-grow">
             <i class="material-icons md-dark">file_upload</i>
           </button>
-          <button class="navbar-buttons hover-grow" 
+          <button id="button-create-folder" class="navbar-buttons hover-grow" 
                   v-on:click="execute('createFolder')"
           >
             <i class="material-icons md-dark">create_new_folder</i>
           </button>
-          <button class="navbar-buttons hover-grow" 
+          <button id="button-create-file" class="navbar-buttons hover-grow" 
                   v-on:click="execute('createFile')"
           >
             <i class="material-icons md-dark">note_add</i>
           </button>
-          <button class="navbar-buttons" 
+          <button id="button-duplicate" class="navbar-buttons" 
                   v-bind:class="{'hover-grow': buttonEffect}"
           >
             <i class="material-icons md-dark" 
               v-bind:class="{'md-inactive': buttonDisabled}"
             >content_copy</i>
           </button>
-          <button class="navbar-buttons" 
+          <button id="button-file-download" class="navbar-buttons" 
                   v-bind:class="{'hover-grow': buttonEffect}"
                     v-on:click="execute('download')"
           >
             <i class="material-icons md-dark" 
                 v-bind:class="{'md-inactive': buttonDisabled}">file_download</i>
           </button>
-          <button class="navbar-buttons" 
+          <button id="button-delete" class="navbar-buttons" 
                   v-bind:class="{'hover-grow': buttonEffect}"
                   v-on:click="execute('delete')"
           >
@@ -80,10 +80,10 @@
           </button>
       </div>
       <div class="col view-type inline-block">
-        <button class="navbar-buttons hover-grow" 
+        <button id="button-icon-view" class="navbar-buttons hover-grow" 
                 v-on:click="setViewMode('iconView')"
         >Icon</button>|
-        <button class="navbar-buttons hover-grow" 
+        <button id="button-list-view" class="navbar-buttons hover-grow" 
                 v-on:click="setViewMode('listView')"
         >List</button>
       </div>

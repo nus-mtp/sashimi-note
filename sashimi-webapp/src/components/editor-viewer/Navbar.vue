@@ -55,11 +55,11 @@
         <button v-on:click="updateParent('editor')" class="navbar-buttons hover-grow" id="button-editor">
         <i class="material-icons md-dark md-dark">edit</i>
         </button>
-        <button v-on:click="updateParent('split')" class="navbar-buttons hover-grow" id="button-viewer">
+        <button v-on:click="updateParent('split')" class="navbar-buttons hover-grow" id="button-split-screen">
         <!--<i class="material-icons md-dark md-dark">chrome_reader_mode</i>-->
         <img src="../../assets/images/buttons/button-split-screen.svg" class="button-img" alt="plugins">
         </button>
-        <button v-on:click="updateParent('viewer')" class="navbar-buttons hover-grow" id="button-split-screen">
+        <button v-on:click="updateParent('viewer')" class="navbar-buttons hover-grow" id="button-viewer">
         <i class="material-icons md-dark md-dark md-dark">remove_red_eye</i>
         </button>
       </div>
