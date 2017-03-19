@@ -7,10 +7,23 @@ import idMap from '../data/idmap';
 const NO_PARENT_ID = -1;
 
 /* Private Functions */
+/**
+ * Check if queue is empty
+ *
+ * @param {List} queue
+ * @return {Boolean}
+ */
 function queueIsEmpty(queue) {
   return queue.length <= 0;
 }
 
+/**
+ * Remove an element from queue at the given index
+ *
+ * @param {List} queue
+ * @param {Integer} index
+ * @return {Object}
+ */
 function removeElementAtIndex(queue, index) {
   if (index === NO_PARENT_ID) {
     return null;
@@ -19,12 +32,26 @@ function removeElementAtIndex(queue, index) {
   }
 }
 
+/**
+ * Return a file which has the specified parentID
+ *
+ * @param {List} queue
+ * @param {Integer} index
+ * @return {File}
+ */
 function getChildFile(queue, parentID) {
   parentID = (parentID == null) ? NO_PARENT_ID: parentID;
   const index = queue.findIndex(dbFileObj => dbFileObj.folder_id === parentID);
   return removeElementAtIndex(queue, index);
 }
 
+/**
+ * Return a folder which has the specified parentID
+ *
+ * @param {List} queue
+ * @param {Integer} index
+ * @return {Folder}
+ */
 function getChildFolder(queue, parentID) {
   parentID = (parentID == null) ? NO_PARENT_ID: parentID;
   const index = queue.findIndex(dbFolderObj => dbFolderObj.parent_folder_id === parentID);
@@ -46,6 +73,7 @@ const core = {
   /**
    * Initialize Filemanager
    *
+   * @param {List} dbList
    * @return {Folder}
    */
   init: function init(dbList) {
@@ -84,10 +112,22 @@ const core = {
     return rootFolder;
   },
 
+  /**
+   * Get file of specified fileID from idMap
+   *
+   * @param {Integer} id
+   * @return {File}
+   */
   getFile: function getFile(id) {
     return idMap.getFileFromMap(id);
   },
 
+  /**
+   * Get file of specified folderID from idMap
+   *
+   * @param {Integer} id
+   * @return {Folder}
+   */
   getFolder: function getFolder(id) {
     return idMap.getFolderFromMap(id);
   }

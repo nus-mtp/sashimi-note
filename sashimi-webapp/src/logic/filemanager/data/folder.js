@@ -27,7 +27,13 @@ export default function Folder(folderID, folderName, folderPath) {
   this.childFileList = []; // list of files in current folder
 }
 
-/* Private Functions */
+/* Private Function */
+/**
+ * Check if new foldername is the same as another foldername
+ *
+ * @param {String} newFolderName
+ * @return {Boolean}
+ */
 function hasSameFolderName(newFolderName) {
   if (!(this instanceof Folder)) {
     throw new Error(ERROR_NOT_FOLDER_INSTANCE);
@@ -88,7 +94,7 @@ Folder.prototype.createFile = function createFile() {
  * Remove a folder from the database
  *
  * @param {}
- * @return {}
+ * @return {Promise}
  */
 Folder.prototype.remove = function remove() {
   if (this.id === ROOT_FOLDER_ID) {

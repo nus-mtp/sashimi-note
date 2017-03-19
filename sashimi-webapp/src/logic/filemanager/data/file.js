@@ -23,6 +23,12 @@ export default function File(fileID, fileName, filePath, parentFolder) {
 }
 
 /* Private Functions */
+/**
+ * Check if destination folder is current folder this file resides in
+ *
+ * @param {Folder} destFolder
+ * @return {Boolean}
+ */
 function isCurrentFolder(destFolder) {
   if (!(this instanceof File)) {
     throw new Error(ERROR_NOT_FILE_INSTANCE);
@@ -30,10 +36,22 @@ function isCurrentFolder(destFolder) {
   return destFolder.id === this.parentFolder.id;
 }
 
+/**
+ * Check if destination folder is null
+ *
+ * @param {Folder} destFolder
+ * @return {Boolean}
+ */
 function isInvalidFolder(destFolder) {
   return Folder.getFolder(destFolder.id) == null;
 }
 
+/**
+ * Check if new filename is the same as another filename
+ *
+ * @param {String} newFileName
+ * @return {Boolean}
+ */
 function hasSameFileName(newFileName) {
   if (!(this instanceof File)) {
     throw new Error(ERROR_NOT_FILE_INSTANCE);
