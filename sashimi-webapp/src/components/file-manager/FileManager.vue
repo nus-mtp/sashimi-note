@@ -34,6 +34,8 @@ export default {
     changeFolder(newFolder) {
       this.docs = newFolder;
       fileManager.update(this.docs);
+      console.log(newFolder);
+      this.$router.push({ path: '', query: { folder: newFolder.path } });
       // change directory
     },
     changeViewMode(viewMode) {
