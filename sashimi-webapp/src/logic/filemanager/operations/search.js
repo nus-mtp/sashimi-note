@@ -12,9 +12,10 @@ let searchFolderList = [];
  * Searches database for filenames and foldernames containing the search string
  *
  * @param {String} searchString
+ * @return {Promise}
  */
 function searchDB(searchString) {
-  storage.partialSearch(searchString)
+  return storage.partialSearch(searchString)
     .then((dbList) => {
       const dbFileList = dbList.shift();
       const dbFolderList = dbList.shift();
@@ -44,37 +45,43 @@ const search = {
    * Return a Search Folder which contain list of files found
    *
    * @param {String} searchString
-   * @return {Folder}
+   * @return {Promise<Folder>}
    */
   fileOnly: function fileOnly(searchString) {
-    searchDB(searchString);
-    searchFolder.childFileList = searchFileList;
-    return searchFolder;
+    return searchDB(searchString)
+    .then(() => {
+      searchFolder.childFileList = searchFileList;
+      return searchFolder;
+    });
   },
 
   /**
    * Return a Search Folder which contain list of folders found
    *
    * @param {String} searchString
-   * @return {Folder}
+   * @return {Promise<Folder>}
    */
   folderOnly: function folderOnly(searchString) {
-    searchDB(searchString);
-    searchFolder.childFolderList = searchFolderList;
-    return searchFolder;
+    return searchDB(searchString)
+    .then(() => {
+      searchFolder.childFolderList = searchFolderList;
+      return searchFolder;
+    });
   },
 
   /**
    * Return a Search Folder which contain list of files and folders found
    *
    * @param {String} searchString
-   * @return {Folder}
+   * @return {Promise<Folder>}
    */
   all: function all(searchString) {
-    searchDB(searchString);
-    searchFolder.childFileList = searchFileList;
-    searchFolder.childFolderList = searchFolderList;
-    return searchFolder;
+    return searchDB(searchString)
+    .then(() => {
+      searchFolder.childFileList = searchFileList;
+      searchFolder.childFolderList = searchFolderList;
+      return searchFolder;
+    });
   }
 
 };
