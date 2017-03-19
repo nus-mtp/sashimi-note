@@ -8,26 +8,27 @@
         <h3>New {{value}}</h3>
       </div>
     </div>
-    <folder 
-      v-for="folder in docs.childFolderList"
-      v-on:openFolder="changeFolder"
-      v-on:focusFolder="focus"
-      v-on:blurFolder="blur"
-      v-on:blurNameInput="blurNameInput"
-          :folder="folder"
-    >
-    </folder>
-    <file 
-      v-for="file in docs.childFileList"
-      v-on:focusFile="focus"
-      v-on:blurFile="blur"
-          :file="file"
-    >
-    </file>
+      <folder 
+        v-for="folder in docs.childFolderList"
+        v-on:openFolder="changeFolder"
+        v-on:focusFolder="focus"
+        v-on:blurFolder="blur"
+        v-on:blurNameInput="blurNameInput"
+            :folder="folder"
+      >
+      </folder>
+      <file 
+        v-for="file in docs.childFileList"
+        v-on:focusFile="focus"
+        v-on:blurFile="blur"
+            :file="file"
+      >
+      </file>
   </div>
 </template>
 
 <script>
+import fileManager from 'src/logic/filemanager';
 import eventHub from './EventHub';
 import folder from './Folder';
 import file from './File';
@@ -44,7 +45,15 @@ export default {
     folder,
     file,
   },
-  watch: {},
+  watch: {
+    $route(path) {
+      if (path.query.folder === undefined) {
+        const ROOT_FOLDER_ID = 0;
+        const rootFolder = fileManager.getFolderByID(ROOT_FOLDER_ID);
+        this.changeFolder(rootFolder);
+      }
+    }
+  },
   methods: {
     focus(focusedDoc) {
       eventHub.$emit('focus', focusedDoc);
@@ -56,7 +65,7 @@ export default {
       this.$emit('changeFolder', newFolder);
     },
     blurNameInput() {
-      console.log('blur');
+      // console.log('blur');
       // handle rename
     }
   },
