@@ -43,6 +43,7 @@ describe('idMap', () => {
       }).to.throw(Error);
     });
     it('should return undefined if file is not found', () => {
+      idMap.clearMap();
       expect(idMap.getFileFromMap(0)).to.equal(undefined);
     });
     it('should return the file if it is found', () => {
@@ -60,6 +61,7 @@ describe('idMap', () => {
       }).to.throw(Error);
     });
     it('should return undefined if folder is not found', () => {
+      idMap.clearMap();
       expect(idMap.getFolderFromMap(0)).to.equal(undefined);
     });
     it('should return the folder if it is found', () => {
@@ -86,4 +88,6 @@ describe('idMap', () => {
       }).to.throw(Error);
     });
   });
+
+  idMap.clearMap();
 });
