@@ -41,7 +41,7 @@ const core = {
     }, transitionDuration);
   },
 
-  pointermove(event) {
+  gesturemove(event) {
     if (this.eventInstance.numPointers > 1) {
       return; // Panning is restricted with using 1 finger only
     }
@@ -56,7 +56,7 @@ const core = {
     this.transform.set({ translateX, translateY });
   },
 
-  interactZoom(event) {
+  gesturezoom(event) {
     if (event.type === 'gesturemove' && this.eventInstance.numPointers !== 2) {
       // The event is a gesture, but is it not executed by two fingers
       return;
@@ -69,9 +69,12 @@ const core = {
   },
 
   mousewheel(event) {
-    event.preventDefault();
     if (event.ctrlKey) {
-      core.interactZoom.call(this, event);
+      // event.preventDefault() is called so that MS Edge does not
+      // zoom the entire window.
+      event.preventDefault();
+
+      core.gesturezoom.call(this, event);
     } else {
       let translateY = this.transform.translateY - ((event.deltaY/4) * (1 / this.transform.scale));
       translateY = guard.translateY(translateY, this.el.container);

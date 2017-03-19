@@ -126,7 +126,7 @@ DocumentNavigator.prototype.addEventListeners = function addEventListeners() {
     },
     onmove: (event) => {
       if (this.eventInstance.state.action === 'panning') {
-        core.pointermove.call(this, event);
+        core.gesturemove.call(this, event);
         return true;
       } else {
         return false;
@@ -139,7 +139,7 @@ DocumentNavigator.prototype.addEventListeners = function addEventListeners() {
     }
   };
   const gesturableSettings = {
-    onmove: core.interactZoom.bind(this),
+    onmove: core.gesturezoom.bind(this),
   };
 
   this.interactable = interact(this.el.parent);
