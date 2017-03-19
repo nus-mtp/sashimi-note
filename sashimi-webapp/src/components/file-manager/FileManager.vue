@@ -94,24 +94,21 @@ export default {
     downloadDoc(doc) {
       doc.load()
       .then((docContent) => {
-        this.download(doc, docContent);
+        const element = document.createElement('a');
+        const href = 'data:text/plain;charset=utf-8,';
+        const content = encodeURIComponent(docContent);
+        element.setAttribute('href', href+content, docContent);
+        const fileName = doc.name;
+        element.setAttribute('download', fileName);
+
+        element.style.display = 'none';
+        document.body.appendChild(element);
+
+        element.click();
+
+        document.body.removeChild(element);
       });
     },
-    download(doc, docContent) {
-      const element = document.createElement('a');
-      const href = 'data:text/plain;charset=utf-8,';
-      const content = encodeURIComponent(docContent);
-      element.setAttribute('href', href+content, docContent);
-      const fileName = doc.name;
-      element.setAttribute('download', fileName);
-
-      element.style.display = 'none';
-      document.body.appendChild(element);
-
-      element.click();
-
-      document.body.removeChild(element);
-    }
   },
   mounted() {
     const ROOT_FOLDER_ID = 0;
