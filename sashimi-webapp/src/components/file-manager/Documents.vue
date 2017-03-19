@@ -74,7 +74,6 @@ export default {
         this.value = 'Folder';
       } else if (action === 'createFile') {
         this.value = 'File';
-      // } else if (action === 'download') {
       }
     });
   }
