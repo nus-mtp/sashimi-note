@@ -6,18 +6,19 @@ function createDoc(browser, docType) {
 
   browser.execute(() => {
     const className = `.${docType}`;
-    const numFiles = document.querySelectorAll(className).length;
+    const numDocs = document.querySelectorAll(className).length;
 
-    return numFiles;
-  }, [docType], (numFiles) => {
+    return numDocs;
+  }, [docType], (numDocs) => {
     try {
-      const button = `#button-create-${docType}`;
+      const createButton = `#button-create-${docType}`;
+      const numDocsAfterCreate = numDocs.value + 1;
 
       browser
-        .click(button);
+        .click(createButton);
 
       browser
-        .expect(numFiles.value).to.equal(numFiles.value+1);
+        .expect(numDocs.value).to.equal(numDocsAfterCreate);
     } catch (error) {
       console.log(error);
     }
@@ -31,7 +32,6 @@ describe('FileManager\'s create file/folder button', function() {
   it('should create a new file', (browser) => {
     createDoc(browser, 'file');
   });
-
 
   it('should create a new folder', (browser) => {
     createDoc(browser, 'folder');
