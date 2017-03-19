@@ -77,7 +77,7 @@ export default class tableCreator {
     }
   }
 
-  static endCreateTable(headerName) {
+  static endCreateTable() {
     return new Promise((resolve, reject) => {
       if (isTableInitializedForCreation) {
         // remove extra characters to input into alasql
