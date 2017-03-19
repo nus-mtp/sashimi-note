@@ -3,7 +3,7 @@ import File from './file';
 import idMap from './idmap';
 
 /* Error Messages */
-const ERROR_RENAME_FOLDER = 'Another folder in the current folder has the same name';
+const ERROR_SAME_FOLDER_NAME = 'Another folder in the current folder has the same name';
 const ERROR_RENAME_ROOTFOLDER = 'Root folder cannot be renamed';
 const ERROR_NOT_FOLDER_INSTANCE = '"this" is not an instance of "Folder"';
 
@@ -115,7 +115,7 @@ Folder.prototype.rename = function rename(newFolderName) {
       reject(ERROR_RENAME_ROOTFOLDER);
     }
     if (hasSameFolderName.call(this, newFolderName)) {
-      reject(ERROR_RENAME_FOLDER);
+      reject(ERROR_SAME_FOLDER_NAME);
     }
     resolve();
   })

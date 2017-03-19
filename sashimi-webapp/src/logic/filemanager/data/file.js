@@ -3,7 +3,7 @@ import Folder from './folder';
 import idMap from './idmap';
 
 /* Error Messages */
-const ERROR_RENAME_FILE = 'Another file in the current folder has the same name';
+const ERROR_SAME_FILE_NAME = 'Another file in the current folder has the same name';
 const ERROR_MOVING_TO_SAME_FOLDER = 'Attempting to move to current folder';
 const ERROR_MOVING_TO_INVALID_FOLDER = 'Attempting to move to an invalid folder';
 const ERROR_NOT_FILE_INSTANCE = '"this" is not an instance of "File"';
@@ -127,7 +127,7 @@ File.prototype.move = function move(destFolder) {
 File.prototype.rename = function rename(newFileName) {
   return new Promise((resolve, reject) => {
     if (hasSameFileName.call(this, newFileName)) {
-      reject(ERROR_RENAME_FILE);
+      reject(ERROR_SAME_FILE_NAME);
     }
 
     resolve();
