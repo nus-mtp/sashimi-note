@@ -26,17 +26,17 @@ export default class query {
 
   static getAllFilesAndFolders() {
     return new Promise((resolve, reject) => {
-      const promiseArr = [];
+      const fileAndFolderArray = [];
       initPromiseSequence()
       .then(() =>
         sqlCommands.getFullTableData(constants.ENTITIES_FILE_MANAGER)
-        .then(fileArr => promiseArr.push(fileArr))
+        .then(fileArr => fileAndFolderArray.push(fileArr))
         .catch(sqlError => reject(sqlError)))
       .then(() =>
         sqlCommands.getFullTableData(constants.ENTITIES_FOLDER)
-        .then(folderArr => promiseArr.push(folderArr))
+        .then(folderArr => fileAndFolderArray.push(folderArr))
         .catch(sqlError => reject(sqlError)))
-      .then(() => resolve(promiseArr))
+      .then(() => resolve(fileAndFolderArray))
       .catch(sqlErr => reject(sqlErr));
     });
   }
@@ -59,16 +59,16 @@ export default class query {
 
   static searchString(searchString) {
     return new Promise((resolve, reject) => {
-      const promiseArr = [];
+      const fileAndFolderArray = [];
 
       initPromiseSequence()
       .then(() => sqlCommands.partialSearchFileName(searchString)
-        .then(fileArr => promiseArr.push(fileArr))
+        .then(fileArr => fileAndFolderArray.push(fileArr))
         .catch(sqlError => reject(sqlError)))
       .then(() => sqlCommands.partialSearchFolderName(searchString)
-        .then(folderArr => promiseArr.push(folderArr))
+        .then(folderArr => fileAndFolderArray.push(folderArr))
         .catch(sqlError => reject(sqlError)))
-      .then(() => resolve(promiseArr))
+      .then(() => resolve(fileAndFolderArray))
       .catch(sqlErr => reject(sqlErr));
     });
   }
