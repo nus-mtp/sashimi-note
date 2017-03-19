@@ -1,52 +1,85 @@
-import Folder from './folder';
-import history from './history';
-import search from './search';
+import core from './operations/core';
+import search from './operations/search';
+import History from './operations/history';
 
 const fileManager = {
 
-  /** Initialize database
+  /**
+   * Initialize Filemanager
    *
-   * @return {Folder} root folder
+   * @return {Promise}
    */
   start: function start() {
-    return Folder.getRootFolder();
+    return core.loadDB()
+      .then(core.init);
+  },
+
+  /* Get Operations */
+
+  /**
+   * Given an ID, return the File
+   *
+   * @param {Integer} fileID
+   * @return {File}
+   */
+  getFileByID: function getFileByID(fileID) {
+    return core.getFile(fileID);
+  },
+
+  /**
+   * Given an ID, return the Folder
+   *
+   * @param {Integer} folderID
+   * @return {Folder}
+   */
+  getFolderByID: function getFolderByID(folderID) {
+    return core.getFolder(folderID);
   },
 
   /* Search Operations */
 
   /**
-   * Return a list of files and folders containing the search string
+   * Return a Folder containing files and folders matching the search string
    *
    * @param {String} searchString
-   * @return {List} Contains files and folders
+   * @return {Folder}
    */
   searchAll: function searchAll(searchString) {
-    // return search.all(searchString)
+    return search.all(searchString);
   },
 
+  /**
+   * Return a Folder containing files matching the search string
+   *
+   * @param {String} searchString
+   * @return {Folder}
+   */
   searchFileOnly: function searchFileOnly(searchString) {
-    // return search.fileOnly(searchString)
+    return search.fileOnly(searchString);
   },
 
+  /** `
+   * Return a Folder containing folders matching the search string
+   *
+   * @param {String} searchString
+   * @return {Folder}
+   */
   searchFolderOnly: function searchFolderOnly(searchString) {
-    // return search.folderOnly(searchString)
+    return search.folderOnly(searchString);
   },
 
-  /* History Operations */
+  /* History Operation */
 
-  update: function update(folder) {
-    return history.update(folder);
-  },
-
-  previous: function previous() {
-    return history.previous();
-  },
-
-  next: function next() {
-    return history.next();
+  /**
+   * Return a History with the current folder initialized as the given folder.
+   *
+   * @param {Folder} folder
+   * @return {History}
+   */
+  createHistory: function createHistory(folder) {
+    return new History(folder);
   }
 
 };
 
-// module.exports = fileManager;
 export default fileManager;

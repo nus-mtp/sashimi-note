@@ -1,18 +1,16 @@
-import exceptions from '../exceptions';
-
-import constants from '../constants';
-
-import SqlCommands from '../sql-related/sqlCommands';
-
-import DateTime from '../generated-data/dateTime';
-
-import SqlArray from '../generated-data/sqlArray';
+import exceptions from 'src/database/exceptions';
+import constants from 'src/database/constants';
+import SqlCommands from 'src/database/sql-related/sqlCommands';
+import DateTime from 'src/database/generated-data/dateTime';
+import SqlArray from 'src/database/generated-data/sqlArray';
+import StringManipulator from 'src/database/stringManipulation';
 
 const sqlCommands = new SqlCommands();
 const dateTime = new DateTime();
 const alasqlArray = new SqlArray();
+const stringManipulator = new StringManipulator();
 
-function createNewFile(organizationId, filePath, folderId, newFileId) {
+function createNewFile(organizationId, filePath, folderId, newFileId, newFileName) {
   if (typeof Promise === 'function') {
     return new Promise((resolve, reject) => {
       const currentDateTime = dateTime.getCurrentDateTime();
@@ -20,7 +18,7 @@ function createNewFile(organizationId, filePath, folderId, newFileId) {
       const fileOrganizationId = organizationId;
       const fileFolderId = folderId;
       const fileId = newFileId;
-      const fileName = constants.DEFAULT_FILE_NAME;
+      const fileName = newFileName;
       const fileMarkDown = constants.DEFAULT_EMPTY;
       const filePermission = constants.PERMISSION_CREATOR;
       const fileCreationDateTime = currentDateTime;
@@ -48,7 +46,7 @@ function createNewFile(organizationId, filePath, folderId, newFileId) {
   }
 }
 
-function createNewFolder(organizationId, folderPath, currentFolderId, newFolderId) {
+function createNewFolder(organizationId, folderPath, currentFolderId, newFolderId, newFolderName) {
   if (typeof Promise === 'function') {
     return new Promise((resolve, reject) => {
       const currentDateTime = dateTime.getCurrentDateTime();
@@ -58,7 +56,7 @@ function createNewFolder(organizationId, folderPath, currentFolderId, newFolderI
       const folderpermissionIndex = constants.PERMISSION_CREATOR;
       const folderOrganizationId = organizationId;
       const folderCreationDate = currentDateTime;
-      const folderName = constants.DEFAULT_FOLDER_NAME;
+      const folderName = newFolderName;
       const folderlastModifiedDate = folderCreationDate;
       const folderThisPath = folderPath;
 
@@ -92,9 +90,15 @@ export default class dataAdd {
         sqlCommands.getMaxFileId()
           .then((maxId) => {
             const newFileId = maxId + 1;
-            return createNewFile(organizationId, filePath, folderId, newFileId)
-            .then(data => resolve(data))
-            .catch(err => reject(err));
+            // search all possible identical fileNames
+            return sqlCommands.exactSearchStartFileNameInFolder(filePath)
+            .then((queryFiles) => {
+              const newFileName = constants.DEFAULT_FILE_NAME;
+              return createNewFile(organizationId, filePath, folderId, newFileId, newFileName)
+              .then(data => resolve(data))
+              .catch(err => reject(err));
+            })
+            .catch(sqlErr => reject(sqlErr));
           }).catch(sqlError => reject(sqlError))
       );
     } else {
@@ -109,9 +113,16 @@ export default class dataAdd {
         sqlCommands.getMaxFolderId()
         .then((maxId) => {
           const newFolderId = maxId + 1;
-          return createNewFolder(organizationId, folderPath, folderId, newFolderId)
+          // search all possible identical folderNames
+          return sqlCommands.exactSearchStartFolderNameInFolder(folderId)
+          .then((queryFiles) => {
+            const newFolderName = constants.DEFAULT_FOLDER_NAME;
+            const newFolderPath = stringManipulator.stringConcat(folderPath, newFolderName, '/');
+            return createNewFolder(organizationId, newFolderPath, folderId, newFolderId, newFolderName)
             .then(data => resolve(data))
             .catch(err => reject(err));
+          })
+          .catch(sqlErr => reject(sqlErr));
         }).catch(sqlError => reject(sqlError))
       );
     } else {
