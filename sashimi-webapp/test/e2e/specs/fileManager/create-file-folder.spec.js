@@ -15,7 +15,8 @@ function createDoc(browser, docType) {
       const numDocsAfterCreate = numDocs.value + 1;
 
       browser
-        .click(createButton);
+        .click(createButton)
+        .pause(500);
 
       browser
         .expect(numDocs.value).to.equal(numDocsAfterCreate);
