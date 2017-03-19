@@ -8,10 +8,9 @@
     >
       <img src="../../assets/images/icons/icon-folder.svg" alt="folder">
       <p contenteditable="true" tabindex="2" class="inline-block"
-        v-on:blur="blurNameInput"
+        v-on:blur="saveFolderName"
         v-on:keypress="onKeyPress($event)"
         v-on:keyup="onKeyUp($event)"
-            :id="folder.id"
       >{{folder.name}}</p>
     </button>
   </div>
@@ -32,19 +31,18 @@
       blurFolder() {
         this.$emit('blurFolder');
       },
-      blurNameInput() {
-        this.saveFolderName();
-        window.getSelection().removeAllRanges();
-      },
       saveFolderName() {
-        let newFolderName = document
-                                .getElementById(this.folder.id)
-                                .innerHTML
-                                .trim().replace(/&nbsp;/gi, '');
+        window.getSelection().removeAllRanges();
+
+        let newFolderName = this.$el.getElementsByTagName('p')[0].innerHTML;
+        newFolderName = newFolderName.trim().replace(/&nbsp;/gi, '');
         if (newFolderName === '') {
           newFolderName = 'untitled';
         }
-        this.$emit('renameFolder', { newFolderName, folderToRename: this.folder });
+
+        if (newFolderName !== this.folder.name) {
+          this.$emit('renameFolder', newFolderName, this.folder);
+        }
       },
       onKeyPress(event) {
         const enterKey = 13;
@@ -55,7 +53,7 @@
       onKeyUp(event) {
         const enterKey = 13;
         if (event.keyCode === enterKey) {
-          this.blurNameInput();
+          this.saveFolderName();
         }
       }
     },

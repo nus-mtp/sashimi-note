@@ -13,7 +13,7 @@
         v-on:openFolder="changeFolder"
         v-on:focusFolder="focus"
         v-on:blurFolder="blur"
-        v-on:renameFolder="rename"
+        v-on:renameFolder="renameDoc"
             :folder="folder"
       >
       </folder>
@@ -21,6 +21,7 @@
         v-for="file in docs.childFileList"
         v-on:focusFile="focus"
         v-on:blurFile="blur"
+        v-on:renameFile="renameDoc"
             :file="file"
       >
       </file>
@@ -64,8 +65,9 @@ export default {
     changeFolder(newFolder) {
       this.$emit('changeFolder', newFolder);
     },
-    rename(payload) {
-      payload.folderToRename.rename(payload.newFolderName);
+    renameDoc(newDocName, docToRename) {
+      console.log(newDocName);
+      docToRename.rename(newDocName);
     }
   },
   mounted() {
