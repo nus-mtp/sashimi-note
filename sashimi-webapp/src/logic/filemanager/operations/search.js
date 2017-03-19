@@ -25,7 +25,7 @@ function searchDB(searchString) {
       searchFolderList = [];
 
       while ((dbFileObj = dbFileList.shift()) != null) {
-        searchFileList.push(idMap.getFolderFromMap(dbFileObj.file_id));
+        searchFileList.push(idMap.getFileFromMap(dbFileObj.file_id));
       }
 
       while ((dbFolderObj = dbFolderList.shift()) != null) {
