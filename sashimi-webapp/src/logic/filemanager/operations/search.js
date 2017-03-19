@@ -29,7 +29,7 @@ function searchDB(searchString) {
       }
 
       while ((dbFolderObj = dbFolderList.shift()) != null) {
-        searchFileList.push(idMap.getFolderFromMap(dbFolderObj.folder_id));
+        searchFolderList.push(idMap.getFolderFromMap(dbFolderObj.folder_id));
       }
     })
     .catch((error) => {
