@@ -1,13 +1,12 @@
 import storage from 'src/database/storage';
 import Folder from './folder';
+import idMap from './idmap';
 
-/* Constants */
-
-// const RENAME_ERROR_MSG = `Another file in "${this.parentFolder.path}" has the same file name`;
-const RENAME_ERROR_MSG = 'Another file in the current folder has the same name';
-const MOVE_SAME_FOLDER_ERROR_MSG = 'Attempting to move to current folder';
-const MOVE_INVALID_FODLER_ERROR_MSG = 'Attempting to move to an invalid folder';
-const NOT_FILE_INSTANCE_ERROR_MSG = '"this" is not an instance of "File"';
+/* Error Messages */
+const ERROR_SAME_FILE_NAME = 'Another file in the current folder has the same name';
+const ERROR_MOVING_TO_SAME_FOLDER = 'Attempting to move to current folder';
+const ERROR_MOVING_TO_INVALID_FOLDER = 'Attempting to move to an invalid folder';
+const ERROR_NOT_FILE_INSTANCE = '"this" is not an instance of "File"';
 
 /**
 * File Object
@@ -24,10 +23,9 @@ export default function File(fileID, fileName, filePath, parentFolder) {
 }
 
 /* Private Functions */
-
 function isCurrentFolder(destFolder) {
   if (!(this instanceof File)) {
-    throw new Error(NOT_FILE_INSTANCE_ERROR_MSG);
+    throw new Error(ERROR_NOT_FILE_INSTANCE);
   }
   return destFolder.id === this.parentFolder.id;
 }
@@ -38,13 +36,13 @@ function isInvalidFolder(destFolder) {
 
 function hasSameFileName(newFileName) {
   if (!(this instanceof File)) {
-    throw new Error(NOT_FILE_INSTANCE_ERROR_MSG);
+    throw new Error(ERROR_NOT_FILE_INSTANCE);
   }
   const currParentFolder = this.parentFolder;
   let currFile;
   let sameFileName = false;
-  for (let i = 0; i< currParentFolder.childFileList.length; i += 1) {
-    currFile = currParentFolder.childFileList[i];
+  for (let index = 0; index < currParentFolder.childFileList.length; index += 1) {
+    currFile = currParentFolder.childFileList[index];
     if (newFileName === currFile.name) {
       sameFileName = true;
       break;
@@ -62,7 +60,7 @@ function hasSameFileName(newFileName) {
 File.prototype.remove = function remove() {
   return storage.deleteFile(this.path)
     .then(() => {
-      Folder.removeFileByID(this.id);
+      idMap.removeFileFromMap(this.id);
       const parentFolder = this.parentFolder;
       // const index = parentFolder.childFileList.findIndex(childFile => childFile.id === this.id);
       const index = parentFolder.childFileList.indexOf(this);
@@ -94,17 +92,6 @@ File.prototype.load = function load() {
 };
 
 /**
- * Copy file
- *
- * @param {Folder} folder default: currentFolder
- * @return {}
-
-File.prototype.copy = function copy(folder) {
-
-};
-*/
-
-/**
  * Move file to a specified folder
  *
  * @param {Folder} destFolder
@@ -113,11 +100,11 @@ File.prototype.copy = function copy(folder) {
 File.prototype.move = function move(destFolder) {
   return new Promise((resolve, reject) => {
     if (isCurrentFolder.call(this, destFolder)) {
-      reject(MOVE_SAME_FOLDER_ERROR_MSG);
+      reject(ERROR_MOVING_TO_SAME_FOLDER);
     }
 
     if (isInvalidFolder(destFolder)) {
-      reject(MOVE_INVALID_FODLER_ERROR_MSG);
+      reject(ERROR_MOVING_TO_INVALID_FOLDER);
     }
 
     resolve();
@@ -140,7 +127,7 @@ File.prototype.move = function move(destFolder) {
 File.prototype.rename = function rename(newFileName) {
   return new Promise((resolve, reject) => {
     if (hasSameFileName.call(this, newFileName)) {
-      reject(RENAME_ERROR_MSG);
+      reject(ERROR_SAME_FILE_NAME);
     }
 
     resolve();
@@ -152,6 +139,17 @@ File.prototype.rename = function rename(newFileName) {
     this.path = this.path.replace(oldFileName, newFileName);
   });
 };
+
+/**
+ * Copy file
+ *
+ * @param {Folder} folder default: currentFolder
+ * @return {}
+
+File.prototype.copy = function copy(folder) {
+
+};
+*/
 
 
 /**

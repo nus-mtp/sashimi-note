@@ -1,7 +1,7 @@
 import storage from 'src/database/storage';
-import Folder from './folder';
+import Folder from '../data/folder';
 
-const searchFolder = Folder.createEmptyFolder();
+const searchFolder = new Folder();
 let searchFileList = [];
 let searchFolderList = [];
 
