@@ -41,12 +41,25 @@ export default class query {
     });
   }
 
-  static isTableExistsInDatabase(tableName) {
-    return new Promise((resolve, reject) =>
-      sqlCommands.getFullTableData(tableName)
-      .then(() => resolve(true))
-      .catch(sqlErr => resolve(false))
-    );
+  static isTableExistsInDatabase(tableName, databaseName) {
+    return new Promise((resolve, reject) => {
+      const thisDatabaseName = databaseName || constants.INDEXEDDB_NAME;
+      const requestOpenDatabase = indexedDB.open(thisDatabaseName);
+      requestOpenDatabase.onsuccess = function onSuccess(event) {
+        const tableNames = event.target.result.objectStoreNames;
+        if (tableNames.contains(tableName) === false) {
+          requestOpenDatabase.result.close();
+          resolve(false);
+        } else {
+          requestOpenDatabase.result.close();
+          resolve(true);
+        }
+      };
+      // if database version not supported, implies table does not exists
+      requestOpenDatabase.onupgradeneeded = function onUpgradeNeeded(event) {
+        resolve(false);
+      };
+    });
   }
 
   static getFullTableData(tableName) {
