@@ -167,7 +167,6 @@ export default {
 
     p {
       font-size: $documents-name-font-size;
-      width: 95%;
       overflow: hidden;
       text-overflow: ellipsis;
       white-space: nowrap;
