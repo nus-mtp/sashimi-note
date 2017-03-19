@@ -62,7 +62,6 @@ File.prototype.remove = function remove() {
     .then(() => {
       idMap.removeFileFromMap(this.id);
       const parentFolder = this.parentFolder;
-      // const index = parentFolder.childFileList.findIndex(childFile => childFile.id === this.id);
       const index = parentFolder.childFileList.indexOf(this);
       parentFolder.childFileList.splice(index, 1);
     })
@@ -132,44 +131,10 @@ File.prototype.rename = function rename(newFileName) {
 
     resolve();
   })
-  .then(() => storage.renameFile(newFileName, this.id))
+  .then(() => storage.renameFile(this.id, newFileName))
   .then(() => {
     const oldFileName = this.name;
     this.name = newFileName;
     this.path = this.path.replace(oldFileName, newFileName);
   });
 };
-
-/**
- * Copy file
- *
- * @param {Folder} folder default: currentFolder
- * @return {}
-
-File.prototype.copy = function copy(folder) {
-
-};
-*/
-
-
-/**
- * Download file from database to drive
- *
- * @param {String} fileFormat deafult: md format
- * @return {}
-
-File.prototype.download = function download() {
-
-};
-
-/**
- * Upload file from drive to database
- *
- * @param {}
- * @return {}
-
-File.prototype.upload = function upload() {
-
-};
-
-*/

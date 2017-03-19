@@ -98,7 +98,7 @@ Folder.prototype.remove = function remove() {
   .then(() => {
     idMap.removeFolderFromMap(this.id);
     const parentFolder = this.parentFolder;
-    const index = parentFolder.childFolderList.findIndex(childFolder => childFolder.id === this.id);
+    const index = parentFolder.childFolderList.indexOf(this);
     parentFolder.childFolderList.splice(index, 1);
   });
 };
@@ -119,7 +119,7 @@ Folder.prototype.rename = function rename(newFolderName) {
     }
     resolve();
   })
-  .then(() => storage.renameFolder(newFolderName, this.id))
+  .then(() => storage.renameFolder(this.id, newFolderName))
   .then(() => {
     const oldFolderName = this.name;
     this.name = newFolderName;
