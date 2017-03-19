@@ -4,25 +4,23 @@ function createDoc(browser, docType) {
   browser.url(`${devServer}/`);
   browser.expect.element('#app').to.be.visible.before(5000);
 
-  browser.execute(() => {
+  browser.execute((data) => {
+    const className = `.${data}`;
+    const currentNumDocs = document.querySelectorAll(className).length;
+
+    return currentNumDocs;
+  }, [docType], (result) => {
     const className = `.${docType}`;
-    const numDocs = document.querySelectorAll(className).length;
+    const createButton = `#button-create-${docType}`;
+    const previousNumDocs = result.value;
+    const expectedNumDocs = previousNumDocs + 1;
 
-    return numDocs;
-  }, [docType], (numDocs) => {
-    try {
-      const createButton = `#button-create-${docType}`;
-      const numDocsAfterCreate = numDocs.value + 1;
-
-      browser
+    browser
         .click(createButton)
         .pause(500);
 
-      browser
-        .expect(numDocs.value).to.equal(numDocsAfterCreate);
-    } catch (error) {
-      console.log(error);
-    }
+    browser
+      .assert.elementCount(className, expectedNumDocs);
   });
 }
 describe('FileManager\'s create file/folder button', function() {
