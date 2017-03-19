@@ -3,7 +3,7 @@ import SqlArray from 'src/database/generated-data/sqlArray';
 import dataDelete from 'src/database/data-modifier/dataDelete';
 import exceptions from 'src/database/exceptions';
 
-const testDatabaseName = 'test';
+const testDatabaseName = 'testSQL';
 const sqlCommands = new SqlCommands();
 const alasqlArray = new SqlArray();
 
