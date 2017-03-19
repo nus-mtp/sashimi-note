@@ -101,8 +101,50 @@ DocumentNavigator.prototype.removeDomStyling = function removeDomStyling() {
 DocumentNavigator.prototype.addEventListeners = function addEventListeners() {
   this.eventInstance = {
     pointers: {},
-    numPointers: 0
+    numPointers: 0,
+    state: {
+      action: null,
+      pointerType: null
+    }
   };
+
+  const draggableSettings = {
+    inertia: {
+      resistance: 5,
+      minSpeed: 400,
+      endSpeed: 20
+    },
+    onstart: (event) => {
+      if (this.eventInstance.state.pointerType === 'touch') {
+        this.eventInstance.state.action = 'panning';
+        return false;
+      } else {
+        // other input: Mouse, Pen will not change
+        //   the eventInstance.state.action
+        return true;
+      }
+    },
+    onmove: (event) => {
+      if (this.eventInstance.state.action === 'panning') {
+        core.pointermove.call(this, event);
+        return true;
+      } else {
+        return false;
+      }
+    },
+    onend: (event) => {
+      if (this.eventInstance.state.action === 'panning') {
+        this.eventInstance.state.action = null;
+      }
+    }
+  };
+  const gesturableSettings = {
+    onmove: core.interactZoom.bind(this),
+  };
+
+  this.interactable = interact(this.el.parent);
+  this.interactable.draggable(draggableSettings);
+  this.interactable.gesturable(gesturableSettings);
 
   this.eventListeners = [
     {
@@ -113,14 +155,24 @@ DocumentNavigator.prototype.addEventListeners = function addEventListeners() {
     }, {
       event: 'pointerdown',
       fn: (event) => {
-        this.eventInstance.pointers[event.pointerId] = true;
+        // Set the state of event instance
+        this.eventInstance.pointers[event.pointerId] = event;
+        this.eventInstance.state.pointerType = event.pointerType || 'mouse';
         this.eventInstance.numPointers = Object.keys(this.eventInstance.pointers).length;
+
+        if (this.eventInstance.state.pointerType === 'touch') {
+          this.interactable.draggable(draggableSettings);
+        } else {
+          this.interactable.draggable(false);
+        }
       },
       target: this.el.parent,
     }, {
       event: 'pointerup',
       fn: (event) => {
+        // Set the state of event instance
         delete this.eventInstance.pointers[event.pointerId];
+        this.eventInstance.state.pointerType = null;
         this.eventInstance.numPointers = Object.keys(this.eventInstance.pointers).length;
       },
       target: this.el.parent,
@@ -139,19 +191,6 @@ DocumentNavigator.prototype.addEventListeners = function addEventListeners() {
       target: this.resizeObserveTarget
     });
   }
-
-  this.interactable = interact(this.el.parent)
-  .draggable({
-    inertia: {
-      resistance: 5,
-      minSpeed: 400,
-      endSpeed: 20
-    },
-    onmove: core.pointermove.bind(this),
-  })
-  .gesturable({
-    onmove: core.interactZoom.bind(this),
-  });
 
   this.eventListeners.forEach((listener) => {
     listener.target.addEventListener(listener.event, listener.fn, listener.boolean);
