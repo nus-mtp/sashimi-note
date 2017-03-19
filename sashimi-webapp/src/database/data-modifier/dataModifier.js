@@ -4,83 +4,46 @@
  *
  */
 
-import dataAdd from './dataAdd';
-import dataDelete from './dataDelete';
-import dataUpdate from './dataUpdate';
-import exceptions from '../exceptions';
+import dataAdd from 'src/database/data-modifier/dataAdd';
+import dataDelete from 'src/database/data-modifier/dataDelete';
+import dataUpdate from 'src/database/data-modifier/dataUpdate';
 
 export default class dataModifier {
   static constructor() {}
 
   static deleteAllEntities(databaseName) {
-    if (typeof Promise === 'function') {
-      return new Promise((resolve, reject) =>
-        dataDelete.deleteAllEntities(databaseName)
-        .then(data => resolve(data))
-        .catch(sqlErr => reject(sqlErr))
-      );
-    } else {
-      throw new exceptions.PromiseFunctionNotDefined();
-    }
+    return dataDelete.deleteAllEntities(databaseName);
   }
 
   static createNewFile(organizationId, filePath, folderId) {
-    if (typeof Promise === 'function') {
-      return new Promise((resolve, reject) =>
-        dataAdd.createNewFile(organizationId, filePath, folderId)
-        .then(fileId => resolve(fileId))
-        .catch(sqlErr => reject(sqlErr))
-      );
-    } else {
-      throw new exceptions.PromiseFunctionNotDefined();
-    }
+    return dataAdd.createNewFile(organizationId, filePath, folderId);
   }
 
   static createNewFolder(organizationId, folderPath, folderId) {
-    if (typeof Promise === 'function') {
-      return new Promise((resolve, reject) =>
-        dataAdd.createNewFolder(organizationId, folderPath, folderId)
-        .then(data => resolve(data))
-        .catch(sqlErr => reject(sqlErr))
-      );
-    } else {
-      throw new exceptions.PromiseFunctionNotDefined();
-    }
+    return dataAdd.createNewFolder(organizationId, folderPath, folderId);
   }
 
-  static saveFile(fileId, file) {
-    if (typeof Promise === 'function') {
-      return new Promise((resolve, reject) =>
-        dataUpdate.saveFile(fileId, file)
-        .then(data => resolve(true))
-        .catch(sqlError => reject(sqlError))
-      );
-    } else {
-      throw new exceptions.PromiseFunctionNotDefined();
-    }
+  static moveFile(fileId, newPath) {
+    return dataUpdate.changeFilePath(fileId, newPath);
+  }
+
+  static renameFileName(fileId, newFileName) {
+    return dataUpdate.changeFileName(fileId, newFileName);
+  }
+
+  static renameFolderName(folderId, newFolderName) {
+    return dataUpdate.changeFolderName(folderId, newFolderName);
+  }
+
+  static saveFile(fileId, fileContent) {
+    return dataUpdate.saveFile(fileId, fileContent);
   }
 
   static deleteFile(fileId) {
-    if (typeof Promise === 'function') {
-      return new Promise((resolve, reject) =>
-        dataDelete.deleteFile(fileId)
-        .then(data => resolve(true))
-        .catch(sqlError => reject(sqlError))
-      );
-    } else {
-      throw new exceptions.PromiseFunctionNotDefined();
-    }
+    return dataDelete.deleteFile(fileId);
   }
 
   static deleteFolder(folderId) {
-    if (typeof Promise === 'function') {
-      return new Promise((resolve, reject) =>
-        dataDelete.deleteFolder(folderId)
-        .then(data => resolve(true))
-        .catch(sqlError => reject(sqlError))
-      );
-    } else {
-      throw new exceptions.PromiseFunctionNotDefined();
-    }
+    return dataDelete.deleteFolder(folderId);
   }
 }

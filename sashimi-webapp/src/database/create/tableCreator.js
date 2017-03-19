@@ -1,13 +1,9 @@
-import constants from '../constants';
-
-import SqlCommands from '../sql-related/sqlCommands';
-
-import StringManipulator from '../stringManipulation';
-
-import exceptions from '../exceptions';
+import constants from 'src/database/constants';
+import SqlCommands from 'src/database/sql-related/sqlCommands';
+import StringManipulator from 'src/database/stringManipulation';
+import exceptions from 'src/database/exceptions';
 
 const sqlCommands = new SqlCommands();
-
 const stringManipulator = new StringManipulator();
 
 let isTableInitializedForCreation = constants.CONST_TABLE_CREATION_CLOSED;
@@ -22,16 +18,8 @@ export default class tableCreator {
   static constructor() {}
 
   static callSqlToLinkToDatabase(databaseName) {
-    if (typeof Promise === 'function') {
-      return new Promise((resolve, reject) => {
-        const thisDatabaseName = databaseName;
-        return sqlCommands.linkDatabaseToIndexedDB(thisDatabaseName)
-          .then(data => resolve(data))
-          .catch(sqlError => reject(sqlError));
-      });
-    } else {
-      throw new exceptions.PromiseFunctionNotDefined();
-    }
+    const thisDatabaseName = databaseName || constants.INDEXEDDB_NAME;
+    return sqlCommands.linkDatabaseToIndexedDB(thisDatabaseName);
   }
 
   static initCreateTable(tableName) {
@@ -89,23 +77,19 @@ export default class tableCreator {
     }
   }
 
-  static endCreateTable(headerName, alasqlArrayObject) {
-    if (typeof Promise === 'function') {
-      return new Promise((resolve, reject) => {
-        if (isTableInitializedForCreation) {
-          // remove extra characters to input into alasql
-          sqlCreateTableString = endOfCreateTableStringForAlasql(sqlCreateTableString);
-          isTableInitializedForCreation = constants.CONST_TABLE_CREATION_CLOSED;
-          return sqlCommands.createTable(sqlCreateTableString)
-            .then(data => resolve(data))
-            .catch(sqlError => reject(sqlError));
-        } else {
-          return null;
-        }
-      });
-    } else {
-      throw new exceptions.PromiseFunctionNotDefined();
-    }
+  static endCreateTable() {
+    return new Promise((resolve, reject) => {
+      if (isTableInitializedForCreation) {
+        // remove extra characters to input into alasql
+        sqlCreateTableString = endOfCreateTableStringForAlasql(sqlCreateTableString);
+        isTableInitializedForCreation = constants.CONST_TABLE_CREATION_CLOSED;
+        return sqlCommands.createTable(sqlCreateTableString)
+        .then(data => resolve(data))
+        .catch(sqlError => reject(sqlError));
+      } else {
+        return resolve(null);
+      }
+    });
   }
 
 }

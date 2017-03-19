@@ -1,33 +1,30 @@
-import exceptions from '../exceptions';
-
-import SqlCommands from '../sql-related/sqlCommands';
+import SqlCommands from 'src/database/sql-related/sqlCommands';
+import StringManipulator from 'src/database/stringManipulation';
 
 const sqlCommands = new SqlCommands();
+const stringManipulator = new StringManipulator();
 
-function updateFile(fileId, markdownFile) {
-  if (typeof Promise === 'function') {
-    return new Promise((resolve, reject) =>
-      sqlCommands.saveFile(fileId, markdownFile)
-      .then(data => resolve(true))
-      .catch(sqlError => sqlError)
-    );
-  } else {
-    throw new exceptions.PromiseFunctionNotDefined();
-  }
+function resolveFileSaving(fileContent) {
+  return stringManipulator.replaceAll(fileContent, '"', '\\"');
 }
 
 export default class dataUpdate {
   static constructor() {}
 
   static saveFile(fileId, markdownFile) {
-    if (typeof Promise === 'function') {
-      return new Promise((resolve, reject) =>
-        updateFile(fileId, markdownFile)
-        .then(data => resolve(data))
-        .catch(sqlError => reject(sqlError))
-      );
-    } else {
-      throw new exceptions.PromiseFunctionNotDefined();
-    }
+    markdownFile = resolveFileSaving(markdownFile);
+    return sqlCommands.saveFile(fileId, markdownFile);
+  }
+
+  static changeFilePath(fileId, newPath) {
+    return sqlCommands.changeFilePath(fileId, newPath);
+  }
+
+  static changeFileName(fileId, newFileName) {
+    return sqlCommands.changeFileName(fileId, newFileName);
+  }
+
+  static changeFolderName(folderId, newFolderName) {
+    return sqlCommands.changeFolderName(folderId, newFolderName);
   }
 }

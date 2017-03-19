@@ -6,121 +6,106 @@
  *
  */
 
-import SqlCommands from '../sql-related/sqlCommands';
+import SqlCommands from 'src/database/sql-related/sqlCommands';
+import constants from 'src/database/constants';
+import StringManipulator from 'src/database/stringManipulation';
 
-import exceptions from '../exceptions';
-
-import constants from '../constants';
+const stringManipulator = new StringManipulator();
 
 const sqlCommands = new SqlCommands();
 
-// dummy function to init sequence running
+// dummy function to init sequence running for code aesthetic below
 function initPromiseSequence() {
-  if (typeof Promise === 'function') {
-    return new Promise((resolve, reject) => {
-      resolve(true);
-    });
-  } else {
-    throw new exceptions.PromiseFunctionNotDefined();
-  }
+  return new Promise((resolve, reject) =>
+    resolve()
+  );
 }
 
 export default class query {
   static constructor() {}
 
   static getAllFilesAndFolders() {
-    if (typeof Promise === 'function') {
-      return new Promise((resolve, reject) => {
-        const promiseArr = [];
-        initPromiseSequence()
-        .then(() => sqlCommands.getFullTableData(constants.ENTITIES_FILE_MANAGER)
-          .then(fileArr => promiseArr.push(fileArr))
-          .catch(sqlError => reject(sqlError)))
-        .then(() => sqlCommands.getFullTableData(constants.ENTITIES_FOLDER)
-          .then(folderArr => promiseArr.push(folderArr))
-          .catch(sqlError => reject(sqlError)))
-        .then(() => resolve(promiseArr))
-        .catch(sqlErr => reject(sqlErr));
-      });
-    } else {
-      throw new exceptions.PromiseFunctionNotDefined();
-    }
+    return new Promise((resolve, reject) => {
+      const fileAndFolderArray = [];
+      initPromiseSequence()
+      .then(() =>
+        sqlCommands.getFullTableData(constants.ENTITIES_FILE_MANAGER)
+        .then(fileArr => fileAndFolderArray.push(fileArr))
+        .catch(sqlError => reject(sqlError)))
+      .then(() =>
+        sqlCommands.getFullTableData(constants.ENTITIES_FOLDER)
+        .then(folderArr => fileAndFolderArray.push(folderArr))
+        .catch(sqlError => reject(sqlError)))
+      .then(() => resolve(fileAndFolderArray))
+      .catch(sqlErr => reject(sqlErr));
+    });
   }
 
-  static isTableExistsInDatabase(tableName) {
-    if (typeof Promise === 'function') {
-      return new Promise((resolve, reject) =>
-        sqlCommands.getFullTableData(tableName)
-        .then(data => resolve(true))
-        .catch(sqlErr => resolve(false))
-      );
-    } else {
-      throw new exceptions.PromiseFunctionNotDefined();
-    }
+  static isTableExistsInDatabase(tableName, databaseName) {
+    return new Promise((resolve, reject) => {
+      const thisDatabaseName = databaseName || constants.INDEXEDDB_NAME;
+      const requestOpenDatabase = indexedDB.open(thisDatabaseName);
+      requestOpenDatabase.onsuccess = function onSuccess(event) {
+        const tableNames = event.target.result.objectStoreNames;
+        if (tableNames.contains(tableName) === false) {
+          requestOpenDatabase.result.close();
+          resolve(false);
+        } else {
+          requestOpenDatabase.result.close();
+          resolve(true);
+        }
+      };
+      // if database version not supported, implies table does not exists
+      requestOpenDatabase.onupgradeneeded = function onUpgradeNeeded(event) {
+        resolve(false);
+      };
+    });
   }
 
   static getFullTableData(tableName) {
-    if (typeof Promise === 'function') {
-      return new Promise((resolve, reject) =>
-        sqlCommands.getFullTableData(tableName)
-        .then(data => resolve(data))
-        .catch(sqlError => reject(sqlError))
-      );
-    } else {
-      throw new exceptions.PromiseFunctionNotDefined();
-    }
+    return sqlCommands.getFullTableData(tableName);
   }
 
   static searchString(searchString) {
-    if (typeof Promise === 'function') {
-      return new Promise((resolve, reject) => {
-        const promiseArr = [];
+    return new Promise((resolve, reject) => {
+      const fileAndFolderArray = [];
 
-        initPromiseSequence()
-        .then(() => sqlCommands.partialSearchFileName(searchString)
-          .then(fileArr => promiseArr.push(fileArr))
-          .catch(sqlError => reject(sqlError)))
-        .then(() => sqlCommands.partialSearchFolderName(searchString)
-          .then(folderArr => promiseArr.push(folderArr))
-          .catch(sqlError => reject(sqlError)))
-        .then(() => resolve(promiseArr))
-        .catch(sqlErr => reject(sqlErr));
-      });
-    } else {
-      throw new exceptions.PromiseFunctionNotDefined();
-    }
+      initPromiseSequence()
+      .then(() => sqlCommands.partialSearchFileName(searchString)
+        .then(fileArr => fileAndFolderArray.push(fileArr))
+        .catch(sqlError => reject(sqlError)))
+      .then(() => sqlCommands.partialSearchFolderName(searchString)
+        .then(folderArr => fileAndFolderArray.push(folderArr))
+        .catch(sqlError => reject(sqlError)))
+      .then(() => resolve(fileAndFolderArray))
+      .catch(sqlErr => reject(sqlErr));
+    });
   }
 
   static loadFolder(folderId) {
-    if (typeof Promise === 'function') {
-      return new Promise((resolve, reject) => {
-        const promiseArr = [];
+    return new Promise((resolve, reject) => {
+      const fileAndFolderArray = [];
 
-        initPromiseSequence()
-        .then(() => sqlCommands.loadFilesFromFolder(folderId)
-          .then(fileArr => promiseArr.push(fileArr))
-          .catch(sqlError => reject(sqlError)))
-        .then(() => sqlCommands.loadFoldersFromFolder(folderId)
-          .then(folderArr => promiseArr.push(folderArr))
-          .catch(sqlError => reject(sqlError)))
-        .then(() => resolve(promiseArr))
-        .catch(sqlError => reject(sqlError));
-      });
-    } else {
-      throw new exceptions.PromiseFunctionNotDefined();
-    }
+      initPromiseSequence()
+      .then(() => sqlCommands.loadFilesFromFolder(folderId)
+        .then(fileArr => fileAndFolderArray.push(fileArr))
+        .catch(sqlError => reject(sqlError)))
+      .then(() => sqlCommands.loadFoldersFromFolder(folderId)
+        .then(folderArr => fileAndFolderArray.push(folderArr))
+        .catch(sqlError => reject(sqlError)))
+      .then(() => resolve(fileAndFolderArray))
+      .catch(sqlError => reject(sqlError));
+    });
   }
 
   static loadFile(fileId) {
-    if (typeof Promise === 'function') {
-      return new Promise((resolve, reject) =>
-        sqlCommands.loadFile(fileId)
-        .then(data => resolve(data))
-        .catch(sqlError => reject(sqlError))
-      );
-    } else {
-      throw new exceptions.PromiseFunctionNotDefined();
-    }
+    return new Promise((resolve, reject) =>
+      sqlCommands.loadFile(fileId)
+      .then((fileContent) => {
+        fileContent = stringManipulator.replaceAll(fileContent, '\\"', '"');
+        resolve(fileContent);
+      })
+      .catch(sqlError => reject(sqlError))
+    );
   }
-
 }
