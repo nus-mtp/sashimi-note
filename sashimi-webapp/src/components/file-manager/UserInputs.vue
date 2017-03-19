@@ -196,6 +196,7 @@ export default {
 }
 
 .view-type {
+  display: none;
   font-size: $navbar-font-size;
 
   a {
@@ -204,6 +205,12 @@ export default {
     &:visited {
       color: black;
     }
+  }
+}
+
+@media screen and (min-width: 480px) {
+  .view-type {
+    display: inline-block;
   }
 }
 
