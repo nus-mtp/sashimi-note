@@ -87,7 +87,7 @@ export default class tableCreator {
         .then(data => resolve(data))
         .catch(sqlError => reject(sqlError));
       } else {
-        return null;
+        return resolve(null);
       }
     });
   }
