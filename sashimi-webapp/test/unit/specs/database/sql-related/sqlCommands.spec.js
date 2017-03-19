@@ -3,7 +3,7 @@ import SqlArray from 'src/database/generated-data/sqlArray';
 import dataDelete from 'src/database/data-modifier/dataDelete';
 import exceptions from 'src/database/exceptions';
 
-const testDatabaseName = 'test';
+const testDatabaseName = 'testSQL';
 const sqlCommands = new SqlCommands();
 const alasqlArray = new SqlArray();
 
@@ -41,25 +41,17 @@ function isTableExistsInDatabase(tableName, callback) {
 
 
 function cleanTestCase() {
-  if (typeof Promise === 'function') {
-    return new Promise((resolve, reject) =>
-      dataDelete.deleteAllEntities(testDatabaseName)
-      .then(isDeleted => resolve(isDeleted))
-      .catch(sqlErr => reject(sqlErr))
-    );
-  } else {
-    throw new exceptions.PromiseFunctionNotDefined();
-  }
+  return dataDelete.deleteAllEntities(testDatabaseName);
 }
 
 describe('sqlCommands', () => {
-  before(() => {
-    sqlCommands.linkDatabaseToIndexedDB(testDatabaseName);
-  });
+  before(() =>
+    sqlCommands.linkDatabaseToIndexedDB(testDatabaseName)
+  );
 
-  after(() => {
-    cleanTestCase();
-  });
+  after(() =>
+    cleanTestCase()
+  );
 
   describe('link to indexeddb database', () => {
     it('should link to indexeddb database', (done) => {
@@ -69,9 +61,7 @@ describe('sqlCommands', () => {
       sqlCommands.linkDatabaseToIndexedDB(testDatabaseName)
       .then(() => {
         isDatabaseExists(testDatabaseName, (isDBExists) => {
-          /*eslint-disable */
           expect(isDBExists).to.be.true;
-          /*eslint-enable */
         });
         done();
       })
@@ -92,9 +82,7 @@ describe('sqlCommands', () => {
       })
       .then(() => { // test for table exists in database
         isTableExistsInDatabase('abc', (isTableExist) => {
-          /*eslint-disable */
           expect(isTableExist).to.be.true;
-          /*eslint-enable */
           done();
         });
       })

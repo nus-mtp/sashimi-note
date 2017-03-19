@@ -12,12 +12,6 @@ export default Object.freeze({
     this.stack = (new Error()).stack;
   },
 
-  PromiseFunctionNotDefined: function PromiseFunctionNotDefined(message) {
-    this.message = message || 'Exception: Promise function not defined for this browser.';
-    this.name = 'PromiseFunctionNotDefined';
-    this.stack = (new Error()).stack;
-  },
-
   IndexedDBNotSupported: function IndexedDBNotSupported(message) {
     this.message = message || 'Exception: IndexedDB not supported on this browser.';
     this.name = 'IndexedDBNotSupported';

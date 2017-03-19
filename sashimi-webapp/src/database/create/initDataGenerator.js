@@ -1,6 +1,6 @@
-import SqlArray from '../generated-data/sqlArray';
-import constants from '../constants';
-import DateTime from '../generated-data/dateTime';
+import SqlArray from 'src/database/generated-data/sqlArray';
+import constants from 'src/database/constants';
+import DateTime from 'src/database/generated-data/dateTime';
 
 const alasqlArray = new SqlArray();
 const dateTime = new DateTime();
