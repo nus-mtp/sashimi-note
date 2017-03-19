@@ -2,12 +2,10 @@ import constants from 'src/database/constants';
 import SqlCommands from 'src/database/sql-related/sqlCommands';
 import DateTime from 'src/database/generated-data/dateTime';
 import SqlArray from 'src/database/generated-data/sqlArray';
-import StringManipulator from 'src/database/stringManipulation';
 
 const sqlCommands = new SqlCommands();
 const dateTime = new DateTime();
 const alasqlArray = new SqlArray();
-const stringManipulator = new StringManipulator();
 
 function createNewFile(organizationId, filePath, folderId, newFileId, newFileName) {
   return new Promise((resolve, reject) => {

@@ -61,7 +61,6 @@ function cascadeChangeFilePath(index, prevBasePath, newBasePath, fileArr) {
     }
     const fileToChangePathIndex = Object.values(fileArr[index])[0];
     let newPath;
-    console.log(index);
     return getCurrentFilePath(fileToChangePathIndex)
     .then((currentFilePath) => {
       const childPath = currentFilePath.toString().split(prevBasePath)[1];
