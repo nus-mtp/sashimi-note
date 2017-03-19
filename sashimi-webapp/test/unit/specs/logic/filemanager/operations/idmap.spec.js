@@ -43,7 +43,8 @@ describe('idMap', () => {
       }).to.throw(Error);
     });
     it('should return undefined if file is not found', () => {
-      expect(idMap.getFileFromMap(0)).to.equal(undefined);
+      const result = idMap.getFileFromMap(0);
+      expect(result).to.equal(undefined);
     });
     it('should return the file if it is found', () => {
       const expectedFile = new File(0);
@@ -86,4 +87,6 @@ describe('idMap', () => {
       }).to.throw(Error);
     });
   });
+
+  idMap.clearMap();
 });
