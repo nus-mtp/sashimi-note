@@ -43,9 +43,10 @@
       </div>
       <div class="float-right">
         <div class="col vertical-align-child buttons-right inline-block">
-          <button id="button-file-upload" class="navbar-buttons hover-grow">
+          <!--Button yet to be implemented. Commented out for deployment-->
+          <!--<button id="button-file-upload" class="navbar-buttons hover-grow">
             <i class="material-icons md-dark">file_upload</i>
-          </button>
+          </button>-->
           <button id="button-create-folder" class="navbar-buttons hover-grow" 
                   v-on:click="execute('createFolder')"
           >
@@ -56,12 +57,13 @@
           >
             <i class="material-icons md-dark">note_add</i>
           </button>
-          <button id="button-duplicate" class="navbar-buttons" 
+          <!--Button yet to be implemented. Commented out for deployment-->
+          <!--<button id="button-duplicate" class="navbar-buttons" 
                   v-bind:class="{'hover-grow': buttonEffect}"
           >
             <i class="material-icons md-dark" 
               v-bind:class="{'md-inactive': buttonDisabled}"
-            >content_copy</i>
+            >content_copy</i>-->
           </button>
           <button id="button-file-download" class="navbar-buttons" 
                   v-bind:class="{'hover-grow': buttonEffect}"
