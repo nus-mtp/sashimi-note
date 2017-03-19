@@ -2,7 +2,10 @@
  * Conditional processor to format what to show and what to hide in viewer
  * Referenced from markdown-it-inline-comments plugin
  * See here: https://github.com/jay-hodgson/markdown-it-inline-comments
- * Process =>hide 'This is a Text' <= as ''
+ * Process =>hide 'This is a Text' <= as '' and ==>hide:condition 'Text in here' <== as ''
+ * based on the stated condition. (E.g. if condition = all, it hides from all versions.
+ * If condition = student, it hides from student versions only.)
+ * @param {MarkdownIt} md - MarkdownIt object containing parsed data of markdown content
  */
 let fileName;
 
@@ -237,4 +240,4 @@ export default function hideShowPlugin(md) {
   md.block.ruler.after('table', 'hideShowBlock', hideShowBlock);
 }
 
-// Future note: can use hideShowPlugin.setCon = function() {...} for setting fileName variable
+// Future note: can use hideShowPlugin.setCond = function() {...} for setting fileName variable

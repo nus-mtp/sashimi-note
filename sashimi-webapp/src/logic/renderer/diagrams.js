@@ -28,7 +28,7 @@ export default function diagramsRenderer(ele) {
       const observer = new MutationObserver((mutations) => {
         if (mutations.length !== 0) {
           observer.disconnect();
-          resolve('Finished drawing!');
+          resolve(seqDiagrams[i].innerHTML);
         }
       });
 
@@ -96,5 +96,5 @@ export default function diagramsRenderer(ele) {
   }
 
   // returns resolved if all the promises are resolved, otherwise returns rejected
-  return Promise.all(promiseArr);
+  return Promise.all(promiseArr).then(() => seqDiagrams);
 }

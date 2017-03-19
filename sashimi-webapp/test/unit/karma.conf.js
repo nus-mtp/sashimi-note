@@ -15,6 +15,7 @@ module.exports = function(config) {
     frameworks: ['mocha', 'sinon-chai'],
     reporters: ['spec', 'coverage'],
     files: [
+      { pattern: '../../static/vendors/dependencies/*.js', included: true, served: true },
       { pattern: '../../static/vendors/*.js', included: true, served: true },
       './index.js',
     ],
