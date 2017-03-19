@@ -74,9 +74,11 @@ describe('tableCreator', () => {
       if (!isUsed) {
         isUsed = true;
         tableCreator.endCreateTable()
-        .then(result => expect(result).to.be.null);
-        isUsed = false;
-        done();
+        .then((result) => {
+          expect(result).to.be.a('null');
+          isUsed = false;
+          done();
+        });
       }
     });
 
