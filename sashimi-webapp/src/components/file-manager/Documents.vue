@@ -1,39 +1,70 @@
 <template>
-  <div class="group section documents" v-bind:class="view">
-    <file :view="action"></file>
+  <div class="group section documents" 
+    v-bind:class="viewMode"
+  >
+    <!--<div class="modal" v-show="modal">
+      <div class="modal-content">
+        <span class="close">&times;</span>
+        <h3>New {{value}}</h3>
+      </div>
+    </div>-->
+    <folder 
+      v-for="folder in docs.childFolderList"
+      v-on:openFolder="changeFolder"
+      v-on:focusFolder="focus"
+      v-on:blurFolder="blur"
+          :folder="folder"
+    >
+    </folder>
+    <file 
+      v-for="file in docs.childFileList"
+      v-on:focusFile="focus"
+      v-on:blurFile="blur"
+          :file="file"
+    >
+    </file>
   </div>
 </template>
 
 <script>
+import eventHub from './EventHub';
 import folder from './Folder';
 import file from './File';
 
 export default {
-  props: ['action'],
+  props: ['viewMode', 'docs'],
   data() {
     return {
-      view: {
-        iconView: false,
-        listView: true
-      },
+      modal: false,
+      value: ''
     };
-  },
-  watch: {
-    action(value) {
-      // compute action based on value
-      if (value === 'iconView') {
-        this.view.iconView = true;
-        this.view.listView = false;
-      } else {
-        this.view.iconView = false;
-        this.view.listView = true;
-      }
-    },
   },
   components: {
     folder,
     file,
   },
+  watch: {},
+  methods: {
+    focus(focusedDoc) {
+      eventHub.$emit('focus', focusedDoc);
+    },
+    blur() {
+      eventHub.$emit('blur');
+    },
+    changeFolder(newFolder) {
+      this.$emit('changeFolder', newFolder);
+    },
+  },
+  mounted() {
+    eventHub.$on('execute', (action, data) => {
+      if (action === 'createFolder') {
+        this.value = 'Folder';
+      } else if (action === 'createFile') {
+        this.value = 'File';
+      // } else if (action === 'download') {
+      }
+    });
+  }
 };
 </script>
 
@@ -52,16 +83,16 @@ export default {
     padding: 0;
 
     &:hover {
-      background-color: rgba(0,0,0,0.02);      
+      background-color: rgba(0,0,0,0.02);
     }
 
     &:focus {
-      background-color: #d3e2e2;
+      background-color: $documents-focus-color;
     }
 
     p {
-      font-family: $general-font;
-      
+      font-family: $font-primary;
+
       &::selection {
         background-color: white;
       }
@@ -86,7 +117,7 @@ export default {
     }
 
     p {
-      font-size: 13px;
+      font-size: $documents-name-font-size;
       position: absolute;
       top: 15px;
       left: 0;
@@ -108,10 +139,8 @@ export default {
   .folder,
   .file {
     width: 100%;
-    border-bottom: 1px solid $navbar-border-color;
-    vertical-align: middle;
-    padding: 10px 20px;
-    padding-top: 16px;
+    border-bottom: 1px solid $grey-border;
+    padding: 8px 18px;
     text-overflow: ellipsis;
     overflow: hidden;
     white-space: nowrap;
@@ -123,7 +152,7 @@ export default {
     }
 
     p {
-      font-size: 16px;
+      font-size: $documents-name-font-size;
       width: 95%;
       overflow: hidden;
       text-overflow: ellipsis;

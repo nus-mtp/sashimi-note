@@ -19,11 +19,11 @@ export default {
 
 body {
   margin: 0;
-  font-size: 18px;
+  font-size: $font-size-primary;
 }
 
 #app {
-  font-family: $general-font;
+  font-family: $font-primary;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   -webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
@@ -115,7 +115,7 @@ img {
 
 .button {
   &-group-margin {
-    margin-left: $left-margin-navbar-elements;
+    margin-left: $navbar-elements-left-margin;
   }
 
   &-img {
@@ -129,18 +129,18 @@ img {
   width: $button-logo-width;
 
   a {
-    font-size: 14px;
-    font-family: $general-font;
+    font-size: $logo-font-size;
+    font-family: $font-primary;
     text-decoration: none;
-    color: #95989A;
+    color: $grey-font;
 
     &:focus,
     &:visited {
-      color: #95989A;;
+      color: $grey-font;
     }
 
     &:hover {
-      color: darkorange;
+      color: $orange;
     }
 
     img {

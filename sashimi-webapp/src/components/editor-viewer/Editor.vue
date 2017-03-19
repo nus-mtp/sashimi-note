@@ -19,6 +19,7 @@ export default {
   props: ['value'],
   data() {
     return {
+      isBeingLoaded: true,
       mdContent: this.value,
       editorOption: {
         tabSize: 4,
@@ -38,6 +39,15 @@ export default {
   methods: {
     codeChange(newCode) {
       this.$emit('input', newCode);
+    }
+  },
+  watch: {
+    value(data) {
+      if (this.isBeingLoaded) {
+        codeMirrorInstance.setValue(data);
+        codeMirrorInstance.setCursor(data.length);
+        this.isBeingLoaded = false;
+      }
     }
   },
   computed: {

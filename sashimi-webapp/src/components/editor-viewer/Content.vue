@@ -2,12 +2,12 @@
   <div>
     <navbar v-model="action"></navbar>
     <div class="section group content">
-      <div class="col" v-bind:class="editorCols">
+      <div class="col editor-wrapper" v-bind:class="editorCols">
         <editor 
           v-model="mdContent"
         ></editor>
       </div>
-      <div class="col" v-bind:class="viewerCols">
+      <div class="col viewer-wrapper" v-bind:class="viewerCols">
         <viewer 
           :editor-content="mdContent" 
           :file-format="fileFormat" 
@@ -19,6 +19,8 @@
 </template>
 
 <script>
+import _ from 'lodash';
+import fileManager from 'src/logic/filemanager';
 import navbar from './Navbar';
 import viewer from './Viewer';
 import editor from './Editor';
@@ -31,11 +33,10 @@ export default {
   },
   data() {
     return {
-      // TODO: Temporary solution for presistence storage
-      //       to be remove when file manager is implemented.
-      mdContent: localStorage.getItem('mdContent'),
+      mdContent: '',
       action: '',
       fileFormat: 'html',
+      file: null,
       editorCols: {
         span_6_of_12: true,
         span_12_of_12: false,
@@ -82,21 +83,20 @@ export default {
         }
       }
     },
-    mdContent(value) {
-      // TODO: Temporary solution for presistence storage
-      //       to be remove when file manager is implemented.
-      localStorage.setItem('mdContent', value);
-    },
+    mdContent: _.debounce(function saveFile(value) {
+      this.file.save(value);
+    }, 1000),
   },
   method: {
   },
   computed: {
   },
   mounted() {
-    // console.log(this.$route.query.id);
-
-    // if id != null
-    //  load content
+    this.file = fileManager.getFileByID(this.$route.query.id);
+    this.file.load()
+    .then((data) => {
+      this.mdContent = data;
+    });
   }
 };
 
