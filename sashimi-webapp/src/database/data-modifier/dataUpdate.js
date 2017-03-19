@@ -1,20 +1,30 @@
-import exceptions from 'src/database/exceptions';
 import SqlCommands from 'src/database/sql-related/sqlCommands';
+import StringManipulator from 'src/database/stringManipulation';
 
 const sqlCommands = new SqlCommands();
+const stringManipulator = new StringManipulator();
+
+function resolveFileSaving(fileContent) {
+  return stringManipulator.replaceAll(fileContent, '"', '\\"');
+}
 
 export default class dataUpdate {
   static constructor() {}
 
   static saveFile(fileId, markdownFile) {
-    if (typeof Promise === 'function') {
-      return new Promise((resolve, reject) =>
-        sqlCommands.saveFile(fileId, markdownFile)
-        .then(() => resolve())
-        .catch(sqlError => reject(sqlError))
-      );
-    } else {
-      throw new exceptions.PromiseFunctionNotDefined();
-    }
+    markdownFile = resolveFileSaving(markdownFile);
+    return sqlCommands.saveFile(fileId, markdownFile);
+  }
+
+  static changeFilePath(fileId, newPath) {
+    return sqlCommands.changeFilePath(fileId, newPath);
+  }
+
+  static changeFileName(fileId, newFileName) {
+    return sqlCommands.changeFileName(fileId, newFileName);
+  }
+
+  static changeFolderName(folderId, newFolderName) {
+    return sqlCommands.changeFolderName(folderId, newFolderName);
   }
 }
