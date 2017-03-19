@@ -76,7 +76,7 @@ function hasSameFileName(newFileName) {
  * @return {}
  */
 File.prototype.remove = function remove() {
-  return storage.deleteFile(this.path)
+  return storage.deleteFile(this.id)
     .then(() => {
       idMap.removeFileFromMap(this.id);
       const parentFolder = this.parentFolder;

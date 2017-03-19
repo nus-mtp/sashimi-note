@@ -41,7 +41,13 @@ function removeElementAtIndex(queue, index) {
  */
 function getChildFile(queue, parentID) {
   parentID = (parentID == null) ? NO_PARENT_ID: parentID;
-  const index = queue.findIndex(dbFileObj => dbFileObj.folder_id === parentID);
+  // const index = queue.findIndex(dbFileObj => dbFileObj.folder_id === parentID);
+  let index;
+  for (let i=0; i<queue.length; i+=1) {
+    if (queue[i].folder_id === parentID) {
+      index = i;
+    }
+  }
   return removeElementAtIndex(queue, index);
 }
 
@@ -54,7 +60,13 @@ function getChildFile(queue, parentID) {
  */
 function getChildFolder(queue, parentID) {
   parentID = (parentID == null) ? NO_PARENT_ID: parentID;
-  const index = queue.findIndex(dbFolderObj => dbFolderObj.parent_folder_id === parentID);
+  // const index = queue.findIndex(dbFolderObj => dbFolderObj.parent_folder_id === parentID);
+  let index;
+  for (let i=0; i<queue.length; i+=1) {
+    if (queue[i].parent_folder_id === parentID) {
+      index = i;
+    }
+  }
   return removeElementAtIndex(queue, index);
 }
 
@@ -94,14 +106,14 @@ const core = {
     while (!queueIsEmpty(processingQueue)) {
       currFolder = processingQueue.shift();
       /* Process dbFileList for child file */
-      while ((dbFileObj = getChildFile(dbFileList, currFolder.id)) !== null) {
+      while ((dbFileObj = getChildFile(dbFileList, currFolder.id)) != null) {
         childFile = new File(dbFileObj.file_id, dbFileObj.file_name, dbFileObj.file_path, currFolder);
         idMap.addFileToMap(childFile.id, childFile);
         currFolder.childFileList.push(childFile);
       }
 
-          /* Process dbFolderList for child folder */
-      while ((dbFolderObj = getChildFolder(dbFolderList, currFolder.id)) !== null) {
+      /* Process dbFolderList for child folder */
+      while ((dbFolderObj = getChildFolder(dbFolderList, currFolder.id)) != null) {
         childFolder = new Folder(dbFolderObj.folder_id, dbFolderObj.folder_name, dbFolderObj.folder_path);
         processingQueue.push(childFolder);
         idMap.addFolderToMap(childFolder.id, childFolder);
