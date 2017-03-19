@@ -11,7 +11,11 @@
       </div>
       <!--Waiting for file-manager api to be completed to implement buttons-->
       <div class="col searchBar inline-block">
-        <input type="text" placeholder="Search...">
+        <input
+          type="text"
+          placeholder="Search..."
+          v-model="searchString"
+        >
       </div>
     </div>
     <div class="section group navbar userActions vertical-align-child">
@@ -97,6 +101,7 @@ export default {
       buttonDisabled: true,
       buttonEffect: false,
       focusedDoc: {},
+      searchString: '',
     };
   },
   methods: {
@@ -118,7 +123,11 @@ export default {
       this.$emit('changeViewMode', viewMode);
     },
   },
-  watch: {},
+  watch: {
+    searchString(value) {
+      console.log(value);
+    }
+  },
   mounted() {
     eventHub.$on('focus', (focusedDoc) => {
       this.buttonDisabled = false;
