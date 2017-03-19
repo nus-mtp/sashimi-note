@@ -23,11 +23,11 @@ function searchDB(searchString) {
       searchFileList = [];
       searchFolderList = [];
 
-      while ((dbFileObj = dbFileList.shift()) !== null) {
+      while ((dbFileObj = dbFileList.shift()) != null) {
         searchFileList.push(Folder.get(dbFileObj.file_id));
       }
 
-      while ((dbFolderObj = dbFolderList.shift()) !== null) {
+      while ((dbFolderObj = dbFolderList.shift()) != null) {
         searchFileList.push(Folder.get(dbFolderObj.folder_id));
       }
     })
