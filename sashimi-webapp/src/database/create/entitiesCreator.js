@@ -79,7 +79,7 @@ export default class entitiesCreator {
 
     tableCreator.setPrimaryKeys(constants.HEADER_USER_USER_ID);
 
-    return tableCreator.endCreateTable(constants.ENTITIES_USER, initDataGenerator.getInitDataUser());
+    return tableCreator.endCreateTable();
   }
 
   static createOrganizationTable() {
@@ -95,7 +95,7 @@ export default class entitiesCreator {
     tableCreator.setPrimaryKeys(constants.HEADER_ORGANIZATION_ORGANIZATION_ID,
                                 constants.HEADER_ORGANIZATION_USER_ID);
 
-    return tableCreator.endCreateTable(constants.ENTITIES_ORGANIZATION, initDataGenerator.getInitDataOrganization());
+    return tableCreator.endCreateTable();
   }
 
   static createFileManagerTable() {
@@ -113,7 +113,7 @@ export default class entitiesCreator {
 
     tableCreator.setPrimaryKeys(constants.HEADER_FILE_MANAGER_FILE_ID,
                                 constants.HEADER_FILE_MANAGER_ORGANIZATION_ID);
-    return tableCreator.endCreateTable(constants.ENTITIES_FILE_MANAGER, initDataGenerator.getInitDataFileManager());
+    return tableCreator.endCreateTable();
   }
 
   static createFolderTable() {
@@ -130,7 +130,7 @@ export default class entitiesCreator {
 
     tableCreator.setPrimaryKeys(constants.HEADER_FOLDER_ORGANIZATION_ID,
                                 constants.HEADER_FOLDER_FOLDER_ID);
-    return tableCreator.endCreateTable(constants.ENTITIES_FOLDER);
+    return tableCreator.endCreateTable();
   }
 
   static fillUpDefaultData() {
