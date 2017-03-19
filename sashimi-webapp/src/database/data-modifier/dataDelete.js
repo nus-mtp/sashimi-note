@@ -49,7 +49,7 @@ export default class dataDelete {
   }
 
   static deleteFile(fileId) {
-    sqlCommands.deleteFile(fileId);
+    return sqlCommands.deleteFile(fileId);
   }
 
 
