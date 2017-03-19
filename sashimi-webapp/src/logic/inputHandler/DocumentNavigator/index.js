@@ -1,7 +1,7 @@
 import interact from 'interactjs';
 import domUtils from 'src/helpers/domUtils';
 import unitConverter from 'src/helpers/unitConverter';
-import core from './core';
+import EventHM from './EventHandlerManager';
 import CssTransformer from './CssTransformer';
 
 /**
@@ -18,6 +18,7 @@ const DocumentNavigator = function DocumentNavigator(containerCssSelector, resiz
   this.resizeObserveTarget = resizeObserveTarget || null;
 
   // 1. Set viewport on init;
+  this.eventHandler = new EventHM(this);
   this.updateElementWidth();
 
   // 2. Set up event listener and DOM properties;
@@ -43,7 +44,7 @@ DocumentNavigator.prototype.updateElementWidth = function updateElementWidth() {
     this.width[key] = unitConverter.get(elementWidth, 'px', false);
   });
 
-  core.updateWindowSize.call(this);
+  this.eventHandler.eventFn.dom.resize.call(this);
 };
 
 DocumentNavigator.prototype.setDomBehaviour = function setDomBehaviour() {
@@ -108,73 +109,23 @@ DocumentNavigator.prototype.addEventListeners = function addEventListeners() {
     }
   };
 
-  const draggableSettings = {
-    inertia: {
-      resistance: 5,
-      minSpeed: 400,
-      endSpeed: 20
-    },
-    onstart: (event) => {
-      if (this.eventInstance.state.pointerType === 'touch') {
-        this.eventInstance.state.action = 'panning';
-        return false;
-      } else {
-        // other input: Mouse, Pen will not change
-        //   the eventInstance.state.action
-        return true;
-      }
-    },
-    onmove: (event) => {
-      if (this.eventInstance.state.action === 'panning') {
-        core.gesturemove.call(this, event);
-        return true;
-      } else {
-        return false;
-      }
-    },
-    onend: (event) => {
-      if (this.eventInstance.state.action === 'panning') {
-        this.eventInstance.state.action = null;
-      }
-    }
-  };
-  const gesturableSettings = {
-    onmove: core.gesturezoom.bind(this),
-  };
-
   this.interactable = interact(this.el.parent);
-  this.interactable.draggable(draggableSettings);
-  this.interactable.gesturable(gesturableSettings);
+  this.interactable.draggable(this.eventHandler.settings.draggable);
+  this.interactable.gesturable(this.eventHandler.settings.gesturable);
 
   this.eventListeners = [
     {
       event: 'mousewheel',
-      fn: core.mousewheel.bind(this),
+      fn: this.eventHandler.eventFn.mousewheel.bind(this),
       target: this.el.parent,
       boolean: false
     }, {
       event: 'pointerdown',
-      fn: (event) => {
-        // Set the state of event instance
-        this.eventInstance.pointers[event.pointerId] = event;
-        this.eventInstance.state.pointerType = event.pointerType || 'mouse';
-        this.eventInstance.numPointers = Object.keys(this.eventInstance.pointers).length;
-
-        if (this.eventInstance.state.pointerType === 'touch') {
-          this.interactable.draggable(draggableSettings);
-        } else {
-          this.interactable.draggable(false);
-        }
-      },
+      fn: this.eventHandler.eventFn.pointer.down.bind(this),
       target: this.el.parent,
     }, {
       event: 'pointerup',
-      fn: (event) => {
-        // Set the state of event instance
-        delete this.eventInstance.pointers[event.pointerId];
-        this.eventInstance.state.pointerType = null;
-        this.eventInstance.numPointers = Object.keys(this.eventInstance.pointers).length;
-      },
+      fn: this.eventHandler.eventFn.pointer.up.bind(this),
       target: this.el.parent,
     }, {
       event: 'resize',
