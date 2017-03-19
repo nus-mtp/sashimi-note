@@ -72,7 +72,21 @@ export default {
           break;
         }
         case 'search': {
-          console.log('say: ', doc);
+          if (doc === '') {
+            this.docs = this.history.currFolder;
+          } else {
+            fileManager.searchAll(doc)
+            .then((result) => { this.docs = result; })
+            .catch((error) => {
+              // Simple alert box for message
+              // TODO: Use a less obstrusive alert message
+              alert('Opps, I have problem finding your file');
+              console.log(error);
+            });
+            // Intentionally not updating the history stack.
+            // Since, there may be multiple incomplete searching,
+            // updating the history stack may unnecessary populate the stack.
+          }
           break;
         }
         default: break;
@@ -105,6 +119,7 @@ export default {
     const ROOT_FOLDER_ID = 0;
     this.docs = fileManager.getFolderByID(ROOT_FOLDER_ID);
     this.history = fileManager.createHistory(this.docs);
+    console.log(this.history);
   }
 };
 
