@@ -164,22 +164,6 @@ export default {
   background-color: $navbar-background-color;
   box-shadow: 0 2px 10px rgba(0,0,0,0.2);
   padding-top: 10px 0;
-
-  table {
-    width: 100%;
-    
-    td {
-      vertical-align: middle;
-    }
-  }
-}
-
-.buttons-right {
-  display: none;
-
-  td {
-    width: $button-img-width;
-  }
 }
 
 .navbar-breadcrumb {
@@ -220,10 +204,6 @@ export default {
     &:visited {
       color: black;
     }
-  }
-
-  td {
-    width: 100px;
   }
 }
 
