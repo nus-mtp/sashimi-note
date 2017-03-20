@@ -21,9 +21,7 @@ if (process.env.NODE_ENV !== 'testing') {
   printTitle('Build web application');
 
   cd(`./${webapp.path}`);
-  exec(CMD_INSTALL), function(error, stdout, stderr) {
-    console.log(stdout);
-  };
+  exec(CMD_INSTALL);
   statusBuild = exec(CMD_BINARY + ' run build').code;
   throwErrorIfFailedToExec(statusBuild, 'build failed')
 
