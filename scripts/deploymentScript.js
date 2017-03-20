@@ -1,5 +1,10 @@
 require('shelljs/global');
 
+// print process.argv
+var isYarn = process.env.npm_execpath.indexOf('yarn') !== -1;
+var CMD_BINARY = (isYarn) ? 'yarn' : 'npm';
+var CMD_INSTALL = (isYarn) ? CMD_BINARY : CMD_BINARY + ' install';
+
 var platform = {
   path: 'sashimi-platform',
   buildPath: 'public'
@@ -16,8 +21,10 @@ if (process.env.NODE_ENV !== 'testing') {
   printTitle('Build web application');
 
   cd(`./${webapp.path}`);
-  exec('yarn');
-  statusBuild = exec('yarn run build').code;
+  exec(CMD_INSTALL), function(error, stdout, stderr) {
+    console.log(stdout);
+  };
+  statusBuild = exec(CMD_BINARY + ' run build').code;
   throwErrorIfFailedToExec(statusBuild, 'build failed')
 
   printTitle('Copy webapp to server folder');
@@ -40,7 +47,7 @@ cd(`..`);
 printTitle('Run web server')
 
 cd(`./${platform.path}`);
-exec('yarn')
+exec(CMD_INSTALL)
 
 
 function throwErrorIfFailedToExec(statusCode, message) {
