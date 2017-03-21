@@ -1,6 +1,6 @@
 <p align="center">
   <a href="https://sashimi-note.herokuapp.com">
-    <img width="60%" src="http://i.imgur.com/sH6Utl0.jpg">
+    <img width="60%" src="https://rawgit.com/wiki/nus-mtp/lecture-note-2.0/media/Misc/sashimi-note-logo.svg">
   </a>
 </p>
 
