@@ -315,6 +315,16 @@ export default function sqlCommands() {
     );
   };
 
+  this.retrieveFullFile = function retrieveFullFile(fileId) {
+    return new Promise((resolve, reject) =>
+      alasql.promise([stringManipulator.stringConcat('SELECT * FROM ', constants.ENTITIES_FILE_MANAGER,
+                                                      ' WHERE ', constants.HEADER_FILE_MANAGER_FILE_ID,
+                                                      ' = ', fileId)])
+      .then(data => resolve(getArray(data)))
+      .catch(sqlError => reject(sqlError))
+    );
+  };
+
   this.partialSearchFolderName = function partialSearchFolderName(searchString) {
     return new Promise((resolve, reject) =>
       alasql.promise([stringManipulator.stringConcat('SELECT * FROM ', constants.ENTITIES_FOLDER,
