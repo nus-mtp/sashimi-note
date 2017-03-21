@@ -5,8 +5,8 @@
 </p>
 
 <p align="center">
-  <a href="https://travis-ci.org/nus-mtp/lecture-note-2.0">
-    <img src="https://travis-ci.org/nus-mtp/lecture-note-2.0.svg?branch=master" title="Build Status of master branch">
+  <a href="https://travis-ci.org/nus-mtp/sashimi-note">
+    <img src="https://travis-ci.org/nus-mtp/sashimi-note.svg?branch=master" title="Build Status of master branch">
   </a>
 </p>
 
