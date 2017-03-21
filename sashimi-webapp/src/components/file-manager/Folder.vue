@@ -1,24 +1,62 @@
 <template>
   <div class="col vertical-align-child" 
     v-on:dblclick="openFolder"
-    id="123">
-      <button class="folder">
-        <img src="../../assets/images/icons/icon-folder.svg" alt="folder">
-        <p class="inline-block">CS3244 Project</p>
-      </button>
+  >
+    <button tabindex="1" class="folder"
+            v-on:focus="focusFolder"
+            v-on:blur="blurFolder"
+    >
+      <img src="../../assets/images/icons/icon-folder.svg" alt="folder">
+      <p contenteditable="true" tabindex="2" class="inline-block"
+        v-on:blur="saveFolderName"
+        v-on:keypress="onKeyPress($event)"
+        v-on:keyup="onKeyUp($event)"
+      >{{folder.name}}</p>
+    </button>
   </div>
 </template>
 
 <script>
   export default {
+    props: ['folder'],
     data() {
     },
     methods: {
       openFolder() {
-        const folderId = this.$el.id;
-        this.$router.push({ path: 'content', query: { id: folderId } });
+        this.$emit('openFolder', this.folder);
       },
-    }
+      focusFolder() {
+        this.$emit('focusFolder', this.folder);
+      },
+      blurFolder() {
+        this.$emit('blurFolder');
+      },
+      saveFolderName() {
+        window.getSelection().removeAllRanges();
+
+        let newFolderName = this.$el.getElementsByTagName('p')[0].innerHTML;
+        newFolderName = newFolderName.trim().replace(/&nbsp;/gi, '');
+        if (newFolderName === '') {
+          newFolderName = 'untitled';
+        }
+
+        if (newFolderName !== this.folder.name) {
+          this.$emit('renameFolder', newFolderName, this.folder);
+        }
+      },
+      onKeyPress(event) {
+        const enterKey = 13;
+        if (event.keyCode === enterKey) {
+          event.preventDefault();
+        }
+      },
+      onKeyUp(event) {
+        const enterKey = 13;
+        if (event.keyCode === enterKey) {
+          this.saveFolderName();
+        }
+      }
+    },
   };
 </script>
 

@@ -60,10 +60,13 @@ describe('tableCreator', () => {
         } catch (tableCreationException) {
           expect(tableCreationException.name).to.equal('TableCreationAlreadyInitiated');
         }
+        tableCreator.addHeader('a', 'INT');
         tableCreator.endCreateTable()
+        .then(() => {
+          isUsed = false;
+          done();
+        })
         .catch(err => done(err));
-        isUsed = false;
-        done();
       }
     });
 
@@ -71,9 +74,11 @@ describe('tableCreator', () => {
       if (!isUsed) {
         isUsed = true;
         tableCreator.endCreateTable()
-        .then(result => expect(result).to.be.null);
-        isUsed = false;
-        done();
+        .then((result) => {
+          expect(result).to.be.a('null');
+          isUsed = false;
+          done();
+        });
       }
     });
 
@@ -85,9 +90,11 @@ describe('tableCreator', () => {
         tableCreator.addHeader('b', 'STRING');
         tableCreator.addHeader('c', 'DATE');
         tableCreator.endCreateTable()
+        .then(() => {
+          isUsed = false;
+          done();
+        })
         .catch(err => expect(err).to.not.equal(Error));
-        isUsed = false;
-        done();
       }
     });
 
@@ -107,9 +114,11 @@ describe('tableCreator', () => {
           tableCreator.addHeader('c', 'DATE');
           tableCreator.setForeignKey('b', 'abc', 'b');
           tableCreator.endCreateTable()
+          .then(() => {
+            isUsed = false;
+            done();
+          })
           .catch(err => expect(err).to.not.equal(Error));
-          done();
-          isUsed = false;
         });
       }
     });
@@ -123,16 +132,19 @@ describe('tableCreator', () => {
         tableCreator.addHeader('c', 'DATE');
         tableCreator.setPrimaryKeys('a', 'b', 'c');
         tableCreator.endCreateTable()
+        .then(() => {
+          tableCreator.initCreateTable('abc');
+          tableCreator.addHeader('a', 'NUMBER', 'PRIMARY KEY');
+          tableCreator.addHeader('b', 'STRING');
+          tableCreator.addHeader('c', 'DATE');
+          tableCreator.endCreateTable()
+          .then(() => {
+            isUsed = false;
+            done();
+          })
+          .catch(err => expect(err).to.not.equal(Error));
+        })
         .catch(err => expect(err).to.not.equal(Error));
-
-        tableCreator.initCreateTable('abc');
-        tableCreator.addHeader('a', 'NUMBER', 'PRIMARY KEY');
-        tableCreator.addHeader('b', 'STRING');
-        tableCreator.addHeader('c', 'DATE');
-        tableCreator.endCreateTable()
-        .catch(err => expect(err).to.not.equal(Error));
-        isUsed = false;
-        done();
       }
     });
 
@@ -145,17 +157,20 @@ describe('tableCreator', () => {
         tableCreator.addHeader('c', 'DATE');
         tableCreator.setUnique('a', 'b', 'c');
         tableCreator.endCreateTable()
+        .then(() => {
+          tableCreator.initCreateTable('abc');
+          tableCreator.addHeader('a', 'NUMBER', 'PRIMARY KEY');
+          tableCreator.addHeader('b', 'STRING', 'UNIQUE');
+          tableCreator.addHeader('c', 'DATE');
+          tableCreator.setUnique('a', 'b', 'c');
+          tableCreator.endCreateTable()
+          .then(() => {
+            isUsed = false;
+            done();
+          })
+          .catch(err => expect(err).to.not.equal(Error));
+        })
         .catch(err => expect(err).to.not.equal(Error));
-
-        tableCreator.initCreateTable('abc');
-        tableCreator.addHeader('a', 'NUMBER', 'PRIMARY KEY');
-        tableCreator.addHeader('b', 'STRING', 'UNIQUE');
-        tableCreator.addHeader('c', 'DATE');
-        tableCreator.setUnique('a', 'b', 'c');
-        tableCreator.endCreateTable()
-        .catch(err => expect(err).to.not.equal(Error));
-        done();
-        isUsed = false;
       }
     });
   });
