@@ -6,9 +6,9 @@ const ERROR_NOT_ID = 'Input is not an ID';
 const ERROR_NOT_FILE = 'Input is not a File';
 const ERROR_NOT_FOLDER = 'Input is not a Folder';
 
-/* Constants */
-const fileMap = {}; // key: fileID, value: File
-const folderMap = {}; // key: folderID, value: Folder
+/* Static variable */
+let fileMap = {}; // key: fileID, value: File
+let folderMap = {}; // key: folderID, value: Folder
 
 /* Private Functions */
 /**
@@ -126,6 +126,14 @@ const idMap = {
       throw new Error(ERROR_NOT_ID);
     }
     delete folderMap[folderID];
+  },
+
+  /**
+   * Clear fileMap and folderMap
+   */
+  clearMap: function clearMap() {
+    fileMap = {};
+    folderMap = {};
   }
 };
 

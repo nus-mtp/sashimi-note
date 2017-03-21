@@ -27,7 +27,13 @@ export default function Folder(folderID, folderName, folderPath) {
   this.childFileList = []; // list of files in current folder
 }
 
-/* Private Functions */
+/* Private Function */
+/**
+ * Check if new foldername is the same as another foldername
+ *
+ * @param {String} newFolderName
+ * @return {Boolean}
+ */
 function hasSameFolderName(newFolderName) {
   if (!(this instanceof Folder)) {
     throw new Error(ERROR_NOT_FOLDER_INSTANCE);
@@ -88,7 +94,7 @@ Folder.prototype.createFile = function createFile() {
  * Remove a folder from the database
  *
  * @param {}
- * @return {}
+ * @return {Promise}
  */
 Folder.prototype.remove = function remove() {
   if (this.id === ROOT_FOLDER_ID) {
@@ -98,7 +104,7 @@ Folder.prototype.remove = function remove() {
   .then(() => {
     idMap.removeFolderFromMap(this.id);
     const parentFolder = this.parentFolder;
-    const index = parentFolder.childFolderList.findIndex(childFolder => childFolder.id === this.id);
+    const index = parentFolder.childFolderList.indexOf(this);
     parentFolder.childFolderList.splice(index, 1);
   });
 };
@@ -119,7 +125,7 @@ Folder.prototype.rename = function rename(newFolderName) {
     }
     resolve();
   })
-  .then(() => storage.renameFolder(newFolderName, this.id))
+  .then(() => storage.renameFolder(this.id, newFolderName))
   .then(() => {
     const oldFolderName = this.name;
     this.name = newFolderName;
