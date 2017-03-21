@@ -10,74 +10,142 @@
         </router-link>
       </div>
       <!--Waiting for file-manager api to be completed to implement buttons-->
-      <!--<div class="col searchBar inline-block">
-        <input type="text" placeholder="Search...">
-      </div>-->
+      <div class="col searchBar inline-block">
+        <input
+          type="text"
+          placeholder="Search..."
+          v-model="searchString"
+        >
+      </div>
     </div>
-    <div class="navbar userActions vertical-align-child">
-      <table>
-        <tr>
-          <td class="breadcrumb float-left">
-            <ul class="navbar-breadcrumb">
-              <li><a href="\">Home</a></li>
-            </ul>
-          </td>
-            <!--Waiting for file-manager api to be completed to implement buttons-->
-            <div class="float-right">
-              <!--<div class="vertical-align-child buttons-right inline-block">
-                <td>
-                  <button class="navbar-buttons hover-grow">
-                    <i class="material-icons md-dark">file_upload</i>
-                  </button>
-                </td>
-                <td>
-                  <button class="navbar-buttons hover-grow">
-                    <i class="material-icons md-dark">note_add</i>
-                  </button>
-                </td>
-                <td>
-                  <button class="navbar-buttons" v-bind:class="{'hover-grow': buttonEffect}">
-                  <i class="material-icons md-dark" v-bind:class="{'md-inactive': buttonDisabled}">content_copy</i>
-                  </button>
-                </td>
-                <td>
-                  <button class="navbar-buttons" v-bind:class="{'hover-grow': buttonEffect}">
-                    <i class="material-icons md-dark" v-bind:class="{'md-inactive': buttonDisabled}">file_download</i>
-                  </button>
-                </td>
-                <td>
-                  <button class="navbar-buttons" v-bind:class="{'hover-grow': buttonEffect}">
-                    <i class="material-icons md-dark" v-bind:class="{'md-inactive': buttonDisabled}">delete</i>
-                  </button>
-                </td>
-              </div>-->
-              <div class="view-type inline-block">
-                <td class="vertical-align-child">
-                  <button class="navbar-buttons hover-grow" v-on:click="setAction('iconView')">Icon</button>|
-                  <button class="navbar-buttons hover-grow" v-on:click="setAction('listView')">List</button>
-                </td>
-              </div>
-            </div>
-          </tr>
-      </table>
+    <div class="section group navbar userActions vertical-align-child">
+      <div class="col float-left">
+        <ul class="navbar-breadcrumb inline-block">
+          <li>
+            <button class="navbar-buttons hover-grow" 
+                    v-on:click="execute('history back')"
+            >
+              <i class="material-icons">arrow_back</i>
+            </button>
+          </li>
+          <li>
+            <button class="navbar-buttons hover-grow" 
+                    v-on:click="execute('history forward')"
+            >
+              <i class="material-icons">arrow_forward</i>
+            </button>
+            </a>
+          </li>
+          <li>
+            <a href="\">Home</a>
+          </li>
+        </ul>
+      </div>
+      <div class="float-right">
+        <div class="col vertical-align-child buttons-right inline-block">
+          <!--Button yet to be implemented. Commented out for deployment-->
+          <!--<button id="button-file-upload" class="navbar-buttons hover-grow">
+            <i class="material-icons md-dark">file_upload</i>
+          </button>-->
+          <button id="button-create-folder" class="navbar-buttons hover-grow" 
+                  v-on:click="execute('createFolder')"
+          >
+            <i class="material-icons md-dark">create_new_folder</i>
+          </button>
+          <button id="button-create-file" class="navbar-buttons hover-grow" 
+                  v-on:click="execute('createFile')"
+          >
+            <i class="material-icons md-dark">note_add</i>
+          </button>
+          <!--Button yet to be implemented. Commented out for deployment-->
+          <!--<button id="button-duplicate" class="navbar-buttons" 
+                  v-bind:class="{'hover-grow': buttonEffect}"
+          >
+            <i class="material-icons md-dark" 
+              v-bind:class="{'md-inactive': buttonDisabled}"
+            >content_copy</i>-->
+          </button>
+          <button id="button-file-download" class="navbar-buttons" 
+                  v-bind:class="{'hover-grow': buttonEffect}"
+                    v-on:click="execute('download')"
+          >
+            <i class="material-icons md-dark" 
+                v-bind:class="{'md-inactive': buttonDisabled}">file_download</i>
+          </button>
+          <button id="button-delete" class="navbar-buttons" 
+                  v-bind:class="{'hover-grow': buttonEffect}"
+                  v-on:click="execute('delete')"
+          >
+            <i class="material-icons md-dark" 
+                v-bind:class="{'md-inactive': buttonDisabled}"
+            >delete</i>
+          </button>
+      </div>
+      <div class="col view-type inline-block">
+        <button id="button-icon-view" class="navbar-buttons hover-grow" 
+                v-on:click="setViewMode('iconView')"
+        >Icon</button>|
+        <button id="button-list-view" class="navbar-buttons hover-grow" 
+                v-on:click="setViewMode('listView')"
+        >List</button>
+      </div>
+    </div>
     </div>
   </div>
 </template>
 
 <script>
+import _ from 'lodash';
+import eventHub from './EventHub';
+
+let userInputsVue = null;
+
 export default {
-  props: ['value'],
   data() {
     return {
       buttonDisabled: true,
       buttonEffect: false,
+      focusedDoc: {},
+      searchString: '',
     };
   },
   methods: {
-    setAction(action) {
-      this.$emit('input', action);
-    }
-  }
+    execute(action) {
+      eventHub.$emit('execute', action);
+      switch (action) {
+        case 'delete':
+        case 'duplicate':
+        case 'download': {
+          this.$emit('execute', action, this.focusedDoc);
+          break;
+        }
+        default: {
+          this.$emit('execute', action);
+        }
+      }
+    },
+    setViewMode(viewMode) {
+      userInputsVue.$emit('changeViewMode', viewMode);
+    },
+  },
+  watch: {
+    searchString: _.debounce((result) => {
+      userInputsVue.$emit('execute', 'search', result);
+    }, 500)
+  },
+  mounted() {
+    userInputsVue = this;
+
+    eventHub.$on('focus', (focusedDoc) => {
+      this.buttonDisabled = false;
+      this.buttonEffect = true;
+      this.focusedDoc = focusedDoc;
+    });
+    eventHub.$on('blur', () => {
+      this.buttonDisabled = true;
+      this.buttonEffect = false;
+    });
+  },
 };
 </script>
 
@@ -103,40 +171,22 @@ export default {
     border: 1px solid $navbar-border-color;
     width: 80%;
     padding: 8px;
-    font-family: $general-font;
-    font-size: 15px;
+    font-family: $font-primary;
+    font-size: $font-size-secondary;
   }
 }
 
 .userActions {
   background-color: $navbar-background-color;
   box-shadow: 0 2px 10px rgba(0,0,0,0.2);
-  padding-top: 3px;
-  padding-bottom: 3px;
-
-  table {
-    width: 100%;
-    
-    td {
-      vertical-align: middle;
-    }
-  }
+  padding-top: 10px 0;
 }
-
-.buttons-right {
-  display: none;
-
-  td {
-    width: $button-img-width;
-  }
-}
-
 
 .navbar-breadcrumb {
   list-style: none;
-  margin-top: 10px;
   font-size: $navbar-font-size;
   padding-left: 0;
+  margin: 0;
 
   li {
     display: inline;
@@ -162,6 +212,7 @@ export default {
 }
 
 .view-type {
+  display: none;
   font-size: $navbar-font-size;
 
   a {
@@ -171,9 +222,11 @@ export default {
       color: black;
     }
   }
+}
 
-  td {
-    width: 100px;
+@media screen and (min-width: 480px) {
+  .view-type {
+    display: inline-block;
   }
 }
 

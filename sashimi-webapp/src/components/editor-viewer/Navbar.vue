@@ -1,13 +1,12 @@
 <template>
   <div class="section group navbar">
     <div class="col button-logo vertical-align-child">
-        <a v-on:click="goHome" class="vertical-align-child navbar-buttons hover-grow">        
-            <!--<img src="../../assets/images/buttons/button-back.svg" class="button-img" alt="back">-->
+        <router-link to="\" class="vertical-align-child navbar-buttons hover-grow">
             <img src="../../assets/sashimi.svg" class="inline-block" alt="sashimi">
             <p class="inline-block">
               SASHIMI NOTE
             </p>
-        </a>
+        </router-link>
     </div>
     <!--Waiting for file-manager api to be completed to implement buttons-->
     <!--<div class="col float-left vertical-align-child button-group-margin">
@@ -56,11 +55,11 @@
         <button v-on:click="updateParent('editor')" class="navbar-buttons hover-grow" id="button-editor">
         <i class="material-icons md-dark md-dark">edit</i>
         </button>
-        <button v-on:click="updateParent('split')" class="navbar-buttons hover-grow" id="button-viewer">
+        <button v-on:click="updateParent('split')" class="navbar-buttons hover-grow" id="button-split-screen">
         <!--<i class="material-icons md-dark md-dark">chrome_reader_mode</i>-->
         <img src="../../assets/images/buttons/button-split-screen.svg" class="button-img" alt="plugins">
         </button>
-        <button v-on:click="updateParent('viewer')" class="navbar-buttons hover-grow" id="button-split-screen">
+        <button v-on:click="updateParent('viewer')" class="navbar-buttons hover-grow" id="button-viewer">
         <i class="material-icons md-dark md-dark md-dark">remove_red_eye</i>
         </button>
       </div>
@@ -116,7 +115,7 @@ export default {
 }
 
 .button-dropdown {
-  font-size: $navbar-font-size;
+  font-size: $logo-font-size;
   padding: 10px;
   box-sizing: border-box;
 
@@ -126,7 +125,7 @@ export default {
 
   p {
     margin: 0;
-    font-family: $general-font;
+    font-family: $font-primary;
   }
 }
 
@@ -136,7 +135,7 @@ export default {
   .button-dropdown {
     border: 1px solid transparent;  
     transition: border 0.5s;
-    width: 140px;
+    width: $navbar-button-dropdown-width;
   }
 
   &:hover {
@@ -157,7 +156,7 @@ export default {
   opacity:0;
   visibility: hidden;
   position: absolute;
-  width: 140px;
+  width: $navbar-button-dropdown-width;
   box-sizing: border-box;
   border: 1px solid black;
   text-align: left;
@@ -172,8 +171,8 @@ export default {
     border: none;
     background-color: transparent;
     cursor: pointer;
-    font-family: $general-font;
-    font-size: $navbar-font-size;
+    font-family: $font-primary;
+    font-size: $logo-font-size;
     display: block;
     padding: 12px;
     width: 100%;
