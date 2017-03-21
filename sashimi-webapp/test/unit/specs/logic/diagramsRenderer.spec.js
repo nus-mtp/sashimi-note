@@ -31,6 +31,7 @@ describe('Renderer', () => {
       iframeDoc.write('<div></div>');
     };
     iframe.onload();
+    console.log(iframeDoc.width, iframeDoc.height);
   });
 
   describe('Diagrams Renderer', () => {
