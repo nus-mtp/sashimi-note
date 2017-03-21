@@ -106,7 +106,6 @@ function cascadeChangeFolderPath(index, prevBasePath, newBasePath, folderArr) {
     if (index >= folderArr.length) {
       resolve(true);
     }
-    console.log(index);
     const folderToChangePathIndex = Object.values(folderArr[index])[0];
     let newPath;
     return getCurrentFolderPath(folderToChangePathIndex)
