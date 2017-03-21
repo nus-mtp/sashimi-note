@@ -25,7 +25,7 @@ function getCurrentFilePath(fileId) {
                                                    ' FROM ', constants.ENTITIES_FILE_MANAGER,
                                                    ' WHERE ', constants.HEADER_FILE_MANAGER_FILE_ID,
                                                    ' = ', fileId)])
-    .then(filePath => resolve(filePath))
+    .then(filePath => resolve(getDataOutOfAlasql(filePath)))
     .catch(sqlErr => reject(sqlErr))
   );
 }
@@ -36,7 +36,7 @@ function getCurrentFolderPath(folderId) {
                                                    ' FROM ', constants.ENTITIES_FOLDER,
                                                    ' WHERE ', constants.HEADER_FOLDER_FOLDER_ID,
                                                    ' = ', folderId)])
-    .then(folderPath => resolve(folderPath))
+    .then(folderPath => resolve(getDataOutOfAlasql(folderPath)))
     .catch(sqlErr => reject(sqlErr))
   );
 }
@@ -399,7 +399,8 @@ export default function sqlCommands() {
       return getFolderPathAndNameFromId(folderId)
       .then((folderData) => {
         // step 2: get all the folders to have their path and name changed
-        prevFolderPath = getDataOutOfAlasql(folderData);
+        prevFolderPath = stringManipulator.getPreviousPath(getDataOutOfAlasql(folderData),
+          getSecondDataOutOfAlasql(folderData));
         const thisFolderName = getSecondDataOutOfAlasql(folderData);
         thisFolderPath = stringManipulator.stringConcat(prevFolderPath, thisFolderName, '/');
         newFolderPath = stringManipulator.stringConcat(prevFolderPath, newFolderName, '/');
@@ -480,8 +481,6 @@ export default function sqlCommands() {
       .then((folderData) => {
         // step 2: get all the folders to be deleted
         thisFolderPath = getDataOutOfAlasql(folderData);
-        const thisFolderName = getSecondDataOutOfAlasql(folderData);
-        thisFolderPath = stringManipulator.stringConcat(thisFolderPath, thisFolderName, '/');
         return getListOfFolderIdsWithSamePath(thisFolderPath)
         .then((folderIds) => {
           foldersToDelete = getArray(folderIds);

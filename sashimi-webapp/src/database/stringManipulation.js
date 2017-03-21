@@ -16,4 +16,9 @@ export default function stringManipulation() {
   this.replaceAll = function replaceAll(string, stringToReplace, replacement) {
     return string.replace(new RegExp(stringToReplace, 'g'), replacement);
   };
+
+  this.getPreviousPath = function getPreviousPath(fullPath, lastFolderName) {
+    const lengthOfExtraCurrentFolder = lastFolderName.length + 1; // extra slash
+    return fullPath.substring(0, fullPath.length - lengthOfExtraCurrentFolder);
+  };
 }
