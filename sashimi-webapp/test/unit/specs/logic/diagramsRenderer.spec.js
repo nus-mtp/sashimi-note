@@ -50,6 +50,7 @@ describe('Renderer', () => {
     it('should handle drawing of sequence diagrams', (done) => {
       // Retrieve HTML string from getHtmlData
       seqHtmlData.then((output) => {
+        console.log(iframeDoc.width, iframeDoc.height);
         toRender.innerHTML = output;
         diagramsRenderer(toRender)
         .then((out) => {
@@ -139,11 +140,11 @@ describe('Renderer', () => {
           // Replace special characters that have been converted into ampersands
           let renderedContent = toRender.innerHTML.replace(/&gt;/g, '>');
           renderedContent = renderedContent.replace(/(\\')/g, '\'');
-          renderedContent = renderedContent.replace(/&quot;/g, '\"');
+          renderedContent = renderedContent.replace(/&quot;/g, '"');
           renderedContent = renderedContent.replace(/&#45;/g, '-');
           let outputContent = diagramsRenderedOutput.replace(/(\r\n)/g, '\n');
           outputContent = outputContent.replace(/\\'/g, '\'');
-          outputContent = outputContent.replace(/&quot;/g, '\"');
+          outputContent = outputContent.replace(/&quot;/g, '"');
           outputContent = outputContent.replace(/&#45;/g, '-');
           // We are comparing length here again because flowCharts being drawn cannot compare directly because the draw function (using Raphaël)
           // will input a different id value for certain tags on different calls, but content length will always be the same.
