@@ -1,6 +1,6 @@
 <p align="center">
   <a href="https://sashimi-note.herokuapp.com">
-    <img width="60%" src="http://i.imgur.com/2maMZJz.png">
+    <img width="60%" src="http://i.imgur.com/sH6Utl0.jpg">
   </a>
 </p>
 
