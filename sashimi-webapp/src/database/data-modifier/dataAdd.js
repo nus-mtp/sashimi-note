@@ -91,6 +91,28 @@ export default class dataAdd {
     );
   }
 
+  static duplicateFile(fileId) {
+    return new Promise((resolve, reject) => {
+      sqlCommands.getMaxFileId()
+      .then((maxId) => {
+        const newFileId = maxId + 1;
+        return sqlCommands.retrieveFullFile(fileId)
+        .then((file) => {
+          file[0].file_id = newFileId;
+          return file;
+        })
+        .then(duplicatedFile =>
+          sqlCommands.insertContent(constants.ENTITIES_FILE_MANAGER, duplicatedFile)
+          .then(() =>
+            resolve(duplicatedFile)
+          )
+          .catch(sqlError => reject(sqlError)))
+        .catch(sqlError => reject(sqlError));
+      })
+      .catch(sqlError => reject(sqlError));
+    });
+  }
+
   static createNewFolder(organizationId, folderPath, folderId) {
     return new Promise((resolve, reject) =>
       // set default new ID if not exist (already have 0)
