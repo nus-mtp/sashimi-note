@@ -31,7 +31,7 @@ describe('Renderer', () => {
       iframeDoc.write('<div></div>');
     };
     iframe.onload();
-    console.log(iframeDoc.width, iframeDoc.height);
+    console.log(iframeDoc.width, iframeDoc.height, document.width, document.height);
   });
 
   describe('Diagrams Renderer', () => {
@@ -50,7 +50,6 @@ describe('Renderer', () => {
     it('should handle drawing of sequence diagrams', (done) => {
       // Retrieve HTML string from getHtmlData
       seqHtmlData.then((output) => {
-        console.log(iframeDoc.width, iframeDoc.height);
         toRender.innerHTML = output;
         diagramsRenderer(toRender)
         .then((out) => {
