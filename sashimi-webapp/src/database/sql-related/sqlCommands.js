@@ -139,7 +139,6 @@ function cascadeDeleteFolder(index, folderArr) {
     if (index >= folderArr.length) {
       resolve(true);
     }
-    console.log(index);
     const folderToDeleteIndex = Object.values(folderArr[index])[0];
     return deleteSingleFolder(folderToDeleteIndex)
     .then(() => {
@@ -167,7 +166,6 @@ function cascadeDeleteFile(index, fileArr) {
     if (index >= fileArr.length) {
       resolve(true);
     }
-    console.log(index);
     const fileToDeleteIndex = Object.values(fileArr[index])[0];
     return deleteSingleFile(fileToDeleteIndex)
     .then(() => {
