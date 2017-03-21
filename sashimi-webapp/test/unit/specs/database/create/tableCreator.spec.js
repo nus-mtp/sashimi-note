@@ -29,9 +29,12 @@ describe('tableCreator', () => {
     tableCreator.callSqlToLinkToDatabase(testDatabaseName)
   );
 
-  after(() =>
+  after((done) => {
     cleanTestCase()
-  );
+    .then(() =>
+      done()
+    );
+  });
 
   describe('link to indexeddb database', () => {
     it('should link to indexeddb database', (done) => {
@@ -42,8 +45,8 @@ describe('tableCreator', () => {
       .then(() => {
         isDatabaseExists(testDatabaseName, (isDBExists) => {
           expect(isDBExists).to.be.true;
+          done();
         });
-        done();
       })
       .catch(err => done(err));
     });
