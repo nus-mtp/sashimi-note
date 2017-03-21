@@ -157,6 +157,10 @@ export default class storage {
     return dataModifier.moveFile(fileId, newPath);
   }
 
+  static copyFile(fileId) {
+    return dataModifier.copyFile(fileId);
+  }
+
   static renameFile(fileId, newFileName) {
     return dataModifier.renameFileName(fileId, newFileName);
   }

@@ -27,6 +27,10 @@ export default class dataModifier {
     return dataUpdate.changeFilePath(fileId, newPath);
   }
 
+  static copyFile(fileId) {
+    return dataAdd.duplicateFile(fileId);
+  }
+
   static renameFileName(fileId, newFileName) {
     return dataUpdate.changeFileName(fileId, newFileName);
   }
