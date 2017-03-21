@@ -4,4 +4,4 @@ node_js:
 env:
   - TEST_DIR=sashimi-webapp
   - TEST_DIR=sashimi-platform
-script: cd $TEST_DIR && SET NODE_ENV=testing yarn && yarn test-travis
+script: cd $TEST_DIR && NODE_ENV=testing yarn && yarn test-travis
