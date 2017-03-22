@@ -69,7 +69,6 @@
     overflow: hidden;
 
     #viewer-container {
-      cursor: pointer;
       transform: scale(1) translate(0, 0);
       width: 1px;
       margin: 0 auto;

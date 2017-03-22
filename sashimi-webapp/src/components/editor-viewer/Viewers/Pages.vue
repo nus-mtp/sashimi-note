@@ -1,6 +1,8 @@
 <template>
-  <div id='viewer-container'>
-    <div class="page-view"></div>
+  <div touch-action="none">
+    <!-- A empty parent div is created for documentNavigator -->
+    <!--   to remove its dependency on the parent component. -->
+    <div id='viewer-container'></div>
   </div>
 </template>
 
@@ -32,18 +34,16 @@
       // Mount does not gurrantee DOM to be ready, thus nextTick is used
       Vue.nextTick(() => {
         this.pageRenderer = new PageRenderer('viewer-container');
-        renderThrottleFn(this.htmlData, this.pageRenderer);
-
-        // Initialise navigation for Pages mode
-        this.documentNavigator = new DocumentNavigator(
-          this.pageRenderer.page,
-          '#viewer-container',
-          '.page-view'
-        );
+        renderThrottleFn(this.htmlData, this.pageRenderer)
+        .then(() => {
+          // Initialise navigation for Pages mode
+          const resizeObserveTarget = this.$el.parentNode.parentNode;
+          this.documentNavigator = new DocumentNavigator('#viewer-container', resizeObserveTarget);
+        });
       });
     },
     beforeDestroy() {
-      this.documentNavigator.removeListeners();
+      this.documentNavigator.unsetDomBehaviour();
     }
   };
 
