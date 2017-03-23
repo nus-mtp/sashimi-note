@@ -20,8 +20,19 @@ function isDatabaseExists(databaseName, callback) {
   };
 }
 
+
+function deleteDatabase(databaseName) {
+  return new Promise((resolve, reject) => {
+    const thisDatabaseName = databaseName || testDatabaseName;
+    if (!window.indexedDB) {
+      reject(exceptions.IndexedDBNotSupported);
+    }
+    resolve(window.indexedDB.deleteDatabase(thisDatabaseName));
+  });
+}
+
 function cleanTestCase() {
-  return dataDelete.deleteAllEntities(testDatabaseName);
+  return deleteDatabase(testDatabaseName);
 }
 
 describe('tableCreator', () => {
