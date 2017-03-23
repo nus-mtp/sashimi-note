@@ -37,7 +37,7 @@ describe('initDataGenerator', () => {
         organization_id: 1,
         folder_id: 0,
         file_id: 1,
-        file_name: 'newFile.md',
+        file_name: 'newFile',
         file_markdown: '',
         permission_index: 1,
         creation_date: creationDate,

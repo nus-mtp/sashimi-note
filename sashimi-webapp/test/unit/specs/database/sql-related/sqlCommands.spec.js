@@ -49,9 +49,12 @@ describe('sqlCommands', () => {
     sqlCommands.linkDatabaseToIndexedDB(testDatabaseName)
   );
 
-  after(() =>
+  after((done) => {
     cleanTestCase()
-  );
+    .then(() =>
+      done()
+    );
+  });
 
   describe('link to indexeddb database', () => {
     it('should link to indexeddb database', (done) => {
@@ -62,8 +65,8 @@ describe('sqlCommands', () => {
       .then(() => {
         isDatabaseExists(testDatabaseName, (isDBExists) => {
           expect(isDBExists).to.be.true;
+          done();
         });
-        done();
       })
       .catch(err => done(err));
     });

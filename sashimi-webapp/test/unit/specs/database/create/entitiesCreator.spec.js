@@ -66,8 +66,8 @@ describe('entitiesCreator', () => {
       .then(() => {
         isDatabaseExists(testDatabaseName, (isDBExists) => {
           expect(isDBExists).to.be.true;
+          done();
         });
-        done();
       })
       .catch(err => done(err));
     });
@@ -82,8 +82,8 @@ describe('entitiesCreator', () => {
       .then(() => {
         isTableExistsInDatabase(constants.ENTITIES_USER, (isTableExists) => {
           expect(isTableExists).to.be.true;
+          done();
         });
-        done();
       })
       .catch(err => done(err));
     });
@@ -96,8 +96,8 @@ describe('entitiesCreator', () => {
       .then(() => {
         isTableExistsInDatabase(constants.ENTITIES_ORGANIZATION, (isTableExists) => {
           expect(isTableExists).to.be.true;
+          done();
         });
-        done();
       })
       .catch(err => done(err));
     });
@@ -110,8 +110,8 @@ describe('entitiesCreator', () => {
       .then(() => {
         isTableExistsInDatabase(constants.ENTITIES_FILE_MANAGER, (isTableExists) => {
           expect(isTableExists).to.be.true;
+          done();
         });
-        done();
       })
       .catch(err => done(err));
     });
@@ -124,8 +124,8 @@ describe('entitiesCreator', () => {
       .then(() => {
         isTableExistsInDatabase(constants.ENTITIES_FOLDER, (isTableExists) => {
           expect(isTableExists).to.be.true;
+          done();
         });
-        done();
       })
       .catch(err => done(err));
     });
@@ -190,7 +190,7 @@ describe('entitiesCreator', () => {
             organization_id: 1,
             folder_id: 0,
             file_id: 1,
-            file_name: 'newFile.md',
+            file_name: 'newFile',
             file_markdown: '',
             permission_index: 1,
             creation_date: creationDate,

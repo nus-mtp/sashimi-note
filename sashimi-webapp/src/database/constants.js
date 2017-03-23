@@ -55,8 +55,7 @@ export default Object.freeze({
   DEFAULT_FILE_ID: '1',
   DEFAULT_FOLDER_NAME: 'newFolder',
   DEFAULT_ROOT_FOLDER_NAME: 'root',
-  DEFAULT_FILE_NAME_OMIT_FILE_TYPE: 'newFile',
-  DEFAULT_FILE_NAME: 'newFile.md',
+  DEFAULT_FILE_NAME: 'newFile',
 
 
   ORGANIZATION_TYPE_USER: '1',

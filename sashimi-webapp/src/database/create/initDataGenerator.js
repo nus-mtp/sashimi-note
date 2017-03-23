@@ -37,7 +37,7 @@ export default class initDataGenerator {
     alasqlArray.addKeyBasePair(constants.HEADER_FILE_MANAGER_ORGANIZATION_ID, 1);
     alasqlArray.addKeyBasePair(constants.HEADER_FILE_MANAGER_FOLDER_ID, 0);
     alasqlArray.addKeyBasePair(constants.HEADER_FILE_MANAGER_FILE_ID, 1);
-    alasqlArray.addKeyBasePair(constants.HEADER_FILE_MANAGER_FILE_NAME, 'newFile.md');
+    alasqlArray.addKeyBasePair(constants.HEADER_FILE_MANAGER_FILE_NAME, constants.DEFAULT_FILE_NAME);
     alasqlArray.addKeyBasePair(constants.HEADER_FILE_MANAGER_FILE_MARKDOWN, '');
     alasqlArray.addKeyBasePair(constants.HEADER_FILE_MANAGER_PERMISSION_INDEX, 1);
     alasqlArray.addKeyBasePair(constants.HEADER_FILE_MANAGER_CREATION_DATE, createdDateTime);
@@ -54,7 +54,7 @@ export default class initDataGenerator {
     alasqlArray.addKeyBasePair(constants.HEADER_FOLDER_PERMISSION_INDEX, 1);
     alasqlArray.addKeyBasePair(constants.HEADER_FOLDER_ORGANIZATION_ID, 1);
     alasqlArray.addKeyBasePair(constants.HEADER_FOLDER_CREATION_DATE, createdDateTime);
-    alasqlArray.addKeyBasePair(constants.HEADER_FOLDER_FOLDER_NAME, 'root');
+    alasqlArray.addKeyBasePair(constants.HEADER_FOLDER_FOLDER_NAME, constants.DEFAULT_ROOT_FOLDER_NAME);
     alasqlArray.addKeyBasePair(constants.HEADER_FOLDER_LAST_MODIFIED_DATE, createdDateTime);
     alasqlArray.addKeyBasePair(constants.HEADER_FOLDER_PATH, '/root/');
     return alasqlArray.endAlasqlArray();

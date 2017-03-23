@@ -2,10 +2,12 @@ import constants from 'src/database/constants';
 import SqlCommands from 'src/database/sql-related/sqlCommands';
 import DateTime from 'src/database/generated-data/dateTime';
 import SqlArray from 'src/database/generated-data/sqlArray';
+import StringManipulation from 'src/database/stringManipulation';
 
 const sqlCommands = new SqlCommands();
 const dateTime = new DateTime();
 const alasqlArray = new SqlArray();
+const stringManipulator = new StringManipulation();
 
 function createNewFile(organizationId, filePath, folderId, newFileId, newFileName) {
   return new Promise((resolve, reject) => {
@@ -91,6 +93,28 @@ export default class dataAdd {
     );
   }
 
+  static duplicateFile(fileId) {
+    return new Promise((resolve, reject) => {
+      sqlCommands.getMaxFileId()
+      .then((maxId) => {
+        const newFileId = maxId + 1;
+        return sqlCommands.retrieveFullFile(fileId)
+        .then((files) => {
+          files[0].file_id = newFileId;
+          return files;
+        })
+        .then(duplicatedFile =>
+          sqlCommands.insertContent(constants.ENTITIES_FILE_MANAGER, duplicatedFile)
+          .then(() =>
+            resolve(duplicatedFile)
+          )
+          .catch(sqlError => reject(sqlError)))
+        .catch(sqlError => reject(sqlError));
+      })
+      .catch(sqlError => reject(sqlError));
+    });
+  }
+
   static createNewFolder(organizationId, folderPath, folderId) {
     return new Promise((resolve, reject) =>
       // set default new ID if not exist (already have 0)
@@ -101,7 +125,8 @@ export default class dataAdd {
         return sqlCommands.exactSearchStartFolderNameInFolder(folderId)
         .then((queryFiles) => {
           const newFolderName = constants.DEFAULT_FOLDER_NAME;
-          return createNewFolder(organizationId, folderPath, folderId, newFolderId, newFolderName)
+          const newFolderPath = stringManipulator.stringConcat(folderPath, newFolderName, '/');
+          return createNewFolder(organizationId, newFolderPath, folderId, newFolderId, newFolderName)
           .then(data => resolve(data))
           .catch(err => reject(err));
         })
