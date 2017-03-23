@@ -11,7 +11,7 @@ const ERROR_NOT_FILE_INSTANCE = '"this" is not an instance of "File"';
 const ERROR_CONTAIN_ILLEGAL_CHARACTERS = 'New file name contains illegal character(s)';
 
 /* Constant */
-const ILLEGAL_CHARACTERS = '!$%^&*()_+|~-=`{}[]:";\'<>?,./';
+const ILLEGAL_CHARACTERS = /^[`~!@#$%^&*()-_=+\\|[\]{};:'",<.>/?]+$/;
 
 /**
 * File Object
@@ -81,8 +81,7 @@ function hasSameFileName(newFileName) {
 /**
  * Remove file from the database
  *
- * @param {}
- * @return {}
+ * @return {Promise}
  */
 File.prototype.remove = function remove() {
   return storage.deleteFile(this.id)
@@ -160,8 +159,8 @@ File.prototype.rename = function rename(newFileName) {
     return new Promise((resolve, reject) => reject(ERROR_EMPTY_STRING));
   } else if (this.name === newFileName) {
     return new Promise((resolve, reject) => resolve());
-  /* }  else if (newFileName.match(ILLEGAL_CHARACTERS)) {
-   return new Promise((resolve, reject) => reject(ERROR_CONTAIN_ILLEGAL_CHARACTERS));*/
+  } else if (newFileName.match(ILLEGAL_CHARACTERS)) {
+    return new Promise((resolve, reject) => reject(ERROR_CONTAIN_ILLEGAL_CHARACTERS));
   } else if (hasSameFileName.call(this, newFileName)) {
     return new Promise((resolve, reject) => reject(ERROR_SAME_FILE_NAME));
   } else {

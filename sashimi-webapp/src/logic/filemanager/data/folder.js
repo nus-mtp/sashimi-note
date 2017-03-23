@@ -13,7 +13,7 @@ const ERROR_CONTAIN_ILLEGAL_CHARACTERS = 'New folder name contains illegal chara
 /* Constants */
 const ORGANIZATION_ID = 1;
 const ROOT_FOLDER_ID = 0;
-const ILLEGAL_CHARACTERS = '!$%^&*()_+|~-=`{}[]:";\'<>?,./';
+const ILLEGAL_CHARACTERS = /^[`~!@#$%^&*()-_=+\\|[\]{};:'",<.>/?]+$/;
 
 /**
 * Folder Object
@@ -101,7 +101,6 @@ Folder.prototype.createFile = function createFile() {
 /**
  * Remove a folder from the database
  *
- * @param {}
  * @return {Promise}
  */
 Folder.prototype.remove = function remove() {
@@ -133,8 +132,8 @@ Folder.prototype.rename = function rename(newFolderName) {
     return new Promise((resolve, reject) => reject(ERROR_EMPTY_STRING));
   } else if (this.name === newFolderName) {
     return new Promise((resolve, reject) => resolve());
-  /* }  else if (newFolderName.match(ILLEGAL_CHARACTERS)) {
-    return new Promise((resolve, reject) => reject(ERROR_CONTAIN_ILLEGAL_CHARACTERS));*/
+  } else if (newFolderName.match(ILLEGAL_CHARACTERS)) {
+    return new Promise((resolve, reject) => reject(ERROR_CONTAIN_ILLEGAL_CHARACTERS));
   } else if (this.id === ROOT_FOLDER_ID) {
     return new Promise((resolve, reject) => reject(ERROR_RENAME_ROOTFOLDER));
   } else if (hasSameFolderName.call(this, newFolderName)) {
