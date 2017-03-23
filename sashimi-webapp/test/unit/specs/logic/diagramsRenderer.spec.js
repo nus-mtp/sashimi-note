@@ -26,16 +26,19 @@ let toRender;
 
 // Regex helper function
 function regexHelper(diff) {
-  const ignoredAttr = ['id', 'marker-end', 'x1', 'x2'];
+  const ignoredAttr = ['id', 'marker-end', 'x1', 'x2', 'x', 'y1', 'y2', 'y',
+    'width', 'height', 'd', 'dy', 'r', 'style', 'viewBox', 'transform', 'points'];
   const errorArray = [];
   const missedArray = [];
   diff.forEach((line) => {
     const regex1 = /(.*) '(.*)':.* '(.*)'.*'(.*)'/g;
     const regex2 = /(.*) '(.*)' (is missed)/g;
     const regex3 = /Extra attribute '(.*)'/g;
+    const regex4 = /Expected text '(.*)' instead of '(.*)'/g;
     const arr1 = regex1.exec(line.message);
     const arr2 = regex2.exec(line.message);
     const arr3 = regex3.exec(line.message);
+    const arr4 = regex4.exec(line.message);
     if (arr1 !== null) {
       // ignore expected value error
       if (arr1[1] === 'Attribute') {
@@ -214,6 +217,7 @@ describe('Renderer', () => {
         diagramsRenderer(toRender)
         .then((out) => {
           // Replace special characters that have been converted into ampersands
+          console.log(toRender);
           let renderedContent = toRender.innerHTML.replace(/&gt;/g, '>');
           renderedContent = renderedContent.replace(/(\\')/g, '\'');
           renderedContent = renderedContent.replace(/&quot;/g, '"');
