@@ -107,7 +107,7 @@ describe('sqlCommands', () => {
       }
       const createTableString = 'abc(a NUMBER, b STRING, c DATE)';
       sqlCommands.createTable(createTableString)
-      .then(() => {
+      .then(() => { // need to insert something before table exists
         sqlCommands.insertContent('abc', [{ a: 123, b: 'hello', c: '2017.03.07 15:52:33' }])
         .catch(sqlErr => done(sqlErr));
       })
