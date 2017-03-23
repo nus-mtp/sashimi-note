@@ -1,6 +1,8 @@
 <template>
-  <div id='viewer-container'>
-    <div class="page-view"></div>
+  <div touch-action="none">
+    <!-- A empty parent div is created for documentNavigator -->
+    <!--   to remove its dependency on the parent component. -->
+    <div id='viewer-container'></div>
   </div>
 </template>
 
@@ -9,7 +11,7 @@
   import _ from 'lodash';
   import PageRenderer from 'src/logic/renderer';
   import DocumentNavigator from 'src/logic/inputHandler/DocumentNavigator';
-  
+
   // Throttle function used to limit the rate which
   // the render function is called
   const throttleTime = 600;
@@ -43,20 +45,16 @@
       // Mount does not gurrantee DOM to be ready, thus nextTick is used
       Vue.nextTick(() => {
         this.pageRenderer = new PageRenderer('viewer-container', PAGE_A6);
-        renderThrottleFn(this.htmlData, this.pageRenderer);
-
-        // Initialise navigation for Slide mode
-        this.documentNavigator = new DocumentNavigator(
-          this.pageRenderer.page,
-          '#viewer-container',
-          '.page-view'
-        );
+        renderThrottleFn(this.htmlData, this.pageRenderer)
+        .then(() => {
+          // Initialise navigation for Slide mode
+          const resizeObserveTarget = this.$el.parentNode.parentNode;
+          this.documentNavigator = new DocumentNavigator('#viewer-container', resizeObserveTarget);
+        });
       });
     },
     beforeDestroy() {
-      this.documentNavigator.removeListeners();
+      this.documentNavigator.unsetDomBehaviour();
     }
   };
-
 </script>
-
