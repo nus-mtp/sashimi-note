@@ -63,7 +63,7 @@ function deleteDatabase(databaseName) {
     if (!window.indexedDB) {
       reject(exceptions.IndexedDBNotSupported);
     }
-    resolve(window.indexedDB.deleteDatabase(databaseName));
+    resolve(window.indexedDB.deleteDatabase(thisDatabaseName));
   });
 }
 
