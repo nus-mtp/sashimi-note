@@ -19,7 +19,7 @@ const fileManager = {
   /**
    * Given an ID, return the File
    *
-   * @param {Integer} fileID
+   * @param {String} fileID
    * @return {File}
    */
   getFileByID: function getFileByID(fileID) {
@@ -29,7 +29,7 @@ const fileManager = {
   /**
    * Given an ID, return the Folder
    *
-   * @param {Integer} folderID
+   * @param {String} folderID
    * @return {Folder}
    */
   getFolderByID: function getFolderByID(folderID) {
