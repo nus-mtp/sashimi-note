@@ -7,6 +7,10 @@ const alasql = require('alasql');
 const stringManipulator = new StringManipulator();
 const dateTime = new DateTime();
 
+function resolveQuotesInjection(fileContent) {
+  return stringManipulator.replaceAll(fileContent, '"', '\\"');
+}
+
 function getDataOutOfAlasql(data) {
   return Object.values(data[0][0])[0];
 }
@@ -252,17 +256,19 @@ export default function sqlCommands() {
   };
 
   this.partialSearchFileName = function partialSearchFileName(searchString) {
-    return new Promise((resolve, reject) =>
-      alasql.promise([stringManipulator.stringConcat('SELECT * FROM ', constants.ENTITIES_FILE_MANAGER,
+    return new Promise((resolve, reject) => {
+      searchString = resolveQuotesInjection(searchString);
+      return alasql.promise([stringManipulator.stringConcat('SELECT * FROM ', constants.ENTITIES_FILE_MANAGER,
                                                       ' WHERE ', constants.HEADER_FILE_MANAGER_FILE_NAME,
                                                       ' LIKE "%', searchString, '%"')])
       .then(data => resolve(getArray(data)))
-      .catch(sqlError => reject(sqlError))
-    );
+      .catch(sqlError => reject(sqlError));
+    });
   };
 
   this.exactSearchStartFileNameInFolder = function exactSearchStartFileNameInFolder(filePath) {
-    return new Promise((resolve, reject) =>
+    return new Promise((resolve, reject) => {
+      filePath = resolveQuotesInjection(filePath);
       alasql.promise([stringManipulator.stringConcat('SELECT ', constants.HEADER_FILE_MANAGER_FILE_NAME,
                                                       ' FROM ', constants.ENTITIES_FILE_MANAGER,
                                                       ' WHERE ', constants.HEADER_FILE_MANAGER_PATH,
@@ -270,8 +276,8 @@ export default function sqlCommands() {
                                                       ' ORDER BY ', constants.HEADER_FILE_MANAGER_FILE_NAME,
                                                       ' ASC')])
       .then(data => resolve(getArray(data)))
-      .catch(sqlError => reject(sqlError))
-    );
+      .catch(sqlError => reject(sqlError));
+    });
   };
 
   this.exactSearchStartFolderNameInFolder = function exactSearchStartFolderNameInFolder(parentFolderId) {
@@ -327,13 +333,14 @@ export default function sqlCommands() {
   };
 
   this.partialSearchFolderName = function partialSearchFolderName(searchString) {
-    return new Promise((resolve, reject) =>
-      alasql.promise([stringManipulator.stringConcat('SELECT * FROM ', constants.ENTITIES_FOLDER,
+    return new Promise((resolve, reject) => {
+      searchString = resolveQuotesInjection(searchString);
+      return alasql.promise([stringManipulator.stringConcat('SELECT * FROM ', constants.ENTITIES_FOLDER,
                                                       ' WHERE ', constants.HEADER_FOLDER_FOLDER_NAME,
                                                       ' LIKE "%', searchString, '%"')])
       .then(data => resolve(getArray(data)))
-      .catch(sqlError => reject(sqlError))
-    );
+      .catch(sqlError => reject(sqlError));
+    });
   };
 
   this.loadFilesFromFolder = function loadFilesFromFolder(folderId) {
@@ -444,8 +451,9 @@ export default function sqlCommands() {
   };
 
   this.saveFile = function saveFile(fileId, markdownFile) {
-    return new Promise((resolve, reject) =>
-      alasql.promise([stringManipulator.stringConcat('UPDATE ', constants.ENTITIES_FILE_MANAGER,
+    return new Promise((resolve, reject) => {
+      markdownFile = resolveQuotesInjection(markdownFile);
+      return alasql.promise([stringManipulator.stringConcat('UPDATE ', constants.ENTITIES_FILE_MANAGER,
                                                       ' SET ', constants.HEADER_FILE_MANAGER_FILE_MARKDOWN,
                                                       ' = "', markdownFile,
                                                       '" WHERE ', constants.HEADER_FILE_MANAGER_FILE_ID,
@@ -461,7 +469,8 @@ export default function sqlCommands() {
         .catch(sqlError => reject(sqlError));
       })
       .then(() => resolve(true))
-      .catch(sqlErr => reject(sqlErr)));
+      .catch(sqlErr => reject(sqlErr));
+    });
   };
 
   this.deleteFile = function deleteFile(fileId) {
