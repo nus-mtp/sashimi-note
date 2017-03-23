@@ -39,6 +39,25 @@ function isTableExistsInDatabase(tableName, callback) {
   };
 }
 
+function deleteTable(tableName, databaseName) {
+  return new Promise((resolve, reject) => {
+    const thisDatabaseName = databaseName || testDatabaseName;
+    const request = indexedDB.open(thisDatabaseName);
+    request.onsuccess = function onSuccess(event) {
+      const database = event.target.result;
+      if (database.objectStoreNames.contains(tableName)) {
+        database.deleteObjectStore(tableName);
+      }
+      request.result.close()
+      .then(() => resolve())
+      .catch(err => reject(err));
+    };
+    request.onupgradeneeded = function onUpgradeNeeded(event) {
+      resolve('false');
+    };
+  });
+}
+
 
 function cleanTestCase() {
   return dataDelete.deleteAllEntities(testDatabaseName);
