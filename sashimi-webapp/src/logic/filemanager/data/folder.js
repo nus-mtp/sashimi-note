@@ -3,6 +3,7 @@ import File from './file';
 import idMap from './idmap';
 
 /* Error Messages */
+const ERROR_EMPTY_STRING = 'Attempting to rename folder with an empty string';
 const ERROR_SAME_FOLDER_NAME = 'Another folder in the current folder has the same name';
 const ERROR_RENAME_ROOTFOLDER = 'Root folder cannot be renamed';
 const ERROR_REMOVE_ROOTFOLDER = 'Root folder cannot be removed';
@@ -128,7 +129,9 @@ Folder.prototype.rename = function rename(newFolderName) {
   }
 
   newFolderName = newFolderName.trim();
-  if (this.name === newFolderName) {
+  if (!newFolderName) {
+    return new Promise((resolve, reject) => reject(ERROR_EMPTY_STRING));
+  } else if (this.name === newFolderName) {
     return new Promise((resolve, reject) => resolve());
   /* }  else if (newFolderName.match(ILLEGAL_CHARACTERS)) {
     return new Promise((resolve, reject) => reject(ERROR_CONTAIN_ILLEGAL_CHARACTERS));*/

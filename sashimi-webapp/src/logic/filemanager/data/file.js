@@ -3,6 +3,7 @@ import Folder from './folder';
 import idMap from './idmap';
 
 /* Error Messages */
+const ERROR_EMPTY_STRING = 'Attempting to rename file with an empty string';
 const ERROR_SAME_FILE_NAME = 'Another file in the current folder has the same name';
 const ERROR_MOVING_TO_SAME_FOLDER = 'Attempting to move to current folder';
 const ERROR_MOVING_TO_INVALID_FOLDER = 'Attempting to move to an invalid folder';
@@ -155,7 +156,9 @@ File.prototype.rename = function rename(newFileName) {
   }
 
   newFileName = newFileName.trim();
-  if (this.name === newFileName) {
+  if (!newFileName) {
+    return new Promise((resolve, reject) => reject(ERROR_EMPTY_STRING));
+  } else if (this.name === newFileName) {
     return new Promise((resolve, reject) => resolve());
   /* }  else if (newFileName.match(ILLEGAL_CHARACTERS)) {
    return new Promise((resolve, reject) => reject(ERROR_CONTAIN_ILLEGAL_CHARACTERS));*/
