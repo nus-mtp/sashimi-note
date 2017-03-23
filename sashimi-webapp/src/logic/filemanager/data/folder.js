@@ -127,6 +127,7 @@ Folder.prototype.rename = function rename(newFolderName) {
     throw new Error(ERROR_NOT_FOLDER_INSTANCE);
   }
 
+  newFolderName = newFolderName.trim();
   if (this.name === newFolderName) {
     return new Promise((resolve, reject) => resolve());
   /* }  else if (newFolderName.match(ILLEGAL_CHARACTERS)) {

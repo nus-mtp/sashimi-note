@@ -154,6 +154,7 @@ File.prototype.rename = function rename(newFileName) {
     throw new Error(ERROR_NOT_FILE_INSTANCE);
   }
 
+  newFileName = newFileName.trim();
   if (this.name === newFileName) {
     return new Promise((resolve, reject) => resolve());
   /* }  else if (newFileName.match(ILLEGAL_CHARACTERS)) {
