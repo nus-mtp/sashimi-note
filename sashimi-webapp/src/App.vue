@@ -41,6 +41,10 @@ img {
   -ms-user-select: none;
 }
 
+a {
+  color: black;
+  text-decoration: none;
+}
 :focus {
   outline: 0;
 }
