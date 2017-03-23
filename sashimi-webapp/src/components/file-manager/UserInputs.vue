@@ -198,8 +198,6 @@ export default {
     }
 
     a {
-      text-decoration: underline;
-
       &:visited {
         color: black;
       }
