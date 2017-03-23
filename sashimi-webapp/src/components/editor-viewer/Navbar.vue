@@ -1,7 +1,7 @@
 <template>
   <div class="section group navbar">
     <div class="col button-logo vertical-align-child">
-        <router-link to="\" class="vertical-align-child navbar-buttons hover-grow">
+        <router-link to="/" class="vertical-align-child navbar-buttons hover-grow">
             <img src="../../assets/sashimi.svg" class="inline-block" alt="sashimi">
             <p class="inline-block">
               SASHIMI NOTE
