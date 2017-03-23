@@ -1,3 +1,4 @@
+import domCompare from 'dom-compare';
 import diagramsRenderer from 'src/logic/renderer/diagrams';
 import documentPackager from 'src/logic/documentPackager';
 import diagramsInput from './reference/diagrams/diagramsInput.txt';
@@ -23,6 +24,63 @@ const iframe = document.createElement('IFRAME');
 let iframeDoc;
 let toRender;
 
+// Regex helper function
+function regexHelper(diff) {
+  const ignoredAttr = ['id', 'marker-end', 'x1', 'x2'];
+  const errorArray = [];
+  const missedArray = [];
+  diff.forEach((line) => {
+    const regex1 = /(.*) '(.*)':.* '(.*)'.*'(.*)'/g;
+    const regex2 = /(.*) '(.*)' (is missed)/g;
+    const regex3 = /Extra attribute '(.*)'/g;
+    const arr1 = regex1.exec(line.message);
+    const arr2 = regex2.exec(line.message);
+    const arr3 = regex3.exec(line.message);
+    if (arr1 !== null) {
+      // ignore expected value error
+      if (arr1[1] === 'Attribute') {
+        if (arr1[2] === 'font-family') {
+          const expected = arr1[3].replace(/'/g, '');
+          const actual = arr1[4].replace(/"/g, '');
+          if (expected !== actual) {
+            console.log(line.message);
+            errorArray.push(line);
+          }
+        } else if (ignoredAttr.indexOf(arr1[2]) === -1) {
+          if (arr1[3] !== arr1[4]) {
+            console.log(line.message);
+            errorArray.push(line);
+          }
+        }
+      }
+    } else if (arr2 !== null) {
+      // ignore missing attribute error
+      if (arr2[2].match(/xlink:/g) !== null) {
+        missedArray.push(arr2[2].replace(/xlink:/g, ''));
+      } else {
+        console.log(line.message);
+        errorArray.push(line);
+      }
+    } else if (arr3 !== null) {
+      // ignore extra attribute error
+      if (missedArray.length !== 0) {
+        const pos = missedArray.indexOf(arr3[1]);
+        if (pos !== -1) {
+          missedArray.splice(pos, 1);
+        } else {
+          console.log(line.message);
+          errorArray.push(line);
+        }
+      }
+    } else {
+      // add into error array
+      errorArray.push(line);
+      console.log(line.message);
+    }
+  });
+  return errorArray;
+}
+
 describe('Renderer', () => {
   before(() => {
     document.body.appendChild(iframe);
@@ -31,7 +89,6 @@ describe('Renderer', () => {
       iframeDoc.write('<div></div>');
     };
     iframe.onload();
-    console.log(iframeDoc.width, iframeDoc.height, document.width, document.height);
   });
 
   describe('Diagrams Renderer', () => {
@@ -53,9 +110,14 @@ describe('Renderer', () => {
         toRender.innerHTML = output;
         diagramsRenderer(toRender)
         .then((out) => {
-          const renderedContent = toRender.innerHTML.replace(/&quot;/g, '\'');
+          // const renderedContent = toRender.innerHTML.replace(/&quot;/g, '\'');
           const outputContent = seqDiagramsOutput.replace(/(\r\n)/g, '\n');
-          expect(renderedContent).to.equal(outputContent);
+          const eleOutput = iframeDoc.createElement('DIV');
+          eleOutput.innerHTML = outputContent;
+          const results = domCompare.compare(eleOutput, toRender);
+          const diff = results.getDifferences();
+          const errorArray = regexHelper(diff);
+          expect(errorArray.length).to.equal(0);
           done();
         })
         .catch((error) => {
@@ -74,10 +136,15 @@ describe('Renderer', () => {
         .then((out) => {
           // We are comparing length because the draw function (using Raphaël) will input a different id value for
           // certain tags on different calls, but content length will always be the same.
-          let renderedContent = toRender.innerHTML.replace(/&gt;/g, '>');
-          renderedContent = renderedContent.replace(/&quot;/g, '"');
+          // let renderedContent = toRender.innerHTML.replace(/&gt;/g, '>');
+          // renderedContent = renderedContent.replace(/&quot;/g, '\'');
           const outputContent = flowChartsOutput.replace(/(\r\n)/g, '\n');
-          expect(renderedContent.length).to.equal(outputContent.length);
+          const eleOutput = iframeDoc.createElement('DIV');
+          eleOutput.innerHTML = outputContent;
+          const results = domCompare.compare(eleOutput, toRender);
+          const diff = results.getDifferences();
+          const errorArray = regexHelper(diff);
+          expect(errorArray.length).to.equal(0);
           done();
         })
         .catch((error) => {
@@ -94,9 +161,14 @@ describe('Renderer', () => {
         toRender.innerHTML = output;
         diagramsRenderer(toRender)
         .then((out) => {
-          const renderedContent = toRender.innerHTML.replace(/&gt;/g, '>');
+          // const renderedContent = toRender.innerHTML.replace(/&gt;/g, '>');
           const outputContent = graphvizOutput.replace(/(\r\n)/g, '\n');
-          expect(renderedContent).to.equal(outputContent);
+          const eleOutput = iframeDoc.createElement('DIV');
+          eleOutput.innerHTML = outputContent;
+          const results = domCompare.compare(eleOutput, toRender);
+          const diff = results.getDifferences();
+          const errorArray = regexHelper(diff);
+          expect(errorArray.length).to.equal(0);
           done();
         })
         .catch((error) => {
@@ -119,7 +191,12 @@ describe('Renderer', () => {
           // setting custom numbered/tagged attribute values on different runs of the test, however content length will always be the same.
           // e.g. 1st run: <text dy="1em" y="3" x="0" fill="#000" stroke="none" font-size="10" style="text-anchor: middle;">
           // 2nd run could be: y attribute value can be 4 instead of 3 etc
-          expect(renderedContent.length).to.equal(outputContent.length);
+          const eleOutput = iframeDoc.createElement('DIV');
+          eleOutput.innerHTML = outputContent;
+          const results = domCompare.compare(eleOutput, toRender);
+          const diff = results.getDifferences();
+          const errorArray = regexHelper(diff);
+          expect(errorArray.length).to.equal(0);
           done();
         })
         .catch((error) => {
@@ -141,13 +218,15 @@ describe('Renderer', () => {
           renderedContent = renderedContent.replace(/(\\')/g, '\'');
           renderedContent = renderedContent.replace(/&quot;/g, '"');
           renderedContent = renderedContent.replace(/&#45;/g, '-');
-          let outputContent = diagramsRenderedOutput.replace(/(\r\n)/g, '\n');
-          outputContent = outputContent.replace(/\\'/g, '\'');
-          outputContent = outputContent.replace(/&quot;/g, '"');
-          outputContent = outputContent.replace(/&#45;/g, '-');
+          const outputContent = diagramsRenderedOutput.replace(/(\r\n)/g, '\n');
           // We are comparing length here again because flowCharts being drawn cannot compare directly because the draw function (using Raphaël)
           // will input a different id value for certain tags on different calls, but content length will always be the same.
-          expect(renderedContent.length).to.equal(outputContent.length);
+          const eleOutput = iframeDoc.createElement('DIV');
+          eleOutput.innerHTML = outputContent;
+          const results = domCompare.compare(eleOutput, toRender);
+          const diff = results.getDifferences();
+          const errorArray = regexHelper(diff);
+          expect(errorArray.length).to.equal(0);
           done();
         })
         .catch((error) => {

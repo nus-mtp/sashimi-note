@@ -147,6 +147,13 @@ are-we-there-yet@~1.1.2:
     delegates "^1.0.0"
     readable-stream "^2.0.0 || ^1.1.13"
 
+argparse@1.0.2:
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/argparse/-/argparse-1.0.2.tgz#bcfae39059656d1973d0b9e6a1a74154b5a9a136"
+  dependencies:
+    lodash ">= 3.2.0 < 4.0.0"
+    sprintf-js "~1.0.2"
+
 argparse@^1.0.7:
   version "1.0.9"
   resolved "https://registry.yarnpkg.com/argparse/-/argparse-1.0.9.tgz#73d83bc263f86e97f8cc4f6bae1b0e90a7d22c86"
@@ -1861,6 +1868,14 @@ doctrine@1.5.0, doctrine@^1.2.2:
   dependencies:
     esutils "^2.0.2"
     isarray "^1.0.0"
+
+dom-compare@^0.2.1:
+  version "0.2.1"
+  resolved "https://registry.yarnpkg.com/dom-compare/-/dom-compare-0.2.1.tgz#7db1d5305b5161e2648bfbf1e844b2344c3d8d2a"
+  dependencies:
+    argparse "1.0.2"
+    colors "0.6.2"
+    xmldom "0.1.16"
 
 dom-converter@~0.1:
   version "0.1.4"
@@ -3857,7 +3872,7 @@ lodash.uniq@^4.3.0:
   version "4.5.0"
   resolved "https://registry.yarnpkg.com/lodash.uniq/-/lodash.uniq-4.5.0.tgz#d0225373aeb652adc1bc82e4945339a842754773"
 
-lodash@^3.10.0, lodash@^3.8.0:
+"lodash@>= 3.2.0 < 4.0.0", lodash@^3.10.0, lodash@^3.8.0:
   version "3.10.1"
   resolved "https://registry.yarnpkg.com/lodash/-/lodash-3.10.1.tgz#5bf45e8e49ba4189e17d482789dfd15bd140b7b6"
 
@@ -6473,6 +6488,10 @@ xlsx@^0.8.4:
 xml-char-classes@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/xml-char-classes/-/xml-char-classes-1.0.0.tgz#64657848a20ffc5df583a42ad8a277b4512bbc4d"
+
+xmldom@0.1.16:
+  version "0.1.16"
+  resolved "https://registry.yarnpkg.com/xmldom/-/xmldom-0.1.16.tgz#cf2602832b1ab5c3e6813fca08fe70196ba15e8c"
 
 xmlhttprequest-ssl@1.5.3:
   version "1.5.3"
