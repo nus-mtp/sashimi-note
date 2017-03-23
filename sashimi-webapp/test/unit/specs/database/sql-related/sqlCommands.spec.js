@@ -58,9 +58,18 @@ function deleteTable(tableName, databaseName) {
   });
 }
 
+function deleteDatabase(databaseName) {
+  return new Promise((resolve, reject) => {
+    const thisDatabaseName = databaseName || testDatabaseName;
+    if (!window.indexedDB) {
+      reject(exceptions.IndexedDBNotSupported);
+    }
+    resolve(window.indexedDB.deleteDatabase(databaseName));
+  });
+}
 
 function cleanTestCase() {
-  return dataDelete.deleteAllEntities(testDatabaseName);
+  return deleteDatabase(testDatabaseName);
 }
 
 describe('sqlCommands', () => {
