@@ -99,9 +99,9 @@ export default class dataAdd {
       .then((maxId) => {
         const newFileId = maxId + 1;
         return sqlCommands.retrieveFullFile(fileId)
-        .then((file) => {
-          file[0].file_id = newFileId;
-          return file;
+        .then((files) => {
+          files[0].file_id = newFileId;
+          return files;
         })
         .then(duplicatedFile =>
           sqlCommands.insertContent(constants.ENTITIES_FILE_MANAGER, duplicatedFile)
