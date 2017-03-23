@@ -7,6 +7,10 @@ const ERROR_SAME_FILE_NAME = 'Another file in the current folder has the same na
 const ERROR_MOVING_TO_SAME_FOLDER = 'Attempting to move to current folder';
 const ERROR_MOVING_TO_INVALID_FOLDER = 'Attempting to move to an invalid folder';
 const ERROR_NOT_FILE_INSTANCE = '"this" is not an instance of "File"';
+const ERROR_CONTAIN_ILLEGAL_CHARACTERS = 'New file name contains illegal character(s)';
+
+/* Constant */
+const ILLEGAL_CHARACTERS = '!$%^&*()_+|~-=`{}[]:";\'<>?,./';
 
 /**
 * File Object
@@ -61,6 +65,10 @@ function hasSameFileName(newFileName) {
   let sameFileName = false;
   for (let index = 0; index < currParentFolder.childFileList.length; index += 1) {
     currFile = currParentFolder.childFileList[index];
+    /* eslint no-continue:0 */
+    if (newFileName === this.name) {
+      continue;
+    }
     if (newFileName === currFile.name) {
       sameFileName = true;
       break;
@@ -142,17 +150,22 @@ File.prototype.move = function move(destFolder) {
  * @return {Promise}
  */
 File.prototype.rename = function rename(newFileName) {
-  return new Promise((resolve, reject) => {
-    if (hasSameFileName.call(this, newFileName)) {
-      reject(ERROR_SAME_FILE_NAME);
-    }
+  if (!(this instanceof Folder)) {
+    throw new Error(ERROR_NOT_FILE_INSTANCE);
+  }
 
-    resolve();
-  })
-  .then(() => storage.renameFile(this.id, newFileName))
-  .then(() => {
-    const oldFileName = this.name;
-    this.name = newFileName;
-    this.path = this.path.replace(oldFileName, newFileName);
-  });
+  if (this.name === newFileName) {
+    return new Promise((resolve, reject) => resolve());
+  /* }  else if (newFileName.match(ILLEGAL_CHARACTERS)) {
+   return new Promise((resolve, reject) => reject(ERROR_CONTAIN_ILLEGAL_CHARACTERS));*/
+  } else if (hasSameFileName.call(this, newFileName)) {
+    return new Promise((resolve, reject) => reject(ERROR_SAME_FILE_NAME));
+  } else {
+    return storage.renameFile(this.id, newFileName)
+    .then(() => {
+      const oldFileName = this.name;
+      this.name = newFileName;
+      this.path = this.path.replace(oldFileName, newFileName);
+    });
+  }
 };
