@@ -101,6 +101,7 @@ export default class dataAdd {
         return sqlCommands.retrieveFullFile(fileId)
         .then((files) => {
           files[0].file_id = newFileId;
+          files[0].file_name = stringManipulator.stringConcat('copy of ', files[0].file_name);
           return files;
         })
         .then(duplicatedFile =>
