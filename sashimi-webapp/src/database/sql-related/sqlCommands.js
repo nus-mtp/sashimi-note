@@ -194,7 +194,10 @@ function getListOfFolderIdsWithSamePath(folderPath) {
     alasql.promise([stringManipulator.stringConcat('SELECT ', constants.HEADER_FOLDER_FOLDER_ID,
                                                    ' FROM ', constants.ENTITIES_FOLDER,
                                                    ' WHERE ', constants.HEADER_FOLDER_PATH,
-                                                   ' LIKE "', folderPath, '%"')])
+                                                   ' LIKE "', folderPath, '%"',
+                                                   // omit the folders in the same folder with same name
+                                                   ' AND ', constants.HEADER_FOLDER_PATH,
+                                                   ' != "', folderPath, '"')])
     .then(folderList => resolve(folderList))
     .catch(sqlErr => reject(sqlErr))
   );
@@ -506,6 +509,11 @@ export default function sqlCommands() {
       .then(() =>
         // step 5: cascade delete all children files
         cascadeDeleteFile(0, filesToDelete)
+        .then(() => {})
+        .catch(sqlErr => reject(sqlErr))
+      )
+      .then(() =>
+        deleteSingleFolder(folderId)
         .then(() => {})
         .catch(sqlErr => reject(sqlErr))
       )
