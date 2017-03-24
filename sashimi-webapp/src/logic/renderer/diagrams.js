@@ -55,13 +55,13 @@ export default function diagramsRenderer(ele) {
         }
       });
 
-      let content = flowCharts[i].innerHTML;
-      content = content.replace(/&gt;/g, '>');
+      const content = flowCharts[i].innerText;
       const diagram = flowchart.parse(content);
       flowCharts[i].innerHTML = '';
       observer.observe(flowCharts[i], observerConfig);
       diagram.drawSVG(flowCharts[i]);
-    }).catch((error) => {
+    })
+    .catch((error) => {
       flowCharts[i].innerHTML = `<code class='hljs'>${flowCharts[i].innerText}</code>`;
     }));
   }

@@ -2,6 +2,8 @@ import domCompare from 'dom-compare';
 import diagramsRenderer from 'src/logic/renderer/diagrams';
 import documentPackager from 'src/logic/documentPackager';
 import diagramsInput from './reference/diagrams/diagramsInput.txt';
+import invalidSyntaxInput from './reference/diagrams/invalidSyntaxInput.txt';
+import invalidSyntaxOutput from './reference/diagrams/invalidSyntaxOutput.txt';
 import seqDiagramsInput from './reference/diagrams/seqDiagramsInput.txt';
 import seqDiagramsOutput from './reference/diagrams/seqDiagramsOutput.txt';
 import flowChartsInput from './reference/diagrams/flowChartsInput.txt';
@@ -18,6 +20,7 @@ const seqHtmlData = documentPackager.getHtmlData(seqDiagramsInput);
 const flowHtmlData = documentPackager.getHtmlData(flowChartsInput);
 const vizHtmlData = documentPackager.getHtmlData(graphvizInput);
 const mermaidHtmlData = documentPackager.getHtmlData(mermaidInput);
+const invalidHtmlData = documentPackager.getHtmlData(invalidSyntaxInput);
 
 // Use iframe as a psuedo browser for testing
 const iframe = document.createElement('IFRAME');
@@ -107,6 +110,8 @@ function regexHelper(diff) {
       // ignore missing attribute error
       if (arr2[2].match(/xlink:/g) !== null) {
         missedArray.push(arr2[2].replace(/xlink:/g, ''));
+      } else if (arr2[2].match(/:xlink/g) !== null) {
+        missedArray.push(arr2[2].replace(/:xlink/g, ''));
       } else {
         errorArray.push(line);
       }
@@ -137,9 +142,7 @@ function regexHelper(diff) {
       }
 
       if (textExpected.get(key) === textActual.get(key)) {
-        errorArray = errorArray.filter((errorLine) => {
-          return (errorLine.node === arrNode[1]+arrNode[2]);
-        });
+        errorArray = errorArray.filter(errorLine => (errorLine.node === arrNode[1]+arrNode[2]));
       }
     } else {
       // add into error array
@@ -172,6 +175,31 @@ describe('Renderer', () => {
       });
     });
 
+    it('should handle invalid or incomplete diagram syntax', (done) => {
+      invalidHtmlData.then((output) => {
+        toRender.innerHTML = output;
+        diagramsRenderer(toRender)
+        .then((out) => {
+          const outputContent = invalidSyntaxOutput.replace(/(\r\n)/g, '\n');
+          const eleOutput = iframeDoc.createElement('DIV');
+          eleOutput.innerHTML = outputContent;
+          const results = domCompare.compare(eleOutput, toRender);
+          const diff = results.getDifferences();
+          const errorArray = regexHelper(diff);
+          console.log(errorArray);
+          expect(errorArray.length).to.equal(0);
+          done();
+        })
+        .catch((error) => {
+          done(error);
+        });
+        done();
+      })
+      .catch((error) => {
+        done(error);
+      });
+    });
+
     it('should handle drawing of sequence diagrams', (done) => {
       // Retrieve HTML string from getHtmlData
       seqHtmlData.then((output) => {
@@ -190,6 +218,7 @@ describe('Renderer', () => {
         .catch((error) => {
           done(error);
         });
+        done();
       })
       .catch((error) => {
         done(error);
@@ -213,6 +242,7 @@ describe('Renderer', () => {
         .catch((error) => {
           done(error);
         });
+        done();
       })
       .catch((error) => {
         done(error);
@@ -236,6 +266,7 @@ describe('Renderer', () => {
         .catch((error) => {
           done(error);
         });
+        done();
       })
       .catch((error) => {
         done(error);
@@ -259,6 +290,7 @@ describe('Renderer', () => {
         .catch((error) => {
           done(error);
         });
+        done();
       })
       .catch((error) => {
         done(error);
@@ -282,6 +314,7 @@ describe('Renderer', () => {
         .catch((error) => {
           done(error);
         });
+        done();
       })
       .catch((error) => {
         done(error);
