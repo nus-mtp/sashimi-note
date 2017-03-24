@@ -28,8 +28,10 @@ let toRender;
 function regexHelper(diff) {
   const ignoredAttr = ['id', 'marker-end', 'x1', 'x2', 'x', 'y1', 'y2', 'y',
     'width', 'height', 'd', 'dy', 'r', 'style', 'viewBox', 'transform', 'points'];
-  const errorArray = [];
   const missedArray = [];
+  let errorArray = [];
+  let textExpected = new Map();
+  let textActual = new Map();
   diff.forEach((line) => {
     const regex1 = /(.*) '(.*)':.* '(.*)'.*'(.*)'/g;
     const regex2 = /(.*) '(.*)' (is missed)/g;
@@ -77,7 +79,26 @@ function regexHelper(diff) {
       }
     } else if (arr4 !== null) {
       // check the node the error is thrown and concantate the strings!
+      const regexNode = /(.*)\//g;
+      const arrNode = regexNode.exec(line.node);
+      const key = arrNode[1];
+      errorArray.push(line);
       console.log(line);
+      if (textExpected.has(key) && textActual.has(key)) {
+        const currExpectedText = textExpected.get(key);
+        const currActualText = textActual.get(key);
+        textExpected.set(key, currExpectedText + arr4[1]);
+        textActual.set(key, currActualText + arr4[2]);
+      } else {
+        textExpected.set(key, arr4[1]);
+        textActual.set(key, arr4[2]);
+      }
+
+      if (textExpected.get(key) === textActual.get(key)) {
+        errorArray = errorArray.filter((errorLine) => {
+          return errorLine.node === arrNode[1]+arrNode[2];
+        });
+      }
     } else {
       // add into error array
       errorArray.push(line);
@@ -220,7 +241,6 @@ describe('Renderer', () => {
         diagramsRenderer(toRender)
         .then((out) => {
           // Replace special characters that have been converted into ampersands
-          console.log(toRender);
           let renderedContent = toRender.innerHTML.replace(/&gt;/g, '>');
           renderedContent = renderedContent.replace(/(\\')/g, '\'');
           renderedContent = renderedContent.replace(/&quot;/g, '"');
