@@ -87,8 +87,8 @@ function regexHelper(diff) {
       if (textExpected.has(key) && textActual.has(key)) {
         const currExpectedText = textExpected.get(key);
         const currActualText = textActual.get(key);
-        textExpected.set(key, currExpectedText + arr4[1]);
-        textActual.set(key, currActualText + arr4[2]);
+        textExpected.set(key, `${currExpectedText} ${arr4[1]}`);
+        textActual.set(key, `${currActualText} ${arr4[2]}`);
       } else {
         textExpected.set(key, arr4[1]);
         textActual.set(key, arr4[2]);
@@ -96,7 +96,7 @@ function regexHelper(diff) {
 
       if (textExpected.get(key) === textActual.get(key)) {
         errorArray = errorArray.filter((errorLine) => {
-          return errorLine.node === arrNode[1]+arrNode[2];
+          return (errorLine.node === arrNode[1]+arrNode[2]);
         });
       }
     } else {
