@@ -29,9 +29,10 @@ function regexHelper(diff) {
   const ignoredAttr = ['id', 'marker-end', 'x1', 'x2', 'x', 'y1', 'y2', 'y',
     'width', 'height', 'd', 'dy', 'r', 'style', 'viewBox', 'transform', 'points'];
   const missedArray = [];
+  const textExpected = new Map();
+  const textActual = new Map();
+
   let errorArray = [];
-  let textExpected = new Map();
-  let textActual = new Map();
   diff.forEach((line) => {
     const regex1 = /(.*) '(.*)':.* '(.*)'.*'(.*)'/g;
     const regex2 = /(.*) '(.*)' (is missed)/g;
@@ -48,12 +49,10 @@ function regexHelper(diff) {
           const expected = arr1[3].replace(/'/g, '');
           const actual = arr1[4].replace(/"/g, '');
           if (expected !== actual) {
-            console.log(line.message);
             errorArray.push(line);
           }
         } else if (ignoredAttr.indexOf(arr1[2]) === -1) {
           if (arr1[3] !== arr1[4]) {
-            console.log(line.message);
             errorArray.push(line);
           }
         }
@@ -63,7 +62,6 @@ function regexHelper(diff) {
       if (arr2[2].match(/xlink:/g) !== null) {
         missedArray.push(arr2[2].replace(/xlink:/g, ''));
       } else {
-        console.log(line.message);
         errorArray.push(line);
       }
     } else if (arr3 !== null) {
@@ -73,7 +71,6 @@ function regexHelper(diff) {
         if (pos !== -1) {
           missedArray.splice(pos, 1);
         } else {
-          console.log(line.message);
           errorArray.push(line);
         }
       }
@@ -83,7 +80,6 @@ function regexHelper(diff) {
       const arrNode = regexNode.exec(line.node);
       const key = arrNode[1];
       errorArray.push(line);
-      console.log(line);
       if (textExpected.has(key) && textActual.has(key)) {
         const currExpectedText = textExpected.get(key);
         const currActualText = textActual.get(key);
@@ -102,7 +98,6 @@ function regexHelper(diff) {
     } else {
       // add into error array
       errorArray.push(line);
-      console.log(line.message);
     }
   });
   return errorArray;
@@ -137,7 +132,6 @@ describe('Renderer', () => {
         toRender.innerHTML = output;
         diagramsRenderer(toRender)
         .then((out) => {
-          // const renderedContent = toRender.innerHTML.replace(/&quot;/g, '\'');
           const outputContent = seqDiagramsOutput.replace(/(\r\n)/g, '\n');
           const eleOutput = iframeDoc.createElement('DIV');
           eleOutput.innerHTML = outputContent;
@@ -163,8 +157,6 @@ describe('Renderer', () => {
         .then((out) => {
           // We are comparing length because the draw function (using Raphaël) will input a different id value for
           // certain tags on different calls, but content length will always be the same.
-          // let renderedContent = toRender.innerHTML.replace(/&gt;/g, '>');
-          // renderedContent = renderedContent.replace(/&quot;/g, '\'');
           const outputContent = flowChartsOutput.replace(/(\r\n)/g, '\n');
           const eleOutput = iframeDoc.createElement('DIV');
           eleOutput.innerHTML = outputContent;
@@ -188,7 +180,6 @@ describe('Renderer', () => {
         toRender.innerHTML = output;
         diagramsRenderer(toRender)
         .then((out) => {
-          // const renderedContent = toRender.innerHTML.replace(/&gt;/g, '>');
           const outputContent = graphvizOutput.replace(/(\r\n)/g, '\n');
           const eleOutput = iframeDoc.createElement('DIV');
           eleOutput.innerHTML = outputContent;
@@ -212,12 +203,11 @@ describe('Renderer', () => {
         toRender.innerHTML = output;
         diagramsRenderer(toRender)
         .then((out) => {
-          const renderedContent = toRender.innerHTML.replace(/&gt;/g, '>');
-          const outputContent = mermaidOutput.replace(/(\r\n)/g, '\n');
           // We are comparing length here also because mermaid diagrams being drawn cannot compare directly due to mermaidAPI
           // setting custom numbered/tagged attribute values on different runs of the test, however content length will always be the same.
           // e.g. 1st run: <text dy="1em" y="3" x="0" fill="#000" stroke="none" font-size="10" style="text-anchor: middle;">
           // 2nd run could be: y attribute value can be 4 instead of 3 etc
+          const outputContent = mermaidOutput.replace(/(\r\n)/g, '\n');
           const eleOutput = iframeDoc.createElement('DIV');
           eleOutput.innerHTML = outputContent;
           const results = domCompare.compare(eleOutput, toRender);
@@ -240,14 +230,9 @@ describe('Renderer', () => {
         toRender.innerHTML = output;
         diagramsRenderer(toRender)
         .then((out) => {
-          // Replace special characters that have been converted into ampersands
-          let renderedContent = toRender.innerHTML.replace(/&gt;/g, '>');
-          renderedContent = renderedContent.replace(/(\\')/g, '\'');
-          renderedContent = renderedContent.replace(/&quot;/g, '"');
-          renderedContent = renderedContent.replace(/&#45;/g, '-');
-          const outputContent = diagramsRenderedOutput.replace(/(\r\n)/g, '\n');
           // We are comparing length here again because flowCharts being drawn cannot compare directly because the draw function (using Raphaël)
           // will input a different id value for certain tags on different calls, but content length will always be the same.
+          const outputContent = diagramsRenderedOutput.replace(/(\r\n)/g, '\n');
           const eleOutput = iframeDoc.createElement('DIV');
           eleOutput.innerHTML = outputContent;
           const results = domCompare.compare(eleOutput, toRender);
