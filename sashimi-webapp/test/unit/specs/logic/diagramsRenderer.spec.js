@@ -75,6 +75,9 @@ function regexHelper(diff) {
           errorArray.push(line);
         }
       }
+    } else if (arr4 !== null) {
+      // check the node the error is thrown and concantate the strings!
+      console.log(line);
     } else {
       // add into error array
       errorArray.push(line);
