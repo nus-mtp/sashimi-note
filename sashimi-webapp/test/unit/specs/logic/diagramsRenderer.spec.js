@@ -24,7 +24,36 @@ const iframe = document.createElement('IFRAME');
 let iframeDoc;
 let toRender;
 
-// Regex helper function
+/**
+ * Regex helper function for checking differences found by domCompare library.
+ *
+ * We are using this because some attribute values/styling are rendered differently on travis,
+ * causing travis to keep failing, although local unit test passes the test.
+ *
+ * Four cases to ignore:
+ * 1. Attribute value differs by parenthesis even though its the same font or because of random generation of value
+ *  regex1 case:
+ *  /(.*) '(.*)':.* '(.*)'.*'(.*)'/g;
+ *  1st (.*) captures the category causing the Error (e.g. is it Tag, Attribute, Attribute's value or Content?)
+ *  2nd (.*) captures the attribute causing the Error (e.g. is it 'id', 'href', 'src' attribute etc)
+ *  3rd (.*) captures type of error's expected value (e.g. 'Arial')
+ *  4th (.*) captures type of error's actual value (e.g. "Arial")
+ *  Example lines -
+ *  1. 'Attribute 'font-family': expected value ''Arial'' instead of '"Arial"''
+ *  2. 'Attribute 'id': expected value 'raphael-marker-endblock33-obj5c60j' instead of 'raphael-marker-endblock33-obj5ihv5''
+ *
+ * 2.
+ *
+ *
+ * 3.
+ *
+ *
+ * 4.
+ *
+ * 
+ * @param {Array} diff - Array containing differences found by domCompare library
+ * @return {Array} returns an Array of non-formatting related errors (e.g. critical errors)
+ **/
 function regexHelper(diff) {
   const ignoredAttr = ['id', 'marker-end', 'x1', 'x2', 'x', 'y1', 'y2', 'y',
     'width', 'height', 'd', 'dy', 'r', 'style', 'viewBox', 'transform', 'points'];
