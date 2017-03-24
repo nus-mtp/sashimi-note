@@ -6,12 +6,32 @@
   * @param {array} options - array containing custom parsing/rending options for use by Markdown-it renderer
   */
 
+// Import HTML entity decoding library to decode for possible XSS insertion
+import heParser from 'he';
+
+// Helper filter function to filter out possible XSS using diagrams
+function filter(content) {
+  const regex = /:>(.*)(?::|&colon;).*/gm;
+  const jsString = 'javascript';
+  let array;
+  let parsedString;
+  while ((array = regex.exec(content)) !== null) {
+    parsedString = heParser.decode(array[1]);
+    if (jsString.toUpperCase() === parsedString.toUpperCase()) {
+      const newRegex = new RegExp(`:>${array[1]}.*`);
+      content = content.replace(newRegex, '');
+    }
+  }
+  return content;
+}
+
 export default function setup(md, options) {
   const defaultRender = md.renderer.rules.fence;
 
   /* eslint no-undef: 0 */
   md.renderer.rules.fence = (tokens, idx, opts, env, self) => {
     const token = tokens[idx];
+    token.content = filter(token.content);
     if (token.info === 'sequence') {
       return `<pre class="sequence">${token.content}</pre>`;
     } else if (token.info === 'flow') {

@@ -186,7 +186,6 @@ describe('Renderer', () => {
           const results = domCompare.compare(eleOutput, toRender);
           const diff = results.getDifferences();
           const errorArray = regexHelper(diff);
-          console.log(errorArray);
           expect(errorArray.length).to.equal(0);
           done();
         })
