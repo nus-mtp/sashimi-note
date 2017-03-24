@@ -33,24 +33,41 @@ let toRender;
  * Four cases to ignore:
  * 1. Attribute value differs by parenthesis even though its the same font or because of random generation of value
  *  regex1 case:
- *  /(.*) '(.*)':.* '(.*)'.*'(.*)'/g;
- *  1st (.*) captures the category causing the Error (e.g. is it Tag, Attribute, Attribute's value or Content?)
- *  2nd (.*) captures the attribute causing the Error (e.g. is it 'id', 'href', 'src' attribute etc)
- *  3rd (.*) captures type of error's expected value (e.g. 'Arial')
- *  4th (.*) captures type of error's actual value (e.g. "Arial")
+ *    /(.*) '(.*)':.* '(.*)'.*'(.*)'/g;
+ *    1st (.*) captures the category causing the Error (e.g. is it Tag, Attribute, Attribute's value or Content?)
+ *    2nd (.*) captures the attribute causing the Error (e.g. is it 'id', 'href', 'src' attribute etc)
+ *    3rd (.*) captures type of error's expected value (e.g. 'Arial')
+ *    4th (.*) captures type of error's actual value (e.g. "Arial")
  *  Example lines -
- *  1. 'Attribute 'font-family': expected value ''Arial'' instead of '"Arial"''
- *  2. 'Attribute 'id': expected value 'raphael-marker-endblock33-obj5c60j' instead of 'raphael-marker-endblock33-obj5ihv5''
+ *    1. 'Attribute 'font-family': expected value ''Arial'' instead of '"Arial"''
+ *    2. 'Attribute 'id': expected value 'raphael-marker-endblock33-obj5c60j' instead of 'raphael-marker-endblock33-obj5ihv5''
  *
- * 2.
+ * 2. Attribute is missing, usually caused by attributes that have the deprecated 'xlink:' resulting in the expected
+ * output to differ from the actual output.
+ *  regex2 case:
+ *    /(.*) '(.*)' (is missed)/g;
+ *    1st (.*) captures the category causing the Error (e.g. is it Tag, Attribute, Attribute's value or Content?)
+ *    2nd (.*) captures the class causing the Error (e.g. is it 'id', 'href', 'src' class etc)
+ *  Example line -
+ *    1. 'Attribute 'xlink:href' is missed'
  *
+ * 3. Extra attribute case, in most cases are caused by the above ignore case 2.
+ *  regex3 case:
+ *    /Extra attribute '(.*)'/g;
+ *    (.*) captures the class causing the Error (e.g. is it 'id', 'href', 'src' class etc)
+ *  Example line -
+ *    1. 'Extra attribute 'href''
  *
- * 3.
+ * 4. Different text content, sometimes as a result of different container attribute values (e.g. different width/height etc)
+ * from expected output
+ *  regex4 case:
+ *    /Expected text '(.*)' instead of '(.*)'/g;
+ *    1st (.*) captures the category causing the Error (e.g. is it Tag, Attribute, Attribute's value or Content?)
+ *    2nd (.*) captures the class causing the Error (e.g. is it 'id', 'href', 'src' class etc)
+ *  Example line -
+ *    1. 'Expected text 'long long time,' instead of 'long long'
+ *    2. 'Expected text 'so long that' instead of 'time, so long'
  *
- *
- * 4.
- *
- * 
  * @param {Array} diff - Array containing differences found by domCompare library
  * @return {Array} returns an Array of non-formatting related errors (e.g. critical errors)
  **/
@@ -184,8 +201,6 @@ describe('Renderer', () => {
         toRender.innerHTML = output;
         diagramsRenderer(toRender)
         .then((out) => {
-          // We are comparing length because the draw function (using Raphaël) will input a different id value for
-          // certain tags on different calls, but content length will always be the same.
           const outputContent = flowChartsOutput.replace(/(\r\n)/g, '\n');
           const eleOutput = iframeDoc.createElement('DIV');
           eleOutput.innerHTML = outputContent;
@@ -232,10 +247,6 @@ describe('Renderer', () => {
         toRender.innerHTML = output;
         diagramsRenderer(toRender)
         .then((out) => {
-          // We are comparing length here also because mermaid diagrams being drawn cannot compare directly due to mermaidAPI
-          // setting custom numbered/tagged attribute values on different runs of the test, however content length will always be the same.
-          // e.g. 1st run: <text dy="1em" y="3" x="0" fill="#000" stroke="none" font-size="10" style="text-anchor: middle;">
-          // 2nd run could be: y attribute value can be 4 instead of 3 etc
           const outputContent = mermaidOutput.replace(/(\r\n)/g, '\n');
           const eleOutput = iframeDoc.createElement('DIV');
           eleOutput.innerHTML = outputContent;
@@ -259,8 +270,6 @@ describe('Renderer', () => {
         toRender.innerHTML = output;
         diagramsRenderer(toRender)
         .then((out) => {
-          // We are comparing length here again because flowCharts being drawn cannot compare directly because the draw function (using Raphaël)
-          // will input a different id value for certain tags on different calls, but content length will always be the same.
           const outputContent = diagramsRenderedOutput.replace(/(\r\n)/g, '\n');
           const eleOutput = iframeDoc.createElement('DIV');
           eleOutput.innerHTML = outputContent;
