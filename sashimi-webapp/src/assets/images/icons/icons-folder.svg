@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!-- Generator: Adobe Illustrator 15.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="249px"
+	 height="249px" viewBox="0 0 249 249" style="enable-background:new 0 0 249 249;" xml:space="preserve">
+<style type="text/css">
+<![CDATA[
+]]>
+</style>
+<g id="folder">
+	<path id="Shape" style="fill:#77CBFF;stroke:#0C79BE;stroke-width:2;" d="M104,43H44c-11,0-19.9,9-19.9,20L24,183c0,11,9,20,20,20
+		h160c11,0,20-9,20-20V83c0-11-9-20-20-20h-80L104,43z"/>
+	<rect id="Rectangle_1_" x="-0.5" style="fill:#D8D8D8;fill-opacity:0;" width="249" height="249"/>
+</g>
+<g id="file">
+	<rect id="Rectangle" x="334" style="fill:#D8D8D8;fill-opacity:0;" width="249" height="249"/>
+	<path style="fill:#7BC9BE;stroke:#2A7770;stroke-width:2;" d="M400.05,25.583c-10.715,0-19.387,8.767-19.387,19.483l-0.097,155.868
+		c0,10.715,8.67,19.481,19.387,19.481H516.95c10.715,0,19.481-8.769,19.481-19.481V71.276l-45.058-45.693H400.05z"/>
+	<polygon style="fill:#7BC9BE;stroke:#2A7770;stroke-width:2;" points="493.241,68.775 493.241,27.989 534.027,68.775 	"/>
+</g>
+<g id="new-folder">
+	<polygon id="Shape_4_" style="fill:none;" points="689,0 938,0 938,249 689,249 	"/>
+	<path id="Shape_5_" style="fill:#9E9E9E;" d="M793,44h-60c-11,0-19.9,9-19.9,20L713,184c0,11,9,20,20,20h160c11,0,20-9,20-20V84
+		c0-11-9-20-20-20h-80L793,44z"/>
+	<circle style="fill:#9E9E9E;stroke:#FFFFFF;stroke-width:12;" cx="883.333" cy="173.334" r="30.667"/>
+	<g>
+		<rect x="879.295" y="158.668" style="fill:#FFFFFF;" width="8.08" height="29.332"/>
+		<rect x="868.668" y="169.295" style="fill:#FFFFFF;" width="29.332" height="8.08"/>
+	</g>
+</g>
+<g id="new-file">
+	<polygon id="Shape_3_" style="fill:none;" points="1002.967,0 1251.967,0 1251.967,249 1002.967,249 	"/>
+	<g>
+		<path style="fill:#9E9E9E;" d="M1068.017,25.583c-10.715,0-19.387,8.767-19.387,19.483l-0.097,155.868
+			c0,10.715,8.67,19.481,19.387,19.481h116.997c10.715,0,19.483-8.769,19.483-19.481V71.276l-45.06-45.693H1068.017z"/>
+		<polygon style="fill:#9E9E9E;stroke:#FFFFFF;stroke-width:7;" points="1162.208,68.775 1162.208,27.989 1202.994,68.775 		"/>
+	</g>
+	<circle style="fill:#9E9E9E;stroke:#FFFFFF;stroke-width:12;" cx="1173.25" cy="189.75" r="30.667"/>
+	<g>
+		<rect x="1169.211" y="175.084" style="fill:#FFFFFF;" width="8.08" height="29.332"/>
+		<rect x="1158.584" y="185.711" style="fill:#FFFFFF;" width="29.332" height="8.08"/>
+	</g>
+</g>
+<g id="duplicate">
+	<polygon id="Shape_7_" style="fill:none;" points="1362.967,0 1611.967,0 1611.967,249 1362.967,249 	"/>
+	<path style="fill:#9E9E9E;" d="M1424.344,26.137c-9.979,0-18.055,8.164-18.055,18.145l-0.09,145.151
+		c0,9.979,8.074,18.144,18.053,18.144h108.955c9.979,0,18.143-8.164,18.143-18.144V68.688l-41.959-42.551H1424.344z"/>
+	<path style="fill:#9E9E9E;stroke:#FFFFFF;stroke-width:9;" d="M1441.727,41.424c-9.979,0-18.055,8.165-18.055,18.144
+		l-0.088,145.153c0,9.979,8.072,18.144,18.053,18.144h108.953c9.979,0,18.146-8.164,18.146-18.144V83.975l-41.962-42.551H1441.727z"
+		/>
+	<polygon style="fill:#9E9E9E;stroke:#FFFFFF;stroke-width:7;" points="1529.441,81.646 1529.441,43.665 1567.424,81.646 	"/>
+</g>
+<g id="upload">
+	<path style="fill:#9E9E9E;" d="M1762.282,101.513l98.876-0.56l1.335-1.336c2.215-2.214,2.234-5.784,0.047-7.974l-46.517-46.513
+		c-2.188-2.19-5.758-2.17-7.973,0.045l-47.045,47.043c-2.215,2.215-2.235,5.784-0.045,7.974L1762.282,101.513z"/>
+	<path style="fill:#9E9E9E;" d="M1832.803,157.918c0,2.762-2.523,5-5.64,5h-30.825c-3.114,0-5.64-2.238-5.64-5v-72
+		c0-2.762,2.523-5,5.64-5h30.825c3.114,0,5.64,2.238,5.64,5V157.918z"/>
+	<path style="fill:#9E9E9E;" d="M1883.467,199.667c0,3.222-2.238,5.833-5,5.833h-138c-2.763,0-5-2.611-5-5.833v-12.834
+		c0-3.222,2.237-5.833,5-5.833h138c2.762,0,5,2.611,5,5.833V199.667z"/>
+	<polygon id="Shape_9_" style="fill:none;" points="1684.967,0 1933.967,0 1933.967,249 1684.967,249 	"/>
+</g>
+<g id="download">
+	<path style="fill:#9E9E9E;" d="M2158.751,103.406l-98.876,0.56l-1.335,1.336c-2.215,2.214-2.235,5.784-0.046,7.974l46.515,46.513
+		c2.19,2.189,5.759,2.17,7.975-0.045l47.045-47.043c2.215-2.215,2.233-5.784,0.045-7.974L2158.751,103.406z"/>
+	<path style="fill:#9E9E9E;" d="M2088.23,47c0-2.762,2.522-5,5.639-5h30.826c3.112,0,5.639,2.238,5.639,5v72
+		c0,2.762-2.524,5-5.639,5h-30.826c-3.114,0-5.639-2.238-5.639-5V47z"/>
+	<path style="fill:#9E9E9E;" d="M2181,198.167c0,3.222-2.238,5.833-5,5.833h-138c-2.762,0-5-2.611-5-5.833v-12.834
+		c0-3.222,2.238-5.833,5-5.833h138c2.762,0,5,2.611,5,5.833V198.167z"/>
+	<polygon id="Shape_12_" style="fill:none;" points="1984.783,0 2233.783,0 2233.783,249 1984.783,249 	"/>
+</g>
+<g id="delete">
+	<path style="fill:#9E9E9E;" d="M2515.852,199.09c0,2.544-2.936,4.605-6.562,4.605h-98.012c-3.627,0-6.562-2.062-6.562-4.605V91.911
+		c0-2.544,2.938-4.606,6.562-4.606h98.012c3.627,0,6.562,2.062,6.562,4.606V199.09z"/>
+	<path style="fill:#9E9E9E;" d="M2527.5,71.271c0,3.163-2.688,5.729-6.003,5.729H2399.07c-3.315,0-6.004-2.566-6.004-5.729v-6.875
+		c0-3.163,2.688-5.729,6.004-5.729h122.427c3.313,0,6.003,2.566,6.003,5.729V71.271z"/>
+	<path style="fill:#9E9E9E;" d="M2482.064,57.667c0,2.761-0.871,5-1.945,5h-39.672c-1.074,0-1.945-2.239-1.945-5v-6
+		c0-2.761,0.871-5,1.945-5h39.672c1.074,0,1.945,2.239,1.945,5V57.667z"/>
+	<polygon id="Shape_13_" style="fill:none;" points="2335.783,0 2584.783,0 2584.783,249 2335.783,249 	"/>
+</g>
+<g id="nyt_x5F_exporter_x5F_info" style="display:none;">
+	<text transform="matrix(1 0 0 1 -131 381)" style="display:inline; font-family:'MyriadPro-Regular'; font-size:12;">&lt;nyt_prefs&gt;  &lt;nyt_prefix&gt;&lt;/nyt_prefix&gt;  &lt;nyt_suffix&gt;&lt;/nyt_suffix&gt;  &lt;nyt_base_path&gt;~/Google%20Drive/NUS/Y3S2/CS3283_4/icons/icons%20svg&lt;/nyt_base_path&gt;  &lt;nyt_scaling&gt;100&lt;/nyt_scaling&gt;  &lt;nyt_transparency&gt;true&lt;/nyt_transparency&gt;  &lt;nyt_embedImage&gt;true&lt;/nyt_embedImage&gt;  &lt;nyt_embedFont&gt;true&lt;/nyt_embedFont&gt;  &lt;nyt_trimEdges&gt;true&lt;/nyt_trimEdges&gt;  &lt;nyt_innerPadding&gt;false&lt;/nyt_innerPadding&gt;  &lt;nyt_format&gt;SVG&lt;/nyt_format&gt;  &lt;nyt_artboards&gt;all&lt;/nyt_artboards&gt;  &lt;nyt_layers&gt;all&lt;/nyt_layers&gt;  &lt;nyt_exportArtboards&gt;false&lt;/nyt_exportArtboards&gt;  &lt;nyt_ignoreWarnings&gt;false&lt;/nyt_ignoreWarnings&gt;&lt;/nyt_prefs&gt;</text>
+</g>
+</svg>
