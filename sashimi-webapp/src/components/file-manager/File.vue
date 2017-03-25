@@ -11,6 +11,7 @@
         v-on:blur="saveFileName"
         v-on:keypress="onKeyPress($event)"
         v-on:keyup="onKeyUp($event)"
+        v-on:paste="removeStyle($event)"
       >{{file.name}}</p>
     </button>
   </div>
@@ -59,6 +60,12 @@ export default {
         this.saveFileName();
       }
     },
+    removeStyle(event) {
+      event.preventDefault();
+
+      const pastedText = event.clipboardData.getData('text/plain');
+      document.execCommand('insertHTML', false, pastedText);
+    }
   }
 };
 </script>

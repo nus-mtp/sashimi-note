@@ -11,6 +11,7 @@
         v-on:blur="saveFolderName"
         v-on:keypress="onKeyPress($event)"
         v-on:keyup="onKeyUp($event)"
+        v-on:paste="removeStyle($event)"
       >{{folder.name}}</p>
     </button>
   </div>
@@ -55,6 +56,12 @@
         if (event.keyCode === enterKey) {
           this.saveFolderName();
         }
+      },
+      removeStyle(event) {
+        event.preventDefault();
+
+        const pastedText = event.clipboardData.getData('text/plain');
+        document.execCommand('insertHTML', false, pastedText);
       }
     },
   };
