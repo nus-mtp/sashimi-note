@@ -1,13 +1,13 @@
 <template>
   <div>
     <navbar v-model="action"></navbar>
-    <div class="section group content">
-      <div class="col editor-wrapper" v-bind:class="editorCols">
+    <div class="section group content" v-bind:data-viewMode="viewMode">
+      <div class="col editor-wrapper">
         <editor 
           v-model="mdContent"
         ></editor>
       </div>
-      <div class="col viewer-wrapper" v-bind:class="viewerCols">
+      <div class="col viewer-wrapper">
         <viewer 
           :editor-content="mdContent" 
           :file-format="fileFormat" 
@@ -37,16 +37,7 @@ export default {
       action: '',
       fileFormat: 'html',
       file: null,
-      editorCols: {
-        span_6_of_12: true,
-        span_12_of_12: false,
-        span_0_of_12: false
-      },
-      viewerCols: {
-        span_6_of_12: true,
-        span_12_of_12: false,
-        span_0_of_12: false
-      }
+      viewMode: 'split'
     };
   },
   watch: {
@@ -54,33 +45,7 @@ export default {
       if (value === 'pages' || value === 'slides' || value === 'html') {
         this.fileFormat = value;
       } else if (value === 'editor' || value === 'viewer' || value === 'split') {
-        switch (value) {
-          case 'editor':
-            this.editorCols.span_12_of_12 = true;
-            this.editorCols.span_6_of_12 = false;
-            this.viewerCols.span_6_of_12 = false;
-            this.viewerCols.span_12_of_12 = false;
-            this.viewerCols.span_0_of_12 = true;
-            this.editorCols.span_0_of_12 = false;
-            break;
-          case 'viewer':
-            this.editorCols.span_12_of_12 = false;
-            this.editorCols.span_6_of_12 = false;
-            this.viewerCols.span_6_of_12 = false;
-            this.viewerCols.span_12_of_12 = true;
-            this.editorCols.span_0_of_12 = true;
-            this.viewerCols.span_0_of_12 = false;
-            break;
-          default:
-          // split screen
-            this.editorCols.span_6_of_12 = true;
-            this.viewerCols.span_6_of_12 = true;
-            this.editorCols.span_12_of_12 = false;
-            this.viewerCols.span_12_of_12 = false;
-            this.editorCols.span_0_of_12 = false;
-            this.viewerCols.span_0_of_12 = false;
-            break;
-        }
+        this.viewMode = value;
       }
     },
     mdContent: _.debounce(function saveFile(value) {
@@ -107,13 +72,50 @@ export default {
   display: none;
 }
 
-.span_6_of_12,
-.span_12_of_12,
-.span_0_of_12 {
+.viewer-wrapper,
+.editor-wrapper {
   transition: width 0.7s;
 }
 
 .content {
   overflow-x: hidden;
+
+  &[data-viewMode="editor"] {
+    .viewer-wrapper {
+      width: 0;
+    }
+
+    .editor-wrapper {
+      width: 100%;
+    }
+  }
+
+  &[data-viewMode="split"] {
+    .viewer-wrapper,
+    .editor-wrapper {
+      width: 50%;
+    }
+
+  }
+
+  &[data-viewMode="viewer"] {
+    .viewer-wrapper {
+      width: 100%;
+    }
+
+    .editor-wrapper {
+      width: 0;
+    }
+  }
+}
+
+// .viewer-wrapper {
+//   display: none;
+// }
+
+@media screen and (min-width: 768px) {
+  .viewer-wrapper {
+    display: inline-block;
+  }
 }
 </style>
