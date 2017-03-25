@@ -75,8 +75,8 @@ let toRender;
  * @return {Array} returns an Array of non-formatting related errors (e.g. critical errors)
  **/
 function regexHelper(diff) {
-  const ignoredAttr = ['id', 'marker-end', 'x1', 'x2', 'x', 'y1', 'y2', 'y',
-    'width', 'height', 'd', 'dy', 'r', 'style', 'viewBox', 'transform', 'points'];
+  const ignoredAttr = ['id', 'marker-end', 'x1', 'x2', 'x', 'y1', 'y2', 'y', 'width',
+    'height', 'd', 'dy', 'r', 'style', 'viewBox', 'transform', 'points'];
   const missedArray = [];
   const textExpected = new Map();
   const textActual = new Map();
@@ -98,6 +98,17 @@ function regexHelper(diff) {
           const expected = arr1[3].replace(/'/g, '');
           const actual = arr1[4].replace(/"/g, '');
           if (expected !== actual) {
+            errorArray.push(line);
+          }
+        } else if (arr1[2] === 'id') {
+          if (arr1[3].indexOf('raphael-marker-endblock33-obj') !== -1
+              && arr1[4].indexOf('raphael-marker-endblock33-obj') !== -1) {
+                // do nothing
+          } else if ((arr1[3].indexOf('arrowhead') !== -1
+              && arr1[4].indexOf('arrowhead') !== -1)) {
+                // do nothing
+          } else {
+            console.log(line);
             errorArray.push(line);
           }
         } else if (ignoredAttr.indexOf(arr1[2]) === -1) {
@@ -192,12 +203,11 @@ describe('Renderer', () => {
         .catch((error) => {
           done(error);
         });
-        done();
       })
       .catch((error) => {
         done(error);
       });
-    });
+    }).timeout(4000);
 
     it('should handle drawing of sequence diagrams', (done) => {
       // Retrieve HTML string from getHtmlData
@@ -217,7 +227,6 @@ describe('Renderer', () => {
         .catch((error) => {
           done(error);
         });
-        done();
       })
       .catch((error) => {
         done(error);
@@ -241,7 +250,6 @@ describe('Renderer', () => {
         .catch((error) => {
           done(error);
         });
-        done();
       })
       .catch((error) => {
         done(error);
@@ -265,7 +273,6 @@ describe('Renderer', () => {
         .catch((error) => {
           done(error);
         });
-        done();
       })
       .catch((error) => {
         done(error);
@@ -289,7 +296,6 @@ describe('Renderer', () => {
         .catch((error) => {
           done(error);
         });
-        done();
       })
       .catch((error) => {
         done(error);
@@ -313,11 +319,10 @@ describe('Renderer', () => {
         .catch((error) => {
           done(error);
         });
-        done();
       })
       .catch((error) => {
         done(error);
       });
-    });
+    }).timeout(3000);
   });
 });
