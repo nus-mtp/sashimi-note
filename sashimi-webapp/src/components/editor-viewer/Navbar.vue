@@ -2,10 +2,7 @@
   <div class="section group navbar">
     <div class="col button-logo vertical-align-child">
         <router-link to="/" class="vertical-align-child navbar-buttons">
-            <img src="../../assets/sashimi.svg" class="inline-block" alt="sashimi">
-            <p class="inline-block">
-              SASHIMI NOTE
-            </p>
+            <img src="../../assets/sashimi-note.svg" class="inline-block" alt="sashimi">
         </router-link>
     </div>
     <!--Waiting for file-manager api to be completed to implement buttons-->

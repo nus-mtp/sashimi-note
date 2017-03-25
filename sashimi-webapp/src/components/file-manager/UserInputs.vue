@@ -3,10 +3,7 @@
     <div class="section group userInputs navbar vertical-align-child">
       <div class="col button-logo inline-block">
         <router-link to="/" class="vertical-align-child">
-          <img src="../../assets/sashimi.svg" class="inline-block" alt="sashimi">
-          <p class="inline-block">
-            SASHIMI NOTE
-          </p>
+          <img src="../../assets/sashimi-note.svg" class="inline-block" alt="sashimi">
         </router-link>
       </div>
       <!--Waiting for file-manager api to be completed to implement buttons-->

@@ -148,7 +148,7 @@ a {
     }
 
     img {
-      width: 40px;
+      width: 150px;
     }
     
     p {
