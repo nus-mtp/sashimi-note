@@ -37,7 +37,12 @@ export default {
       action: '',
       fileFormat: 'html',
       file: null,
-      viewMode: 'split'
+      viewMode: 'split',
+      changeViewModeOnResize: function() {
+        if (window.innerWidth < 768 && this.viewMode === 'split') {
+          this.viewMode = 'editor';
+        }
+      }
     };
   },
   watch: {
@@ -57,11 +62,24 @@ export default {
   computed: {
   },
   mounted() {
-    this.file = fileManager.getFileByID(this.$route.query.id);
+    // for testing purposes
+    // will be handled by fileManager logic
+    const fileID = parseInt(this.$route.query.id);
+
+    this.file = fileManager.getFileByID(fileID);
     this.file.load()
-    .then((data) => {
-      this.mdContent = data;
-    });
+      .then((data) => {
+        this.mdContent = data;
+      });
+
+    if (window.innerWidth < 768) {
+      this.viewMode = 'editor';
+    }
+
+    window.addEventListener('resize', this.changeViewModeOnResize);
+  },
+  beforeDestroy() {
+    window.removeEventListener('resize', this.changeViewModeOnResize);
   }
 };
 
@@ -107,15 +125,5 @@ export default {
       width: 0;
     }
   }
-}
-
-// .viewer-wrapper {
-//   display: none;
-// }
-
-@media screen and (min-width: 768px) {
-  .viewer-wrapper {
-    display: inline-block;
-  }
-}
+} 
 </style>
