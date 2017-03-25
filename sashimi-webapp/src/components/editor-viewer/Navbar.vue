@@ -1,7 +1,7 @@
 <template>
   <div class="section group navbar">
     <div class="col button-logo vertical-align-child">
-        <router-link to="/" class="vertical-align-child navbar-buttons hover-grow">
+        <router-link to="/" class="vertical-align-child navbar-buttons">
             <img src="../../assets/sashimi.svg" class="inline-block" alt="sashimi">
             <p class="inline-block">
               SASHIMI NOTE
@@ -11,18 +11,18 @@
     <!--Waiting for file-manager api to be completed to implement buttons-->
     <!--<div class="col float-left vertical-align-child button-group-margin">
       <div class="image-upload">
-        <label for="file-input" class="navbar-buttons hover-grow" id="upload-image">
+        <label for="file-input" class="navbar-buttons" id="upload-image">
           <i class="material-icons md-dark">photo_camera</i>
         </label>
         <input type="file" id="file-input">
       </div>
-      <button class="navbar-buttons hover-grow" id="plugins">
+      <button class="navbar-buttons" id="plugins">
         <img src="../../assets/images/buttons/button-plugins.svg" class="button-img" alt="plugins">
       </button>
-      <button class="navbar-buttons hover-grow" id="annotate">
+      <button class="navbar-buttons" id="annotate">
         <img src="../../assets/images/buttons/button-annotate.svg" class="button-img" alt="annotate">
       </button>
-      <button class="navbar-buttons hover-grow" id="share-file">
+      <button class="navbar-buttons" id="share-file">
         <i class="material-icons md-dark">share</i>
       </button>
     </div>-->
@@ -30,7 +30,7 @@
       <div class="col inline-block">
         <!--Waiting for file-manager api to be completed to implement buttons-->    
         <!--<div class="navbar-dropdown inline-block">
-          <button class="button-dropdown button-group-margin vertical-align-child navbar-buttons hover-grow" id="new-file">
+          <button class="button-dropdown button-group-margin vertical-align-child navbar-buttons" id="new-file">
             <img class="inline-block" src="../../assets/images/symbols/symbol-add.svg" alt="add"> 
             <p class="inline-block">New</p>  
           </button>
@@ -40,7 +40,7 @@
           </div>
         </div>-->
         <div class="navbar-dropdown inline-block">
-          <button class="button-dropdown button-group-margin vertical-align-child navbar-buttons hover-grow" id="manage-file">
+          <button class="button-dropdown button-group-margin vertical-align-child navbar-buttons" id="manage-file">
             <p class="inline-block">Manage</p> 
             <img class="inline-block" src="../../assets/images/symbols/symbol-arrow-down.svg" alt="add">
           </button>
@@ -52,14 +52,14 @@
         </div>
       </div>
       <div class="col vertical-align-child button-group-margin">
-        <button v-on:click="updateParent('editor')" class="navbar-buttons hover-grow" id="button-editor">
+        <button v-on:click="updateParent('editor')" class="navbar-buttons" id="button-editor">
         <i class="material-icons md-dark md-dark">edit</i>
         </button>
-        <button v-on:click="updateParent('split')" class="navbar-buttons hover-grow" id="button-split-screen">
+        <button v-on:click="updateParent('split')" class="navbar-buttons" id="button-split-screen">
         <!--<i class="material-icons md-dark md-dark">chrome_reader_mode</i>-->
         <img src="../../assets/images/buttons/button-split-screen.svg" class="button-img" alt="plugins">
         </button>
-        <button v-on:click="updateParent('viewer')" class="navbar-buttons hover-grow" id="button-viewer">
+        <button v-on:click="updateParent('viewer')" class="navbar-buttons" id="button-viewer">
         <i class="material-icons md-dark md-dark md-dark">remove_red_eye</i>
         </button>
       </div>
@@ -107,10 +107,11 @@ export default {
 
 .button-logo {
   cursor: pointer;
-  .hover-grow{
-    &:hover {
-      transform: scale(1.1);
-    }
+}
+
+.navbar-buttons {
+  &#button-split-screen {
+    display: none;
   }
 }
 
@@ -191,6 +192,14 @@ export default {
   &[data-active="html"] button[data-format="html"] {
     background-color: rgba(0,0,0,0.2);
     font-weight: 600;
+  }
+}
+
+@media screen and (min-width: 768px) {
+  .navbar-buttons {
+    &#button-split-screen {
+      display: inline-block;
+    }
   }
 }
 </style>
