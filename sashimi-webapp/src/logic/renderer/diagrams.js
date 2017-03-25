@@ -62,7 +62,10 @@ export default function diagramsRenderer(ele) {
       diagram.drawSVG(flowCharts[i]);
     })
     .catch((error) => {
-      flowCharts[i].innerHTML = `<code class='hljs'>${flowCharts[i].innerText}</code>`;
+      console.log(error);
+      if (flowCharts[i].innerText !== '') {
+        flowCharts[i].innerHTML = `<code class='hljs'>${flowCharts[i].innerText}</code>`;
+      }
     }));
   }
 
