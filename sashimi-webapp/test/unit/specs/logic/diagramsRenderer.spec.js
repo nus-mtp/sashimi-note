@@ -100,15 +100,17 @@ function regexHelper(diff) {
           if (expected !== actual) {
             errorArray.push(line);
           }
+        // certain cases of id can be ignored
         } else if (arr1[2] === 'id') {
+          // Case 1
           if (arr1[3].indexOf('raphael-marker-endblock33-obj') !== -1
               && arr1[4].indexOf('raphael-marker-endblock33-obj') !== -1) {
-                // do nothing
+                // Ignore, not an actual error. Just randomly generated id value
           } else if ((arr1[3].indexOf('arrowhead') !== -1
               && arr1[4].indexOf('arrowhead') !== -1)) {
-                // do nothing
+                // Ignore, not an actual error.
           } else {
-            console.log(line);
+            // console.log(line);
             errorArray.push(line);
           }
         } else if (ignoredAttr.indexOf(arr1[2]) === -1) {
@@ -137,7 +139,7 @@ function regexHelper(diff) {
         }
       }
     } else if (arr4 !== null) {
-      // check the node the error is thrown and concantate the strings!
+      // check the node where the error is thrown and concantate the strings!
       const regexNode = /(.*)\//g;
       const arrNode = regexNode.exec(line.node);
       const key = arrNode[1];
