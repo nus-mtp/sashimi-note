@@ -1,0 +1,1388 @@
+<h2 id="uml-diagrams">UML Diagrams</h2>
+<h3 id="sequence-diagrams">Sequence Diagrams</h3>
+<p>You can render sequence diagrams like this:</p>
+<pre class="sequence"><svg width="645px" height="346px" class="sequence simple"><desc></desc><defs><marker viewBox="0 0 5 5" markerWidth="5" markerHeight="5" orient="auto" refX="5" refY="2.5" id="markerArrowBlock"><path d="M 0 0 L 5 2.5 L 0 5 z"></path></marker><marker viewBox="0 0 9.6 16" markerWidth="4" markerHeight="16" orient="auto" refX="9.6" refY="8" id="markerArrowOpen"><path d="M 9.6,8 1.92,16 0,13.7 5.76,8 0,2.286 1.92,0 9.6,8 z"></path></marker></defs><g class="title"></g><g class="actor"><rect x="155" y="20" width="70" height="38" stroke="#000000" fill="#ffffff" style="stroke-width: 2px;"></rect><text x="165" y="44" style="font-size: 16px; font-family: 'Andale Mono', monospace;"><tspan x="165">Alice</tspan></text></g><g class="actor"><rect x="155" y="288" width="70" height="38" stroke="#000000" fill="#ffffff" style="stroke-width: 2px;"></rect><text x="165" y="312" style="font-size: 16px; font-family: 'Andale Mono', monospace;"><tspan x="165">Alice</tspan></text></g><line x1="190" x2="190" y1="58" y2="288" stroke="#000000" fill="none" style="stroke-width: 2px;"></line><g class="actor"><rect x="415" y="20" width="50" height="38" stroke="#000000" fill="#ffffff" style="stroke-width: 2px;"></rect><text x="425" y="44" style="font-size: 16px; font-family: 'Andale Mono', monospace;"><tspan x="425">Bob</tspan></text></g><g class="actor"><rect x="415" y="288" width="50" height="38" stroke="#000000" fill="#ffffff" style="stroke-width: 2px;"></rect><text x="425" y="312" style="font-size: 16px; font-family: 'Andale Mono', monospace;"><tspan x="425">Bob</tspan></text></g><line x1="440" x2="440" y1="58" y2="288" stroke="#000000" fill="none" style="stroke-width: 2px;"></line><g class="signal"><text x="200" y="88" style="font-size: 16px; font-family: 'Andale Mono', monospace;"><tspan x="200">Hello Bob, how are you?</tspan></text><line x1="190" x2="440" y1="96" y2="96" stroke="#000000" fill="none" style="stroke-width: 2px; marker-end: url(#markerArrowBlock);"></line></g><g class="note"><rect x="460" y="116" width="110" height="28" stroke="#000000" fill="#ffffff" style="stroke-width: 2px;"></rect><text x="465" y="135" style="font-size: 16px; font-family: 'Andale Mono', monospace;"><tspan x="465">Bob thinks</tspan></text></g><g class="signal"><text x="230" y="174" style="font-size: 16px; font-family: 'Andale Mono', monospace;"><tspan x="230">I am good thanks!</tspan></text><line x1="440" x2="190" y1="182" y2="182" stroke="#000000" fill="none" style="stroke-width: 2px; stroke-dasharray: 6px, 2px; marker-end: url(#markerArrowBlock);"></line></g><g class="note"><rect x="20" y="202" width="150" height="28" stroke="#000000" fill="#ffffff" style="stroke-width: 2px;"></rect><text x="25" y="221" style="font-size: 16px; font-family: 'Andale Mono', monospace;"><tspan x="25">Alice responds</tspan></text></g><g class="signal"><text x="215" y="260" style="font-size: 16px; font-family: 'Andale Mono', monospace;"><tspan x="215">Where have you been?</tspan></text><line x1="190" x2="440" y1="268" y2="268" stroke="#000000" fill="none" style="stroke-width: 2px; marker-end: url(#markerArrowBlock);"></line></g></svg></pre><pre class="sequence"><svg width="490px" height="203.203125px" class="sequence simple"><desc></desc><defs><marker viewBox="0 0 5 5" markerWidth="5" markerHeight="5" orient="auto" refX="5" refY="2.5" id="markerArrowBlock"><path d="M 0 0 L 5 2.5 L 0 5 z"></path></marker><marker viewBox="0 0 9.6 16" markerWidth="4" markerHeight="16" orient="auto" refX="9.6" refY="8" id="markerArrowOpen"><path d="M 9.6,8 1.92,16 0,13.7 5.76,8 0,2.286 1.92,0 9.6,8 z"></path></marker></defs><g class="title"></g><g class="actor"><rect x="10" y="20" width="30" height="38" stroke="#000000" fill="#ffffff" style="stroke-width: 2px;"></rect><text x="20" y="44" style="font-size: 16px; font-family: 'Andale Mono', monospace;"><tspan x="20">C</tspan></text></g><g class="actor"><rect x="10" y="145.203125" width="30" height="38" stroke="#000000" fill="#ffffff" style="stroke-width: 2px;"></rect><text x="20" y="169.203125" style="font-size: 16px; font-family: 'Andale Mono', monospace;"><tspan x="20">C</tspan></text></g><line x1="25" x2="25" y1="58" y2="145.203125" stroke="#000000" fill="none" style="stroke-width: 2px;"></line><g class="actor"><rect x="60" y="20" width="30" height="38" stroke="#000000" fill="#ffffff" style="stroke-width: 2px;"></rect><text x="70" y="44" style="font-size: 16px; font-family: 'Andale Mono', monospace;"><tspan x="70">B</tspan></text></g><g class="actor"><rect x="60" y="145.203125" width="30" height="38" stroke="#000000" fill="#ffffff" style="stroke-width: 2px;"></rect><text x="70" y="169.203125" style="font-size: 16px; font-family: 'Andale Mono', monospace;"><tspan x="70">B</tspan></text></g><line x1="75" x2="75" y1="58" y2="145.203125" stroke="#000000" fill="none" style="stroke-width: 2px;"></line><g class="actor"><rect x="110" y="20" width="30" height="38" stroke="#000000" fill="#ffffff" style="stroke-width: 2px;"></rect><text x="120" y="44" style="font-size: 16px; font-family: 'Andale Mono', monospace;"><tspan x="120">A</tspan></text></g><g class="actor"><rect x="110" y="145.203125" width="30" height="38" stroke="#000000" fill="#ffffff" style="stroke-width: 2px;"></rect><text x="120" y="169.203125" style="font-size: 16px; font-family: 'Andale Mono', monospace;"><tspan x="120">A</tspan></text></g><line x1="125" x2="125" y1="58" y2="145.203125" stroke="#000000" fill="none" style="stroke-width: 2px;"></line><g class="note"><rect x="145" y="78" width="280" height="47.203125" stroke="#000000" fill="#ffffff" style="stroke-width: 2px;"></rect><text x="150" y="97" style="font-size: 16px; font-family: 'Andale Mono', monospace;"><tspan x="150">By listing the participants</tspan><tspan dy="1.2em" x="150">you can change their order</tspan></text></g></svg></pre><pre class="sequence"><svg width="415px" height="366.40625px" class="sequence simple"><desc></desc><defs><marker viewBox="0 0 5 5" markerWidth="5" markerHeight="5" orient="auto" refX="5" refY="2.5" id="markerArrowBlock"><path d="M 0 0 L 5 2.5 L 0 5 z"></path></marker><marker viewBox="0 0 9.6 16" markerWidth="4" markerHeight="16" orient="auto" refX="9.6" refY="8" id="markerArrowOpen"><path d="M 9.6,8 1.92,16 0,13.7 5.76,8 0,2.286 1.92,0 9.6,8 z"></path></marker></defs><g class="title"></g><g class="actor"><rect x="145" y="20" width="30" height="38" stroke="#000000" fill="#ffffff" style="stroke-width: 2px;"></rect><text x="155" y="44" style="font-size: 16px; font-family: 'Andale Mono', monospace;"><tspan x="155">A</tspan></text></g><g class="actor"><rect x="145" y="308.40625" width="30" height="38" stroke="#000000" fill="#ffffff" style="stroke-width: 2px;"></rect><text x="155" y="332.40625" style="font-size: 16px; font-family: 'Andale Mono', monospace;"><tspan x="155">A</tspan></text></g><line x1="160" x2="160" y1="58" y2="308.40625" stroke="#000000" fill="none" style="stroke-width: 2px;"></line><g class="actor"><rect x="355" y="20" width="30" height="38" stroke="#000000" fill="#ffffff" style="stroke-width: 2px;"></rect><text x="365" y="44" style="font-size: 16px; font-family: 'Andale Mono', monospace;"><tspan x="365">B</tspan></text></g><g class="actor"><rect x="355" y="308.40625" width="30" height="38" stroke="#000000" fill="#ffffff" style="stroke-width: 2px;"></rect><text x="365" y="332.40625" style="font-size: 16px; font-family: 'Andale Mono', monospace;"><tspan x="365">B</tspan></text></g><line x1="370" x2="370" y1="58" y2="308.40625" stroke="#000000" fill="none" style="stroke-width: 2px;"></line><g class="note"><rect x="20" y="78" width="120" height="47.203125" stroke="#000000" fill="#ffffff" style="stroke-width: 2px;"></rect><text x="25" y="97" style="font-size: 16px; font-family: 'Andale Mono', monospace;"><tspan x="25">Note to the</tspan><tspan dy="1.2em" x="25">left of A</tspan></text></g><g class="note"><rect x="180" y="145.203125" width="120" height="47.203125" stroke="#000000" fill="#ffffff" style="stroke-width: 2px;"></rect><text x="185" y="164.203125" style="font-size: 16px; font-family: 'Andale Mono', monospace;"><tspan x="185">Note to the</tspan><tspan dy="1.2em" x="185">right of A</tspan></text></g><g class="note"><rect x="100" y="212.40625" width="120" height="28" stroke="#000000" fill="#ffffff" style="stroke-width: 2px;"></rect><text x="105" y="231.40625" style="font-size: 16px; font-family: 'Andale Mono', monospace;"><tspan x="105">Note over A</tspan></text></g><g class="note"><rect x="150" y="260.40625" width="230" height="28" stroke="#000000" fill="#ffffff" style="stroke-width: 2px;"></rect><text x="155" y="279.40625" style="font-size: 16px; font-family: 'Andale Mono', monospace;"><tspan x="155">Note over both A and B</tspan></text></g></svg></pre><pre class="sequence"><svg width="450px" height="316px" class="sequence simple"><desc>Here is a title</desc><defs><marker viewBox="0 0 5 5" markerWidth="5" markerHeight="5" orient="auto" refX="5" refY="2.5" id="markerArrowBlock"><path d="M 0 0 L 5 2.5 L 0 5 z"></path></marker><marker viewBox="0 0 9.6 16" markerWidth="4" markerHeight="16" orient="auto" refX="9.6" refY="8" id="markerArrowOpen"><path d="M 9.6,8 1.92,16 0,13.7 5.76,8 0,2.286 1.92,0 9.6,8 z"></path></marker></defs><g class="title"><rect x="10" y="10" width="160" height="28" stroke="#000000" fill="#ffffff" style="stroke-width: 2px;"></rect><text x="15" y="29" style="font-size: 16px; font-family: 'Andale Mono', monospace;"><tspan x="15">Here is a title</tspan></text></g><g class="actor"><rect x="10" y="48" width="30" height="38" stroke="#000000" fill="#ffffff" style="stroke-width: 2px;"></rect><text x="20" y="72" style="font-size: 16px; font-family: 'Andale Mono', monospace;"><tspan x="20">A</tspan></text></g><g class="actor"><rect x="10" y="258" width="30" height="38" stroke="#000000" fill="#ffffff" style="stroke-width: 2px;"></rect><text x="20" y="282" style="font-size: 16px; font-family: 'Andale Mono', monospace;"><tspan x="20">A</tspan></text></g><line x1="25" x2="25" y1="86" y2="258" stroke="#000000" fill="none" style="stroke-width: 2px;"></line><g class="actor"><rect x="140" y="48" width="30" height="38" stroke="#000000" fill="#ffffff" style="stroke-width: 2px;"></rect><text x="150" y="72" style="font-size: 16px; font-family: 'Andale Mono', monospace;"><tspan x="150">B</tspan></text></g><g class="actor"><rect x="140" y="258" width="30" height="38" stroke="#000000" fill="#ffffff" style="stroke-width: 2px;"></rect><text x="150" y="282" style="font-size: 16px; font-family: 'Andale Mono', monospace;"><tspan x="150">B</tspan></text></g><line x1="155" x2="155" y1="86" y2="258" stroke="#000000" fill="none" style="stroke-width: 2px;"></line><g class="actor"><rect x="270" y="48" width="30" height="38" stroke="#000000" fill="#ffffff" style="stroke-width: 2px;"></rect><text x="280" y="72" style="font-size: 16px; font-family: 'Andale Mono', monospace;"><tspan x="280">C</tspan></text></g><g class="actor"><rect x="270" y="258" width="30" height="38" stroke="#000000" fill="#ffffff" style="stroke-width: 2px;"></rect><text x="280" y="282" style="font-size: 16px; font-family: 'Andale Mono', monospace;"><tspan x="280">C</tspan></text></g><line x1="285" x2="285" y1="86" y2="258" stroke="#000000" fill="none" style="stroke-width: 2px;"></line><g class="actor"><rect x="390" y="48" width="30" height="38" stroke="#000000" fill="#ffffff" style="stroke-width: 2px;"></rect><text x="400" y="72" style="font-size: 16px; font-family: 'Andale Mono', monospace;"><tspan x="400">D</tspan></text></g><g class="actor"><rect x="390" y="258" width="30" height="38" stroke="#000000" fill="#ffffff" style="stroke-width: 2px;"></rect><text x="400" y="282" style="font-size: 16px; font-family: 'Andale Mono', monospace;"><tspan x="400">D</tspan></text></g><line x1="405" x2="405" y1="86" y2="258" stroke="#000000" fill="none" style="stroke-width: 2px;"></line><g class="signal"><text x="35" y="116" style="font-size: 16px; font-family: 'Andale Mono', monospace;"><tspan x="35">Normal line</tspan></text><line x1="25" x2="155" y1="124" y2="124" stroke="#000000" fill="none" style="stroke-width: 2px; marker-end: url(#markerArrowBlock);"></line></g><g class="signal"><text x="165" y="154" style="font-size: 16px; font-family: 'Andale Mono', monospace;"><tspan x="165">Dashed line</tspan></text><line x1="155" x2="285" y1="162" y2="162" stroke="#000000" fill="none" style="stroke-width: 2px; stroke-dasharray: 6px, 2px; marker-end: url(#markerArrowBlock);"></line></g><g class="signal"><text x="295" y="192" style="font-size: 16px; font-family: 'Andale Mono', monospace;"><tspan x="295">Open arrow</tspan></text><line x1="285" x2="405" y1="200" y2="200" stroke="#000000" fill="none" style="stroke-width: 2px; marker-end: url(#markerArrowOpen);"></line></g><g class="signal"><text x="130" y="230" style="font-size: 16px; font-family: 'Andale Mono', monospace;"><tspan x="130">Dashed open arrow</tspan></text><line x1="405" x2="25" y1="238" y2="238" stroke="#000000" fill="none" style="stroke-width: 2px; stroke-dasharray: 6px, 2px; marker-end: url(#markerArrowOpen);"></line></g></svg></pre><pre class="sequence"><svg width="475px" height="317.203125px" class="sequence simple"><desc></desc><defs><marker viewBox="0 0 5 5" markerWidth="5" markerHeight="5" orient="auto" refX="5" refY="2.5" id="markerArrowBlock"><path d="M 0 0 L 5 2.5 L 0 5 z"></path></marker><marker viewBox="0 0 9.6 16" markerWidth="4" markerHeight="16" orient="auto" refX="9.6" refY="8" id="markerArrowOpen"><path d="M 9.6,8 1.92,16 0,13.7 5.76,8 0,2.286 1.92,0 9.6,8 z"></path></marker></defs><g class="title"></g><g class="actor"><rect x="10" y="20" width="80" height="38" stroke="#000000" fill="#ffffff" style="stroke-width: 2px;"></rect><text x="20" y="44" style="font-size: 16px; font-family: 'Andale Mono', monospace;"><tspan x="20">Andrew</tspan></text></g><g class="actor"><rect x="10" y="259.203125" width="80" height="38" stroke="#000000" fill="#ffffff" style="stroke-width: 2px;"></rect><text x="20" y="283.203125" style="font-size: 16px; font-family: 'Andale Mono', monospace;"><tspan x="20">Andrew</tspan></text></g><line x1="50" x2="50" y1="58" y2="259.203125" stroke="#000000" fill="none" style="stroke-width: 2px;"></line><g class="actor"><rect x="205" y="20" width="70" height="38" stroke="#000000" fill="#ffffff" style="stroke-width: 2px;"></rect><text x="215" y="44" style="font-size: 16px; font-family: 'Andale Mono', monospace;"><tspan x="215">China</tspan></text></g><g class="actor"><rect x="205" y="259.203125" width="70" height="38" stroke="#000000" fill="#ffffff" style="stroke-width: 2px;"></rect><text x="215" y="283.203125" style="font-size: 16px; font-family: 'Andale Mono', monospace;"><tspan x="215">China</tspan></text></g><line x1="240" x2="240" y1="58" y2="259.203125" stroke="#000000" fill="none" style="stroke-width: 2px;"></line><g class="signal"><text x="95" y="88" style="font-size: 16px; font-family: 'Andale Mono', monospace;"><tspan x="95">Says Hello</tspan></text><line x1="50" x2="240" y1="96" y2="96" stroke="#000000" fill="none" style="stroke-width: 2px; marker-end: url(#markerArrowBlock);"></line></g><g class="note"><rect x="260" y="116" width="130" height="47.203125" stroke="#000000" fill="#ffffff" style="stroke-width: 2px;"></rect><text x="265" y="135" style="font-size: 16px; font-family: 'Andale Mono', monospace;"><tspan x="265">China thinks</tspan><tspan dy="1.2em" x="265">about it</tspan></text></g><g class="signal"><text x="85" y="193.203125" style="font-size: 16px; font-family: 'Andale Mono', monospace;"><tspan x="85">How are you?</tspan></text><line x1="240" x2="50" y1="201.203125" y2="201.203125" stroke="#000000" fill="none" style="stroke-width: 2px; stroke-dasharray: 6px, 2px; marker-end: url(#markerArrowBlock);"></line></g><g class="signal"><text x="60" y="231.203125" style="font-size: 16px; font-family: 'Andale Mono', monospace;"><tspan x="60">I am good thanks!</tspan></text><line x1="50" x2="240" y1="239.203125" y2="239.203125" stroke="#000000" fill="none" style="stroke-width: 2px; marker-end: url(#markerArrowOpen);"></line></g></svg></pre><h3 id="flow-charts">Flow Charts</h3>
+<p>Flow charts can be specified like this:</p>
+<pre class="flow"><svg height="530" version="1.1" width="184" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 184 530" preserveAspectRatio="xMidYMid meet" style="overflow: hidden; position: relative; top: -0.0625px;"><desc style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">Created with Raphaël 2.2.0</desc><defs style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"><path stroke-linecap="round" d="M5,0 0,2.5 5,5z" id="raphael-marker-block" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></path><marker id="raphael-marker-endblock33-objqemre" markerHeight="3" markerWidth="3" orient="auto" refX="1.5" refY="1.5" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"><use xlink:href="#raphael-marker-block" transform="rotate(180 1.5 1.5) scale(0.6,0.6)" stroke-width="1.6667" fill="black" stroke="none" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></use></marker><path stroke-linecap="round" d="M5,0 0,2.5 5,5z" id="raphael-marker-block" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></path><marker id="raphael-marker-endblock33-objcegu7" markerHeight="3" markerWidth="3" orient="auto" refX="1.5" refY="1.5" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"><use xlink:href="#raphael-marker-block" transform="rotate(180 1.5 1.5) scale(0.6,0.6)" stroke-width="1.6667" fill="black" stroke="none" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></use></marker><path stroke-linecap="round" d="M5,0 0,2.5 5,5z" id="raphael-marker-block" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></path><marker id="raphael-marker-endblock33-obj5c60j" markerHeight="3" markerWidth="3" orient="auto" refX="1.5" refY="1.5" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"><use xlink:href="#raphael-marker-block" transform="rotate(180 1.5 1.5) scale(0.6,0.6)" stroke-width="1.6667" fill="black" stroke="none" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></use></marker><path stroke-linecap="round" d="M5,0 0,2.5 5,5z" id="raphael-marker-block" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></path><marker id="raphael-marker-endblock33-objuf0no" markerHeight="3" markerWidth="3" orient="auto" refX="1.5" refY="1.5" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"><use xlink:href="#raphael-marker-block" transform="rotate(180 1.5 1.5) scale(0.6,0.6)" stroke-width="1.6667" fill="black" stroke="none" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></use></marker><path stroke-linecap="round" d="M5,0 0,2.5 5,5z" id="raphael-marker-block" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></path><marker id="raphael-marker-endblock33-objfi9s5" markerHeight="3" markerWidth="3" orient="auto" refX="1.5" refY="1.5" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"><use xlink:href="#raphael-marker-block" transform="rotate(180 1.5 1.5) scale(0.6,0.6)" stroke-width="1.6667" fill="black" stroke="none" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></use></marker><path stroke-linecap="round" d="M5,0 0,2.5 5,5z" id="raphael-marker-block" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></path><marker id="raphael-marker-endblock33-objfi9s5" markerHeight="3" markerWidth="3" orient="auto" refX="1.5" refY="1.5" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"><use xlink:href="#raphael-marker-block" transform="rotate(180 1.5 1.5) scale(0.6,0.6)" stroke-width="1.6667" fill="black" stroke="none" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></use></marker><path stroke-linecap="round" d="M5,0 0,2.5 5,5z" id="raphael-marker-block" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></path><marker id="raphael-marker-endblock33-objuf0no" markerHeight="3" markerWidth="3" orient="auto" refX="1.5" refY="1.5" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"><use xlink:href="#raphael-marker-block" transform="rotate(180 1.5 1.5) scale(0.6,0.6)" stroke-width="1.6667" fill="black" stroke="none" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></use></marker><path stroke-linecap="round" d="M5,0 0,2.5 5,5z" id="raphael-marker-block" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></path><marker id="raphael-marker-endblock33-obj5c60j" markerHeight="3" markerWidth="3" orient="auto" refX="1.5" refY="1.5" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"><use xlink:href="#raphael-marker-block" transform="rotate(180 1.5 1.5) scale(0.6,0.6)" stroke-width="1.6667" fill="black" stroke="none" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></use></marker><path stroke-linecap="round" d="M5,0 0,2.5 5,5z" id="raphael-marker-block" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></path><marker id="raphael-marker-endblock33-objcegu7" markerHeight="3" markerWidth="3" orient="auto" refX="1.5" refY="1.5" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"><use xlink:href="#raphael-marker-block" transform="rotate(180 1.5 1.5) scale(0.6,0.6)" stroke-width="1.6667" fill="black" stroke="none" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></use></marker><path stroke-linecap="round" d="M5,0 0,2.5 5,5z" id="raphael-marker-block" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></path><marker id="raphael-marker-endblock33-objqemre" markerHeight="3" markerWidth="3" orient="auto" refX="1.5" refY="1.5" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"><use xlink:href="#raphael-marker-block" transform="rotate(180 1.5 1.5) scale(0.6,0.6)" stroke-width="1.6667" fill="black" stroke="none" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></use></marker></defs><rect x="0" y="0" width="50" height="36" rx="20" ry="20" fill="#ffffff" stroke="#000000" stroke-width="3" class="flowchart" id="st" transform="matrix(1,0,0,1,56,25.5)" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></rect><text x="10" y="18" text-anchor="start" font-family="'Arial'" font-size="14px" stroke="none" fill="#000000" id="stt" class="flowchartt" transform="matrix(1,0,0,1,56,25.5)" stroke-width="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: start; font-family: Arial; font-size: 14px;"><tspan dy="5" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">Start</tspan></text><rect x="0" y="0" width="105" height="36" rx="0" ry="0" fill="#ffffff" stroke="#000000" stroke-width="3" class="flowchart" id="op" transform="matrix(1,0,0,1,28.5,137)" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></rect><text x="10" y="18" text-anchor="start" font-family="'Arial'" font-size="14px" stroke="none" fill="#000000" id="opt" class="flowchartt" transform="matrix(1,0,0,1,28.5,137)" stroke-width="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: start; font-family: Arial; font-size: 14px;"><tspan dy="5" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">My Operation</tspan></text><rect x="0" y="0" width="53" height="36" rx="0" ry="0" fill="#ffffff" stroke="#000000" stroke-width="3" class="flowchart" id="op2" transform="matrix(1,0,0,1,54.5,248.5)" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></rect><text x="10" y="18" text-anchor="start" font-family="'Arial'" font-size="14px" stroke="none" fill="#000000" id="op2t" class="flowchartt" transform="matrix(1,0,0,1,54.5,248.5)" stroke-width="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: start; font-family: Arial; font-size: 14px;"><tspan dy="5" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">lalala</tspan></text><path fill="#ffffff" stroke="#000000" d="M37.5,18.75L0,37.5L75,75L150,37.5L75,0L0,37.5" stroke-width="3" id="cond" class="flowchart" transform="matrix(1,0,0,1,6,340.5)" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></path><text x="42.5" y="37.5" text-anchor="start" font-family="'Arial'" font-size="14px" stroke="none" fill="#000000" id="condt" class="flowchartt" transform="matrix(1,0,0,1,6,340.5)" stroke-width="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: start; font-family: Arial; font-size: 14px;"><tspan dy="5" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">Yes or No?</tspan><tspan dy="16.8" x="42.5" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></tspan></text><rect x="0" y="0" width="45" height="36" rx="20" ry="20" fill="#ffffff" stroke="#000000" stroke-width="3" class="flowchart" id="e" transform="matrix(1,0,0,1,58.5,491)" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></rect><text x="10" y="18" text-anchor="start" font-family="'Arial'" font-size="14px" stroke="none" fill="#000000" id="et" class="flowchartt" transform="matrix(1,0,0,1,58.5,491)" stroke-width="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: start; font-family: Arial; font-size: 14px;"><tspan dy="5" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">End</tspan></text><path fill="none" stroke="#000000" d="M81,61.5C81,61.5,81,116.24948120117188,81,132.50323343276978" stroke-width="3" marker-end="url(#raphael-marker-endblock33-objqemre)" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></path><path fill="none" stroke="#000000" d="M81,173C81,173,81,227.74948120117188,81,244.00323343276978" stroke-width="3" marker-end="url(#raphael-marker-endblock33-objcegu7)" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></path><path fill="none" stroke="#000000" d="M81,284.5C81,284.5,81,322.70077085494995,81,336.00016031763516" stroke-width="3" marker-end="url(#raphael-marker-endblock33-obj5c60j)" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></path><path fill="none" stroke="#000000" d="M81,415.5C81,415.5,81,470.2494812011719,81,486.5032334327698" stroke-width="3" marker-end="url(#raphael-marker-endblock33-objuf0no)" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></path><text x="86" y="425.5" text-anchor="start" font-family="'Arial'" font-size="14px" stroke="none" fill="#000000" stroke-width="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: start; font-family: Arial; font-size: 14px;"><tspan dy="5" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">yes</tspan></text><path fill="none" stroke="#000000" d="M156,378C156,378,181,378,181,378C181,378,181,223.5,181,223.5C181,223.5,81,223.5,81,223.5C81,223.5,81,236.80397129058838,81,244.0016276333481" stroke-width="3" marker-end="url(#raphael-marker-endblock33-objfi9s5)" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></path><text x="161" y="368" text-anchor="start" font-family="'Arial'" font-size="14px" stroke="none" fill="#000000" stroke-width="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: start; font-family: Arial; font-size: 14px;"><tspan dy="5" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">no</tspan></text></svg></pre><pre class="flow"><svg height="425.4375" version="1.1" width="813.25" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 813.25 425.4375" preserveAspectRatio="xMidYMid meet" style="overflow: hidden; position: relative; top: -0.0625px;"><desc style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">Created with Raphaël 2.2.0</desc><defs style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"><path stroke-linecap="round" d="M5,0 0,2.5 5,5z" id="raphael-marker-block" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></path><marker id="raphael-marker-endblock33-objw6cfm" markerHeight="3" markerWidth="3" orient="auto" refX="1.5" refY="1.5" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"><use xlink:href="#raphael-marker-block" transform="rotate(180 1.5 1.5) scale(0.6,0.6)" stroke-width="1.6667" fill="black" stroke="none" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></use></marker><path stroke-linecap="round" d="M5,0 0,2.5 5,5z" id="raphael-marker-block" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></path><marker id="raphael-marker-endblock33-obj63rua" markerHeight="3" markerWidth="3" orient="auto" refX="1.5" refY="1.5" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"><use xlink:href="#raphael-marker-block" transform="rotate(180 1.5 1.5) scale(0.6,0.6)" stroke-width="1.6667" fill="black" stroke="none" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></use></marker><path stroke-linecap="round" d="M5,0 0,2.5 5,5z" id="raphael-marker-block" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></path><marker id="raphael-marker-endblock33-objpyscb" markerHeight="3" markerWidth="3" orient="auto" refX="1.5" refY="1.5" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"><use xlink:href="#raphael-marker-block" transform="rotate(180 1.5 1.5) scale(0.6,0.6)" stroke-width="1.6667" fill="black" stroke="none" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></use></marker><path stroke-linecap="round" d="M5,0 0,2.5 5,5z" id="raphael-marker-block" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></path><marker id="raphael-marker-endblock33-obj6aya8" markerHeight="3" markerWidth="3" orient="auto" refX="1.5" refY="1.5" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"><use xlink:href="#raphael-marker-block" transform="rotate(180 1.5 1.5) scale(0.6,0.6)" stroke-width="1.6667" fill="black" stroke="none" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></use></marker><path stroke-linecap="round" d="M5,0 0,2.5 5,5z" id="raphael-marker-block" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></path><marker id="raphael-marker-endblock33-obj5s624" markerHeight="3" markerWidth="3" orient="auto" refX="1.5" refY="1.5" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"><use xlink:href="#raphael-marker-block" transform="rotate(180 1.5 1.5) scale(0.6,0.6)" stroke-width="1.6667" fill="black" stroke="none" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></use></marker><path stroke-linecap="round" d="M5,0 0,2.5 5,5z" id="raphael-marker-block" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></path><marker id="raphael-marker-endblock33-objwb6s2" markerHeight="3" markerWidth="3" orient="auto" refX="1.5" refY="1.5" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"><use xlink:href="#raphael-marker-block" transform="rotate(180 1.5 1.5) scale(0.6,0.6)" stroke-width="1.6667" fill="black" stroke="none" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></use></marker><path stroke-linecap="round" d="M5,0 0,2.5 5,5z" id="raphael-marker-block" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></path><marker id="raphael-marker-endblock33-objb6trw" markerHeight="3" markerWidth="3" orient="auto" refX="1.5" refY="1.5" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"><use xlink:href="#raphael-marker-block" transform="rotate(180 1.5 1.5) scale(0.6,0.6)" stroke-width="1.6667" fill="black" stroke="none" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></use></marker><path stroke-linecap="round" d="M5,0 0,2.5 5,5z" id="raphael-marker-block" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></path><marker id="raphael-marker-endblock33-objtwson" markerHeight="3" markerWidth="3" orient="auto" refX="1.5" refY="1.5" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"><use xlink:href="#raphael-marker-block" transform="rotate(180 1.5 1.5) scale(0.6,0.6)" stroke-width="1.6667" fill="black" stroke="none" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></use></marker><path stroke-linecap="round" d="M5,0 0,2.5 5,5z" id="raphael-marker-block" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></path><marker id="raphael-marker-endblock33-objw9t44" markerHeight="3" markerWidth="3" orient="auto" refX="1.5" refY="1.5" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"><use xlink:href="#raphael-marker-block" transform="rotate(180 1.5 1.5) scale(0.6,0.6)" stroke-width="1.6667" fill="black" stroke="none" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></use></marker><path stroke-linecap="round" d="M5,0 0,2.5 5,5z" id="raphael-marker-block" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></path><marker id="raphael-marker-endblock33-objw9t44" markerHeight="3" markerWidth="3" orient="auto" refX="1.5" refY="1.5" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"><use xlink:href="#raphael-marker-block" transform="rotate(180 1.5 1.5) scale(0.6,0.6)" stroke-width="1.6667" fill="black" stroke="none" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></use></marker><path stroke-linecap="round" d="M5,0 0,2.5 5,5z" id="raphael-marker-block" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></path><marker id="raphael-marker-endblock33-objw9t44" markerHeight="3" markerWidth="3" orient="auto" refX="1.5" refY="1.5" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"><use xlink:href="#raphael-marker-block" transform="rotate(180 1.5 1.5) scale(0.6,0.6)" stroke-width="1.6667" fill="black" stroke="none" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></use></marker><path stroke-linecap="round" d="M5,0 0,2.5 5,5z" id="raphael-marker-block" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></path><marker id="raphael-marker-endblock33-objtwson" markerHeight="3" markerWidth="3" orient="auto" refX="1.5" refY="1.5" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"><use xlink:href="#raphael-marker-block" transform="rotate(180 1.5 1.5) scale(0.6,0.6)" stroke-width="1.6667" fill="black" stroke="none" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></use></marker><path stroke-linecap="round" d="M5,0 0,2.5 5,5z" id="raphael-marker-block" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></path><marker id="raphael-marker-endblock33-objb6trw" markerHeight="3" markerWidth="3" orient="auto" refX="1.5" refY="1.5" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"><use xlink:href="#raphael-marker-block" transform="rotate(180 1.5 1.5) scale(0.6,0.6)" stroke-width="1.6667" fill="black" stroke="none" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></use></marker><path stroke-linecap="round" d="M5,0 0,2.5 5,5z" id="raphael-marker-block" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></path><marker id="raphael-marker-endblock33-objwb6s2" markerHeight="3" markerWidth="3" orient="auto" refX="1.5" refY="1.5" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"><use xlink:href="#raphael-marker-block" transform="rotate(180 1.5 1.5) scale(0.6,0.6)" stroke-width="1.6667" fill="black" stroke="none" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></use></marker><path stroke-linecap="round" d="M5,0 0,2.5 5,5z" id="raphael-marker-block" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></path><marker id="raphael-marker-endblock33-obj5s624" markerHeight="3" markerWidth="3" orient="auto" refX="1.5" refY="1.5" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"><use xlink:href="#raphael-marker-block" transform="rotate(180 1.5 1.5) scale(0.6,0.6)" stroke-width="1.6667" fill="black" stroke="none" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></use></marker><path stroke-linecap="round" d="M5,0 0,2.5 5,5z" id="raphael-marker-block" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></path><marker id="raphael-marker-endblock33-obj6aya8" markerHeight="3" markerWidth="3" orient="auto" refX="1.5" refY="1.5" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"><use xlink:href="#raphael-marker-block" transform="rotate(180 1.5 1.5) scale(0.6,0.6)" stroke-width="1.6667" fill="black" stroke="none" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></use></marker><path stroke-linecap="round" d="M5,0 0,2.5 5,5z" id="raphael-marker-block" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></path><marker id="raphael-marker-endblock33-objpyscb" markerHeight="3" markerWidth="3" orient="auto" refX="1.5" refY="1.5" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"><use xlink:href="#raphael-marker-block" transform="rotate(180 1.5 1.5) scale(0.6,0.6)" stroke-width="1.6667" fill="black" stroke="none" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></use></marker><path stroke-linecap="round" d="M5,0 0,2.5 5,5z" id="raphael-marker-block" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></path><marker id="raphael-marker-endblock33-obj63rua" markerHeight="3" markerWidth="3" orient="auto" refX="1.5" refY="1.5" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"><use xlink:href="#raphael-marker-block" transform="rotate(180 1.5 1.5) scale(0.6,0.6)" stroke-width="1.6667" fill="black" stroke="none" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></use></marker><path stroke-linecap="round" d="M5,0 0,2.5 5,5z" id="raphael-marker-block" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></path><marker id="raphael-marker-endblock33-objw6cfm" markerHeight="3" markerWidth="3" orient="auto" refX="1.5" refY="1.5" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"><use xlink:href="#raphael-marker-block" transform="rotate(180 1.5 1.5) scale(0.6,0.6)" stroke-width="1.6667" fill="black" stroke="none" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></use></marker></defs><a xlink:href="http://www.google.com" xlink:show="new" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"><rect x="0" y="0" width="50" height="36" rx="20" ry="20" fill="#ffffff" stroke="#000000" stroke-width="3" class="flowchart" id="st" transform="matrix(1,0,0,1,68.5,27.6094)" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></rect></a><a xlink:href="http://www.google.com" xlink:show="new" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"><text x="10" y="18" text-anchor="start" font-family="'Arial'" font-size="14px" stroke="none" fill="#000000" id="stt" class="flowchartt" transform="matrix(1,0,0,1,68.5,27.6094)" stroke-width="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: start; font-family: Arial; font-size: 14px;"><tspan dy="5" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">Start</tspan></text></a><rect x="0" y="0" width="105" height="36" rx="0" ry="0" fill="#ffffff" stroke="#000000" stroke-width="3" class="flowchart" id="op1" transform="matrix(1,0,0,1,41,141.2188)" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></rect><text x="10" y="18" text-anchor="start" font-family="'Arial'" font-size="14px" stroke="none" fill="#000000" id="op1t" class="flowchartt" transform="matrix(1,0,0,1,41,141.2188)" stroke-width="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: start; font-family: Arial; font-size: 14px;"><tspan dy="5" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">My Operation</tspan></text><a xlink:href="http://www.google.com" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"><path fill="#ffffff" stroke="#000000" d="M27,19.8046875L0,39.609375L54,79.21875L108,39.609375L54,0L0,39.609375" stroke-width="3" id="cond" class="flowchart" transform="matrix(1,0,0,1,235.5,119.6094)" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></path></a><a xlink:href="http://www.google.com" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"><text x="32" y="39.609375" text-anchor="start" font-family="'Arial'" font-size="14px" stroke="none" fill="#000000" id="condt" class="flowchartt" transform="matrix(1,0,0,1,235.5,119.6094)" stroke-width="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: start; font-family: Arial; font-size: 14px;"><tspan dy="-3.40625" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">Yes</tspan><tspan dy="16.8" x="32" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">or No?</tspan></text></a><path fill="#ffffff" stroke="#000000" d="M36,18L0,36L72,72L144,36L72,0L0,36" stroke-width="3" id="c2" class="flowchart" transform="matrix(1,0,0,1,415,123.2188)" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></path><text x="41" y="36" text-anchor="start" font-family="'Arial'" font-size="14px" stroke="none" fill="#000000" id="c2t" class="flowchartt" transform="matrix(1,0,0,1,415,123.2188)" stroke-width="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: start; font-family: Arial; font-size: 14px;"><tspan dy="5" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">Good idea</tspan></text><path fill="#ffffff" stroke="#000000" d="M10,18L0,36L155,36L175,0L20,0L10,18" stroke-width="3" id="io" class="flowchart" transform="matrix(1,0,0,1,399.5,272.8281)" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></path><text x="30" y="18" text-anchor="start" font-family="'Arial'" font-size="14px" stroke="none" fill="#000000" id="iot" class="flowchartt" transform="matrix(1,0,0,1,399.5,272.8281)" stroke-width="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: start; font-family: Arial; font-size: 14px;"><tspan dy="5" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">catch something...</tspan></text><a xlink:href="http://www.google.com" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"><rect x="0" y="0" width="45" height="36" rx="20" ry="20" fill="#ffffff" stroke="#000000" stroke-width="3" class="flowchart" id="e" transform="matrix(1,0,0,1,464.5,386.4375)" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></rect></a><a xlink:href="http://www.google.com" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"><text x="10" y="18" text-anchor="start" font-family="'Arial'" font-size="14px" stroke="none" fill="#000000" id="et" class="flowchartt" transform="matrix(1,0,0,1,464.5,386.4375)" stroke-width="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: start; font-family: Arial; font-size: 14px;"><tspan dy="5" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">End</tspan></text></a><rect x="0" y="0" width="49" height="36" rx="0" ry="0" fill="#ffffff" stroke="#000000" stroke-width="3" class="flowchart" id="op2" transform="matrix(1,0,0,1,678,141.2188)" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></rect><text x="10" y="18" text-anchor="start" font-family="'Arial'" font-size="14px" stroke="none" fill="#000000" id="op2t" class="flowchartt" transform="matrix(1,0,0,1,678,141.2188)" stroke-width="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: start; font-family: Arial; font-size: 14px;"><tspan dy="5" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">Stuff</tspan></text><rect x="0" y="0" width="131" height="36" rx="0" ry="0" fill="#ffffff" stroke="#000000" stroke-width="3" class="flowchart" id="sub1" transform="matrix(1,0,0,1,224,276.4375)" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></rect><rect x="10" y="0" width="111" height="36" rx="0" ry="0" fill="#ffffff" stroke="#000000" stroke-width="3" id="sub1i" transform="matrix(1,0,0,1,224,276.4375)" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></rect><text x="20" y="18" text-anchor="start" font-family="'Arial'" font-size="14px" stroke="none" fill="#000000" id="sub1t" class="flowchartt" transform="matrix(1,0,0,1,224,276.4375)" stroke-width="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: start; font-family: Arial; font-size: 14px;"><tspan dy="5" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">My Subroutine</tspan></text><path fill="none" stroke="#000000" d="M93.5,63.609375C93.5,63.609375,93.5,120.14694494009018,93.5,136.71068613347597" stroke-width="3" marker-end="url(#raphael-marker-endblock33-objw6cfm)" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></path><path fill="none" stroke="#000000" d="M146,159.21875C146,159.21875,212.85127019882202,159.21875,231.00034550670534,159.21875" stroke-width="3" marker-end="url(#raphael-marker-endblock33-obj63rua)" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></path><path fill="none" stroke="#000000" d="M343.5,159.21875C343.5,159.21875,394.81509006023407,159.21875,410.5002689555986,159.21875" stroke-width="3" marker-end="url(#raphael-marker-endblock33-objpyscb)" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></path><text x="348.5" y="149.21875" text-anchor="start" font-family="'Arial'" font-size="14px" stroke="none" fill="#000000" stroke-width="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: start; font-family: Arial; font-size: 14px;"><tspan dy="5" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">yes</tspan></text><path fill="none" stroke="#000000" d="M289.5,198.828125C289.5,198.828125,289.5,255.36569494009018,289.5,271.929436133476" stroke-width="3" marker-end="url(#raphael-marker-endblock33-obj6aya8)" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></path><text x="294.5" y="208.828125" text-anchor="start" font-family="'Arial'" font-size="14px" stroke="none" fill="#000000" stroke-width="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: start; font-family: Arial; font-size: 14px;"><tspan dy="5" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">no</tspan></text><path fill="none" stroke="#000000" d="M487,195.21875C487,195.21875,487,251.75631994009018,487,268.320061133476" stroke-width="3" marker-end="url(#raphael-marker-endblock33-obj5s624)" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></path><text x="492" y="205.21875" text-anchor="start" font-family="'Arial'" font-size="14px" stroke="none" fill="#000000" stroke-width="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: start; font-family: Arial; font-size: 14px;"><tspan dy="5" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">yes</tspan></text><path fill="none" stroke="#000000" d="M559,159.21875C559,159.21875,651.7948946356773,159.21875,673.4983880587679,159.21875" stroke-width="3" marker-end="url(#raphael-marker-endblock33-objwb6s2)" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></path><text x="564" y="149.21875" text-anchor="start" font-family="'Arial'" font-size="14px" stroke="none" fill="#000000" stroke-width="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: start; font-family: Arial; font-size: 14px;"><tspan dy="5" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">no</tspan></text><path fill="none" stroke="#000000" d="M487,308.828125C487,308.828125,487,365.3656949400902,487,381.929436133476" stroke-width="3" marker-end="url(#raphael-marker-endblock33-objb6trw)" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></path><path fill="none" stroke="#000000" d="M702.5,177.21875C702.5,177.21875,702.5,361.4375,702.5,361.4375C702.5,361.4375,487,361.4375,487,361.4375C487,361.4375,487,374.7414712905884,487,381.9391276333481" stroke-width="3" marker-end="url(#raphael-marker-endblock33-objtwson)" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></path><path fill="none" stroke="#000000" d="M224,294.4375C224,294.4375,158.75,294.4375,158.75,294.4375C158.75,294.4375,158.75,165.21875,158.75,165.21875C158.75,165.21875,170.75,159.21875,158.75,153.21875C158.75,153.21875,158.75,116.21875,158.75,116.21875C158.75,116.21875,93.5,116.21875,93.5,116.21875C93.5,116.21875,93.5,129.52272129058838,93.5,136.7203776333481" stroke-width="3" marker-end="url(#raphael-marker-endblock33-objw9t44)" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></path></svg></pre><h3 id="graphviz">Graphviz</h3>
+<pre class="graphviz"><!--?xml version="1.0" encoding="UTF-8" standalone="no"?-->
+
+<!-- Generated by graphviz version 2.40.1 (20161225.0304)
+ -->
+<!-- Title: %0 Pages: 1 -->
+<svg width="199pt" height="260pt" viewBox="0.00 0.00 199.00 260.00" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 256)">
+<title>%0</title>
+<polygon fill="#ffffff" stroke="transparent" points="-4,4 -4,-256 195,-256 195,4 -4,4"></polygon>
+<!-- a -->
+<g id="node1" class="node">
+<title>a</title>
+<ellipse fill="none" stroke="#000000" cx="137" cy="-162" rx="27" ry="18"></ellipse>
+<text text-anchor="middle" x="137" y="-157.8" font-family="Times,serif" font-size="14.00" fill="#000000">a</text>
+</g>
+<!-- b -->
+<g id="node2" class="node">
+<title>b</title>
+<ellipse fill="none" stroke="#000000" cx="99" cy="-90" rx="27" ry="18"></ellipse>
+<text text-anchor="middle" x="99" y="-85.8" font-family="Times,serif" font-size="14.00" fill="#000000">b</text>
+</g>
+<!-- a&#45;&#45;b -->
+<g id="edge1" class="edge">
+<title>a--b</title>
+<path fill="none" stroke="#000000" d="M127.9945,-144.937C122.0248,-133.626 114.2149,-118.8282 108.2048,-107.4407"></path>
+</g>
+<!-- c -->
+<g id="node3" class="node">
+<title>c</title>
+<ellipse fill="none" stroke="#000000" cx="126" cy="-18" rx="27" ry="18"></ellipse>
+<text text-anchor="middle" x="126" y="-13.8" font-family="Times,serif" font-size="14.00" fill="#000000">c</text>
+</g>
+<!-- a&#45;&#45;c -->
+<g id="edge3" class="edge">
+<title>a--c</title>
+<path fill="none" stroke="#000000" d="M137.3574,-143.6842C137.5331,-125.4671 137.3246,-96.7409 135,-72 133.862,-59.8878 131.612,-46.3878 129.6465,-35.9159"></path>
+</g>
+<!-- b&#45;&#45;c -->
+<g id="edge2" class="edge">
+<title>b--c</title>
+<path fill="none" stroke="#000000" d="M105.6742,-72.2022C109.8593,-61.0419 115.2321,-46.7143 119.4026,-35.593"></path>
+</g>
+<!-- d -->
+<g id="node4" class="node">
+<title>d</title>
+<ellipse fill="none" stroke="#000000" cx="27" cy="-90" rx="27" ry="18"></ellipse>
+<text text-anchor="middle" x="27" y="-85.8" font-family="Times,serif" font-size="14.00" fill="#000000">d</text>
+</g>
+<!-- d&#45;&#45;c -->
+<g id="edge4" class="edge">
+<title>d--c</title>
+<path fill="none" stroke="#000000" d="M45.6211,-76.4574C63.3208,-63.5849 89.7904,-44.3343 107.4624,-31.4819"></path>
+</g>
+<!-- e -->
+<g id="node5" class="node">
+<title>e</title>
+<ellipse fill="none" stroke="#000000" cx="164" cy="-234" rx="27" ry="18"></ellipse>
+<text text-anchor="middle" x="164" y="-229.8" font-family="Times,serif" font-size="14.00" fill="#000000">e</text>
+</g>
+<!-- e&#45;&#45;a -->
+<g id="edge6" class="edge">
+<title>e--a</title>
+<path fill="none" stroke="#000000" d="M157.3258,-216.2022C153.1407,-205.0419 147.7679,-190.7143 143.5974,-179.593"></path>
+</g>
+<!-- e&#45;&#45;c -->
+<g id="edge5" class="edge">
+<title>e--c</title>
+<path fill="none" stroke="#000000" d="M167.7474,-216.0931C169.7466,-205.6241 171.9966,-192.1241 173,-180 177.0478,-131.0908 167.4587,-117.866 150,-72 145.2554,-59.5355 139.1406,-45.8051 134.2707,-35.3087"></path>
+</g>
+</g>
+</svg>
+</pre><pre class="graphviz"><!--?xml version="1.0" encoding="UTF-8" standalone="no"?-->
+
+<!-- Generated by graphviz version 2.40.1 (20161225.0304)
+ -->
+<!-- Title: %0 Pages: 1 -->
+<svg width="255pt" height="404pt" viewBox="0.00 0.00 254.91 404.00" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 400)">
+<title>%0</title>
+<polygon fill="#ffffff" stroke="transparent" points="-4,4 -4,-400 250.9131,-400 250.9131,4 -4,4"></polygon>
+<!-- a -->
+<g id="node1" class="node">
+<title>a</title>
+<ellipse fill="none" stroke="#000000" cx="123" cy="-378" rx="27" ry="18"></ellipse>
+<text text-anchor="middle" x="123" y="-373.8" font-family="Times,serif" font-size="14.00" fill="#000000">a</text>
+</g>
+<!-- b -->
+<g id="node2" class="node">
+<title>b</title>
+<ellipse fill="none" stroke="#000000" cx="123" cy="-306" rx="27" ry="18"></ellipse>
+<text text-anchor="middle" x="123" y="-301.8" font-family="Times,serif" font-size="14.00" fill="#000000">b</text>
+</g>
+<!-- a&#45;&#45;b -->
+<g id="edge1" class="edge">
+<title>a--b</title>
+<path fill="none" stroke="#000000" d="M123,-359.8314C123,-349 123,-335.2876 123,-324.4133"></path>
+</g>
+<!-- c -->
+<g id="node3" class="node">
+<title>c</title>
+<ellipse fill="none" stroke="#000000" cx="207" cy="-234" rx="27" ry="18"></ellipse>
+<text text-anchor="middle" x="207" y="-229.8" font-family="Times,serif" font-size="14.00" fill="#000000">c</text>
+</g>
+<!-- a&#45;&#45;c -->
+<g id="edge7" class="edge">
+<title>a--c</title>
+<path fill="none" stroke="#000000" d="M134.7835,-361.2495C142.0336,-350.7225 151.3663,-336.7644 159,-324 173.8151,-299.2275 189.2238,-269.5142 198.464,-251.195"></path>
+</g>
+<!-- d -->
+<g id="node4" class="node">
+<title>d</title>
+<ellipse fill="none" stroke="#000000" cx="207" cy="-162" rx="27" ry="18"></ellipse>
+<text text-anchor="middle" x="207" y="-157.8" font-family="Times,serif" font-size="14.00" fill="#000000">d</text>
+</g>
+<!-- a&#45;&#45;d -->
+<g id="edge8" class="edge">
+<title>a--d</title>
+<path fill="none" stroke="#000000" d="M142.5394,-365.4414C171.4062,-345.5265 224.0734,-303.6187 243,-252 248.508,-236.978 247.6365,-231.3135 243,-216 238.6901,-201.7653 229.2535,-187.8532 221.1229,-177.7156"></path>
+</g>
+<!-- e -->
+<g id="node5" class="node">
+<title>e</title>
+<ellipse fill="none" stroke="#000000" cx="141" cy="-90" rx="27" ry="18"></ellipse>
+<text text-anchor="middle" x="141" y="-85.8" font-family="Times,serif" font-size="14.00" fill="#000000">e</text>
+</g>
+<!-- a&#45;&#45;e -->
+<g id="edge9" class="edge">
+<title>a--e</title>
+<path fill="none" stroke="#000000" d="M108.8771,-362.2844C100.7465,-352.1468 91.3099,-338.2347 87,-324 82.3635,-308.6865 84.8763,-303.8584 87,-288 96.1276,-219.8416 122.1847,-141.9151 134.4569,-107.6885"></path>
+</g>
+<!-- f -->
+<g id="node6" class="node">
+<title>f</title>
+<ellipse fill="none" stroke="#000000" cx="141" cy="-18" rx="27" ry="18"></ellipse>
+<text text-anchor="middle" x="141" y="-13.8" font-family="Times,serif" font-size="14.00" fill="#000000">f</text>
+</g>
+<!-- a&#45;&#45;f -->
+<g id="edge6" class="edge">
+<title>a--f</title>
+<path fill="none" stroke="#000000" d="M102.1347,-366.3416C67.0423,-345.0152 0,-296.1405 0,-234 0,-234 0,-234 0,-162 0,-95.171 78.4885,-47.905 118.3459,-28.211"></path>
+</g>
+<!-- b&#45;&#45;c -->
+<g id="edge2" class="edge">
+<title>b--c</title>
+<path fill="none" stroke="#000000" d="M139.5957,-291.7751C154.2264,-279.2345 175.4452,-261.047 190.1513,-248.4418"></path>
+</g>
+<!-- b&#45;&#45;d -->
+<g id="edge10" class="edge">
+<title>b--d</title>
+<path fill="none" stroke="#000000" d="M131.536,-288.805C140.7762,-270.4858 156.1849,-240.7725 171,-216 178.6337,-203.2356 187.9664,-189.2775 195.2165,-178.7505"></path>
+</g>
+<!-- b&#45;&#45;e -->
+<g id="edge11" class="edge">
+<title>b--e</title>
+<path fill="none" stroke="#000000" d="M124.5037,-287.9555C127.8919,-247.2967 136.0918,-148.8988 139.4879,-108.1451"></path>
+</g>
+<!-- b&#45;&#45;f -->
+<g id="edge12" class="edge">
+<title>b--f</title>
+<path fill="none" stroke="#000000" d="M117.3145,-288.2055C105.5339,-248.4498 81.4445,-149.7985 105,-72 109.3099,-57.7653 118.7465,-43.8532 126.8771,-33.7156"></path>
+</g>
+<!-- c&#45;&#45;d -->
+<g id="edge3" class="edge">
+<title>c--d</title>
+<path fill="none" stroke="#000000" d="M207,-215.8314C207,-205 207,-191.2876 207,-180.4133"></path>
+</g>
+<!-- c&#45;&#45;e -->
+<g id="edge13" class="edge">
+<title>c--e</title>
+<path fill="none" stroke="#000000" d="M194.4428,-217.6691C186.9015,-207.3 177.5344,-193.3606 171,-180 159.2773,-156.0314 150.3776,-126.3574 145.4224,-107.7972"></path>
+</g>
+<!-- c&#45;&#45;f -->
+<g id="edge14" class="edge">
+<title>c--f</title>
+<path fill="none" stroke="#000000" d="M221.1229,-218.2844C229.2535,-208.1468 238.6901,-194.2347 243,-180 247.6365,-164.6865 247.4872,-159.3579 243,-144 228.7925,-95.3733 184.1371,-52.8354 158.8751,-31.8643"></path>
+</g>
+<!-- d&#45;&#45;e -->
+<g id="edge4" class="edge">
+<title>d--e</title>
+<path fill="none" stroke="#000000" d="M192.679,-146.3771C181.6086,-134.3003 166.3564,-117.6616 155.2931,-105.5924"></path>
+</g>
+<!-- d&#45;&#45;f -->
+<g id="edge15" class="edge">
+<title>d--f</title>
+<path fill="none" stroke="#000000" d="M202.5776,-144.2028C197.6224,-125.6426 188.7227,-95.9686 177,-72 170.4656,-58.6394 161.0985,-44.7 153.5572,-34.3309"></path>
+</g>
+<!-- e&#45;&#45;f -->
+<g id="edge5" class="edge">
+<title>e--f</title>
+<path fill="none" stroke="#000000" d="M141,-71.8314C141,-61 141,-47.2876 141,-36.4133"></path>
+</g>
+</g>
+</svg>
+</pre><pre class="graphviz"><!--?xml version="1.0" encoding="UTF-8" standalone="no"?-->
+
+<!-- Generated by graphviz version 2.40.1 (20161225.0304)
+ -->
+<!-- Title: %0 Pages: 1 -->
+<svg width="89pt" height="260pt" viewBox="0.00 0.00 89.00 260.00" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 256)">
+<title>%0</title>
+<polygon fill="#ffffff" stroke="transparent" points="-4,4 -4,-256 85,-256 85,4 -4,4"></polygon>
+<!-- a -->
+<g id="node1" class="node">
+<title>a</title>
+<ellipse fill="none" stroke="#000000" cx="54" cy="-234" rx="27" ry="18"></ellipse>
+<text text-anchor="middle" x="54" y="-229.8" font-family="Times,serif" font-size="14.00" fill="#000000">a</text>
+</g>
+<!-- b -->
+<g id="node2" class="node">
+<title>b</title>
+<ellipse fill="none" stroke="#000000" cx="27" cy="-162" rx="27" ry="18"></ellipse>
+<text text-anchor="middle" x="27" y="-157.8" font-family="Times,serif" font-size="14.00" fill="#000000">b</text>
+</g>
+<!-- a&#45;>b -->
+<g id="edge1" class="edge">
+<title>a->b</title>
+<path fill="none" stroke="#000000" d="M47.3258,-216.2022C44.2524,-208.0064 40.5384,-198.1024 37.1305,-189.0145"></path>
+<polygon fill="#000000" stroke="#000000" points="40.3858,-187.7274 33.5974,-179.593 33.8315,-190.1853 40.3858,-187.7274"></polygon>
+</g>
+<!-- c -->
+<g id="node3" class="node">
+<title>c</title>
+<ellipse fill="none" stroke="#000000" cx="27" cy="-90" rx="27" ry="18"></ellipse>
+<text text-anchor="middle" x="27" y="-85.8" font-family="Times,serif" font-size="14.00" fill="#000000">c</text>
+</g>
+<!-- b&#45;>c -->
+<g id="edge2" class="edge">
+<title>b->c</title>
+<path fill="none" stroke="#000000" d="M27,-143.8314C27,-136.131 27,-126.9743 27,-118.4166"></path>
+<polygon fill="#000000" stroke="#000000" points="30.5001,-118.4132 27,-108.4133 23.5001,-118.4133 30.5001,-118.4132"></polygon>
+</g>
+<!-- d -->
+<g id="node4" class="node">
+<title>d</title>
+<ellipse fill="none" stroke="#000000" cx="54" cy="-18" rx="27" ry="18"></ellipse>
+<text text-anchor="middle" x="54" y="-13.8" font-family="Times,serif" font-size="14.00" fill="#000000">d</text>
+</g>
+<!-- c&#45;>d -->
+<g id="edge3" class="edge">
+<title>c->d</title>
+<path fill="none" stroke="#000000" d="M33.6742,-72.2022C36.7476,-64.0064 40.4616,-54.1024 43.8695,-45.0145"></path>
+<polygon fill="#000000" stroke="#000000" points="47.1685,-46.1853 47.4026,-35.593 40.6142,-43.7274 47.1685,-46.1853"></polygon>
+</g>
+<!-- d&#45;>a -->
+<g id="edge4" class="edge">
+<title>d->a</title>
+<path fill="none" stroke="#000000" d="M57.7474,-35.9069C59.7466,-46.3759 61.9966,-59.8759 63,-72 66.9591,-119.8364 66.9591,-132.1636 63,-180 62.2945,-188.5247 60.9727,-197.7297 59.5551,-206.083"></path>
+<polygon fill="#000000" stroke="#000000" points="56.0803,-205.6302 57.7474,-216.0931 62.9689,-206.8742 56.0803,-205.6302"></polygon>
+</g>
+</g>
+</svg>
+</pre><pre class="graphviz"><!--?xml version="1.0" encoding="UTF-8" standalone="no"?-->
+
+<!-- Generated by graphviz version 2.40.1 (20161225.0304)
+ -->
+<!-- Title: %0 Pages: 1 -->
+<svg width="185pt" height="310pt" viewBox="0.00 0.00 184.50 310.40" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 306.4)">
+<title>%0</title>
+<polygon fill="#ffffff" stroke="transparent" points="-4,4 -4,-306.4 180.5,-306.4 180.5,4 -4,4"></polygon>
+<!-- a -->
+<g id="node1" class="node">
+<title>a</title>
+<ellipse fill="none" stroke="#000000" cx="38" cy="-284.4" rx="27" ry="18"></ellipse>
+<text text-anchor="middle" x="38" y="-280.2" font-family="Times,serif" font-size="14.00" fill="#000000">a</text>
+</g>
+<!-- b -->
+<g id="node2" class="node">
+<title>b</title>
+<ellipse fill="none" stroke="#000000" cx="27" cy="-18" rx="27" ry="18"></ellipse>
+<text text-anchor="middle" x="27" y="-13.8" font-family="Times,serif" font-size="14.00" fill="#000000">b</text>
+</g>
+<!-- a&#45;>b -->
+<g id="edge1" class="edge">
+<title>a->b</title>
+<path fill="none" stroke="#000000" d="M37.2282,-266.3584C36.6179,-252.0508 35.7472,-231.5464 35,-213.6 32.5229,-154.1051 29.6892,-84.4279 28.1474,-46.373"></path>
+<polygon fill="#000000" stroke="#000000" points="31.6319,-45.9183 27.7301,-36.0681 24.6376,-46.2016 31.6319,-45.9183"></polygon>
+<text text-anchor="middle" x="40.75" y="-147" font-family="Times,serif" font-size="14.00" fill="#000000">0.2</text>
+</g>
+<!-- c -->
+<g id="node3" class="node">
+<title>c</title>
+<ellipse fill="none" stroke="#000000" cx="71" cy="-195.6" rx="27" ry="18"></ellipse>
+<text text-anchor="middle" x="71" y="-191.4" font-family="Times,serif" font-size="14.00" fill="#000000">c</text>
+</g>
+<!-- a&#45;>c -->
+<g id="edge2" class="edge">
+<title>a->c</title>
+<path fill="none" stroke="#000000" d="M44.5197,-266.856C49.2203,-254.2071 55.6519,-236.9002 60.9995,-222.5105"></path>
+<polygon fill="#000000" stroke="#000000" points="64.2911,-223.7005 64.4938,-213.1076 57.7295,-221.262 64.2911,-223.7005"></polygon>
+<text text-anchor="middle" x="65.75" y="-235.8" font-family="Times,serif" font-size="14.00" fill="#000000">0.4</text>
+</g>
+<!-- c&#45;>b -->
+<g id="edge3" class="edge">
+<title>c->b</title>
+<path fill="none" stroke="#000000" d="M66.5389,-177.5934C58.8434,-146.5317 43.0234,-82.6762 33.8994,-45.8486"></path>
+<polygon fill="#000000" stroke="#000000" points="37.2096,-44.6551 31.4075,-35.7902 30.415,-46.3385 37.2096,-44.6551"></polygon>
+<text text-anchor="middle" x="61.75" y="-102.6" font-family="Times,serif" font-size="14.00" fill="#000000">0.6</text>
+</g>
+<!-- e -->
+<g id="node4" class="node">
+<title>e</title>
+<ellipse fill="none" stroke="#000000" cx="114" cy="-106.8" rx="27" ry="18"></ellipse>
+<text text-anchor="middle" x="114" y="-102.6" font-family="Times,serif" font-size="14.00" fill="#000000">e</text>
+</g>
+<!-- c&#45;>e -->
+<g id="edge4" class="edge">
+<title>c->e</title>
+<path fill="none" stroke="#000000" d="M79.4954,-178.056C85.7195,-165.2025 94.2726,-147.5393 101.3059,-133.0148"></path>
+<polygon fill="#000000" stroke="#000000" points="104.4603,-134.5311 105.6685,-124.0054 98.1601,-131.4803 104.4603,-134.5311"></polygon>
+<text text-anchor="middle" x="104.75" y="-147" font-family="Times,serif" font-size="14.00" fill="#000000">0.6</text>
+</g>
+<!-- e&#45;>b -->
+<g id="edge6" class="edge">
+<title>e->b</title>
+<path fill="none" stroke="#000000" d="M98.8458,-91.3322C85.123,-77.3256 64.7342,-56.5149 49.1784,-40.6373"></path>
+<polygon fill="#000000" stroke="#000000" points="51.479,-37.9842 41.9806,-33.2905 46.4788,-42.8831 51.479,-37.9842"></polygon>
+<text text-anchor="middle" x="86.75" y="-58.2" font-family="Times,serif" font-size="14.00" fill="#000000">0.7</text>
+</g>
+<!-- e&#45;>e -->
+<g id="edge5" class="edge">
+<title>e->e</title>
+<path fill="none" stroke="#000000" d="M138.5325,-114.9211C149.5078,-115.6945 159,-112.9875 159,-106.8 159,-102.6428 154.7151,-100.0567 148.5743,-99.0417"></path>
+<polygon fill="#000000" stroke="#000000" points="148.6524,-95.5424 138.5325,-98.6789 148.3995,-102.5378 148.6524,-95.5424"></polygon>
+<text text-anchor="middle" x="167.75" y="-102.6" font-family="Times,serif" font-size="14.00" fill="#000000">0.1</text>
+</g>
+</g>
+</svg>
+</pre><pre class="graphviz"><!--?xml version="1.0" encoding="UTF-8" standalone="no"?-->
+
+<!-- Generated by graphviz version 2.40.1 (20161225.0304)
+ -->
+<!-- Title: %0 Pages: 1 -->
+<svg width="134pt" height="332pt" viewBox="0.00 0.00 134.00 332.00" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 328)">
+<title>%0</title>
+<polygon fill="#ffffff" stroke="transparent" points="-4,4 -4,-328 130,-328 130,4 -4,4"></polygon>
+<!-- a -->
+<g id="node1" class="node">
+<title>a</title>
+<ellipse fill="none" stroke="#000000" cx="71" cy="-306" rx="27" ry="18"></ellipse>
+<text text-anchor="middle" x="71" y="-301.8" font-family="Times,serif" font-size="14.00" fill="#000000">a</text>
+</g>
+<!-- b -->
+<g id="node2" class="node">
+<title>b</title>
+<ellipse fill="none" stroke="#000000" cx="99" cy="-234" rx="27" ry="18"></ellipse>
+<text text-anchor="middle" x="99" y="-229.8" font-family="Times,serif" font-size="14.00" fill="#000000">b</text>
+</g>
+<!-- a&#45;&#45;b -->
+<g id="edge1" class="edge">
+<title>a--b</title>
+<path fill="none" stroke="#ff0000" stroke-width="3" d="M77.778,-288.5708C82.1479,-277.3339 87.8106,-262.7727 92.1874,-251.5182"></path>
+</g>
+<!-- d -->
+<g id="node3" class="node">
+<title>d</title>
+<ellipse fill="none" stroke="#000000" cx="44" cy="-162" rx="27" ry="18"></ellipse>
+<text text-anchor="middle" x="44" y="-157.8" font-family="Times,serif" font-size="14.00" fill="#000000">d</text>
+</g>
+<!-- a&#45;&#45;d -->
+<g id="edge8" class="edge">
+<title>a--d</title>
+<path fill="none" stroke="#000000" d="M67.635,-288.0535C62.4611,-260.4592 52.6067,-207.9026 47.4074,-180.1727"></path>
+</g>
+<!-- b&#45;&#45;d -->
+<g id="edge2" class="edge">
+<title>b--d</title>
+<path fill="none" stroke="#ff0000" stroke-width="3" d="M86.5196,-217.6621C77.5186,-205.8788 65.4207,-190.0416 56.431,-178.2733"></path>
+</g>
+<!-- c -->
+<g id="node4" class="node">
+<title>c</title>
+<ellipse fill="none" stroke="#000000" cx="99" cy="-90" rx="27" ry="18"></ellipse>
+<text text-anchor="middle" x="99" y="-85.8" font-family="Times,serif" font-size="14.00" fill="#000000">c</text>
+</g>
+<!-- b&#45;&#45;c -->
+<g id="edge5" class="edge">
+<title>b--c</title>
+<path fill="none" stroke="#000000" d="M99,-215.7623C99,-188.0633 99,-135.7005 99,-108.0896"></path>
+</g>
+<!-- d&#45;&#45;c -->
+<g id="edge3" class="edge">
+<title>d--c</title>
+<path fill="none" stroke="#ff0000" stroke-width="3" d="M56.4804,-145.6621C65.4814,-133.8788 77.5793,-118.0416 86.569,-106.2733"></path>
+</g>
+<!-- e -->
+<g id="node6" class="node">
+<title>e</title>
+<ellipse fill="none" stroke="#000000" cx="27" cy="-90" rx="27" ry="18"></ellipse>
+<text text-anchor="middle" x="27" y="-85.8" font-family="Times,serif" font-size="14.00" fill="#000000">e</text>
+</g>
+<!-- d&#45;&#45;e -->
+<g id="edge6" class="edge">
+<title>d--e</title>
+<path fill="none" stroke="#000000" d="M39.7978,-144.2022C37.1823,-133.1252 33.8302,-118.928 31.2128,-107.8425"></path>
+</g>
+<!-- f -->
+<g id="node5" class="node">
+<title>f</title>
+<ellipse fill="none" stroke="#000000" cx="63" cy="-18" rx="27" ry="18"></ellipse>
+<text text-anchor="middle" x="63" y="-13.8" font-family="Times,serif" font-size="14.00" fill="#000000">f</text>
+</g>
+<!-- c&#45;&#45;f -->
+<g id="edge4" class="edge">
+<title>c--f</title>
+<path fill="none" stroke="#ff0000" stroke-width="3" d="M90.2854,-72.5708C84.6253,-61.2506 77.2784,-46.5568 71.6343,-35.2687"></path>
+</g>
+<!-- e&#45;&#45;f -->
+<g id="edge7" class="edge">
+<title>e--f</title>
+<path fill="none" stroke="#000000" d="M35.7146,-72.5708C41.3747,-61.2506 48.7216,-46.5568 54.3657,-35.2687"></path>
+</g>
+</g>
+</svg>
+</pre><pre class="graphviz"><!--?xml version="1.0" encoding="UTF-8" standalone="no"?-->
+
+<!-- Generated by graphviz version 2.40.1 (20161225.0304)
+ -->
+<!-- Title: %0 Pages: 1 -->
+<svg width="197pt" height="322pt" viewBox="0.00 0.00 197.00 321.60" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 317.6)">
+<title>%0</title>
+<polygon fill="#ffffff" stroke="transparent" points="-4,4 -4,-317.6 193,-317.6 193,4 -4,4"></polygon>
+<g id="clust1" class="cluster">
+<title>cluster_0</title>
+<polygon fill="none" stroke="#000000" points="8,-8 8,-305.6 91,-305.6 91,-8 8,-8"></polygon>
+<text text-anchor="middle" x="49.5" y="-289" font-family="Times,serif" font-size="14.00" fill="#000000">Subgraph A</text>
+</g>
+<g id="clust2" class="cluster">
+<title>cluster_1</title>
+<polygon fill="none" stroke="#000000" points="99,-152 99,-228.8 181,-228.8 181,-152 99,-152"></polygon>
+<text text-anchor="middle" x="140" y="-212.2" font-family="Times,serif" font-size="14.00" fill="#000000">Subgraph B</text>
+</g>
+<!-- a -->
+<g id="node1" class="node">
+<title>a</title>
+<ellipse fill="none" stroke="#000000" cx="56" cy="-254.8" rx="27" ry="18"></ellipse>
+<text text-anchor="middle" x="56" y="-250.6" font-family="Times,serif" font-size="14.00" fill="#000000">a</text>
+</g>
+<!-- b -->
+<g id="node2" class="node">
+<title>b</title>
+<ellipse fill="none" stroke="#000000" cx="56" cy="-178" rx="27" ry="18"></ellipse>
+<text text-anchor="middle" x="56" y="-173.8" font-family="Times,serif" font-size="14.00" fill="#000000">b</text>
+</g>
+<!-- a&#45;>b -->
+<g id="edge1" class="edge">
+<title>a->b</title>
+<path fill="none" stroke="#000000" d="M56,-236.5995C56,-227.5132 56,-216.3176 56,-206.1549"></path>
+<polygon fill="#000000" stroke="#000000" points="59.5001,-206.0698 56,-196.0699 52.5001,-206.0699 59.5001,-206.0698"></polygon>
+</g>
+<!-- f -->
+<g id="node5" class="node">
+<title>f</title>
+<ellipse fill="none" stroke="#000000" cx="134" cy="-178" rx="27" ry="18"></ellipse>
+<text text-anchor="middle" x="134" y="-173.8" font-family="Times,serif" font-size="14.00" fill="#000000">f</text>
+</g>
+<!-- a&#45;>f -->
+<g id="edge4" class="edge">
+<title>a->f</title>
+<path fill="none" stroke="#000000" d="M76.7781,-242.7568C82.958,-238.7105 89.5326,-233.9142 95,-228.8 103.1607,-221.1666 110.9245,-211.6974 117.3454,-203.0103"></path>
+<polygon fill="#000000" stroke="#000000" points="120.3285,-204.8552 123.2836,-194.6808 114.6287,-200.7917 120.3285,-204.8552"></polygon>
+</g>
+<!-- c -->
+<g id="node3" class="node">
+<title>c</title>
+<ellipse fill="none" stroke="#000000" cx="56" cy="-106" rx="27" ry="18"></ellipse>
+<text text-anchor="middle" x="56" y="-101.8" font-family="Times,serif" font-size="14.00" fill="#000000">c</text>
+</g>
+<!-- b&#45;>c -->
+<g id="edge2" class="edge">
+<title>b->c</title>
+<path fill="none" stroke="#000000" d="M56,-159.8314C56,-152.131 56,-142.9743 56,-134.4166"></path>
+<polygon fill="#000000" stroke="#000000" points="59.5001,-134.4132 56,-124.4133 52.5001,-134.4133 59.5001,-134.4132"></polygon>
+</g>
+<!-- d -->
+<g id="node4" class="node">
+<title>d</title>
+<ellipse fill="none" stroke="#000000" cx="56" cy="-34" rx="27" ry="18"></ellipse>
+<text text-anchor="middle" x="56" y="-29.8" font-family="Times,serif" font-size="14.00" fill="#000000">d</text>
+</g>
+<!-- c&#45;>d -->
+<g id="edge3" class="edge">
+<title>c->d</title>
+<path fill="none" stroke="#000000" d="M56,-87.8314C56,-80.131 56,-70.9743 56,-62.4166"></path>
+<polygon fill="#000000" stroke="#000000" points="59.5001,-62.4132 56,-52.4133 52.5001,-62.4133 59.5001,-62.4132"></polygon>
+</g>
+<!-- f&#45;>c -->
+<g id="edge5" class="edge">
+<title>f->c</title>
+<path fill="none" stroke="#000000" d="M117.8383,-163.0816C106.6786,-152.7802 91.6666,-138.923 79.2285,-127.4417"></path>
+<polygon fill="#000000" stroke="#000000" points="81.5961,-124.864 71.8741,-120.653 76.8481,-130.0076 81.5961,-124.864"></polygon>
+</g>
+</g>
+</svg>
+</pre><pre class="graphviz"><!--?xml version="1.0" encoding="UTF-8" standalone="no"?-->
+
+<!-- Generated by graphviz version 2.40.1 (20161225.0304)
+ -->
+<!-- Title: %0 Pages: 1 -->
+<svg width="238pt" height="186pt" viewBox="0.00 0.00 238.00 185.60" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 181.6)">
+<title>%0</title>
+<polygon fill="#ffffff" stroke="transparent" points="-4,4 -4,-181.6 234,-181.6 234,4 -4,4"></polygon>
+<g id="clust1" class="cluster">
+<title>cluster_0</title>
+<polygon fill="none" stroke="#000000" points="8,-92.8 8,-169.6 222,-169.6 222,-92.8 8,-92.8"></polygon>
+<text text-anchor="middle" x="115" y="-153" font-family="Times,serif" font-size="14.00" fill="#000000">Subgraph A</text>
+</g>
+<g id="clust2" class="cluster">
+<title>cluster_1</title>
+<polygon fill="none" stroke="#000000" points="44,-8 44,-84.8 186,-84.8 186,-8 44,-8"></polygon>
+<text text-anchor="middle" x="115" y="-68.2" font-family="Times,serif" font-size="14.00" fill="#000000">Subgraph B</text>
+</g>
+<!-- a -->
+<g id="node1" class="node">
+<title>a</title>
+<ellipse fill="none" stroke="#000000" cx="115" cy="-118.8" rx="27" ry="18"></ellipse>
+<text text-anchor="middle" x="115" y="-114.6" font-family="Times,serif" font-size="14.00" fill="#000000">a</text>
+</g>
+<!-- d -->
+<g id="node4" class="node">
+<title>d</title>
+<ellipse fill="none" stroke="#000000" cx="151" cy="-34" rx="27" ry="18"></ellipse>
+<text text-anchor="middle" x="151" y="-29.8" font-family="Times,serif" font-size="14.00" fill="#000000">d</text>
+</g>
+<!-- a&#45;&#45;d -->
+<g id="edge2" class="edge">
+<title>a--d</title>
+<path fill="none" stroke="#000000" d="M122.4592,-101.2294C128.6377,-86.6756 137.3745,-66.0957 143.5503,-51.5481"></path>
+</g>
+<!-- e -->
+<g id="node5" class="node">
+<title>e</title>
+<ellipse fill="none" stroke="#000000" cx="79" cy="-34" rx="27" ry="18"></ellipse>
+<text text-anchor="middle" x="79" y="-29.8" font-family="Times,serif" font-size="14.00" fill="#000000">e</text>
+</g>
+<!-- a&#45;&#45;e -->
+<g id="edge1" class="edge">
+<title>a--e</title>
+<path fill="none" stroke="#000000" d="M107.5408,-101.2294C101.3623,-86.6756 92.6255,-66.0957 86.4497,-51.5481"></path>
+</g>
+<!-- b -->
+<g id="node2" class="node">
+<title>b</title>
+<ellipse fill="none" stroke="#000000" cx="43" cy="-118.8" rx="27" ry="18"></ellipse>
+<text text-anchor="middle" x="43" y="-114.6" font-family="Times,serif" font-size="14.00" fill="#000000">b</text>
+</g>
+<!-- b&#45;&#45;d -->
+<g id="edge3" class="edge">
+<title>b--d</title>
+<path fill="none" stroke="#000000" d="M60.834,-104.797C80.9645,-88.9908 113.505,-63.4405 133.4978,-47.7424"></path>
+</g>
+<!-- b&#45;&#45;e -->
+<g id="edge4" class="edge">
+<title>b--e</title>
+<path fill="none" stroke="#000000" d="M50.4592,-101.2294C56.6377,-86.6756 65.3745,-66.0957 71.5503,-51.5481"></path>
+</g>
+<!-- c -->
+<g id="node3" class="node">
+<title>c</title>
+<ellipse fill="none" stroke="#000000" cx="187" cy="-118.8" rx="27" ry="18"></ellipse>
+<text text-anchor="middle" x="187" y="-114.6" font-family="Times,serif" font-size="14.00" fill="#000000">c</text>
+</g>
+<!-- c&#45;&#45;d -->
+<g id="edge5" class="edge">
+<title>c--d</title>
+<path fill="none" stroke="#000000" d="M179.5408,-101.2294C173.3623,-86.6756 164.6255,-66.0957 158.4497,-51.5481"></path>
+</g>
+<!-- c&#45;&#45;e -->
+<g id="edge6" class="edge">
+<title>c--e</title>
+<path fill="none" stroke="#000000" d="M169.166,-104.797C149.0355,-88.9908 116.495,-63.4405 96.5022,-47.7424"></path>
+</g>
+</g>
+</svg>
+</pre><pre class="graphviz"><!--?xml version="1.0" encoding="UTF-8" standalone="no"?-->
+
+<!-- Generated by graphviz version 2.40.1 (20161225.0304)
+ -->
+<!-- Title: %0 Pages: 1 -->
+<svg width="1142pt" height="203pt" viewBox="0.00 0.00 1142.00 203.00" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 199)">
+<title>%0</title>
+<polygon fill="#ffffff" stroke="transparent" points="-4,4 -4,-199 1138,-199 1138,4 -4,4"></polygon>
+<!-- a -->
+<g id="node1" class="node">
+<title>a</title>
+<ellipse fill="none" stroke="#000000" cx="27" cy="-108" rx="27" ry="18"></ellipse>
+<text text-anchor="middle" x="27" y="-103.8" font-family="Times,serif" font-size="14.00" fill="#000000">a</text>
+</g>
+<!-- b -->
+<g id="node2" class="node">
+<title>b</title>
+<ellipse fill="none" stroke="#000000" cx="117" cy="-62" rx="27" ry="18"></ellipse>
+<text text-anchor="middle" x="117" y="-57.8" font-family="Times,serif" font-size="14.00" fill="#000000">b</text>
+</g>
+<!-- a&#45;&#45;b -->
+<g id="edge1" class="edge">
+<title>a--b</title>
+<path fill="none" stroke="#000000" d="M48.7865,-96.8647C62.9367,-89.6323 81.304,-80.2446 95.4141,-73.0328"></path>
+</g>
+<!-- c -->
+<g id="node3" class="node">
+<title>c</title>
+<ellipse fill="none" stroke="#000000" cx="207" cy="-100" rx="27" ry="18"></ellipse>
+<text text-anchor="middle" x="207" y="-95.8" font-family="Times,serif" font-size="14.00" fill="#000000">c</text>
+</g>
+<!-- a&#45;&#45;c -->
+<g id="edge2" class="edge">
+<title>a--c</title>
+<path fill="none" stroke="#000000" d="M53.9478,-106.8023C87.8815,-105.2942 145.8476,-102.7179 179.868,-101.2059"></path>
+</g>
+<!-- d -->
+<g id="node4" class="node">
+<title>d</title>
+<ellipse fill="none" stroke="#000000" cx="207" cy="-154" rx="27" ry="18"></ellipse>
+<text text-anchor="middle" x="207" y="-149.8" font-family="Times,serif" font-size="14.00" fill="#000000">d</text>
+</g>
+<!-- a&#45;&#45;d -->
+<g id="edge3" class="edge">
+<title>a--d</title>
+<path fill="none" stroke="#000000" d="M52.4078,-114.4931C86.7134,-123.2601 147.4825,-138.79 181.7214,-147.5399"></path>
+</g>
+<!-- b&#45;&#45;c -->
+<g id="edge4" class="edge">
+<title>b--c</title>
+<path fill="none" stroke="#000000" d="M140.1772,-71.7859C153.6146,-77.4595 170.4773,-84.5793 183.9013,-90.2472"></path>
+</g>
+<!-- e -->
+<g id="node5" class="node">
+<title>e</title>
+<ellipse fill="none" stroke="#000000" cx="297" cy="-54" rx="27" ry="18"></ellipse>
+<text text-anchor="middle" x="297" y="-49.8" font-family="Times,serif" font-size="14.00" fill="#000000">e</text>
+</g>
+<!-- b&#45;&#45;e -->
+<g id="edge5" class="edge">
+<title>b--e</title>
+<path fill="none" stroke="#000000" d="M143.9478,-60.8023C177.8815,-59.2942 235.8476,-56.7179 269.868,-55.2059"></path>
+</g>
+<!-- c&#45;&#45;e -->
+<g id="edge6" class="edge">
+<title>c--e</title>
+<path fill="none" stroke="#000000" d="M228.7865,-88.8647C242.9367,-81.6323 261.304,-72.2446 275.4141,-65.0328"></path>
+</g>
+<!-- f -->
+<g id="node6" class="node">
+<title>f</title>
+<ellipse fill="none" stroke="#000000" cx="297" cy="-108" rx="27" ry="18"></ellipse>
+<text text-anchor="middle" x="297" y="-103.8" font-family="Times,serif" font-size="14.00" fill="#000000">f</text>
+</g>
+<!-- c&#45;&#45;f -->
+<g id="edge7" class="edge">
+<title>c--f</title>
+<path fill="none" stroke="#000000" d="M234.003,-102.4003C245.394,-103.4128 258.6271,-104.5891 270.0161,-105.6014"></path>
+</g>
+<!-- d&#45;&#45;f -->
+<g id="edge8" class="edge">
+<title>d--f</title>
+<path fill="none" stroke="#000000" d="M228.7865,-142.8647C242.9367,-135.6323 261.304,-126.2446 275.4141,-119.0328"></path>
+</g>
+<!-- g -->
+<g id="node7" class="node">
+<title>g</title>
+<ellipse fill="none" stroke="#000000" cx="387" cy="-177" rx="27" ry="18"></ellipse>
+<text text-anchor="middle" x="387" y="-172.8" font-family="Times,serif" font-size="14.00" fill="#000000">g</text>
+</g>
+<!-- d&#45;&#45;g -->
+<g id="edge9" class="edge">
+<title>d--g</title>
+<path fill="none" stroke="#000000" d="M233.5596,-157.3937C267.5916,-161.7423 326.247,-169.2371 360.3314,-173.5923"></path>
+</g>
+<!-- h -->
+<g id="node8" class="node">
+<title>h</title>
+<ellipse fill="none" stroke="#000000" cx="387" cy="-31" rx="27" ry="18"></ellipse>
+<text text-anchor="middle" x="387" y="-26.8" font-family="Times,serif" font-size="14.00" fill="#000000">h</text>
+</g>
+<!-- e&#45;&#45;h -->
+<g id="edge10" class="edge">
+<title>e--h</title>
+<path fill="none" stroke="#000000" d="M322.5497,-47.4706C334.8142,-44.3364 349.4658,-40.5921 361.698,-37.4661"></path>
+</g>
+<!-- f&#45;&#45;g -->
+<g id="edge11" class="edge">
+<title>f--g</title>
+<path fill="none" stroke="#000000" d="M314.7811,-121.6322C330.5593,-133.7288 353.4888,-151.3081 369.2558,-163.3961"></path>
+</g>
+<!-- f&#45;&#45;h -->
+<g id="edge12" class="edge">
+<title>f--h</title>
+<path fill="none" stroke="#000000" d="M313.9283,-93.5169C330.0189,-79.7505 354.0822,-59.163 370.1476,-45.4182"></path>
+</g>
+<!-- i -->
+<g id="node9" class="node">
+<title>i</title>
+<ellipse fill="none" stroke="#000000" cx="387" cy="-85" rx="27" ry="18"></ellipse>
+<text text-anchor="middle" x="387" y="-80.8" font-family="Times,serif" font-size="14.00" fill="#000000">i</text>
+</g>
+<!-- f&#45;&#45;i -->
+<g id="edge13" class="edge">
+<title>f--i</title>
+<path fill="none" stroke="#000000" d="M322.5497,-101.4706C334.8142,-98.3364 349.4658,-94.5921 361.698,-91.4661"></path>
+</g>
+<!-- j -->
+<g id="node10" class="node">
+<title>j</title>
+<ellipse fill="none" stroke="#000000" cx="477" cy="-131" rx="27" ry="18"></ellipse>
+<text text-anchor="middle" x="477" y="-126.8" font-family="Times,serif" font-size="14.00" fill="#000000">j</text>
+</g>
+<!-- f&#45;&#45;j -->
+<g id="edge14" class="edge">
+<title>f--j</title>
+<path fill="none" stroke="#000000" d="M323.5596,-111.3937C357.5916,-115.7423 416.247,-123.2371 450.3314,-127.5923"></path>
+</g>
+<!-- k -->
+<g id="node11" class="node">
+<title>k</title>
+<ellipse fill="none" stroke="#000000" cx="567" cy="-177" rx="27" ry="18"></ellipse>
+<text text-anchor="middle" x="567" y="-172.8" font-family="Times,serif" font-size="14.00" fill="#000000">k</text>
+</g>
+<!-- g&#45;&#45;k -->
+<g id="edge15" class="edge">
+<title>g--k</title>
+<path fill="none" stroke="#000000" d="M414.3381,-177C448.3667,-177 506.1212,-177 539.9944,-177"></path>
+</g>
+<!-- o -->
+<g id="node12" class="node">
+<title>o</title>
+<ellipse fill="none" stroke="#000000" cx="657" cy="-39" rx="27" ry="18"></ellipse>
+<text text-anchor="middle" x="657" y="-34.8" font-family="Times,serif" font-size="14.00" fill="#000000">o</text>
+</g>
+<!-- h&#45;&#45;o -->
+<g id="edge16" class="edge">
+<title>h--o</title>
+<path fill="none" stroke="#000000" d="M410.5579,-22.104C422.2368,-18.1577 436.6639,-13.9672 450,-12 515.792,-2.2949 593.6211,-20.3755 632.4273,-31.3949"></path>
+</g>
+<!-- l -->
+<g id="node13" class="node">
+<title>l</title>
+<ellipse fill="none" stroke="#000000" cx="477" cy="-39" rx="27" ry="18"></ellipse>
+<text text-anchor="middle" x="477" y="-34.8" font-family="Times,serif" font-size="14.00" fill="#000000">l</text>
+</g>
+<!-- h&#45;&#45;l -->
+<g id="edge17" class="edge">
+<title>h--l</title>
+<path fill="none" stroke="#000000" d="M414.003,-33.4003C425.394,-34.4128 438.6271,-35.5891 450.0161,-36.6014"></path>
+</g>
+<!-- i&#45;&#45;j -->
+<g id="edge18" class="edge">
+<title>i--j</title>
+<path fill="none" stroke="#000000" d="M408.7865,-96.1353C422.9367,-103.3677 441.304,-112.7554 455.4141,-119.9672"></path>
+</g>
+<!-- i&#45;&#45;l -->
+<g id="edge19" class="edge">
+<title>i--l</title>
+<path fill="none" stroke="#000000" d="M408.7865,-73.8647C422.9367,-66.6323 441.304,-57.2446 455.4141,-50.0328"></path>
+</g>
+<!-- m -->
+<g id="node14" class="node">
+<title>m</title>
+<ellipse fill="none" stroke="#000000" cx="567" cy="-85" rx="27" ry="18"></ellipse>
+<text text-anchor="middle" x="567" y="-80.8" font-family="Times,serif" font-size="14.00" fill="#000000">m</text>
+</g>
+<!-- i&#45;&#45;m -->
+<g id="edge20" class="edge">
+<title>i--m</title>
+<path fill="none" stroke="#000000" d="M414.3381,-85C448.3667,-85 506.1212,-85 539.9944,-85"></path>
+</g>
+<!-- j&#45;&#45;k -->
+<g id="edge21" class="edge">
+<title>j--k</title>
+<path fill="none" stroke="#000000" d="M498.7865,-142.1353C512.9367,-149.3677 531.304,-158.7554 545.4141,-165.9672"></path>
+</g>
+<!-- j&#45;&#45;m -->
+<g id="edge22" class="edge">
+<title>j--m</title>
+<path fill="none" stroke="#000000" d="M498.7865,-119.8647C512.9367,-112.6323 531.304,-103.2446 545.4141,-96.0328"></path>
+</g>
+<!-- n -->
+<g id="node15" class="node">
+<title>n</title>
+<ellipse fill="none" stroke="#000000" cx="657" cy="-131" rx="27" ry="18"></ellipse>
+<text text-anchor="middle" x="657" y="-126.8" font-family="Times,serif" font-size="14.00" fill="#000000">n</text>
+</g>
+<!-- j&#45;&#45;n -->
+<g id="edge23" class="edge">
+<title>j--n</title>
+<path fill="none" stroke="#000000" d="M504.3381,-131C538.3667,-131 596.1212,-131 629.9944,-131"></path>
+</g>
+<!-- k&#45;&#45;n -->
+<g id="edge24" class="edge">
+<title>k--n</title>
+<path fill="none" stroke="#000000" d="M588.7865,-165.8647C602.9367,-158.6323 621.304,-149.2446 635.4141,-142.0328"></path>
+</g>
+<!-- r -->
+<g id="node16" class="node">
+<title>r</title>
+<ellipse fill="none" stroke="#000000" cx="927" cy="-154" rx="27" ry="18"></ellipse>
+<text text-anchor="middle" x="927" y="-149.8" font-family="Times,serif" font-size="14.00" fill="#000000">r</text>
+</g>
+<!-- k&#45;&#45;r -->
+<g id="edge25" class="edge">
+<title>k--r</title>
+<path fill="none" stroke="#000000" d="M594.05,-175.7943C646.2741,-173.3905 764.6097,-167.5747 864,-160 875.8316,-159.0983 888.893,-157.8895 900.0407,-156.7933"></path>
+</g>
+<!-- p -->
+<g id="node17" class="node">
+<title>p</title>
+<ellipse fill="none" stroke="#000000" cx="747" cy="-64" rx="27" ry="18"></ellipse>
+<text text-anchor="middle" x="747" y="-59.8" font-family="Times,serif" font-size="14.00" fill="#000000">p</text>
+</g>
+<!-- o&#45;&#45;p -->
+<g id="edge33" class="edge">
+<title>o--p</title>
+<path fill="none" stroke="#000000" d="M682.07,-45.9639C694.553,-49.4314 709.6,-53.6111 722.0644,-57.0735"></path>
+</g>
+<!-- s -->
+<g id="node19" class="node">
+<title>s</title>
+<ellipse fill="none" stroke="#000000" cx="837" cy="-18" rx="27" ry="18"></ellipse>
+<text text-anchor="middle" x="837" y="-13.8" font-family="Times,serif" font-size="14.00" fill="#000000">s</text>
+</g>
+<!-- o&#45;&#45;s -->
+<g id="edge34" class="edge">
+<title>o--s</title>
+<path fill="none" stroke="#000000" d="M683.9478,-35.8561C717.9796,-31.8857 776.1829,-25.0953 810.1623,-21.1311"></path>
+</g>
+<!-- l&#45;&#45;o -->
+<g id="edge26" class="edge">
+<title>l--o</title>
+<path fill="none" stroke="#000000" d="M504.3381,-39C538.3667,-39 596.1212,-39 629.9944,-39"></path>
+</g>
+<!-- l&#45;&#45;m -->
+<g id="edge27" class="edge">
+<title>l--m</title>
+<path fill="none" stroke="#000000" d="M498.7865,-50.1353C512.9367,-57.3677 531.304,-66.7554 545.4141,-73.9672"></path>
+</g>
+<!-- m&#45;&#45;o -->
+<g id="edge28" class="edge">
+<title>m--o</title>
+<path fill="none" stroke="#000000" d="M588.7865,-73.8647C602.9367,-66.6323 621.304,-57.2446 635.4141,-50.0328"></path>
+</g>
+<!-- m&#45;&#45;n -->
+<g id="edge29" class="edge">
+<title>m--n</title>
+<path fill="none" stroke="#000000" d="M588.7865,-96.1353C602.9367,-103.3677 621.304,-112.7554 635.4141,-119.9672"></path>
+</g>
+<!-- m&#45;&#45;p -->
+<g id="edge30" class="edge">
+<title>m--p</title>
+<path fill="none" stroke="#000000" d="M593.9478,-81.8561C627.9796,-77.8857 686.1829,-71.0953 720.1623,-67.1311"></path>
+</g>
+<!-- n&#45;&#45;r -->
+<g id="edge31" class="edge">
+<title>n--r</title>
+<path fill="none" stroke="#000000" d="M683.8757,-133.2894C735.4959,-137.6867 847.9835,-147.269 899.8322,-151.6857"></path>
+</g>
+<!-- q -->
+<g id="node18" class="node">
+<title>q</title>
+<ellipse fill="none" stroke="#000000" cx="837" cy="-110" rx="27" ry="18"></ellipse>
+<text text-anchor="middle" x="837" y="-105.8" font-family="Times,serif" font-size="14.00" fill="#000000">q</text>
+</g>
+<!-- n&#45;&#45;q -->
+<g id="edge32" class="edge">
+<title>n--q</title>
+<path fill="none" stroke="#000000" d="M683.9478,-127.8561C717.9796,-123.8857 776.1829,-117.0953 810.1623,-113.1311"></path>
+</g>
+<!-- t -->
+<g id="node20" class="node">
+<title>t</title>
+<ellipse fill="none" stroke="#000000" cx="1017" cy="-83" rx="27" ry="18"></ellipse>
+<text text-anchor="middle" x="1017" y="-78.8" font-family="Times,serif" font-size="14.00" fill="#000000">t</text>
+</g>
+<!-- r&#45;&#45;t -->
+<g id="edge40" class="edge">
+<title>r--t</title>
+<path fill="none" stroke="#000000" d="M944.7811,-139.9727C960.6618,-127.4446 983.7869,-109.2015 999.5621,-96.7566"></path>
+</g>
+<!-- p&#45;&#45;q -->
+<g id="edge35" class="edge">
+<title>p--q</title>
+<path fill="none" stroke="#000000" d="M768.7865,-75.1353C782.9367,-82.3677 801.304,-91.7554 815.4141,-98.9672"></path>
+</g>
+<!-- p&#45;&#45;s -->
+<g id="edge36" class="edge">
+<title>p--s</title>
+<path fill="none" stroke="#000000" d="M768.7865,-52.8647C782.9367,-45.6323 801.304,-36.2446 815.4141,-29.0328"></path>
+</g>
+<!-- p&#45;&#45;t -->
+<g id="edge37" class="edge">
+<title>p--t</title>
+<path fill="none" stroke="#000000" d="M773.8757,-65.8913C825.4959,-69.5238 937.9835,-77.4396 989.8322,-81.0882"></path>
+</g>
+<!-- q&#45;&#45;r -->
+<g id="edge38" class="edge">
+<title>q--r</title>
+<path fill="none" stroke="#000000" d="M858.7865,-120.6512C872.8327,-127.5182 891.0341,-136.4167 905.1022,-143.2944"></path>
+</g>
+<!-- q&#45;&#45;t -->
+<g id="edge39" class="edge">
+<title>q--t</title>
+<path fill="none" stroke="#000000" d="M863.5596,-106.0161C897.6894,-100.8966 956.5843,-92.0624 990.6246,-86.9563"></path>
+</g>
+<!-- z -->
+<g id="node21" class="node">
+<title>z</title>
+<ellipse fill="none" stroke="#000000" cx="1107" cy="-45" rx="27" ry="18"></ellipse>
+<text text-anchor="middle" x="1107" y="-40.8" font-family="Times,serif" font-size="14.00" fill="#000000">z</text>
+</g>
+<!-- s&#45;&#45;z -->
+<g id="edge41" class="edge">
+<title>s--z</title>
+<path fill="none" stroke="#000000" d="M863.8757,-20.6876C915.6293,-25.8629 1028.5652,-37.1565 1080.233,-42.3233"></path>
+</g>
+<!-- t&#45;&#45;z -->
+<g id="edge42" class="edge">
+<title>t--z</title>
+<path fill="none" stroke="#000000" d="M1040.1772,-73.2141C1053.6146,-67.5405 1070.4773,-60.4207 1083.9013,-54.7528"></path>
+</g>
+</g>
+</svg>
+</pre><pre class="graphviz"><!--?xml version="1.0" encoding="UTF-8" standalone="no"?-->
+
+<!-- Generated by graphviz version 2.40.1 (20161225.0304)
+ -->
+<!-- Title: %0 Pages: 1 -->
+<svg width="692pt" height="229pt" viewBox="0.00 0.00 692.00 229.00" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 225)">
+<title>%0</title>
+<polygon fill="#ffffff" stroke="transparent" points="-4,4 -4,-225 688,-225 688,4 -4,4"></polygon>
+<!-- a -->
+<g id="node1" class="node">
+<title>a</title>
+<ellipse fill="none" stroke="#000000" cx="27" cy="-149" rx="27" ry="18"></ellipse>
+<text text-anchor="middle" x="27" y="-144.8" font-family="Times,serif" font-size="14.00" fill="#000000">a</text>
+</g>
+<!-- b -->
+<g id="node2" class="node">
+<title>b</title>
+<ellipse fill="none" stroke="#000000" cx="117" cy="-203" rx="27" ry="18"></ellipse>
+<text text-anchor="middle" x="117" y="-198.8" font-family="Times,serif" font-size="14.00" fill="#000000">b</text>
+</g>
+<!-- a&#45;&#45;b -->
+<g id="edge1" class="edge">
+<title>a--b</title>
+<path fill="none" stroke="#000000" d="M47.4224,-161.2534C62.1514,-170.0909 81.948,-181.9688 96.6584,-190.7951"></path>
+</g>
+<!-- c -->
+<g id="node3" class="node">
+<title>c</title>
+<ellipse fill="none" stroke="#000000" cx="117" cy="-149" rx="27" ry="18"></ellipse>
+<text text-anchor="middle" x="117" y="-144.8" font-family="Times,serif" font-size="14.00" fill="#000000">c</text>
+</g>
+<!-- a&#45;&#45;c -->
+<g id="edge2" class="edge">
+<title>a--c</title>
+<path fill="none" stroke="#000000" d="M54.003,-149C65.2905,-149 78.3867,-149 89.705,-149"></path>
+</g>
+<!-- d -->
+<g id="node4" class="node">
+<title>d</title>
+<ellipse fill="none" stroke="#000000" cx="117" cy="-95" rx="27" ry="18"></ellipse>
+<text text-anchor="middle" x="117" y="-90.8" font-family="Times,serif" font-size="14.00" fill="#000000">d</text>
+</g>
+<!-- a&#45;&#45;d -->
+<g id="edge3" class="edge">
+<title>a--d</title>
+<path fill="none" stroke="#000000" d="M47.4224,-136.7466C62.1514,-127.9091 81.948,-116.0312 96.6584,-107.2049"></path>
+</g>
+<!-- b&#45;&#45;c -->
+<g id="edge4" class="edge">
+<title>b--c</title>
+<path fill="none" stroke="#000000" d="M117,-184.7902C117,-178.907 117,-173.0238 117,-167.1406"></path>
+</g>
+<!-- e -->
+<g id="node5" class="node">
+<title>e</title>
+<ellipse fill="none" stroke="#000000" cx="207" cy="-203" rx="27" ry="18"></ellipse>
+<text text-anchor="middle" x="207" y="-198.8" font-family="Times,serif" font-size="14.00" fill="#000000">e</text>
+</g>
+<!-- b&#45;&#45;e -->
+<g id="edge5" class="edge">
+<title>b--e</title>
+<path fill="none" stroke="#000000" d="M144.003,-203C155.2905,-203 168.3867,-203 179.705,-203"></path>
+</g>
+<!-- c&#45;&#45;e -->
+<g id="edge6" class="edge">
+<title>c--e</title>
+<path fill="none" stroke="#000000" d="M137.4224,-161.2534C152.1514,-170.0909 171.948,-181.9688 186.6584,-190.7951"></path>
+</g>
+<!-- f -->
+<g id="node6" class="node">
+<title>f</title>
+<ellipse fill="none" stroke="#000000" cx="207" cy="-149" rx="27" ry="18"></ellipse>
+<text text-anchor="middle" x="207" y="-144.8" font-family="Times,serif" font-size="14.00" fill="#000000">f</text>
+</g>
+<!-- c&#45;&#45;f -->
+<g id="edge7" class="edge">
+<title>c--f</title>
+<path fill="none" stroke="#000000" d="M144.003,-149C155.2905,-149 168.3867,-149 179.705,-149"></path>
+</g>
+<!-- d&#45;&#45;f -->
+<g id="edge8" class="edge">
+<title>d--f</title>
+<path fill="none" stroke="#000000" d="M137.4224,-107.2534C152.1514,-116.0909 171.948,-127.9688 186.6584,-136.7951"></path>
+</g>
+<!-- g -->
+<g id="node7" class="node">
+<title>g</title>
+<ellipse fill="none" stroke="#000000" cx="207" cy="-95" rx="27" ry="18"></ellipse>
+<text text-anchor="middle" x="207" y="-90.8" font-family="Times,serif" font-size="14.00" fill="#000000">g</text>
+</g>
+<!-- d&#45;&#45;g -->
+<g id="edge9" class="edge">
+<title>d--g</title>
+<path fill="none" stroke="#000000" d="M144.003,-95C155.2905,-95 168.3867,-95 179.705,-95"></path>
+</g>
+<!-- h -->
+<g id="node8" class="node">
+<title>h</title>
+<ellipse fill="none" stroke="#000000" cx="297" cy="-203" rx="27" ry="18"></ellipse>
+<text text-anchor="middle" x="297" y="-198.8" font-family="Times,serif" font-size="14.00" fill="#000000">h</text>
+</g>
+<!-- e&#45;&#45;h -->
+<g id="edge10" class="edge">
+<title>e--h</title>
+<path fill="none" stroke="#000000" d="M234.003,-203C245.2905,-203 258.3867,-203 269.705,-203"></path>
+</g>
+<!-- f&#45;&#45;g -->
+<g id="edge11" class="edge">
+<title>f--g</title>
+<path fill="none" stroke="#000000" d="M207,-130.7902C207,-124.907 207,-119.0238 207,-113.1406"></path>
+</g>
+<!-- f&#45;&#45;h -->
+<g id="edge12" class="edge">
+<title>f--h</title>
+<path fill="none" stroke="#000000" d="M227.4224,-161.2534C242.1514,-170.0909 261.948,-181.9688 276.6584,-190.7951"></path>
+</g>
+<!-- i -->
+<g id="node9" class="node">
+<title>i</title>
+<ellipse fill="none" stroke="#000000" cx="297" cy="-149" rx="27" ry="18"></ellipse>
+<text text-anchor="middle" x="297" y="-144.8" font-family="Times,serif" font-size="14.00" fill="#000000">i</text>
+</g>
+<!-- f&#45;&#45;i -->
+<g id="edge13" class="edge">
+<title>f--i</title>
+<path fill="none" stroke="#000000" d="M234.003,-149C245.2905,-149 258.3867,-149 269.705,-149"></path>
+</g>
+<!-- j -->
+<g id="node10" class="node">
+<title>j</title>
+<ellipse fill="none" stroke="#000000" cx="297" cy="-95" rx="27" ry="18"></ellipse>
+<text text-anchor="middle" x="297" y="-90.8" font-family="Times,serif" font-size="14.00" fill="#000000">j</text>
+</g>
+<!-- f&#45;&#45;j -->
+<g id="edge14" class="edge">
+<title>f--j</title>
+<path fill="none" stroke="#000000" d="M227.4224,-136.7466C242.1514,-127.9091 261.948,-116.0312 276.6584,-107.2049"></path>
+</g>
+<!-- k -->
+<g id="node11" class="node">
+<title>k</title>
+<ellipse fill="none" stroke="#000000" cx="297" cy="-41" rx="27" ry="18"></ellipse>
+<text text-anchor="middle" x="297" y="-36.8" font-family="Times,serif" font-size="14.00" fill="#000000">k</text>
+</g>
+<!-- g&#45;&#45;k -->
+<g id="edge15" class="edge">
+<title>g--k</title>
+<path fill="none" stroke="#000000" d="M227.4224,-82.7466C242.1514,-73.9091 261.948,-62.0312 276.6584,-53.2049"></path>
+</g>
+<!-- o -->
+<g id="node12" class="node">
+<title>o</title>
+<ellipse fill="none" stroke="#000000" cx="477" cy="-180" rx="27" ry="18"></ellipse>
+<text text-anchor="middle" x="477" y="-175.8" font-family="Times,serif" font-size="14.00" fill="#000000">o</text>
+</g>
+<!-- h&#45;&#45;o -->
+<g id="edge16" class="edge">
+<title>h--o</title>
+<path fill="none" stroke="#000000" d="M323.3187,-207.3962C347.2279,-210.5674 383.3397,-213.2933 414,-207 428.6874,-203.9853 444.1785,-197.3975 456.1242,-191.4842"></path>
+</g>
+<!-- l -->
+<g id="node13" class="node">
+<title>l</title>
+<ellipse fill="none" stroke="#000000" cx="387" cy="-180" rx="27" ry="18"></ellipse>
+<text text-anchor="middle" x="387" y="-175.8" font-family="Times,serif" font-size="14.00" fill="#000000">l</text>
+</g>
+<!-- h&#45;&#45;l -->
+<g id="edge17" class="edge">
+<title>h--l</title>
+<path fill="none" stroke="#000000" d="M322.5497,-196.4706C334.8142,-193.3364 349.4658,-189.5921 361.698,-186.4661"></path>
+</g>
+<!-- i&#45;&#45;j -->
+<g id="edge18" class="edge">
+<title>i--j</title>
+<path fill="none" stroke="#000000" d="M297,-130.7902C297,-124.907 297,-119.0238 297,-113.1406"></path>
+</g>
+<!-- i&#45;&#45;l -->
+<g id="edge19" class="edge">
+<title>i--l</title>
+<path fill="none" stroke="#000000" d="M321.1183,-157.3074C334.0313,-161.7552 349.892,-167.2183 362.8151,-171.6696"></path>
+</g>
+<!-- m -->
+<g id="node14" class="node">
+<title>m</title>
+<ellipse fill="none" stroke="#000000" cx="387" cy="-126" rx="27" ry="18"></ellipse>
+<text text-anchor="middle" x="387" y="-121.8" font-family="Times,serif" font-size="14.00" fill="#000000">m</text>
+</g>
+<!-- i&#45;&#45;m -->
+<g id="edge20" class="edge">
+<title>i--m</title>
+<path fill="none" stroke="#000000" d="M322.5497,-142.4706C334.8142,-139.3364 349.4658,-135.5921 361.698,-132.4661"></path>
+</g>
+<!-- j&#45;&#45;k -->
+<g id="edge21" class="edge">
+<title>j--k</title>
+<path fill="none" stroke="#000000" d="M297,-76.7902C297,-70.907 297,-65.0238 297,-59.1406"></path>
+</g>
+<!-- j&#45;&#45;m -->
+<g id="edge22" class="edge">
+<title>j--m</title>
+<path fill="none" stroke="#000000" d="M321.1183,-103.3074C334.0313,-107.7552 349.892,-113.2183 362.8151,-117.6696"></path>
+</g>
+<!-- n -->
+<g id="node15" class="node">
+<title>n</title>
+<ellipse fill="none" stroke="#000000" cx="387" cy="-72" rx="27" ry="18"></ellipse>
+<text text-anchor="middle" x="387" y="-67.8" font-family="Times,serif" font-size="14.00" fill="#000000">n</text>
+</g>
+<!-- j&#45;&#45;n -->
+<g id="edge23" class="edge">
+<title>j--n</title>
+<path fill="none" stroke="#000000" d="M322.5497,-88.4706C334.8142,-85.3364 349.4658,-81.5921 361.698,-78.4661"></path>
+</g>
+<!-- k&#45;&#45;n -->
+<g id="edge24" class="edge">
+<title>k--n</title>
+<path fill="none" stroke="#000000" d="M321.1183,-49.3074C334.0313,-53.7552 349.892,-59.2183 362.8151,-63.6696"></path>
+</g>
+<!-- r -->
+<g id="node16" class="node">
+<title>r</title>
+<ellipse fill="none" stroke="#000000" cx="477" cy="-18" rx="27" ry="18"></ellipse>
+<text text-anchor="middle" x="477" y="-13.8" font-family="Times,serif" font-size="14.00" fill="#000000">r</text>
+</g>
+<!-- k&#45;&#45;r -->
+<g id="edge25" class="edge">
+<title>k--r</title>
+<path fill="none" stroke="#000000" d="M323.5596,-37.6063C357.5916,-33.2577 416.247,-25.7629 450.3314,-21.4077"></path>
+</g>
+<!-- p -->
+<g id="node17" class="node">
+<title>p</title>
+<ellipse fill="none" stroke="#000000" cx="477" cy="-126" rx="27" ry="18"></ellipse>
+<text text-anchor="middle" x="477" y="-121.8" font-family="Times,serif" font-size="14.00" fill="#000000">p</text>
+</g>
+<!-- o&#45;&#45;p -->
+<g id="edge33" class="edge">
+<title>o--p</title>
+<path fill="none" stroke="#000000" d="M477,-161.7902C477,-155.907 477,-150.0238 477,-144.1406"></path>
+</g>
+<!-- s -->
+<g id="node19" class="node">
+<title>s</title>
+<ellipse fill="none" stroke="#000000" cx="567" cy="-126" rx="27" ry="18"></ellipse>
+<text text-anchor="middle" x="567" y="-121.8" font-family="Times,serif" font-size="14.00" fill="#000000">s</text>
+</g>
+<!-- o&#45;&#45;s -->
+<g id="edge34" class="edge">
+<title>o--s</title>
+<path fill="none" stroke="#000000" d="M497.4224,-167.7466C512.1514,-158.9091 531.948,-147.0312 546.6584,-138.2049"></path>
+</g>
+<!-- l&#45;&#45;o -->
+<g id="edge26" class="edge">
+<title>l--o</title>
+<path fill="none" stroke="#000000" d="M414.003,-180C425.2905,-180 438.3867,-180 449.705,-180"></path>
+</g>
+<!-- l&#45;&#45;m -->
+<g id="edge27" class="edge">
+<title>l--m</title>
+<path fill="none" stroke="#000000" d="M387,-161.7902C387,-155.907 387,-150.0238 387,-144.1406"></path>
+</g>
+<!-- m&#45;&#45;o -->
+<g id="edge28" class="edge">
+<title>m--o</title>
+<path fill="none" stroke="#000000" d="M407.4224,-138.2534C422.1514,-147.0909 441.948,-158.9688 456.6584,-167.7951"></path>
+</g>
+<!-- m&#45;&#45;n -->
+<g id="edge29" class="edge">
+<title>m--n</title>
+<path fill="none" stroke="#000000" d="M387,-107.7902C387,-101.907 387,-96.0238 387,-90.1406"></path>
+</g>
+<!-- m&#45;&#45;p -->
+<g id="edge30" class="edge">
+<title>m--p</title>
+<path fill="none" stroke="#000000" d="M414.003,-126C425.2905,-126 438.3867,-126 449.705,-126"></path>
+</g>
+<!-- n&#45;&#45;r -->
+<g id="edge31" class="edge">
+<title>n--r</title>
+<path fill="none" stroke="#000000" d="M407.4224,-59.7466C422.1514,-50.9091 441.948,-39.0312 456.6584,-30.2049"></path>
+</g>
+<!-- q -->
+<g id="node18" class="node">
+<title>q</title>
+<ellipse fill="none" stroke="#000000" cx="477" cy="-72" rx="27" ry="18"></ellipse>
+<text text-anchor="middle" x="477" y="-67.8" font-family="Times,serif" font-size="14.00" fill="#000000">q</text>
+</g>
+<!-- n&#45;&#45;q -->
+<g id="edge32" class="edge">
+<title>n--q</title>
+<path fill="none" stroke="#000000" d="M414.003,-72C425.2905,-72 438.3867,-72 449.705,-72"></path>
+</g>
+<!-- t -->
+<g id="node20" class="node">
+<title>t</title>
+<ellipse fill="none" stroke="#000000" cx="567" cy="-72" rx="27" ry="18"></ellipse>
+<text text-anchor="middle" x="567" y="-67.8" font-family="Times,serif" font-size="14.00" fill="#000000">t</text>
+</g>
+<!-- r&#45;&#45;t -->
+<g id="edge40" class="edge">
+<title>r--t</title>
+<path fill="none" stroke="#000000" d="M497.4224,-30.2534C512.1514,-39.0909 531.948,-50.9688 546.6584,-59.7951"></path>
+</g>
+<!-- p&#45;&#45;q -->
+<g id="edge35" class="edge">
+<title>p--q</title>
+<path fill="none" stroke="#000000" d="M477,-107.7902C477,-101.907 477,-96.0238 477,-90.1406"></path>
+</g>
+<!-- p&#45;&#45;s -->
+<g id="edge36" class="edge">
+<title>p--s</title>
+<path fill="none" stroke="#000000" d="M504.003,-126C515.2905,-126 528.3867,-126 539.705,-126"></path>
+</g>
+<!-- p&#45;&#45;t -->
+<g id="edge37" class="edge">
+<title>p--t</title>
+<path fill="none" stroke="#000000" d="M497.4224,-113.7466C512.1514,-104.9091 531.948,-93.0312 546.6584,-84.2049"></path>
+</g>
+<!-- q&#45;&#45;r -->
+<g id="edge38" class="edge">
+<title>q--r</title>
+<path fill="none" stroke="#000000" d="M477,-53.7902C477,-47.907 477,-42.0238 477,-36.1406"></path>
+</g>
+<!-- q&#45;&#45;t -->
+<g id="edge39" class="edge">
+<title>q--t</title>
+<path fill="none" stroke="#000000" d="M504.003,-72C515.2905,-72 528.3867,-72 539.705,-72"></path>
+</g>
+<!-- z -->
+<g id="node21" class="node">
+<title>z</title>
+<ellipse fill="none" stroke="#000000" cx="657" cy="-99" rx="27" ry="18"></ellipse>
+<text text-anchor="middle" x="657" y="-94.8" font-family="Times,serif" font-size="14.00" fill="#000000">z</text>
+</g>
+<!-- s&#45;&#45;z -->
+<g id="edge41" class="edge">
+<title>s--z</title>
+<path fill="none" stroke="#000000" d="M592.07,-118.479C604.657,-114.7029 619.8509,-110.1447 632.3755,-106.3874"></path>
+</g>
+<!-- t&#45;&#45;z -->
+<g id="edge42" class="edge">
+<title>t--z</title>
+<path fill="none" stroke="#000000" d="M592.07,-79.521C604.657,-83.2971 619.8509,-87.8553 632.3755,-91.6126"></path>
+</g>
+</g>
+</svg>
+</pre><pre class="graphviz"><!--?xml version="1.0" encoding="UTF-8" standalone="no"?-->
+
+<!-- Generated by graphviz version 2.40.1 (20161225.0304)
+ -->
+<!-- Title: hierarchy Pages: 1 -->
+<svg width="525pt" height="188pt" viewBox="0.00 0.00 524.58 188.00" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 184)">
+<title>hierarchy</title>
+<polygon fill="#ffffff" stroke="transparent" points="-4,4 -4,-184 520.5839,-184 520.5839,4 -4,4"></polygon>
+<!-- Headteacher -->
+<g id="node1" class="node">
+<title>Headteacher</title>
+<polygon fill="none" stroke="#ff0000" points="319.9797,-180 211.2091,-180 211.2091,-144 319.9797,-144 319.9797,-180"></polygon>
+<text text-anchor="middle" x="265.5944" y="-157.8" font-family="Courier,monospace" font-size="14.00" fill="#000000">Headteacher</text>
+</g>
+<!-- Deputy1 -->
+<g id="node2" class="node">
+<title>Deputy1</title>
+<polygon fill="none" stroke="#ff0000" points="155.8849,-108 81.3039,-108 81.3039,-72 155.8849,-72 155.8849,-108"></polygon>
+<text text-anchor="middle" x="118.5944" y="-85.8" font-family="Courier,monospace" font-size="14.00" fill="#000000">Deputy1</text>
+</g>
+<!-- Headteacher&#45;>Deputy1 -->
+<g id="edge1" class="edge">
+<title>Headteacher->Deputy1</title>
+<path fill="none" stroke="#0000ff" stroke-dasharray="5,2" d="M228.5001,-143.8314C209.1018,-134.3302 185.1774,-122.6121 164.6082,-112.5374"></path>
+<polygon fill="#0000ff" stroke="#0000ff" points="165.9422,-109.2935 155.422,-108.038 162.863,-115.5799 165.9422,-109.2935"></polygon>
+</g>
+<!-- Deputy2 -->
+<g id="node3" class="node">
+<title>Deputy2</title>
+<polygon fill="none" stroke="#ff0000" points="302.8849,-108 228.3039,-108 228.3039,-72 302.8849,-72 302.8849,-108"></polygon>
+<text text-anchor="middle" x="265.5944" y="-85.8" font-family="Courier,monospace" font-size="14.00" fill="#000000">Deputy2</text>
+</g>
+<!-- Headteacher&#45;>Deputy2 -->
+<g id="edge2" class="edge">
+<title>Headteacher->Deputy2</title>
+<path fill="none" stroke="#0000ff" stroke-dasharray="5,2" d="M265.5944,-143.8314C265.5944,-136.131 265.5944,-126.9743 265.5944,-118.4166"></path>
+<polygon fill="#0000ff" stroke="#0000ff" points="269.0945,-118.4132 265.5944,-108.4133 262.0945,-118.4133 269.0945,-118.4132"></polygon>
+</g>
+<!-- BusinessManager -->
+<g id="node4" class="node">
+<title>BusinessManager</title>
+<polygon fill="none" stroke="#ff0000" points="516.5734,-108 374.6154,-108 374.6154,-72 516.5734,-72 516.5734,-108"></polygon>
+<text text-anchor="middle" x="445.5944" y="-85.8" font-family="Courier,monospace" font-size="14.00" fill="#000000">BusinessManager</text>
+</g>
+<!-- Headteacher&#45;>BusinessManager -->
+<g id="edge3" class="edge">
+<title>Headteacher->BusinessManager</title>
+<path fill="none" stroke="#0000ff" stroke-dasharray="5,2" d="M311.016,-143.8314C335.3039,-134.1162 365.3866,-122.0831 390.9464,-111.8592"></path>
+<polygon fill="#0000ff" stroke="#0000ff" points="392.5145,-115.0016 400.4994,-108.038 389.9148,-108.5023 392.5145,-115.0016"></polygon>
+</g>
+<!-- Teacher1 -->
+<g id="node5" class="node">
+<title>Teacher1</title>
+<polygon fill="none" stroke="#ff0000" points="83.2834,-36 -.0946,-36 -.0946,0 83.2834,0 83.2834,-36"></polygon>
+<text text-anchor="middle" x="41.5944" y="-13.8" font-family="Courier,monospace" font-size="14.00" fill="#000000">Teacher1</text>
+</g>
+<!-- Deputy1&#45;>Teacher1 -->
+<g id="edge4" class="edge">
+<title>Deputy1->Teacher1</title>
+<path fill="none" stroke="#0000ff" stroke-dasharray="5,2" d="M99.164,-71.8314C89.8624,-63.1337 78.574,-52.5783 68.4658,-43.1265"></path>
+<polygon fill="#0000ff" stroke="#0000ff" points="70.7133,-40.4363 61.0185,-36.1628 65.9323,-45.5493 70.7133,-40.4363"></polygon>
+</g>
+<!-- Teacher2 -->
+<g id="node6" class="node">
+<title>Teacher2</title>
+<polygon fill="none" stroke="#ff0000" points="238.2834,-36 154.9054,-36 154.9054,0 238.2834,0 238.2834,-36"></polygon>
+<text text-anchor="middle" x="196.5944" y="-13.8" font-family="Courier,monospace" font-size="14.00" fill="#000000">Teacher2</text>
+</g>
+<!-- Deputy1&#45;>Teacher2 -->
+<g id="edge5" class="edge">
+<title>Deputy1->Teacher2</title>
+<path fill="none" stroke="#0000ff" stroke-dasharray="5,2" d="M138.2771,-71.8314C147.6995,-63.1337 159.1345,-52.5783 169.374,-43.1265"></path>
+<polygon fill="#0000ff" stroke="#0000ff" points="171.9439,-45.5175 176.918,-36.1628 167.196,-40.3738 171.9439,-45.5175"></polygon>
+</g>
+<!-- ITManager -->
+<g id="node7" class="node">
+<title>ITManager</title>
+<polygon fill="none" stroke="#ff0000" points="491.1827,-36 400.0061,-36 400.0061,0 491.1827,0 491.1827,-36"></polygon>
+<text text-anchor="middle" x="445.5944" y="-13.8" font-family="Courier,monospace" font-size="14.00" fill="#000000">ITManager</text>
+</g>
+<!-- BusinessManager&#45;>ITManager -->
+<g id="edge6" class="edge">
+<title>BusinessManager->ITManager</title>
+<path fill="none" stroke="#0000ff" stroke-dasharray="5,2" d="M445.5944,-71.8314C445.5944,-64.131 445.5944,-54.9743 445.5944,-46.4166"></path>
+<polygon fill="#0000ff" stroke="#0000ff" points="449.0945,-46.4132 445.5944,-36.4133 442.0945,-46.4133 449.0945,-46.4132"></polygon>
+</g>
+</g>
+</svg>
+</pre><h3 id="mermaid">Mermaid</h3>
+<pre class="mermaid"><svg id="mermaidChart0" width="100%" xmlns="http://www.w3.org/2000/svg" height="100%" viewBox="0 0 1543 196"><style type="text/css" title="mermaid-svg-internal-css">/*  */
+.section { clear: both; padding: 0px; margin: 0px;}
+.section { clear: both; padding: 0px; margin: 0px;}
+.section { clear: both; padding: 0px; margin: 0px;}
+/*  */
+</style><g></g><g class="grid" transform="translate(75, 146)"><g class="tick" transform="translate(139,0)" style="opacity: 1;"><line y2="-111" x2="0"></line><text dy="1em" y="3" x="0" fill="#000" stroke="none" font-size="10" style="text-anchor: middle;">w. 01</text></g><g class="tick" transform="translate(334,0)" style="opacity: 1;"><line y2="-111" x2="0"></line><text dy="1em" y="3" x="0" fill="#000" stroke="none" font-size="10" style="text-anchor: middle;">w. 02</text></g><g class="tick" transform="translate(529,0)" style="opacity: 1;"><line y2="-111" x2="0"></line><text dy="1em" y="3" x="0" fill="#000" stroke="none" font-size="10" style="text-anchor: middle;">w. 03</text></g><g class="tick" transform="translate(724,0)" style="opacity: 1;"><line y2="-111" x2="0"></line><text dy="1em" y="3" x="0" fill="#000" stroke="none" font-size="10" style="text-anchor: middle;">w. 04</text></g><g class="tick" transform="translate(919,0)" style="opacity: 1;"><line y2="-111" x2="0"></line><text dy="1em" y="3" x="0" fill="#000" stroke="none" font-size="10" style="text-anchor: middle;">w. 05</text></g><g class="tick" transform="translate(1114,0)" style="opacity: 1;"><line y2="-111" x2="0"></line><text dy="1em" y="3" x="0" fill="#000" stroke="none" font-size="10" style="text-anchor: middle;">w. 06</text></g><g class="tick" transform="translate(1309,0)" style="opacity: 1;"><line y2="-111" x2="0"></line><text dy="1em" y="3" x="0" fill="#000" stroke="none" font-size="10" style="text-anchor: middle;">w. 07</text></g><path class="domain" d="M0,0V0H1393V0"></path></g><g><rect x="0" y="48" width="1505.5" height="24" class="section section0"></rect><rect x="0" y="72" width="1505.5" height="24" class="section section0"></rect><rect x="0" y="96" width="1505.5" height="24" class="section section1"></rect><rect x="0" y="120" width="1505.5" height="24" class="section section1"></rect></g><g><rect rx="3" ry="3" x="75" y="50" width="836" height="20" class="task  task0"></rect><rect rx="3" ry="3" x="911" y="74" width="557" height="20" class="task  task0"></rect><rect rx="3" ry="3" x="381" y="98" width="335" height="20" class="task  task1"></rect><rect rx="3" ry="3" x="716" y="122" width="668" height="20" class="task  task1"></rect><text font-size="11" x="493" y="63.5" text-height="20" class="taskText taskText0 ">A task           </text><text font-size="11" x="1189.5" y="87.5" text-height="20" class="taskText taskText0 ">Another task     </text><text font-size="11" x="548.5" y="111.5" text-height="20" class="taskText taskText1 ">Task in sec      </text><text font-size="11" x="1050" y="135.5" text-height="20" class="taskText taskText1 ">anther task      </text></g><g><text x="10" y="74" class="sectionTitle sectionTitle0">Section</text><text x="10" y="122" class="sectionTitle sectionTitle1">Another</text></g><g class="today"><line x1="32777" x2="32777" y1="25" y2="171" class="today"></line></g><text x="771.5" y="25" class="titleText">A Gantt Diagram</text></svg></pre><pre class="mermaid"><svg id="mermaidChart1" xmlns="http://www.w3.org/2000/svg" height="100%" viewBox="0 0 569.8000030517578 216" style="max-width:569.8000030517578px;"><style type="text/css" title="mermaid-svg-internal-css">/*  */
+#mermaidChart1 .node>rect { ; }
+#mermaidChart1 .node text  { fill:#000; stroke:none; font-weight:300; font-family:"Helvetica Neue",Helvetica,Arial,sans-serf; font-size:14px; }
+#mermaidChart1 .edgeLabel text  { fill:#000; stroke:none; font-weight:300; font-family:"Helvetica Neue",Helvetica,Arial,sans-serf; font-size:14px; }
+#mermaidChart1 .cluster rect  { rx:4px; fill: rgb(255, 255, 222); rx: 4px; stroke: rgb(170, 170, 51); stroke-width: 1px; }
+/*  */
+</style><g><g class="output"><g class="clusters"></g><g class="edgePaths"><g class="edgePath" style="opacity: 1;"><path class="path" d="M125.8252427184466,84.5L198,53L280.5,53" marker-end="url(#arrowhead69)" style="fill:none"></path><defs><marker id="arrowhead69" viewBox="0 0 10 10" refX="9" refY="5" markerUnits="strokeWidth" markerWidth="8" markerHeight="6" orient="auto"><path d="M 0 0 L 10 5 L 0 10 z" class="arrowheadPath" style="stroke-width: 1px; stroke-dasharray: 1px, 0px;"></path></marker></defs></g><g class="edgePath" style="opacity: 1;"><path class="path" d="M125.8252427184466,124.5L198,156L256,156" marker-end="url(#arrowhead70)" style="fill:none"></path><defs><marker id="arrowhead70" viewBox="0 0 10 10" refX="9" refY="5" markerUnits="strokeWidth" markerWidth="8" markerHeight="6" orient="auto"><path d="M 0 0 L 10 5 L 0 10 z" class="arrowheadPath" style="stroke-width: 1px; stroke-dasharray: 1px, 0px;"></path></marker></defs></g><g class="edgePath" style="opacity: 1;"><path class="path" d="M346.5,53L396,53L442.9025968278855,83.59740164623565" marker-end="url(#arrowhead71)" style="fill:none"></path><defs><marker id="arrowhead71" viewBox="0 0 10 10" refX="9" refY="5" markerUnits="strokeWidth" markerWidth="8" markerHeight="6" orient="auto"><path d="M 0 0 L 10 5 L 0 10 z" class="arrowheadPath" style="stroke-width: 1px; stroke-dasharray: 1px, 0px;"></path></marker></defs></g><g class="edgePath" style="opacity: 1;"><path class="path" d="M371,156L396,156L442.90259867898976,126.40259715311103" marker-end="url(#arrowhead72)" style="fill:none"></path><defs><marker id="arrowhead18" viewBox="0 0 10 10" refX="9" refY="5" markerUnits="strokeWidth" markerWidth="8" markerHeight="6" orient="auto"><path d="M 0 0 L 10 5 L 0 10 z" class="arrowheadPath" style="stroke-width: 1px; stroke-dasharray: 1px, 0px;"></path></marker></defs></g></g><g class="edgeLabels"><g class="edgeLabel" style="opacity: 1;" transform="translate(198,53)"><g transform="translate(-33,-10)" class="label"><foreignObject width="66" height="20"><div style="display: inline-block; white-space: nowrap;"><span class="edgeLabel">Link text</span></div></foreignObject></g></g><g class="edgeLabel" style="opacity: 1;" transform=""><g transform="translate(0,0)" class="label"><foreignObject width="0" height="0"><div style="display: inline-block; white-space: nowrap;"><span class="edgeLabel"></span></div></foreignObject></g></g><g class="edgeLabel" style="opacity: 1;" transform=""><g transform="translate(0,0)" class="label"><foreignObject width="0" height="0"><div style="display: inline-block; white-space: nowrap;"><span class="edgeLabel"></span></div></foreignObject></g></g><g class="edgeLabel" style="opacity: 1;" transform=""><g transform="translate(0,0)" class="label"><foreignObject width="0" height="0"><div style="display: inline-block; white-space: nowrap;"><span class="edgeLabel"></span></div></foreignObject></g></g></g><g class="nodes"><g class="node" style="opacity: 1;" id="A" transform="translate(80,104.5)"><rect rx="0" ry="0" x="-60" y="-20" width="120" height="40"></rect><g class="label" transform="translate(0,0)"><g transform="translate(-50,-10)"><foreignObject width="100" height="20"><div style="display: inline-block; white-space: nowrap;">Square Rect</div></foreignObject></g></g></g><g class="node" style="opacity: 1;" id="B" transform="translate(313.5,53)"><circle x="-33" y="-20" r="33"></circle><g class="label" transform="translate(0,0)"><g transform="translate(-23,-10)"><foreignObject width="46" height="20"><div style="display: inline-block; white-space: nowrap;">Circle</div></foreignObject></g></g></g><g class="node" style="opacity: 1;" id="C" transform="translate(313.5,156)"><rect rx="5" ry="5" x="-57.5" y="-20" width="115" height="40"></rect><g class="label" transform="translate(0,0)"><g transform="translate(-47.5,-10)"><foreignObject width="95" height="20"><div style="display: inline-block; white-space: nowrap;">Round Rect</div></foreignObject></g></g></g><g class="node" style="opacity: 1;" id="D" transform="translate(475.4000015258789,104.5)"><polygon points="54.400000000000006,0 108.80000000000001,-54.400000000000006 54.400000000000006,-108.80000000000001 0,-54.400000000000006" rx="5" ry="5" transform="translate(-54.400000000000006,54.400000000000006)"></polygon><g class="label" transform="translate(0,0)"><g transform="translate(-38,-10)"><foreignObject width="76" height="20"><div style="display: inline-block; white-space: nowrap;">Rhombus</div></foreignObject></g></g></g></g></g></g></svg></pre><pre class="mermaid"><svg id="mermaidChart2" xmlns="http://www.w3.org/2000/svg" height="100%" viewBox="0 0 1407.349998474121 553" style="max-width:1407.349998474121px;"><style type="text/css" title="mermaid-svg-internal-css">/*  */
+#mermaidChart2 .node>rect { ; }
+#mermaidChart2 .node text  { fill:#000; stroke:none; font-weight:300; font-family:"Helvetica Neue",Helvetica,Arial,sans-serf; font-size:14px; }
+#mermaidChart2 .edgeLabel text  { fill:#000; stroke:none; font-weight:300; font-family:"Helvetica Neue",Helvetica,Arial,sans-serf; font-size:14px; }
+#mermaidChart2 .cluster rect  { rx:4px; fill: rgb(255, 255, 222); rx: 4px; stroke: rgb(170, 170, 51); stroke-width: 1px; }
+#mermaidChart2 .green>rect, .green>polygon, .green>circle, .green>ellipse { fill:#9f6; stroke:#333; stroke-width:2px; }
+#mermaidChart2 .orange>rect, .orange>polygon, .orange>circle, .orange>ellipse { fill:#f96; stroke:#333; stroke-width:4px; }
+/*  */
+</style><g><g class="output"><g class="clusters"><g class="cluster" id="subGraph0" style="opacity: 1;" transform="translate(261.17499923706055,266.5)"><rect width="482.3499984741211" height="493" x="-241.17499923706055" y="-246.5"></rect><g class="label"><g transform="translate(0,0)"><foreignObject width="0" height="0"><div style="display: inline-block; white-space: nowrap;"></div></foreignObject></g></g><text x="0" y="-232.5" fill="black" stroke="none" id="mermaidChart2Text" style="text-anchor: middle;"> A subgraph</text></g></g><g class="edgePaths"><g class="edgePath" style="opacity: 1;"><path class="path" d="M603.3499984741211,147.5L603.3499984741211,255L603.3499984741211,334" marker-end="url(#arrowhead102)" style="fill:none"></path><defs><marker id="arrowhead102" viewBox="0 0 10 10" refX="9" refY="5" markerUnits="strokeWidth" markerWidth="8" markerHeight="6" orient="auto"><path d="M 0 0 L 10 5 L 0 10 z" class="arrowheadPath" style="stroke-width: 1px; stroke-dasharray: 1px, 0px;"></path></marker></defs></g><g class="edgePath" style="opacity: 1;"><path class="path" d="M119.5,148L119,255L146.95503597122303,354" marker-end="url(#arrowhead103)" style="fill:none"></path><defs><marker id="arrowhead103" viewBox="0 0 10 10" refX="9" refY="5" markerUnits="strokeWidth" markerWidth="8" markerHeight="6" orient="auto"><path d="M 0 0 L 10 5 L 0 10 z" class="arrowheadPath" style="stroke-width: 1px; stroke-dasharray: 1px, 0px;"></path></marker></defs></g><g class="edgePath" style="opacity: 1;"><path class="path" d="M320.4159325400551,171.26593406593403L253.8499984741211,255L185.76079092780463,354" marker-end="url(#arrowhead104)" style="stroke: #333; fill:none;stroke-width:2px;stroke-dasharray:3;"></path><defs><marker id="arrowhead104" viewBox="0 0 10 10" refX="9" refY="5" markerUnits="strokeWidth" markerWidth="8" markerHeight="6" orient="auto"><path d="M 0 0 L 10 5 L 0 10 z" class="arrowheadPath" style="stroke-width: 1px; stroke-dasharray: 1px, 0px;"></path></marker></defs></g><g class="edgePath" style="opacity: 1;"><path class="path" d="M359.9645443725586,199.58546020507814L363.8499984741211,255L363.8499984741211,374" marker-end="url(#arrowhead105)" style="stroke: #333; stroke-width: 3.5px;fill:none"></path><defs><marker id="arrowhead105" viewBox="0 0 10 10" refX="9" refY="5" markerUnits="strokeWidth" markerWidth="8" markerHeight="6" orient="auto"><path d="M 0 0 L 10 5 L 0 10 z" class="arrowheadPath" style="stroke-width: 1px; stroke-dasharray: 1px, 0px;"></path></marker></defs></g><g class="edgePath" style="opacity: 1;"><path class="path" d="M917.7001268598239,188.40436592981027L856.8499984741211,255L857.3499984741211,364.5" marker-end="url(#arrowhead106)" style="fill:none"></path><defs><marker id="arrowhead106" viewBox="0 0 10 10" refX="9" refY="5" markerUnits="strokeWidth" markerWidth="8" markerHeight="6" orient="auto"><path d="M 0 0 L 10 5 L 0 10 z" class="arrowheadPath" style="stroke-width: 1px; stroke-dasharray: 1px, 0px;"></path></marker></defs></g><g class="edgePath" style="opacity: 1;"><path class="path" d="M1028.9998700884182,188.40436592981027L1089.849998474121,255L1089.849998474121,374" marker-end="url(#arrowhead107)" style="fill:none"></path><defs><marker id="arrowhead107" viewBox="0 0 10 10" refX="9" refY="5" markerUnits="strokeWidth" markerWidth="8" markerHeight="6" orient="auto"><path d="M 0 0 L 10 5 L 0 10 z" class="arrowheadPath" style="stroke-width: 1px; stroke-dasharray: 1px, 0px;"></path></marker></defs></g><g class="edgePath" style="opacity: 1;"><path class="path" d="M1273.349998474121,147.5L1273.349998474121,255L1273.349998474121,300" marker-end="url(#arrowhead108)" style="fill:none"></path><defs><marker id="arrowhead108" viewBox="0 0 10 10" refX="9" refY="5" markerUnits="strokeWidth" markerWidth="8" markerHeight="6" orient="auto"><path d="M 0 0 L 10 5 L 0 10 z" class="arrowheadPath" style="stroke-width: 1px; stroke-dasharray: 1px, 0px;"></path></marker></defs></g></g><g class="edgeLabels"><g class="edgeLabel" style="opacity: 1;" transform=""><g transform="translate(0,0)" class="label"><foreignObject width="0" height="0"><div style="display: inline-block; white-space: nowrap;"><span class="edgeLabel"></span></div></foreignObject></g></g><g class="edgeLabel" style="opacity: 1;" transform="translate(119,255)"><g transform="translate(-58.5,-20)" class="label"><foreignObject width="117" height="40"><div style="display: inline-block; white-space: nowrap;"><span class="edgeLabel">Two line<br>edge comment</span></div></foreignObject></g></g><g class="edgeLabel" style="opacity: 1;" transform=""><g transform="translate(0,0)" class="label"><foreignObject width="0" height="0"><div style="display: inline-block; white-space: nowrap;"><span class="edgeLabel"></span></div></foreignObject></g></g><g class="edgeLabel" style="opacity: 1;" transform=""><g transform="translate(0,0)" class="label"><foreignObject width="0" height="0"><div style="display: inline-block; white-space: nowrap;"><span class="edgeLabel"></span></div></foreignObject></g></g><g class="edgeLabel" style="opacity: 1;" transform=""><g transform="translate(0,0)" class="label"><foreignObject width="0" height="0"><div style="display: inline-block; white-space: nowrap;"><span class="edgeLabel"></span></div></foreignObject></g></g><g class="edgeLabel" style="opacity: 1;" transform=""><g transform="translate(0,0)" class="label"><foreignObject width="0" height="0"><div style="display: inline-block; white-space: nowrap;"><span class="edgeLabel"></span></div></foreignObject></g></g><g class="edgeLabel" style="opacity: 1;" transform=""><g transform="translate(0,0)" class="label"><foreignObject width="0" height="0"><div style="display: inline-block; white-space: nowrap;"><span class="edgeLabel"></span></div></foreignObject></g></g></g><g class="nodes"><g class="node" style="opacity: 1;" id="od" transform="translate(119,127.5)"><polygon points="-20,0 108,0 108,-40 -20,-40 0,-20" transform="translate(-54,20)"></polygon><g class="label" transform="translate(0,0)"><g transform="translate(-44,-10)"><foreignObject width="88" height="20"><div style="display: inline-block; white-space: nowrap;">Odd shape</div></foreignObject></g></g></g><g class="node" style="opacity: 1;" id="ro" transform="translate(158.25,394)"><rect rx="5" ry="5" x="-46.5" y="-40" width="93" height="80"></rect><g class="label" transform="translate(0,0)"><g transform="translate(-36.5,-30)"><foreignObject width="73" height="60"><div style="display: inline-block; white-space: nowrap;">Rounded<br>square<br>shape</div></foreignObject></g></g></g><g class="node orange" style="opacity: 1;" id="di" transform="translate(353.8499984741211,127.5)"><polygon points="77.2,0 154.4,-77.2 77.2,-154.4 0,-77.2" rx="5" ry="5" transform="translate(-77.2,77.2)"></polygon><g class="label" transform="translate(0,0)"><g transform="translate(-56.5,-20)"><foreignObject width="113" height="40"><div style="display: inline-block; white-space: nowrap;">Diamond with <br> line break</div></foreignObject></g></g></g><g class="node" style="opacity: 1;" id="ro2" transform="translate(363.8499984741211,394)"><rect rx="5" ry="5" x="-103.5" y="-20" width="207" height="40"></rect><g class="label" transform="translate(0,0)"><g transform="translate(-93.5,-10)"><foreignObject width="187" height="20"><div style="display: inline-block; white-space: nowrap;">Rounded square shape</div></foreignObject></g></g></g><g class="node green" style="opacity: 1;" id="sq" transform="translate(603.3499984741211,127.5)"><rect rx="0" ry="0" x="-66" y="-20" width="132" height="40"></rect><g class="label" transform="translate(0,0)"><g transform="translate(-56,-10)"><foreignObject width="112" height="20"><div style="display: inline-block; white-space: nowrap;">Square shape</div></foreignObject></g></g></g><g class="node" style="opacity: 1;" id="ci" transform="translate(603.3499984741211,394)"><circle x="-60" y="-20" r="60"></circle><g class="label" transform="translate(0,0)"><g transform="translate(-50,-10)"><foreignObject width="100" height="20"><div style="display: inline-block; white-space: nowrap;">Circle shape</div></foreignObject></g></g></g><g class="node green" style="opacity: 1;" id="e" transform="translate(973.3499984741211,127.5)"><circle x="-82.5" y="-40" r="82.5"></circle><g class="label" transform="translate(0,0)"><g transform="translate(-72.5,-30)"><foreignObject width="145" height="60"><div style="display: inline-block; white-space: nowrap;">Inner / circle<br>and some odd <br>special characters</div></foreignObject></g></g></g><g class="node" style="opacity: 1;" id="od3" transform="translate(856.8499984741211,394)"><polygon points="-30,0 257,0 257,-60 -30,-60 0,-30" transform="translate(-128.5,30)"></polygon><g class="label" transform="translate(0,0)"><g transform="translate(-118.5,-20)"><foreignObject width="237" height="40"><div style="display: inline-block; white-space: nowrap;">Really long text with linebreak<br>in an Odd shape</div></foreignObject></g></g></g><g class="node" style="opacity: 1;" id="f" transform="translate(1089.849998474121,394)"><rect rx="5" ry="5" x="-39.5" y="-20" width="79" height="40"></rect><g class="label" transform="translate(0,0)"><g transform="translate(-29.5,-10)"><foreignObject width="59" height="20"><div style="display: inline-block; white-space: nowrap;">,.?!+-*ز</div></foreignObject></g></g></g><g class="node" style="opacity: 1;" id="cyr" transform="translate(1273.349998474121,127.5)"><rect rx="0" ry="0" x="-36.5" y="-20" width="73" height="40"></rect><g class="label" transform="translate(0,0)"><g transform="translate(-26.5,-10)"><foreignObject width="53" height="20"><div style="display: inline-block; white-space: nowrap;">Cyrillic</div></foreignObject></g></g></g><g class="node" style="opacity: 1;" id="cyr2" transform="translate(1273.349998474121,394)"><circle x="-94" y="-20" r="94"></circle><g class="label" transform="translate(0,0)"><g transform="translate(-84,-10)"><foreignObject width="168" height="20"><div style="display: inline-block; white-space: nowrap;">Circle shape Начало</div></foreignObject></g></g></g></g></g></g></svg></pre><pre class="mermaid"><svg id="mermaidChart3" width="100%" xmlns="http://www.w3.org/2000/svg" height="100%" style="max-width:750px;" viewBox="-50 -10 750 522"><g></g><g><line id="actor8" x1="75" y1="5" x2="75" y2="511" class="actor-line" stroke-width="0.5px" stroke="#999"></line><rect x="0" y="0" fill="#eaeaea" stroke="#666" width="150" height="65" rx="3" ry="3" class="actor"></rect><text x="75" y="32.5" style="text-anchor: middle;" dominant-baseline="central" alignment-baseline="central" class="actor"><tspan x="75" dy="0">Alice</tspan></text></g><g><line id="actor9" x1="275" y1="5" x2="275" y2="511" class="actor-line" stroke-width="0.5px" stroke="#999"></line><rect x="200" y="0" fill="#eaeaea" stroke="#666" width="150" height="65" rx="3" ry="3" class="actor"></rect><text x="275" y="32.5" style="text-anchor: middle;" dominant-baseline="central" alignment-baseline="central" class="actor"><tspan x="275" dy="0">Bob</tspan></text></g><g><line id="actor10" x1="475" y1="5" x2="475" y2="511" class="actor-line" stroke-width="0.5px" stroke="#999"></line><rect x="400" y="0" fill="#eaeaea" stroke="#666" width="150" height="65" rx="3" ry="3" class="actor"></rect><text x="475" y="32.5" style="text-anchor: middle;" dominant-baseline="central" alignment-baseline="central" class="actor"><tspan x="475" dy="0">John</tspan></text></g><defs><marker id="arrowhead" refX="5" refY="2" markerWidth="6" markerHeight="4" orient="auto"><path d="M 0,0 V 4 L6,2 Z"></path></marker></defs><defs><marker id="crosshead" markerWidth="15" markerHeight="8" orient="auto" refX="16" refY="4"><path fill="black" stroke="#000000" stroke-width="1px" d="M 9,2 V 6 L16,4 Z" style="stroke-dasharray: 0px, 0px;"></path><path fill="none" stroke="#000000" stroke-width="1px" d="M 0,1 L 6,7 M 6,1 L 0,7" style="stroke-dasharray: 0px, 0px;"></path></marker></defs><g><text x="175" y="93" class="messageText" style="text-anchor: middle;">Hello Bob, how are you?</text><line x1="75" y1="100" x2="275" y2="100" class="messageLine0" stroke-width="2" stroke="black" marker-end="url(#arrowhead)" style="fill: none;"></line></g><g><text x="375" y="128" class="messageText" style="text-anchor: middle;">How about you John?</text><line x1="275" y1="135" x2="475" y2="135" class="messageLine1" stroke-width="2" stroke="black" marker-end="url(#arrowhead)" style="stroke-dasharray: 3px, 3px; fill: none;"></line></g><g><text x="175" y="163" class="messageText" style="text-anchor: middle;">I am good thanks!</text><line x1="275" y1="170" x2="75" y2="170" class="messageLine1" stroke-width="2" stroke="black" marker-end="url(#crosshead)" style="stroke-dasharray: 3px, 3px; fill: none;"></line></g><g><text x="375" y="198" class="messageText" style="text-anchor: middle;">I am good thanks!</text><line x1="275" y1="205" x2="475" y2="205" class="messageLine0" stroke-width="2" stroke="black" marker-end="url(#crosshead)" style="fill: none;"></line></g><g><rect x="500" y="215" fill="#EDF2AE" stroke="#666" width="150" height="141" rx="0" ry="0" class="note"></rect><text x="516" y="242" fill="black" class="noteText"><tspan x="516">Bob thinks a</tspan><tspan dy="20" x="516">long long time,</tspan><tspan dy="20" x="516">so long that</tspan><tspan dy="20" x="516">the text does</tspan><tspan dy="20" x="516">not fit on a</tspan><tspan dy="20" x="516">row.</tspan></text></g><g><text x="175" y="384" class="messageText" style="text-anchor: middle;">Checking with John...</text><line x1="275" y1="391" x2="75" y2="391" class="messageLine1" stroke-width="2" stroke="black" style="stroke-dasharray: 3px, 3px; fill: none;"></line></g><g><text x="275" y="419" class="messageText" style="text-anchor: middle;">Yes... John, how are you?</text><line x1="75" y1="426" x2="475" y2="426" class="messageLine0" stroke-width="2" stroke="black" style="fill: none;"></line></g><g><rect x="0" y="446" fill="#eaeaea" stroke="#666" width="150" height="65" rx="3" ry="3" class="actor"></rect><text x="75" y="478.5" style="text-anchor: middle;" dominant-baseline="central" alignment-baseline="central" class="actor"><tspan x="75" dy="0">Alice</tspan></text></g><g><rect x="200" y="446" fill="#eaeaea" stroke="#666" width="150" height="65" rx="3" ry="3" class="actor"></rect><text x="275" y="478.5" style="text-anchor: middle;" dominant-baseline="central" alignment-baseline="central" class="actor"><tspan x="275" dy="0">Bob</tspan></text></g><g><rect x="400" y="446" fill="#eaeaea" stroke="#666" width="150" height="65" rx="3" ry="3" class="actor"></rect><text x="475" y="478.5" style="text-anchor: middle;" dominant-baseline="central" alignment-baseline="central" class="actor"><tspan x="475" dy="0">John</tspan></text></g></svg></pre><pre class="mermaid"><svg id="mermaidChart4" width="100%" xmlns="http://www.w3.org/2000/svg" height="100%" style="max-width:450px;" viewBox="-50 -10 450 426"><g></g><g><line id="actor11" x1="75" y1="5" x2="75" y2="415" class="actor-line" stroke-width="0.5px" stroke="#999"></line><rect x="0" y="0" fill="#eaeaea" stroke="#666" width="150" height="65" rx="3" ry="3" class="actor"></rect><text x="75" y="32.5" style="text-anchor: middle;" dominant-baseline="central" alignment-baseline="central" class="actor"><tspan x="75" dy="0">Alice</tspan></text></g><g><line id="actor12" x1="275" y1="5" x2="275" y2="415" class="actor-line" stroke-width="0.5px" stroke="#999"></line><rect x="200" y="0" fill="#eaeaea" stroke="#666" width="150" height="65" rx="3" ry="3" class="actor"></rect><text x="275" y="32.5" style="text-anchor: middle;" dominant-baseline="central" alignment-baseline="central" class="actor"><tspan x="275" dy="0">Bob</tspan></text></g><defs><marker id="arrowhead" refX="5" refY="2" markerWidth="6" markerHeight="4" orient="auto"><path d="M 0,0 V 4 L6,2 Z"></path></marker></defs><defs><marker id="crosshead" markerWidth="15" markerHeight="8" orient="auto" refX="16" refY="4"><path fill="black" stroke="#000000" stroke-width="1px" d="M 9,2 V 6 L16,4 Z" style="stroke-dasharray: 0px, 0px;"></path><path fill="none" stroke="#000000" stroke-width="1px" d="M 0,1 L 6,7 M 6,1 L 0,7" style="stroke-dasharray: 0px, 0px;"></path></marker></defs><g><text x="175" y="118" class="messageText" style="text-anchor: middle;">Hello Bob, how are you?</text><line x1="75" y1="125" x2="275" y2="125" class="messageLine0" stroke-width="2" stroke="black" marker-end="url(#arrowhead)" style="fill: none;"></line></g><g><text x="175" y="178" class="messageText" style="text-anchor: middle;">Not so good :(</text><line x1="275" y1="185" x2="75" y2="185" class="messageLine0" stroke-width="2" stroke="black" marker-end="url(#arrowhead)" style="fill: none;"></line></g><g><text x="175" y="233" class="messageText" style="text-anchor: middle;">Feeling fresh like a daisy</text><line x1="275" y1="240" x2="75" y2="240" class="messageLine0" stroke-width="2" stroke="black" marker-end="url(#arrowhead)" style="fill: none;"></line></g><g><line x1="65" y1="135" x2="285" y2="135" stroke-width="2" stroke="#526e52" class="loopLine"></line><line x1="285" y1="135" x2="285" y2="250" stroke-width="2" stroke="#526e52" class="loopLine"></line><line x1="65" y1="250" x2="285" y2="250" stroke-width="2" stroke="#526e52" class="loopLine"></line><line x1="65" y1="135" x2="65" y2="250" stroke-width="2" stroke="#526e52" class="loopLine"></line><line x1="65" y1="195" x2="285" y2="195" stroke-width="2" stroke="#526e52" class="loopLine"></line><rect x="65" y="135" fill="#526e52" stroke="none" width="50" height="20" rx="0" ry="0" class="labelBox"></rect><text x="72.5" y="150" fill="white" class="labelText"><tspan x="72.5">alt</tspan></text><text x="175" y="150" fill="black" class="loopText" style="text-anchor: middle;"><tspan x="175">[ is sick ]</tspan></text><text x="175" y="210" fill="black" class="loopText" style="text-anchor: middle;"><tspan x="175">[ is well ]</tspan></text></g><g><text x="175" y="303" class="messageText" style="text-anchor: middle;">Thanks for asking</text><line x1="275" y1="310" x2="75" y2="310" class="messageLine0" stroke-width="2" stroke="black" marker-end="url(#arrowhead)" style="fill: none;"></line></g><g><line x1="65" y1="260" x2="285" y2="260" stroke-width="2" stroke="#526e52" class="loopLine"></line><line x1="285" y1="260" x2="285" y2="320" stroke-width="2" stroke="#526e52" class="loopLine"></line><line x1="65" y1="320" x2="285" y2="320" stroke-width="2" stroke="#526e52" class="loopLine"></line><line x1="65" y1="260" x2="65" y2="320" stroke-width="2" stroke="#526e52" class="loopLine"></line><rect x="65" y="260" fill="#526e52" stroke="none" width="50" height="20" rx="0" ry="0" class="labelBox"></rect><text x="72.5" y="275" fill="white" class="labelText"><tspan x="72.5">opt</tspan></text><text x="175" y="275" fill="black" class="loopText" style="text-anchor: middle;"><tspan x="175">[ Extra response ]</tspan></text></g><g><line x1="55" y1="75" x2="295" y2="75" stroke-width="2" stroke="#526e52" class="loopLine"></line><line x1="295" y1="75" x2="295" y2="330" stroke-width="2" stroke="#526e52" class="loopLine"></line><line x1="55" y1="330" x2="295" y2="330" stroke-width="2" stroke="#526e52" class="loopLine"></line><line x1="55" y1="75" x2="55" y2="330" stroke-width="2" stroke="#526e52" class="loopLine"></line><rect x="55" y="75" fill="#526e52" stroke="none" width="50" height="20" rx="0" ry="0" class="labelBox"></rect><text x="62.5" y="90" fill="white" class="labelText"><tspan x="62.5">loop</tspan></text><text x="175" y="90" fill="black" class="loopText" style="text-anchor: middle;"><tspan x="175">[ Daily query ]</tspan></text></g><g><rect x="0" y="350" fill="#eaeaea" stroke="#666" width="150" height="65" rx="3" ry="3" class="actor"></rect><text x="75" y="382.5" style="text-anchor: middle;" dominant-baseline="central" alignment-baseline="central" class="actor"><tspan x="75" dy="0">Alice</tspan></text></g><g><rect x="200" y="350" fill="#eaeaea" stroke="#666" width="150" height="65" rx="3" ry="3" class="actor"></rect><text x="275" y="382.5" style="text-anchor: middle;" dominant-baseline="central" alignment-baseline="central" class="actor"><tspan x="275" dy="0">Bob</tspan></text></g></svg></pre><pre class="mermaid"><svg id="mermaidChart5" width="100%" xmlns="http://www.w3.org/2000/svg" height="100%" style="max-width:750px;" viewBox="-50 -10 750 492"><g></g><g><line id="actor13" x1="75" y1="5" x2="75" y2="481" class="actor-line" stroke-width="0.5px" stroke="#999"></line><rect x="0" y="0" fill="#eaeaea" stroke="#666" width="150" height="65" rx="3" ry="3" class="actor"></rect><text x="75" y="32.5" style="text-anchor: middle;" dominant-baseline="central" alignment-baseline="central" class="actor"><tspan x="75" dy="0">Alice</tspan></text></g><g><line id="actor14" x1="275" y1="5" x2="275" y2="481" class="actor-line" stroke-width="0.5px" stroke="#999"></line><rect x="200" y="0" fill="#eaeaea" stroke="#666" width="150" height="65" rx="3" ry="3" class="actor"></rect><text x="275" y="32.5" style="text-anchor: middle;" dominant-baseline="central" alignment-baseline="central" class="actor"><tspan x="275" dy="0">Bob</tspan></text></g><g><line id="actor15" x1="475" y1="5" x2="475" y2="481" class="actor-line" stroke-width="0.5px" stroke="#999"></line><rect x="400" y="0" fill="#eaeaea" stroke="#666" width="150" height="65" rx="3" ry="3" class="actor"></rect><text x="475" y="32.5" style="text-anchor: middle;" dominant-baseline="central" alignment-baseline="central" class="actor"><tspan x="475" dy="0">John</tspan></text></g><defs><marker id="arrowhead" refX="5" refY="2" markerWidth="6" markerHeight="4" orient="auto"><path d="M 0,0 V 4 L6,2 Z"></path></marker></defs><defs><marker id="crosshead" markerWidth="15" markerHeight="8" orient="auto" refX="16" refY="4"><path fill="black" stroke="#000000" stroke-width="1px" d="M 9,2 V 6 L16,4 Z" style="stroke-dasharray: 0px, 0px;"></path><path fill="none" stroke="#000000" stroke-width="1px" d="M 0,1 L 6,7 M 6,1 L 0,7" style="stroke-dasharray: 0px, 0px;"></path></marker></defs><g><text x="275" y="93" class="messageText" style="text-anchor: middle;">Hello John, how are you?</text><line x1="75" y1="100" x2="475" y2="100" class="messageLine0" stroke-width="2" stroke="black" marker-end="url(#arrowhead)" style="fill: none;"></line></g><g><text x="475" y="153" class="messageText" style="text-anchor: middle;">Fight against hypochondria</text><path d="M 475,160 C 535,150 535,190 475,180" class="messageLine0" stroke-width="2" stroke="black" marker-end="url(#arrowhead)" style="fill: none;"></path></g><g><line x1="357" y1="110" x2="593" y2="110" stroke-width="2" stroke="#526e52" class="loopLine"></line><line x1="593" y1="110" x2="593" y2="200" stroke-width="2" stroke="#526e52" class="loopLine"></line><line x1="357" y1="200" x2="593" y2="200" stroke-width="2" stroke="#526e52" class="loopLine"></line><line x1="357" y1="110" x2="357" y2="200" stroke-width="2" stroke="#526e52" class="loopLine"></line><rect x="357" y="110" fill="#526e52" stroke="none" width="50" height="20" rx="0" ry="0" class="labelBox"></rect><text x="364.5" y="125" fill="white" class="labelText"><tspan x="364.5">loop</tspan></text><text x="475" y="125" fill="black" class="loopText" style="text-anchor: middle;"><tspan x="475">[ Healthcheck ]</tspan></text></g><g><rect x="500" y="210" fill="#EDF2AE" stroke="#666" width="150" height="81" rx="0" ry="0" class="note"></rect><text x="516" y="237" fill="black" class="noteText"><tspan x="516">Rational</tspan><tspan dy="20" x="516">thoughts</tspan><tspan dy="20" x="516">prevail...</tspan></text></g><g><text x="275" y="319" class="messageText" style="text-anchor: middle;">Great!</text><line x1="475" y1="326" x2="75" y2="326" class="messageLine1" stroke-width="2" stroke="black" marker-end="url(#arrowhead)" style="stroke-dasharray: 3px, 3px; fill: none;"></line></g><g><text x="375" y="354" class="messageText" style="text-anchor: middle;">How about you?</text><line x1="475" y1="361" x2="275" y2="361" class="messageLine0" stroke-width="2" stroke="black" marker-end="url(#arrowhead)" style="fill: none;"></line></g><g><text x="375" y="389" class="messageText" style="text-anchor: middle;">Jolly good!</text><line x1="275" y1="396" x2="475" y2="396" class="messageLine1" stroke-width="2" stroke="black" marker-end="url(#arrowhead)" style="stroke-dasharray: 3px, 3px; fill: none;"></line></g><g><rect x="0" y="416" fill="#eaeaea" stroke="#666" width="150" height="65" rx="3" ry="3" class="actor"></rect><text x="75" y="448.5" style="text-anchor: middle;" dominant-baseline="central" alignment-baseline="central" class="actor"><tspan x="75" dy="0">Alice</tspan></text></g><g><rect x="200" y="416" fill="#eaeaea" stroke="#666" width="150" height="65" rx="3" ry="3" class="actor"></rect><text x="275" y="448.5" style="text-anchor: middle;" dominant-baseline="central" alignment-baseline="central" class="actor"><tspan x="275" dy="0">Bob</tspan></text></g><g><rect x="400" y="416" fill="#eaeaea" stroke="#666" width="150" height="65" rx="3" ry="3" class="actor"></rect><text x="475" y="448.5" style="text-anchor: middle;" dominant-baseline="central" alignment-baseline="central" class="actor"><tspan x="475" dy="0">John</tspan></text></g></svg></pre>

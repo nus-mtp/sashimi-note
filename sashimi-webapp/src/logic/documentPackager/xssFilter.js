@@ -1,11 +1,11 @@
 /*
-** HTML XSS Filtering plugin by leizongmin
-** https://github.com/leizongmin/js-xss
-**
-** Features:
-** 1. Specifies HTML tags and their attributes allowed with whitelist
-** 2. Handle any tags or attributes using custom function.
-*/
+ * HTML XSS Filtering plugin by leizongmin
+ * https://github.com/leizongmin/js-xss
+ *
+ * Features:
+ * 1. Specifies HTML tags and their attributes allowed with whitelist
+ * 2. Handle any tags or attributes using custom function.
+ */
 import xssFilter from 'xss';
 
 // some standard attributes that will be allowed
@@ -15,12 +15,12 @@ const allowedAttr = ['id', 'class', 'style'];
 const whiteList = xssFilter.getDefaultWhiteList();
 
 /*
-** Custom whitelist (Adding to current whiteList to prevent filtering
-** out some required HTML attributes for styling by plugins)
-**
-** Will require reviewing/reconstructing after proper integration as
-** this is too "ugly"
-*/
+ * Custom whitelist (Adding to current whiteList to prevent filtering
+ * out some required HTML attributes for styling by plugins)
+ *
+ * Will require reviewing/reconstructing after proper integration as
+ * this is too "ugly"
+ */
 whiteList.span.push('aria-hidden', 'role');
 whiteList.br.push('page');
 

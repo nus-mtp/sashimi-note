@@ -3,7 +3,7 @@
 // we are also using it with karma-webpack
 //   https://github.com/webpack/karma-webpack
 
-let webpackConfig = require('../../build/webpack.test.conf');
+const webpackConfig = require('../../build/webpack.test.conf');
 
 module.exports = function(config) {
   config.set({
@@ -15,7 +15,11 @@ module.exports = function(config) {
     browserNoActivityTimeout: 24000,
     frameworks: ['mocha', 'sinon-chai'],
     reporters: ['spec', 'coverage'],
-    files: ['./index.js'],
+    files: [
+      { pattern: '../../static/vendors/dependencies/*.js', included: true, served: true },
+      { pattern: '../../static/vendors/*.js', included: true, served: true },
+      './index.js',
+    ],
     preprocessors: {
       './index.js': ['webpack', 'sourcemap']
     },
