@@ -26,7 +26,7 @@ export default {
     return {
       viewMode: 'listView',
       docs: {},
-      history: null
+      history: null,
     };
   },
   watch: {
@@ -44,7 +44,7 @@ export default {
     changeViewMode(viewMode) {
       this.viewMode = viewMode;
     },
-    executeAction(action, doc) {
+    executeAction(action, data) {
       switch (action) {
         case 'createFolder': {
           this.docs.createFolder('Folder');
@@ -63,35 +63,21 @@ export default {
           break;
         }
         case 'download': {
-          this.downloadDoc(doc);
+          this.download(data);
           break;
         }
         case 'delete': {
-          doc.remove();
+          data.remove();
           break;
         }
         case 'search': {
-          if (doc === '') {
-            this.docs = this.history.currFolder;
-          } else {
-            fileManager.searchAll(doc)
-            .then((result) => { this.docs = result; })
-            .catch((error) => {
-              // Simple alert box for message
-              // TODO: Use a less obstrusive alert message
-              alert('Opps, I have problem finding your file');
-              console.log(error);
-            });
-            // Intentionally not updating the history stack.
-            // Since, there may be multiple incomplete searching,
-            // updating the history stack may unnecessary populate the stack.
-          }
+          this.search(data);
           break;
         }
         default: break;
       }
     },
-    downloadDoc(doc) {
+    download(doc) {
       doc.load()
       .then((docContent) => {
         const element = document.createElement('a');
@@ -109,6 +95,23 @@ export default {
         document.body.removeChild(element);
       });
     },
+    search(searchStr) {
+      if (searchStr === '') {
+        this.docs = this.history.currFolder;
+      } else {
+        fileManager.searchAll(searchStr)
+        .then((result) => { this.docs = result; })
+        .catch((error) => {
+          // Simple alert box for message
+          // TODO: Use a less obstrusive alert message
+          alert('Opps, I have problem finding your file');
+          console.log(error);
+        });
+        // Intentionally not updating the history stack.
+        // Since, there may be multiple incomplete searching,
+        // updating the history stack may unnecessary populate the stack.
+      }
+    }
   },
   mounted() {
     const ROOT_FOLDER_ID = 0;
