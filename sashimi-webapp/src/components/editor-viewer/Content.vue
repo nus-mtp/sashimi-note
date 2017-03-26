@@ -1,6 +1,6 @@
 <template>
   <div>
-    <navbar v-model="action"></navbar>
+    <navbar v-model="navbarInput"></navbar>
     <div class="section group content" v-bind:data-viewMode="viewMode">
       <div class="col editor-wrapper">
         <editor 
@@ -25,6 +25,8 @@ import navbar from './Navbar';
 import viewer from './Viewer';
 import editor from './Editor';
 
+let contentVue = null;
+
 export default {
   components: {
     navbar,
@@ -34,10 +36,10 @@ export default {
   data() {
     return {
       mdContent: '',
-      action: '',
       fileFormat: 'html',
       file: null,
       viewMode: 'split',
+      navbarInput: this.viewMode,
       changeViewModeOnResize: function() {
         if (window.innerWidth < 768 && this.viewMode === 'split') {
           this.viewMode = 'editor';
@@ -46,11 +48,23 @@ export default {
     };
   },
   watch: {
-    action(value) {
-      if (value === 'pages' || value === 'slides' || value === 'html') {
-        this.fileFormat = value;
-      } else if (value === 'editor' || value === 'viewer' || value === 'split') {
-        this.viewMode = value;
+    navbarInput(value) {
+      switch (value) {
+        case 'pages':
+        case 'slides':
+        case 'html': {
+          this.fileFormat = value;
+          break;
+        }
+
+        case 'editor':
+        case 'viewer':
+        case 'split': {
+          this.viewMode = value;
+          break;
+        }
+
+        default: break;
       }
     },
     mdContent: _.debounce(function saveFile(value) {
@@ -62,6 +76,8 @@ export default {
   computed: {
   },
   mounted() {
+    contentVue = this;
+
     // for testing purposes
     // will be handled by fileManager logic
     const fileID = parseInt(this.$route.query.id);
@@ -76,10 +92,12 @@ export default {
       this.viewMode = 'editor';
     }
 
-    window.addEventListener('resize', this.changeViewModeOnResize);
+    window.addEventListener('resize', this.changeViewModeOnResize.bind(contentVue));
   },
   beforeDestroy() {
-    window.removeEventListener('resize', this.changeViewModeOnResize);
+    contentVue = this;
+
+    window.removeEventListener('resize', this.changeViewModeOnResize.bind(contentVue));
   }
 };
 
