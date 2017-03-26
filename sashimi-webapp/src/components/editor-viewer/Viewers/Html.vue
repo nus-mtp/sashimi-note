@@ -1,14 +1,29 @@
 <template>
   <iframe 
     id="viewer-container"
-    width="100%"
     height="100%"
+    width="100%"
+    frameborder="0"
   ></iframe>
 </template>
 
 <script>
   import Vue from 'vue';
   import diagramsRenderer from 'src/logic/renderer/diagrams';
+
+  function constructStyleLink(link) {
+    const styling = this.renderDoc.createElement('link');
+    const attributes = {
+      type: 'text/css',
+      rel: 'stylesheet',
+      href: link
+    };
+
+    Object.keys(attributes).forEach((key) => {
+      styling.setAttribute(key, attributes[key]);
+    });
+    return styling;
+  }
 
   /**
    * Diagram rendering function for HTML view
@@ -37,20 +52,25 @@
       Vue.nextTick(() => {
         this.renderDoc = this.$el.contentWindow.document;
 
-        const styling = this.renderDoc.createElement('link');
-        const attributes = {
-          type: 'text/css',
-          rel: 'stylesheet',
-          href: '/styles/markdown-html.css'
-        };
+        const styles = [];
+        styles.push(constructStyleLink.call(this, '/styles/markdown-html.css'));
+        styles.push(constructStyleLink.call(this, '/vendors/katex/katex.min.css'));
+        styles.push(constructStyleLink.call(this, '/vendors/highlight.js/styles/ocean.css'));
 
-        Object.keys(attributes).forEach((key) => {
-          styling.setAttribute(key, attributes[key]);
+        styles.forEach((style) => {
+          this.renderDoc.head.appendChild(style);
         });
-        this.renderDoc.head.appendChild(styling);
         renderUpdate(this.renderDoc.body, this.htmlData);
       });
     }
   };
 
 </script>
+
+<style lang='scss'>
+  #viewer-container {
+    width: 100%;
+    height: 100%;
+    border: none;
+  }
+<style>
