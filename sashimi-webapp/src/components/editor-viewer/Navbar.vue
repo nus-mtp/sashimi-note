@@ -1,5 +1,5 @@
 <template>
-  <div class="section group navbar">
+  <div class="section group navbar" v-bind:data-viewMode="viewMode">
     <div class="col button-logo vertical-align-child">
         <router-link to="/" class="vertical-align-child navbar-buttons">
             <img src="../../assets/sashimi-note.svg" class="inline-block" alt="sashimi">
@@ -49,15 +49,21 @@
         </div>
       </div>
       <div class="col vertical-align-child button-group-margin">
-        <button v-on:click="updateParent('editor')" class="navbar-buttons" id="button-editor">
-        <i class="material-icons md-dark md-dark">edit</i>
+        <button class="navbar-buttons" id="button-editor"
+                v-on:click="updateParent('editor')"
+        >
+        <i class="material-icons md-dark">edit</i>
         </button>
-        <button v-on:click="updateParent('split')" class="navbar-buttons" id="button-split-screen">
-        <!--<i class="material-icons md-dark md-dark">chrome_reader_mode</i>-->
+        <button class="navbar-buttons" id="button-split-screen"
+                v-on:click="updateParent('split')"
+        >
+        <!--<i class="material-icons md-dark">chrome_reader_mode</i>-->
         <img src="../../assets/images/buttons/button-split-screen.svg" class="button-img" alt="plugins">
         </button>
-        <button v-on:click="updateParent('viewer')" class="navbar-buttons" id="button-viewer">
-        <i class="material-icons md-dark md-dark md-dark">remove_red_eye</i>
+        <button class="navbar-buttons" id="button-viewer"
+                v-on:click="updateParent('viewer')"
+        >
+        <i class="material-icons md-dark">remove_red_eye</i>
         </button>
       </div>
     </div>
@@ -71,9 +77,15 @@ export default {
   data() {
     return {
       isActive: false,
+      viewMode: '',
     };
   },
   props: ['value'],
+  watch: {
+    value(data) {
+      this.viewMode = data;
+    }
+  },
   methods: {
     updateParent(action) {
       this.$emit('input', action);
@@ -91,6 +103,19 @@ export default {
 .navbar {
   box-sizing: border-box;
   border-bottom: 3px solid $navbar-border-color;
+
+  &[data-viewMode="editor"],
+  &[data-viewMode="split"] {
+    #button-editor {
+      display: none;
+    }
+  }
+
+  &[data-viewMode="viewer"] {
+    #button-viewer {
+      display: none;
+    }
+  }
 }
 
 .image-upload {
@@ -193,9 +218,15 @@ export default {
 }
 
 @media screen and (min-width: 768px) {
-  .navbar-buttons {
-    &#button-split-screen {
-      display: inline-block;
+  .navbar {
+    &[data-viewMode="editor"],
+    &[data-viewMode="viewer"],
+    &[data-viewMode="split"] {
+      #button-split-screen,
+      #button-editor,
+      #button-viewer {
+        display: inline-block;
+      }
     }
   }
 }
