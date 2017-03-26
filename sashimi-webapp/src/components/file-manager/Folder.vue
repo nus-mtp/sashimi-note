@@ -1,5 +1,5 @@
 <template>
-  <div class="col vertical-align-child" 
+  <div class="col vertical-align-child folder-wrapper" 
     v-on:dblclick="openFolder"
   >
     <button tabindex="1" class="folder"

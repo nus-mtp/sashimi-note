@@ -1,5 +1,5 @@
 <template>
-  <div class="col vertical-align-child"
+  <div class="col vertical-align-child file-wrapper"
     v-on:dblclick="openFile"
   >
     <button class="file"
