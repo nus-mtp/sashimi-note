@@ -106,13 +106,15 @@ export default {
 
   &[data-viewMode="editor"],
   &[data-viewMode="split"] {
-    #button-editor {
+    #button-editor, 
+    #button-split-screen {
       display: none;
     }
   }
 
   &[data-viewMode="viewer"] {
-    #button-viewer {
+    #button-viewer,
+    #button-split-screen {
       display: none;
     }
   }
@@ -129,12 +131,6 @@ export default {
 
 .button-logo {
   cursor: pointer;
-}
-
-.navbar-buttons {
-  &#button-split-screen {
-    display: none;
-  }
 }
 
 .button-dropdown {
