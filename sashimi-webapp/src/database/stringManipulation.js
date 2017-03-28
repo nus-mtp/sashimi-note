@@ -13,8 +13,6 @@ export default function stringManipulation() {
     return dateTimeNumber;
   };
 
-  this.replaceAll = function replaceAll(string, stringToReplace, replacement) {
-    return string.replace(new RegExp(stringToReplace, 'g'), replacement);
   };
 
   this.getPreviousPath = function getPreviousPath(fullPath, lastFolderName) {
