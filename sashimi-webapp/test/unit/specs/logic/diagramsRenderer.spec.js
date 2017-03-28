@@ -2,17 +2,17 @@ import domCompare from 'dom-compare';
 import diagramsRenderer from 'src/logic/renderer/diagrams';
 import documentPackager from 'src/logic/documentPackager';
 import diagramsInput from './reference/diagrams/diagramsInput.txt';
-import invalidSyntaxInput from './reference/diagrams/invalidSyntaxInput.txt';
-import invalidSyntaxOutput from './reference/diagrams/invalidSyntaxOutput.txt';
-import seqDiagramsInput from './reference/diagrams/seqDiagramsInput.txt';
-import seqDiagramsOutput from './reference/diagrams/seqDiagramsOutput.txt';
+import diagramsRenderedOutput from './reference/diagrams/diagramsRenderedOutput.txt';
 import flowChartsInput from './reference/diagrams/flowChartsInput.txt';
 import flowChartsOutput from './reference/diagrams/flowChartsOutput.txt';
 import graphvizInput from './reference/diagrams/graphvizInput.txt';
 import graphvizOutput from './reference/diagrams/graphvizOutput.txt';
+import invalidSyntaxInput from './reference/diagrams/invalidSyntaxInput.txt';
+import invalidSyntaxOutput from './reference/diagrams/invalidSyntaxOutput.txt';
 import mermaidInput from './reference/diagrams/mermaidInput.txt';
 import mermaidOutput from './reference/diagrams/mermaidOutput.txt';
-import diagramsRenderedOutput from './reference/diagrams/diagramsRenderedOutput.txt';
+import seqDiagramsInput from './reference/diagrams/seqDiagramsInput.txt';
+import seqDiagramsOutput from './reference/diagrams/seqDiagramsOutput.txt';
 
 // Parse markdown content for test use
 const fullHtmlData = documentPackager.getHtmlData(diagramsInput);
@@ -139,22 +139,34 @@ function regexHelper(diff) {
         }
       }
     } else if (arr4 !== null) {
-      // check the node where the error is thrown and concantate the strings!
+      // Check the node where the error is thrown and concantate the strings!
       const regexNode = /(.*)\//g;
+      // Capture the path of node where the error is thrown
       const arrNode = regexNode.exec(line.node);
+      // Use the path as a key to store the strings in textExpected & textActual
       const key = arrNode[1];
+      // Push line as an error first
       errorArray.push(line);
+
+      // Check if textExpected & textActual already contains the respective key
       if (textExpected.has(key) && textActual.has(key)) {
+        // If have, set key's value as the combination of existing string with current string
         const currExpectedText = textExpected.get(key);
         const currActualText = textActual.get(key);
         textExpected.set(key, `${currExpectedText} ${arr4[1]}`);
         textActual.set(key, `${currActualText} ${arr4[2]}`);
       } else {
+        // Else, set key's value to current string
         textExpected.set(key, arr4[1]);
         textActual.set(key, arr4[2]);
       }
 
+      // After updating textExpected & textActual with the respective strings, check if the strings
+      // match, if match... errors are most likely due to size formmatting issue causing unexpected
+      // text wrapping when rendering the diagrams to fit window size. If don't match... it is
+      // indeed an error!
       if (textExpected.get(key) === textActual.get(key)) {
+        // If matches filter out all the errors that belong to the specific node's path
         errorArray = errorArray.filter(errorLine => (errorLine.node === arrNode[1]+arrNode[2]));
       }
     } else {
@@ -165,13 +177,33 @@ function regexHelper(diff) {
   return errorArray;
 }
 
+/**
+ * Compare expected HTML output and actual HTML output, and return an array of
+ * all the differences found.
+ * @param {String} output - Expected output HTML string
+ * @param {Element} input - Actual rendered HTML element containing the rendered string
+ * @return {Array} Array containing all the differences found by dom-compare library
+ */
+function compareDom(output, input) {
+  // Remove carriage return from string read from a .txt file
+  const outputContent = output.replace(/(\r\n)/g, '\n');
+  // Prepare the output as an HTML Element for comparison using dom-compare library
+  const eleOutput = iframeDoc.createElement('DIV');
+  eleOutput.innerHTML = outputContent;
+  // Get a comparison result object
+  const results = domCompare.compare(eleOutput, input);
+  return results.getDifferences();
+}
+
 describe('Renderer', () => {
   before(() => {
     document.body.appendChild(iframe);
-    iframe.onload = function() {
+    // Create an area for test diagrams to be rendered into for testing
+    iframe.onload = () => {
       iframeDoc = iframe.contentWindow.document;
       iframeDoc.write('<div></div>');
     };
+    // Initialise the above
     iframe.onload();
   });
 
@@ -189,15 +221,14 @@ describe('Renderer', () => {
     });
 
     it('should handle invalid or incomplete diagram syntax', (done) => {
+      // Retrieve HTML string from getHtmlData
       invalidHtmlData.then((output) => {
         toRender.innerHTML = output;
+        // Render any diagrams to be drawn
         diagramsRenderer(toRender)
         .then((out) => {
-          const outputContent = invalidSyntaxOutput.replace(/(\r\n)/g, '\n');
-          const eleOutput = iframeDoc.createElement('DIV');
-          eleOutput.innerHTML = outputContent;
-          const results = domCompare.compare(eleOutput, toRender);
-          const diff = results.getDifferences();
+          // Check if Expected output === Actual rendered output
+          const diff = compareDom(invalidSyntaxOutput, toRender);
           const errorArray = regexHelper(diff);
           expect(errorArray.length).to.equal(0);
           done();
@@ -209,19 +240,18 @@ describe('Renderer', () => {
       .catch((error) => {
         done(error);
       });
+    // Change default timeout value because this test requires more time for rendering
     }).timeout(4000);
 
     it('should handle drawing of sequence diagrams', (done) => {
       // Retrieve HTML string from getHtmlData
       seqHtmlData.then((output) => {
         toRender.innerHTML = output;
+        // Render any diagrams to be drawn
         diagramsRenderer(toRender)
         .then((out) => {
-          const outputContent = seqDiagramsOutput.replace(/(\r\n)/g, '\n');
-          const eleOutput = iframeDoc.createElement('DIV');
-          eleOutput.innerHTML = outputContent;
-          const results = domCompare.compare(eleOutput, toRender);
-          const diff = results.getDifferences();
+          // Check if Expected output === Actual rendered output
+          const diff = compareDom(seqDiagramsOutput, toRender);
           const errorArray = regexHelper(diff);
           expect(errorArray.length).to.equal(0);
           done();
@@ -236,15 +266,14 @@ describe('Renderer', () => {
     });
 
     it('should handle drawing of flow charts', (done) => {
+      // Retrieve HTML string from getHtmlData
       flowHtmlData.then((output) => {
         toRender.innerHTML = output;
+        // Render any diagrams to be drawn
         diagramsRenderer(toRender)
         .then((out) => {
-          const outputContent = flowChartsOutput.replace(/(\r\n)/g, '\n');
-          const eleOutput = iframeDoc.createElement('DIV');
-          eleOutput.innerHTML = outputContent;
-          const results = domCompare.compare(eleOutput, toRender);
-          const diff = results.getDifferences();
+          // Check if Expected output === Actual rendered output
+          const diff = compareDom(flowChartsOutput, toRender);
           const errorArray = regexHelper(diff);
           expect(errorArray.length).to.equal(0);
           done();
@@ -259,15 +288,14 @@ describe('Renderer', () => {
     });
 
     it('should handle drawing of graphviz diagrams', (done) => {
+      // Retrieve HTML string from getHtmlData
       vizHtmlData.then((output) => {
+        // Render any diagrams to be drawn
         toRender.innerHTML = output;
         diagramsRenderer(toRender)
         .then((out) => {
-          const outputContent = graphvizOutput.replace(/(\r\n)/g, '\n');
-          const eleOutput = iframeDoc.createElement('DIV');
-          eleOutput.innerHTML = outputContent;
-          const results = domCompare.compare(eleOutput, toRender);
-          const diff = results.getDifferences();
+          // Check if Expected output === Actual rendered output
+          const diff = compareDom(graphvizOutput, toRender);
           const errorArray = regexHelper(diff);
           expect(errorArray.length).to.equal(0);
           done();
@@ -282,15 +310,14 @@ describe('Renderer', () => {
     });
 
     it('should handle drawing of mermaid diagrams', (done) => {
+      // Retrieve HTML string from getHtmlData
       mermaidHtmlData.then((output) => {
         toRender.innerHTML = output;
+        // Render any diagrams to be drawn
         diagramsRenderer(toRender)
         .then((out) => {
-          const outputContent = mermaidOutput.replace(/(\r\n)/g, '\n');
-          const eleOutput = iframeDoc.createElement('DIV');
-          eleOutput.innerHTML = outputContent;
-          const results = domCompare.compare(eleOutput, toRender);
-          const diff = results.getDifferences();
+          // Check if Expected output === Actual rendered output
+          const diff = compareDom(mermaidOutput, toRender);
           const errorArray = regexHelper(diff);
           expect(errorArray.length).to.equal(0);
           done();
@@ -305,15 +332,14 @@ describe('Renderer', () => {
     });
 
     it('should handle drawing of all types of diagrams together', (done) => {
+      // Retrieve HTML string from getHtmlData
       fullHtmlData.then((output) => {
         toRender.innerHTML = output;
+        // Render any diagrams to be drawn
         diagramsRenderer(toRender)
         .then((out) => {
-          const outputContent = diagramsRenderedOutput.replace(/(\r\n)/g, '\n');
-          const eleOutput = iframeDoc.createElement('DIV');
-          eleOutput.innerHTML = outputContent;
-          const results = domCompare.compare(eleOutput, toRender);
-          const diff = results.getDifferences();
+          // Check if Expected output === Actual rendered output
+          const diff = compareDom(diagramsRenderedOutput, toRender);
           const errorArray = regexHelper(diff);
           expect(errorArray.length).to.equal(0);
           done();
@@ -325,6 +351,7 @@ describe('Renderer', () => {
       .catch((error) => {
         done(error);
       });
+    // Change default timeout value because this test requires more time for rendering
     }).timeout(3000);
   });
 });
