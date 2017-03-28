@@ -13,8 +13,12 @@ export default function stringManipulation() {
     return dateTimeNumber;
   };
 
+  this.replaceAll = function replaceAll(string, stringToReplace, replacement) {
+    return string.replace(new RegExp(stringToReplace, 'g'), replacement);
+  };
+
   this.resolveSQLInjections = function resolveSQLInjections(stringToReplace) {
-    return stringToReplace.replace(/["'\\]/g, (char) => {
+    return stringToReplace.replace(/["\\]/g, (char) => {
       switch (char) {
         case '"':
         case '\\':
@@ -27,17 +31,9 @@ export default function stringManipulation() {
   };
 
   this.revertSQLInjections = function revertSQLInjections(stringToReplace) {
-    return stringToReplace.replace(/[\\\\"\\\\\\\\]/g, (char) => {
-      switch (char) {
-        case '\\\\"':
-          return '"';
-        case '\\\\\\\\':
-          return '\\'; // prepends a backslash to backslash, percent,
-                              // and double/single quotes
-        default:
-          return char;
-      }
-    });
+    stringToReplace = this.replaceAll(stringToReplace, '\\\\"', '"');
+    stringToReplace = this.replaceAll(stringToReplace, '\\\\\\\\', '\\');
+    return stringToReplace;
   };
 
   this.getPreviousPath = function getPreviousPath(fullPath, lastFolderName) {
