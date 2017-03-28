@@ -1,17 +1,19 @@
 <template>
   <div class="editor">
-    <codemirror v-model="mdContent" ref="myEditor" :options="editorOption" @changed="codeChange"> 
+    <codemirror ref="myEditor"
+                v-model="mdContent"
+                :options="editorOptions"
+                @change="onEditorCodeChange">
     </codemirror>
   </div>
 </template>
 
 <script>
 import { codemirror } from 'vue-codemirror';
+import 'codemirror/keymap/sublime';
 
-/* eslint no-unused-vars: 0 */
 let codeMirrorInstance = null;
 
-/* eslint prefer-const: 0 */
 export default {
   components: {
     codemirror
@@ -21,7 +23,7 @@ export default {
     return {
       isBeingLoaded: true,
       mdContent: this.value,
-      editorOption: {
+      editorOptions: {
         tabSize: 4,
         mode: 'text/x-markdown',
         theme: 'base16-dark',
@@ -37,26 +39,21 @@ export default {
     };
   },
   methods: {
-    codeChange(newCode) {
+    onEditorCodeChange(newCode) {
       this.$emit('input', newCode);
-    }
+    },
   },
   watch: {
     value(data) {
       if (this.isBeingLoaded) {
-        codeMirrorInstance.setValue(data);
+        this.mdContent = data;
         codeMirrorInstance.setCursor(data.length);
         this.isBeingLoaded = false;
       }
     }
   },
-  computed: {
-    editor() {
-      return this.$refs.myEditor.editor;
-    },
-  },
   mounted() {
-    codeMirrorInstance = this.editor;
+    codeMirrorInstance = this.$refs.myEditor.editor;
   }
 };
 
@@ -73,15 +70,10 @@ export default {
 
 <style lang="scss">
 .editor {
-  .CodeMirror.cm-s-base16-dark {
+  .CodeMirror {
     height: 100%;
-  }
-
-  .CodeMirror-lines {
-    .CodeMirror-code {
-      color: #dedede;
-      font-family: monospace;
-    }
+    line-height: 140%;
+    font-size: 16px;
   }
 }
 </style>
