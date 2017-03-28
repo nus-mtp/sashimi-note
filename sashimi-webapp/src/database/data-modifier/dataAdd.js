@@ -37,7 +37,7 @@ function createNewFile(organizationId, filePath, folderId, newFileId, newFileNam
 
     return sqlCommands.insertContent(constants.ENTITIES_FILE_MANAGER, newFileData)
     .then(success => resolve(newFileData[0]))
-    .catch(err => reject(err));
+    .catch(sqlErr => reject(sqlErr));
   });
 }
 
