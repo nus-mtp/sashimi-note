@@ -376,15 +376,19 @@ export default function sqlCommands() {
   };
 
   this.changeFileName = function changeFileName(fileId, newFileName) {
-    return new Promise((resolve, reject) =>
-      alasql.promise([stringManipulator.stringConcat('UPDATE ', constants.ENTITIES_FILE_MANAGER,
+    return new Promise((resolve, reject) => {
+      const invalidCharacterIndex = newFileName.search(/'"'|'\\'/);
+      if (invalidCharacterIndex === -1) {
+        reject(new exceptions.InvalidRename());
+      }
+      return alasql.promise([stringManipulator.stringConcat('UPDATE ', constants.ENTITIES_FILE_MANAGER,
                                                       ' SET ', constants.HEADER_FILE_MANAGER_FILE_NAME,
                                                       ' = "', newFileName,
                                                       '" WHERE ', constants.HEADER_FILE_MANAGER_FILE_ID,
                                                       ' = ', fileId)])
       .then(() => resolve())
-      .catch(sqlError => reject(sqlError))
-    );
+      .catch(sqlError => reject(sqlError));
+    });
   };
 
   this.changeFilePath = function changeFilePath(fileId, newPath) {
@@ -406,6 +410,10 @@ export default function sqlCommands() {
       let newFolderPath;
       let foldersToChangePath;
       let filesToChangePath;
+      const invalidCharacterIndex = newFolderName.search(/'"'|'\\'/);
+      if (invalidCharacterIndex === -1) {
+        reject(new exceptions.InvalidRename());
+      }
       // step 1: get the folder path and folder name
       return getFolderPathAndNameFromId(folderId)
       .then((folderData) => {
