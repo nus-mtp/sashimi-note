@@ -41,7 +41,7 @@ export default function diagramsRenderer(ele) {
       observer.observe(seqDiagrams[i], observerConfig);
       diagram.drawSVG(seqDiagrams[i], { theme: 'simple' });
     }).catch((error) => {
-      seqDiagrams[i].innerHTML = `<code class='hljs'>${seqDiagrams[i].innerText}</code>`;
+      seqDiagrams[i].innerHTML = `<code class='hljs'>${seqDiagrams[i].innerHTML}</code>`;
     }));
   }
 
@@ -55,16 +55,16 @@ export default function diagramsRenderer(ele) {
         }
       });
 
-      const content = flowCharts[i].innerText;
+      let content = flowCharts[i].innerHTML;
+      content = content.replace(/&gt;/g, '>');
       const diagram = flowchart.parse(content);
       flowCharts[i].innerHTML = '';
       observer.observe(flowCharts[i], observerConfig);
       diagram.drawSVG(flowCharts[i]);
     })
     .catch((error) => {
-      console.log(error);
-      if (flowCharts[i].innerText !== '') {
-        flowCharts[i].innerHTML = `<code class='hljs'>${flowCharts[i].innerText}</code>`;
+      if (flowCharts[i].innerHTML !== '') {
+        flowCharts[i].innerHTML = `<code class='hljs'>${flowCharts[i].innerHTML}</code>`;
       }
     }));
   }
@@ -76,7 +76,7 @@ export default function diagramsRenderer(ele) {
     try {
       graphviz[i].innerHTML = Viz(content);
     } catch (error) {
-      graphviz[i].innerHTML = `<code class='hljs'>${graphviz[i].innerText}</code>`;
+      graphviz[i].innerHTML = `<code class='hljs'>${graphviz[i].innerHTML}</code>`;
     }
   }
 
@@ -85,17 +85,15 @@ export default function diagramsRenderer(ele) {
     mermaidAPI.initialize({ startOnLoad: false });
   }
   for (let i = 0; i < mermaidDiagrams.length; i+=1) {
-    // Setting id for mermaidAPI to find correct element
-    mermaidDiagrams.id = `mermaidChart${i}`;
     let content = mermaidDiagrams[i].innerHTML;
     content = content.replace(/&gt;/g, '>');
     if (window.mermaidAPI.parse(content)) {
-      const cb = (html) => {
+      const cb = (html, bindFunc) => {
         mermaidDiagrams[i].innerHTML = html;
       };
       mermaidAPI.render(`mermaidChart${i}`, content, cb);
     } else {
-      mermaidDiagrams[i].innerHTML = `<code class='hljs'>${mermaidDiagrams[i].innerText}</code>`;
+      mermaidDiagrams[i].innerHTML = `<code class='hljs'>${mermaidDiagrams[i].innerHTML}</code>`;
     }
   }
 
