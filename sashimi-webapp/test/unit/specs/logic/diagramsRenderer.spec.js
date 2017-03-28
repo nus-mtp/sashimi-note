@@ -39,7 +39,7 @@ let toRender;
  */
 function helper(path, expected, actual) {
   // Change path into CSS selector format
-  const key = path.copy();
+  const key = path;
   path = path.replace(/\//g, ' ');
   function addRemove(match, captured) {
     return `(${captured})`;
