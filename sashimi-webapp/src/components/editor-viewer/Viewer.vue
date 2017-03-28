@@ -43,7 +43,6 @@
 
 <style lang='scss'>
   @import 'src/assets/styles/variables.scss';
-  @import 'src/assets/styles/internal/amblin/style.scss';
   
   .viewer {
     height: calc(100vh - #{$content-navbar-height});

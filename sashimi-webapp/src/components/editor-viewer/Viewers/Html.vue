@@ -52,10 +52,19 @@
       Vue.nextTick(() => {
         this.renderDoc = this.$el.contentWindow.document;
 
+        this.renderDoc.open();
+        this.renderDoc.write(`<!DOCTYPE html>
+                              <html>
+                                <head></head>
+                                <body></body>
+                              </html>
+                              `);
+        this.renderDoc.close();
+
         const styles = [];
         styles.push(constructStyleLink.call(this, '/styles/markdown-html.css'));
-        styles.push(constructStyleLink.call(this, '/vendors/katex/katex.min.css'));
         styles.push(constructStyleLink.call(this, '/vendors/highlight.js/styles/ocean.css'));
+        styles.push(constructStyleLink.call(this, '/vendors/katex/katex.min.css'));
 
         styles.forEach((style) => {
           this.renderDoc.head.appendChild(style);
