@@ -373,7 +373,7 @@ describe('Renderer', () => {
       .catch((error) => {
         done(error);
       });
-    }).timeout(3000);
+    }).timeout(4000);
 
     it('should handle drawing of mermaid diagrams', (done) => {
       // Clears Maps
@@ -424,6 +424,6 @@ describe('Renderer', () => {
         done(error);
       });
     // Change default timeout value because this test requires more time for rendering
-    }).timeout(3000);
+    }).timeout(4000);
   });
 });
