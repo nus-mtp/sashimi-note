@@ -174,6 +174,7 @@ function regexHelper(diff) {
       errorArray.push(line);
     }
   });
+  console.log(errorArray);
   return errorArray;
 }
 
