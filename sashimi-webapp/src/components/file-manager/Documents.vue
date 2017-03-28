@@ -86,8 +86,9 @@ export default {
 .documents {
   overflow-y: auto;
   height: calc(100vh - #{$file-manager-navbar-height-mobile});
+  background-color: $grey-background;
 
-  .folder, 
+  .folder,
   .file {
     cursor: pointer;
     box-sizing: border-box;
@@ -117,29 +118,39 @@ export default {
   padding: 20px;
   box-sizing: border-box;
 
+  .folder-wrapper,
+  .file-wrapper {
+    margin-right: 30px;
+    width: 140px;
+    height: 140px;
+    text-align: center;
+    box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.2);
+  }
+
   .folder,
   .file   {
-    width: 120px;
-    height: 120px;
     text-align: center;
     position: relative;
-    margin-right: 30px;
+    width: 100%;
+    height: 100%;
+    background-color: white;
 
     img {
-      width: 120px;
+      width: 50px;
     }
 
     p {
+      display: block;
       font-size: $documents-name-font-size;
-      position: absolute;
-      top: 15px;
-      left: 0;
-      bottom: 0;
-      right: 0;
-      width: 60px;
-      height: 40px;
-      margin: auto;
-      overflow: auto;
+      // position: absolute;
+      // top: 15px;
+      // left: 0;
+      // bottom: 0;
+      // right: 0;
+      // width: 60px;
+      // height: 40px;
+      // margin: auto;
+      // overflow: auto;
       overflow-wrap: break-word;
     }
   }
@@ -149,6 +160,7 @@ export default {
   .col {
     width: 100%;
   }
+
   .folder,
   .file {
     width: 100%;
