@@ -264,7 +264,7 @@ describe('Renderer', () => {
       .catch((error) => {
         done(error);
       });
-    });
+    }).timeout(3000);
 
     it('should handle drawing of flow charts', (done) => {
       // Retrieve HTML string from getHtmlData
