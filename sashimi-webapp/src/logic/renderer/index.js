@@ -5,25 +5,30 @@ import helper from './helper';
 /**
  * Constructor for the PageRenderer instance that is used to contain the
  * source HTML and CSS data and the render target's id and page size
- * @param {string} renderDomId
+ * @param {string|Element} renderDomTarget - Accept either a ID string
+ *                                           of a HTML Element or HTML Element reference
  * @param {Object} page - A page config containing information about the page sizing
  * @param {string} page.width - in css width.
  * @param {string} page.height - in css height.
  * @param {Object} page.padding - for setting the inner the padding size used on the page.
  */
-export default function PageRenderer(renderDomId, page) {
+export default function PageRenderer(renderDomTarget, page) {
   // Set page sizing. Use default if not provided
   this.page = page || defaultConfig.page;
   this.renderHeight = helper.computeRenderHeight(this.page);
 
   // Set renderFrame and id
-  this.renderDomId = renderDomId;
-  if (!this.renderDomId) {
-    throw new Error('Target DOM id is not provided');
-  }
-  this.renderFrame = document.getElementById(renderDomId);
-  if (!this.renderFrame) {
-    throw new Error(`Element with id='${renderDomId}' is not found at this moment`);
+  if (typeof renderDomTarget === 'string') {
+    this.renderFrame = document.getElementById(renderDomTarget);
+    if (!this.renderFrame) {
+      throw new Error(`Element with id='${renderDomTarget}' is not found at this moment`);
+    }
+    this.renderDomId = renderDomTarget;
+  } else if (renderDomTarget instanceof Element) {
+    this.renderFrame = renderDomTarget;
+    this.renderDomId = null;
+  } else {
+    throw new Error('Target DOM target is not provided');
   }
 
   // Set reference frame
