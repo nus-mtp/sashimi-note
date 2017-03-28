@@ -67,6 +67,7 @@ function helper(path, expected, actual) {
   actStr = actStr.trim();
   textExpected.set(key, expStr);
   textActual.set(key, actStr);
+  return (expStr === actStr);
 }
 
 /**
