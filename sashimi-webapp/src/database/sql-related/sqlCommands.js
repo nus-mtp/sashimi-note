@@ -7,8 +7,9 @@ const alasql = require('alasql');
 const stringManipulator = new StringManipulator();
 const dateTime = new DateTime();
 
-function resolveQuotesInjection(fileContent) {
-  return stringManipulator.replaceAll(fileContent, '"', '\\"');
+
+function resolveSQLInjection(sqlContent) {
+  return stringManipulator.resolveSQLInjections(sqlContent);
 }
 
 function getDataOutOfAlasql(data) {
@@ -257,7 +258,7 @@ export default function sqlCommands() {
 
   this.partialSearchFileName = function partialSearchFileName(searchString) {
     return new Promise((resolve, reject) => {
-      searchString = resolveQuotesInjection(searchString);
+      searchString = resolveSQLInjection(searchString);
       return alasql.promise([stringManipulator.stringConcat('SELECT * FROM ', constants.ENTITIES_FILE_MANAGER,
                                                       ' WHERE ', constants.HEADER_FILE_MANAGER_FILE_NAME,
                                                       ' LIKE "%', searchString, '%"')])
@@ -268,7 +269,7 @@ export default function sqlCommands() {
 
   this.exactSearchStartFileNameInFolder = function exactSearchStartFileNameInFolder(filePath) {
     return new Promise((resolve, reject) => {
-      filePath = resolveQuotesInjection(filePath);
+      filePath = resolveSQLInjection(filePath);
       alasql.promise([stringManipulator.stringConcat('SELECT ', constants.HEADER_FILE_MANAGER_FILE_NAME,
                                                       ' FROM ', constants.ENTITIES_FILE_MANAGER,
                                                       ' WHERE ', constants.HEADER_FILE_MANAGER_PATH,
@@ -334,7 +335,7 @@ export default function sqlCommands() {
 
   this.partialSearchFolderName = function partialSearchFolderName(searchString) {
     return new Promise((resolve, reject) => {
-      searchString = resolveQuotesInjection(searchString);
+      searchString = resolveSQLInjection(searchString);
       return alasql.promise([stringManipulator.stringConcat('SELECT * FROM ', constants.ENTITIES_FOLDER,
                                                       ' WHERE ', constants.HEADER_FOLDER_FOLDER_NAME,
                                                       ' LIKE "%', searchString, '%"')])
@@ -452,7 +453,7 @@ export default function sqlCommands() {
 
   this.saveFile = function saveFile(fileId, markdownFile) {
     return new Promise((resolve, reject) => {
-      markdownFile = resolveQuotesInjection(markdownFile);
+      markdownFile = resolveSQLInjection(markdownFile);
       return alasql.promise([stringManipulator.stringConcat('UPDATE ', constants.ENTITIES_FILE_MANAGER,
                                                       ' SET ', constants.HEADER_FILE_MANAGER_FILE_MARKDOWN,
                                                       ' = "', markdownFile,
