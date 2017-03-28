@@ -1,8 +1,11 @@
 import Folder from '../data/folder';
+import idMap from '../data/idmap';
 
 /* Error Messages */
 const ERROR_NOT_FOLDER = 'Input is not an instance of Folder';
+const ERROR_FOLDER_NOT_FOUND = 'Folder not found';
 const ERROR_SAME_FOLDER = 'Attempting to update the same folder';
+const ERROR_FOLDER_NO_LONGER_EXIST = 'Folder no longer exist';
 
 /* Private Function */
 /**
@@ -18,12 +21,12 @@ function isFolder(obj) {
 /**
  * Check if folder is the same
  *
- * @param {Folder} folder1
- * @param {Folder} folder2
+ * @param {Integer} folderID1
+ * @param {Integer} folderID2
  * @return {boolean}
  */
-function isSameFolder(folder1, folder2) {
-  return folder1 === folder2;
+function isSameFolder(folderID1, folderID2) {
+  return folderID1 === folderID2;
 }
 
 /**
@@ -35,7 +38,7 @@ export default function History(folder) {
   if (!isFolder(folder)) {
     throw new Error(ERROR_NOT_FOLDER);
   }
-  this.currFolder = folder;
+  this.currFolderID = folder.id;
   this.previousHistory = [];
   this.nextHistory = [];
 }
@@ -50,12 +53,15 @@ History.prototype.update = function update(newFolder) {
   if (!isFolder(newFolder)) {
     throw new Error(ERROR_NOT_FOLDER);
   }
-  if (isSameFolder(newFolder, this.currFolder)) {
+  if (idMap.getFolderFromMap(newFolder.id) == null) {
+    throw new Error(ERROR_FOLDER_NOT_FOUND);
+  }
+  if (isSameFolder(newFolder.id, this.currFolderID)) {
     throw new Error(ERROR_SAME_FOLDER);
   }
-  this.previousHistory.push(this.currFolder);
+  this.previousHistory.push(this.currFolder.id);
   this.nextHistory = [];
-  this.currFolder = newFolder;
+  this.currFolderID = newFolder.id;
   return this.currFolder;
 };
 
@@ -66,10 +72,17 @@ History.prototype.update = function update(newFolder) {
 */
 History.prototype.previous = function previous() {
   if (this.previousHistory.length > 0) {
-    this.nextHistory.push(this.currFolder);
-    this.currFolder = this.previousHistory.pop();
+    const tempFolderID = this.previousHistory.pop();
+    if (idMap.getFolderFromMap(tempFolderID) == null) {
+      this.previousHistory = [];
+      this.nextHistory = [];
+      throw new Error(ERROR_FOLDER_NO_LONGER_EXIST);
+    } else {
+      this.nextHistory.push(this.currFolderID);
+      this.currentFolderID = tempFolderID;
+    }
   }
-  return this.currFolder;
+  return idMap.getFolderFromMap(this.currFolderID);
 };
 
 /**
@@ -79,8 +92,14 @@ History.prototype.previous = function previous() {
 */
 History.prototype.next = function next() {
   if (this.nextHistory.length > 0) {
-    this.previousHistory.push(this.currFolder);
-    this.currFolder = this.nextHistory.pop();
+    const tempFolderID = this.nextHistory.pop();
+    if (idMap.getFolderFromMap(tempFolderID) == null) {
+      this.nextHistory = [];
+      throw new Error(ERROR_FOLDER_NO_LONGER_EXIST);
+    } else {
+      this.previousHistory.push(this.currFolderID);
+      this.currentFolderID = tempFolderID;
+    }
   }
-  return this.currFolder;
+  return idMap.getFolderFromMap(this.currFolderID);
 };
