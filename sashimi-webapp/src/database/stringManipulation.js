@@ -13,6 +13,19 @@ export default function stringManipulation() {
     return dateTimeNumber;
   };
 
+  this.resolveSQLInjections = function resolveSQLInjections(stringToReplace) {
+    return stringToReplace.replace(/["'\\]/g, (char) => {
+      switch (char) {
+        case '"':
+        case '\\':
+          return `\\${char}`; // prepends a backslash to backslash, percent,
+                              // and double/single quotes
+        default:
+          return char;
+      }
+    });
+  };
+
   };
 
   this.getPreviousPath = function getPreviousPath(fullPath, lastFolderName) {
