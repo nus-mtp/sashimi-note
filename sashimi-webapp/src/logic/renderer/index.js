@@ -1,3 +1,4 @@
+import elementUtils from 'src/helpers/elementUtils';
 import defaultConfig from './defaultConfig';
 import renderCore from './core';
 import helper from './helper';
@@ -18,17 +19,10 @@ export default function PageRenderer(renderDomTarget, page) {
   this.renderHeight = helper.computeRenderHeight(this.page);
 
   // Set renderFrame and id
-  if (typeof renderDomTarget === 'string') {
-    this.renderFrame = document.getElementById(renderDomTarget);
-    if (!this.renderFrame) {
-      throw new Error(`Element with id='${renderDomTarget}' is not found at this moment`);
-    }
-    this.renderDomId = renderDomTarget;
-  } else if (renderDomTarget instanceof Element) {
-    this.renderFrame = renderDomTarget;
-    this.renderDomId = null;
-  } else {
-    throw new Error('Target DOM target is not provided');
+  this.renderDomId = renderDomTarget || null;
+  this.renderFrame = elementUtils.resolveElement(renderDomTarget);
+  if (!this.renderFrame) {
+    throw new Error('Element provided to PageRenderer is not found at this moment');
   }
 
   // Set reference frame
