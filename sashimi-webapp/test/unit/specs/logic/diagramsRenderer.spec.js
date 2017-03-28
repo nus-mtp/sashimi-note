@@ -42,7 +42,7 @@ function helper(path, expected, actual) {
   const key = path;
   path = path.replace(/\//g, ' ');
   function addRemove(match, captured) {
-    return `(${captured})`;
+    return `:nth-of-type(${captured})`;
   }
   path = path.replace(/\[([0-9]*)\]/g, addRemove);
 
@@ -52,17 +52,17 @@ function helper(path, expected, actual) {
   const expectedHTML = iframeDoc.createElement('DIV');
   expectedHTML.innerHTML = expected;
 
-  const expArr = expectedHTML.querySelectorAll(path).getElementsByTagName('tspan');
-  const actArr = actual.querySelectorAll(path).getElementsByTagName('tspan');
+  const expArr = expectedHTML.querySelector(path).getElementsByTagName('tspan');
+  const actArr = actual.querySelector(path).getElementsByTagName('tspan');
   let expStr = '';
   let actStr = '';
 
-  expArr.forEach((tspan) => {
-    expStr.concat(`${tspan.innerText} `);
-  });
-  actArr.forEach((tspan) => {
-    actStr.concat(`${tspan.innerText} `);
-  });
+  for (let i = 0; i < expArr.length; i+=1) {
+    expStr.concat(`${expArr[i].innerText} `);
+  }
+  for (let i = 0; i < actArr.length; i+=1) {
+    actStr.concat(`${actArr[i].innerText} `);
+  }
   expStr = expStr.trim();
   actStr = actStr.trim();
   textExpected.set(key, expStr);
@@ -115,8 +115,8 @@ function helper(path, expected, actual) {
  *    2. 'Expected text 'so long that' instead of 'time, so long'
  *
  * @param {Array} diff - Array containing differences found by domCompare library
- * @param {String} expected - HTML string of expected output
- * @param {Element} actual - HTML Element containing rendered (actual) output
+ * @param {String} exp - HTML string of expected output
+ * @param {Element} act - HTML Element containing rendered (actual) output
  * @return {Array} returns an Array of non-formatting related errors (e.g. critical errors)
  **/
 function regexHelper(diff, exp, act) {
@@ -153,7 +153,6 @@ function regexHelper(diff, exp, act) {
               && arr1[4].indexOf('arrowhead') !== -1)) {
                 // Ignore, not an actual error.
           } else {
-            // console.log(line);
             errorArray.push(line);
           }
         } else if (ignoredAttr.indexOf(arr1[2]) === -1) {
@@ -174,7 +173,7 @@ function regexHelper(diff, exp, act) {
 
         // Check the node where the error is thrown and concantate the strings!
         // Capture the path of node where the error is thrown
-        const regexNode = /(.*)\//g;
+        const regexNode = /(.*)/g;
         const arrNode = regexNode.exec(line.node);
         // Check if error is due to word wrapping
         const key = arrNode[1];
@@ -229,7 +228,6 @@ function regexHelper(diff, exp, act) {
       errorArray.push(line);
     }
   });
-  console.log(errorArray);
   return errorArray;
 }
 
@@ -288,7 +286,7 @@ describe('Renderer', () => {
         .then((out) => {
           // Check if Expected output === Actual rendered output
           const diff = compareDom(invalidSyntaxOutput, toRender);
-          const errorArray = regexHelper(diff);
+          const errorArray = regexHelper(diff, invalidSyntaxOutput, toRender);
           expect(errorArray.length).to.equal(0);
           done();
         })
@@ -314,7 +312,7 @@ describe('Renderer', () => {
         .then((out) => {
           // Check if Expected output === Actual rendered output
           const diff = compareDom(seqDiagramsOutput, toRender);
-          const errorArray = regexHelper(diff);
+          const errorArray = regexHelper(diff, seqDiagramsOutput, toRender);
           expect(errorArray.length).to.equal(0);
           done();
         })
@@ -339,7 +337,7 @@ describe('Renderer', () => {
         .then((out) => {
           // Check if Expected output === Actual rendered output
           const diff = compareDom(flowChartsOutput, toRender);
-          const errorArray = regexHelper(diff);
+          const errorArray = regexHelper(diff, flowChartsOutput, toRender);
           expect(errorArray.length).to.equal(0);
           done();
         })
@@ -364,7 +362,7 @@ describe('Renderer', () => {
         .then((out) => {
           // Check if Expected output === Actual rendered output
           const diff = compareDom(graphvizOutput, toRender);
-          const errorArray = regexHelper(diff);
+          const errorArray = regexHelper(diff, graphvizOutput, toRender);
           expect(errorArray.length).to.equal(0);
           done();
         })
@@ -389,7 +387,7 @@ describe('Renderer', () => {
         .then((out) => {
           // Check if Expected output === Actual rendered output
           const diff = compareDom(mermaidOutput, toRender);
-          const errorArray = regexHelper(diff);
+          const errorArray = regexHelper(diff, mermaidOutput, toRender);
           expect(errorArray.length).to.equal(0);
           done();
         })
@@ -414,7 +412,7 @@ describe('Renderer', () => {
         .then((out) => {
           // Check if Expected output === Actual rendered output
           const diff = compareDom(diagramsRenderedOutput, toRender);
-          const errorArray = regexHelper(diff);
+          const errorArray = regexHelper(diff, diagramsRenderedOutput, toRender);
           expect(errorArray.length).to.equal(0);
           done();
         })
