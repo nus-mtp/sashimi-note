@@ -38,7 +38,7 @@
         .then(() => {
           // Initialise navigation for Pages mode
           const resizeObserveTarget = this.$el.parentNode.parentNode;
-          this.documentNavigator = new DocumentNavigator('#viewer-container', resizeObserveTarget);
+          this.documentNavigator = new DocumentNavigator('viewer-container', resizeObserveTarget);
         });
       });
     },

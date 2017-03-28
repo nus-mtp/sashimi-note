@@ -1,19 +1,20 @@
 import interact from 'interactjs';
 import domUtils from 'src/helpers/domUtils';
 import unitConverter from 'src/helpers/unitConverter';
+import elementUtils from 'src/helpers/elementUtils';
 import EventHM from './EventHandlerManager';
 import CssTransformer from './CssTransformer';
 
 /**
  * Document Navigator manage the input halding of Pages mode
- * @param {*} containerCssSelector
+ * @param {string | Element} targetReference - Receive either a string Id or an element reference.
  * @param {Element} resizeObserveTarget - If this element is provided, it will be
  *                                        used to track the change in document
  *                                        parent's width
  */
-const DocumentNavigator = function DocumentNavigator(containerCssSelector, resizeObserveTarget) {
+const DocumentNavigator = function DocumentNavigator(targetReference, resizeObserveTarget) {
   // Initialise DocumentNavigator properties
-  this.updateElementReference(containerCssSelector);
+  this.updateElementReference(targetReference);
   this.transform = new CssTransformer(this.el.container);
   this.resizeObserveTarget = resizeObserveTarget || null;
 
@@ -25,9 +26,11 @@ const DocumentNavigator = function DocumentNavigator(containerCssSelector, resiz
   this.setDomBehaviour();
 };
 
-DocumentNavigator.prototype.updateElementReference = function updateElementReference(containerCssSelector) {
-  const containerReference = document.querySelector(containerCssSelector);
-  if (!containerReference) throw new Error(`Unable to query "${containerCssSelector}"`);
+DocumentNavigator.prototype.updateElementReference = function updateElementReference(targetReference) {
+  const containerReference = elementUtils.resolveElement(targetReference);
+  if (!containerReference) {
+    throw new Error('Element provided to DocumentNavigator is not found at this moment');
+  }
 
   this.el = {
     container: containerReference,
