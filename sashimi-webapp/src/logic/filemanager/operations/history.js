@@ -59,10 +59,10 @@ History.prototype.update = function update(newFolder) {
   if (isSameFolder(newFolder.id, this.currFolderID)) {
     throw new Error(ERROR_SAME_FOLDER);
   }
-  this.previousHistory.push(this.currFolder.id);
+  this.previousHistory.push(this.currFolderID);
   this.nextHistory = [];
   this.currFolderID = newFolder.id;
-  return this.currFolder;
+  return idMap.getFolderFromMap(this.currFolderID);
 };
 
 /**
@@ -79,7 +79,7 @@ History.prototype.previous = function previous() {
       throw new Error(ERROR_FOLDER_NO_LONGER_EXIST);
     } else {
       this.nextHistory.push(this.currFolderID);
-      this.currentFolderID = tempFolderID;
+      this.currFolderID = tempFolderID;
     }
   }
   return idMap.getFolderFromMap(this.currFolderID);
@@ -98,7 +98,7 @@ History.prototype.next = function next() {
       throw new Error(ERROR_FOLDER_NO_LONGER_EXIST);
     } else {
       this.previousHistory.push(this.currFolderID);
-      this.currentFolderID = tempFolderID;
+      this.currFolderID = tempFolderID;
     }
   }
   return idMap.getFolderFromMap(this.currFolderID);
