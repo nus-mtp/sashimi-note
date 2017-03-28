@@ -170,13 +170,13 @@ File.prototype.rename = function rename(newFileName) {
 
   newFileName = newFileName.trim();
   if (!newFileName) {
-    return new Promise((resolve, reject) => reject(ERROR_EMPTY_STRING));
+    return Promise.reject(new Error(ERROR_EMPTY_STRING));
   } else if (this.name === newFileName) {
-    return new Promise((resolve, reject) => resolve());
+    return Promise.resolve();
   } else if (newFileName.match(ILLEGAL_CHARACTERS)) {
-    return new Promise((resolve, reject) => reject(ERROR_CONTAIN_ILLEGAL_CHARACTERS));
+    return Promise.reject(new Error(ERROR_CONTAIN_ILLEGAL_CHARACTERS));
   } else if (hasSameFileName.call(this, newFileName)) {
-    return new Promise((resolve, reject) => reject(ERROR_SAME_FILE_NAME));
+    return Promise.reject(new Error(ERROR_SAME_FILE_NAME));
   } else {
     return storage.renameFile(this.id, newFileName)
     .then(() => {
