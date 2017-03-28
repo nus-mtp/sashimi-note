@@ -16,11 +16,11 @@
             type="text"
             placeholder="Search"
             v-model="searchString"
+            required="required"
           >
           <button class="col">
             <i class="material-icons md-dark"
-                    :class="{ 'md-inactive': true } "
-            >clear</i>
+                v-on:click="clearSearchString($event)">clear</i>
           </button>
         </div>
       </div>
@@ -113,7 +113,7 @@ export default {
       focusedDoc: {},
       searchString: '',
       iconViewMode: false,
-      listViewMode: true
+      listViewMode: true,
     };
   },
   methods: {
@@ -141,6 +141,10 @@ export default {
       }
       userInputsVue.$emit('changeViewMode', viewMode);
     },
+    clearSearchString(event) {
+      this.searchString = '';
+      event.target.value = '';
+    }
   },
   watch: {
     searchString: _.debounce((result) => {
@@ -203,6 +207,10 @@ export default {
     font-family: $font-primary;
     font-size: 17px;
     box-sizing: border-box;
+  }
+
+  input:invalid + button {
+    display: none;
   }
 }
 
