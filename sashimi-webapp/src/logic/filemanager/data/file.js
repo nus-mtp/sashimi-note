@@ -144,6 +144,20 @@ File.prototype.move = function move(destFolder) {
 };
 
 /**
+ * Make a copy of a file in the current Folder
+ *
+ * @return {Promise}
+ */
+File.prototype.copy = function copy() {
+  return storage.copyFile(this.id)
+  .then((dbCopiedFile) => {
+    const copiedFile = new File(dbCopiedFile.file_id, dbCopiedFile.file_name, dbCopiedFile.file_path, this);
+    this.parentFolder.childFileList.push(copiedFile);
+    idMap.addFileToMap(copiedFile.id, copiedFile);
+  });
+};
+
+/**
  * Rename file
  *
  * @param {String} newFileName
