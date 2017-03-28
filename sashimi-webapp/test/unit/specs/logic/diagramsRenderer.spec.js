@@ -22,10 +22,52 @@ const vizHtmlData = documentPackager.getHtmlData(graphvizInput);
 const mermaidHtmlData = documentPackager.getHtmlData(mermaidInput);
 const invalidHtmlData = documentPackager.getHtmlData(invalidSyntaxInput);
 
+// Map data structure to help with Error checking
+const textExpected = new Map();
+const textActual = new Map();
+
 // Use iframe as a psuedo browser for testing
 const iframe = document.createElement('IFRAME');
 let iframeDoc;
 let toRender;
+
+/**
+ * Helper function for checking for 'Expected text' Error (See case 4 in regex helper below)
+ * @param {String} path - String containing Error Node's path
+ * @param {String} expected - Expected HTML string output
+ * @param {Element} actual - HTML element containing rendered(actual) output
+ */
+function helper(path, expected, actual) {
+  // Change path into CSS selector format
+  const key = path.copy();
+  path = path.replace(/\//g, ' ');
+  function addRemove(match, captured) {
+    return `(${captured})`;
+  }
+  path = path.replace(/\[([0-9]*)\]/g, addRemove);
+
+  // Remove carriage return from string
+  expected = expected.replace(/(\r\n)/g, '\n');
+  // Prepare the expected output as an HTML Element for use by helper function
+  const expectedHTML = iframeDoc.createElement('DIV');
+  expectedHTML.innerHTML = expected;
+
+  const expArr = expectedHTML.querySelectorAll(path).getElementsByTagName('tspan');
+  const actArr = actual.querySelectorAll(path).getElementsByTagName('tspan');
+  let expStr = '';
+  let actStr = '';
+
+  expArr.forEach((tspan) => {
+    expStr.concat(`${tspan.innerText} `);
+  });
+  actArr.forEach((tspan) => {
+    actStr.concat(`${tspan.innerText} `);
+  });
+  expStr = expStr.trim();
+  actStr = actStr.trim();
+  textExpected.set(key, expStr);
+  textActual.set(key, actStr);
+}
 
 /**
  * Regex helper function for checking differences found by domCompare library.
@@ -72,16 +114,16 @@ let toRender;
  *    2. 'Expected text 'so long that' instead of 'time, so long'
  *
  * @param {Array} diff - Array containing differences found by domCompare library
+ * @param {String} expected - HTML string of expected output
+ * @param {Element} actual - HTML Element containing rendered (actual) output
  * @return {Array} returns an Array of non-formatting related errors (e.g. critical errors)
  **/
-function regexHelper(diff) {
+function regexHelper(diff, exp, act) {
   const ignoredAttr = ['id', 'marker-end', 'x1', 'x2', 'x', 'y1', 'y2', 'y', 'width',
     'height', 'd', 'dy', 'r', 'style', 'viewBox', 'transform', 'points'];
   const missedArray = [];
-  const textExpected = new Map();
-  const textActual = new Map();
 
-  let errorArray = [];
+  const errorArray = [];
   diff.forEach((line) => {
     const regex1 = /(.*) '(.*)':.* '(.*)'.*'(.*)'/g;
     const regex2 = /(.*) '(.*)' (is missed)/g;
@@ -125,6 +167,27 @@ function regexHelper(diff) {
         missedArray.push(arr2[2].replace(/xlink:/g, ''));
       } else if (arr2[2].match(/:xlink/g) !== null) {
         missedArray.push(arr2[2].replace(/:xlink/g, ''));
+      } else if (arr2[2].match(/tspan/g) !== null) {
+        // Missing tspan could be due to different word wrapping, but shouldn't ignore
+        // in case of true error
+
+        // Check the node where the error is thrown and concantate the strings!
+        // Capture the path of node where the error is thrown
+        const regexNode = /(.*)\//g;
+        const arrNode = regexNode.exec(line.node);
+        // Check if error is due to word wrapping
+        const key = arrNode[1];
+        if (!textExpected.has(key) && !textActual.has(key)) {
+          // If don't have, means error is not due to word wrapping
+          // hence should report as error
+          errorArray.push(line);
+        } else if (textExpected.has(key) && textActual.has(key)) {
+          // If have in textExpected and textActual,
+          // Check if strings match, in case text is different
+          if (textExpected.get(key) !== textActual.get(key)) {
+            errorArray.push(line);
+          }
+        }
       } else {
         errorArray.push(line);
       }
@@ -140,34 +203,25 @@ function regexHelper(diff) {
       }
     } else if (arr4 !== null) {
       // Check the node where the error is thrown and concantate the strings!
-      const regexNode = /(.*)\//g;
       // Capture the path of node where the error is thrown
+      const regexNode = /(.*)\//g;
       const arrNode = regexNode.exec(line.node);
-      // Use the path as a key to store the strings in textExpected & textActual
+      // Use the path as a key to check for matching content
+      // and store the strings in textExpected & textActual
       const key = arrNode[1];
-      // Push line as an error first
-      errorArray.push(line);
 
       // Check if textExpected & textActual already contains the respective key
-      if (textExpected.has(key) && textActual.has(key)) {
-        // If have, set key's value as the combination of existing string with current string
-        const currExpectedText = textExpected.get(key);
-        const currActualText = textActual.get(key);
-        textExpected.set(key, `${currExpectedText} ${arr4[1]}`);
-        textActual.set(key, `${currActualText} ${arr4[2]}`);
-      } else {
-        // Else, set key's value to current string
-        textExpected.set(key, arr4[1]);
-        textActual.set(key, arr4[2]);
-      }
-
-      // After updating textExpected & textActual with the respective strings, check if the strings
-      // match, if match... errors are most likely due to size formmatting issue causing unexpected
-      // text wrapping when rendering the diagrams to fit window size. If don't match... it is
-      // indeed an error!
-      if (textExpected.get(key) === textActual.get(key)) {
-        // If matches filter out all the errors that belong to the specific node's path
-        errorArray = errorArray.filter(errorLine => (errorLine.node === arrNode[1]+arrNode[2]));
+      if (!textExpected.has(key) && !textActual.has(key)) {
+        // If don't have, use helper function to find the contents in the respective
+        // and compare
+        if (!helper(key, exp, act)) {
+          errorArray.push(line);
+        }
+      } else if (textExpected.has(key) && textActual.has(key)) {
+        // If have, check if contents match in textExpected and textActual
+        if (textExpected.get(key) !== textActual.get(key)) {
+          errorArray.push(line);
+        }
       }
     } else {
       // add into error array
@@ -222,6 +276,9 @@ describe('Renderer', () => {
     });
 
     it('should handle invalid or incomplete diagram syntax', (done) => {
+      // Clears Maps
+      textActual.clear();
+      textExpected.clear();
       // Retrieve HTML string from getHtmlData
       invalidHtmlData.then((output) => {
         toRender.innerHTML = output;
@@ -245,6 +302,9 @@ describe('Renderer', () => {
     }).timeout(4000);
 
     it('should handle drawing of sequence diagrams', (done) => {
+      // Clears Maps
+      textActual.clear();
+      textExpected.clear();
       // Retrieve HTML string from getHtmlData
       seqHtmlData.then((output) => {
         toRender.innerHTML = output;
@@ -267,6 +327,9 @@ describe('Renderer', () => {
     }).timeout(3000);
 
     it('should handle drawing of flow charts', (done) => {
+      // Clears Maps
+      textActual.clear();
+      textExpected.clear();
       // Retrieve HTML string from getHtmlData
       flowHtmlData.then((output) => {
         toRender.innerHTML = output;
@@ -289,6 +352,9 @@ describe('Renderer', () => {
     });
 
     it('should handle drawing of graphviz diagrams', (done) => {
+      // Clears Maps
+      textActual.clear();
+      textExpected.clear();
       // Retrieve HTML string from getHtmlData
       vizHtmlData.then((output) => {
         // Render any diagrams to be drawn
@@ -308,9 +374,12 @@ describe('Renderer', () => {
       .catch((error) => {
         done(error);
       });
-    });
+    }).timeout(3000);
 
     it('should handle drawing of mermaid diagrams', (done) => {
+      // Clears Maps
+      textActual.clear();
+      textExpected.clear();
       // Retrieve HTML string from getHtmlData
       mermaidHtmlData.then((output) => {
         toRender.innerHTML = output;
@@ -333,6 +402,9 @@ describe('Renderer', () => {
     });
 
     it('should handle drawing of all types of diagrams together', (done) => {
+      // Clears Maps
+      textActual.clear();
+      textExpected.clear();
       // Retrieve HTML string from getHtmlData
       fullHtmlData.then((output) => {
         toRender.innerHTML = output;
