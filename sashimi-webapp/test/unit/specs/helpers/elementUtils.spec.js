@@ -22,6 +22,13 @@ describe('Element Utils', () => {
       document.body.removeChild(paragraphElRef);
     });
 
+    it('should return null it cannot resolve the element with the provided ID', () => {
+      const elementId = `this-element-should-not-exist-${new Date().getTime}`;
+      const outputData = elementUtils.resolveElement(elementId);
+
+      expect(outputData).to.be.a.null;
+    });
+
     it('should resolve the correct element in custom document with the right ID', () => {
       const frame = document.createElement('iframe');
       document.body.appendChild(frame);
