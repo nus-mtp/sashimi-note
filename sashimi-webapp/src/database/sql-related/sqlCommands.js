@@ -1,6 +1,7 @@
 import StringManipulator from 'src/database/stringManipulation';
 import constants from 'src/database/constants';
 import DateTime from 'src/database/generated-data/dateTime';
+import exceptions from 'src/database/exceptions';
 
 const alasql = require('alasql');
 
