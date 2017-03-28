@@ -1,21 +1,31 @@
 <template>
-  <div>
-    <div class="section group userInputs navbar vertical-align-child">
+  <div class="navbar">
+    <div class="section group userInputs vertical-align-child">
       <div class="col button-logo inline-block">
         <router-link to="/" class="vertical-align-child">
           <img src="../../assets/sashimi-note.svg" class="inline-block" alt="sashimi">
         </router-link>
       </div>
       <!--Waiting for file-manager api to be completed to implement buttons-->
-      <div class="col searchBar inline-block">
-        <input
-          type="text"
-          placeholder="Search..."
-          v-model="searchString"
-        >
+      <div class="col searchBar inline-block vertical-align-child">
+        <div class="section group vertical-align-child">
+
+          <i class="col material-icons md-dark">search</i>
+          <input
+            class="col"
+            type="text"
+            placeholder="Search"
+            v-model="searchString"
+          >
+          <button class="col">
+            <i class="material-icons md-dark"
+                    :class="{ 'md-inactive': true } "
+            >clear</i>
+          </button>
+        </div>
       </div>
     </div>
-    <div class="section group navbar userActions vertical-align-child">
+    <div class="section group userActions vertical-align-child">
       <div class="col float-left">
         <ul class="navbar-breadcrumb inline-block">
           <li>
@@ -78,9 +88,11 @@
       <div class="col view-type inline-block">
         <button id="button-icon-view" class="navbar-buttons" 
                 v-on:click="setViewMode('iconView')"
+                    :class="{ 'toggle-view-active': iconViewMode }"
         >Icon</button>|
         <button id="button-list-view" class="navbar-buttons" 
                 v-on:click="setViewMode('listView')"
+                :class="{ 'toggle-view-active': listViewMode }"
         >List</button>
       </div>
     </div>
@@ -100,6 +112,8 @@ export default {
       buttonDisabled: true,
       focusedDoc: {},
       searchString: '',
+      iconViewMode: false,
+      listViewMode: true
     };
   },
   methods: {
@@ -118,6 +132,13 @@ export default {
       }
     },
     setViewMode(viewMode) {
+      if (viewMode === 'iconView') {
+        this.iconViewMode = true;
+        this.listViewMode = false;
+      } else {
+        this.iconViewMode = false;
+        this.listViewMode = true;
+      }
       userInputsVue.$emit('changeViewMode', viewMode);
     },
   },
@@ -142,34 +163,52 @@ export default {
 
 <style scoped lang="scss">
 @import 'src/assets/styles/variables.scss';
-
-.userInputs {
-  border-bottom: 1px solid $navbar-border-color;
+.navbar {
+  padding: 20px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+  z-index: 999;
+  position: relative;
 }
 
 .button-logo {
   width: 100%;
-  text-align: center;
   transform: scale(1.2);
+  padding: 10px 0;
+  text-align: center;
 }
 
 .searchBar {
-  text-align: center;
   width: 100%;
-  margin-top: 3px;
+  background-color: $grey-background;
+  text-align: left;
+
+  i {
+    font-size: 20px;
+    padding: 12px;
+  }
+  
+  button {
+    background-color: $grey-background;
+    border: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
 
   input {
-    border: 1px solid $navbar-border-color;
-    width: 80%;
-    padding: 8px;
+    border: none;
+    border-radius: 6px;
+    background-color: $grey-background;
+    width: calc(100% - #{$searchbar-icons-width}*2);
+    padding: 13px;
     font-family: $font-primary;
-    font-size: $font-size-secondary;
+    font-size: 17px;
+    box-sizing: border-box;
   }
 }
 
 .userActions {
-  background-color: $navbar-background-color;
-  box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+  /*background-color: $navbar-background-color;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.2);*/
   padding-top: 10px 0;
 }
 
@@ -203,6 +242,7 @@ export default {
 .view-type {
   display: none;
   font-size: $navbar-font-size;
+  font-family: $font-primary;
 
   a {
     text-decoration: none;
@@ -212,6 +252,11 @@ export default {
     }
   }
 }
+
+.toggle-view-active {
+    text-transform: uppercase;
+    font-weight: bold;
+  }
 
 @media screen and (min-width: 480px) {
   .view-type {
@@ -226,11 +271,8 @@ export default {
   }
 
   .searchBar {
-    width: calc(100% - #{$button-logo-width});
-
-    input {
-      width: 70%;
-    }
+    width: 50%;
+    margin-left: 40px;
   }
 
   .userActions  {
