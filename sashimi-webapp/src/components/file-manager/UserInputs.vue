@@ -27,24 +27,24 @@
     </div>
     <div class="section group userActions vertical-align-child">
       <div class="col float-left">
+        <button class="navbar-buttons" 
+                v-on:click="execute('history back')"
+        >
+          <i class="material-icons">arrow_back</i>
+        </button>
+        <button class="navbar-buttons" 
+                v-on:click="execute('history forward')"
+        >
+          <i class="material-icons">arrow_forward</i>
+        </button>
         <ul class="navbar-breadcrumb inline-block">
-          <li>
-            <button class="navbar-buttons" 
-                    v-on:click="execute('history back')"
-            >
-              <i class="material-icons">arrow_back</i>
-            </button>
+          <li v-if="searchString !== ''">
+            Search results
           </li>
-          <li>
-            <button class="navbar-buttons" 
-                    v-on:click="execute('history forward')"
-            >
-              <i class="material-icons">arrow_forward</i>
-            </button>
+          <li v-else v-for="folder in folderPath">
+            <a v-on:click="action(changeFolder)">
+              {{ (folder.name === 'root') ? 'Home' : folder.name }}
             </a>
-          </li>
-          <li>
-            <a href="\">Home</a>
           </li>
         </ul>
       </div>
@@ -116,6 +116,7 @@ export default {
       listViewMode: true,
     };
   },
+  props: ['folderPath'],
   methods: {
     execute(action) {
       eventHub.$emit('execute', action);
@@ -128,6 +129,7 @@ export default {
         }
         default: {
           this.$emit('execute', action);
+          break;
         }
       }
     },
