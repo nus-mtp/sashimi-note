@@ -7,9 +7,11 @@ import idMap from '../data/idmap';
 const ERROR_INPUT_NOT_NUMBER = 'Given input is not a number';
 const ERROR_INVALID_FILE_ID = 'File ID is invalid';
 const ERROR_INVALID_FOLDER_ID = 'Folder ID is invalid';
+const ERROR_INVALID_INPUT_TYPE = 'Data type of input should be a number or string';
 
 
 /* Constants */
+const INVALID_ID = Number.MIN_SAFE_INTEGER;
 const NO_PARENT_ID = -1;
 const FIRST_FOLDER_ID = 0;
 const FIRST_FILE_ID = 1;
@@ -150,11 +152,24 @@ const core = {
    * @return {File}
    */
   getFile: function getFile(id) {
-    if (id.match(NUMBER_ONLY)) {
-      throw new Error(ERROR_INPUT_NOT_NUMBER);
+    let fileID = INVALID_ID;
+
+    if (typeof id === 'string') {
+      if (id.match(NUMBER_ONLY) == null) {
+        throw new Error(ERROR_INPUT_NOT_NUMBER);
+      } else {
+        fileID = parseInt(id);
+      }
+    } else if (typeof id === 'number') {
+      if (Number.isInteger(id)) {
+        fileID = id;
+      } else {
+        throw new Error(ERROR_INPUT_NOT_NUMBER);
+      }
+    } else {
+      throw new Error(ERROR_INVALID_INPUT_TYPE);
     }
 
-    const fileID = parseInt(id);
     if (!isValidFileID(fileID)) {
       throw new Error(ERROR_INVALID_FILE_ID);
     }
@@ -169,11 +184,24 @@ const core = {
    * @return {Folder}
    */
   getFolder: function getFolder(id) {
-    if (id.match(NUMBER_ONLY)) {
-      throw new Error(ERROR_INPUT_NOT_NUMBER);
+    let folderID = INVALID_ID;
+
+    if (typeof id === 'string') {
+      if (id.match(NUMBER_ONLY) == null) {
+        throw new Error(ERROR_INPUT_NOT_NUMBER);
+      } else {
+        folderID = parseInt(id);
+      }
+    } else if (typeof id === 'number') {
+      if (Number.isInteger(id)) {
+        folderID = id;
+      } else {
+        throw new Error(ERROR_INPUT_NOT_NUMBER);
+      }
+    } else {
+      throw new Error(ERROR_INVALID_INPUT_TYPE);
     }
 
-    const folderID = parseInt(id);
     if (!isValidFolderID(folderID)) {
       throw new Error(ERROR_INVALID_FOLDER_ID);
     }
