@@ -17,6 +17,7 @@
             placeholder="Search"
             v-model="searchString"
             required="required"
+            ref="searchInput"
           >
           <button class="col">
             <i class="material-icons md-dark"
@@ -41,9 +42,12 @@
           <li v-if="searchString !== ''">
             Search results
           </li>
-          <li v-else v-for="folder in folderPath">
+          <li v-else>
+            Home
+          </li>
+          <li v-for="folder in folderPath" v-if="folder.name !== 'root'">
             <a v-on:click="action(changeFolder)">
-              {{ (folder.name === 'root') ? 'Home' : folder.name }}
+              {{folder.name}}
             </a>
           </li>
         </ul>
@@ -151,7 +155,10 @@ export default {
   watch: {
     searchString: _.debounce((result) => {
       userInputsVue.$emit('execute', 'search', result);
-    }, 500)
+    }, 500),
+    $route() {
+      this.searchString = '';
+    }
   },
   mounted() {
     userInputsVue = this;
