@@ -304,7 +304,7 @@ export default function sqlCommands() {
         if (typeof maxFileId === 'number') {
           resolve(maxFileId);
         } else {
-          resolve(-1);
+          resolve(0);
         }
       }).catch(sqlError => reject(sqlError))
     );
