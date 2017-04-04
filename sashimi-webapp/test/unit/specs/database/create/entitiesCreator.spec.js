@@ -1,5 +1,4 @@
 import entitiesCreator from 'src/database/create/entitiesCreator';
-import dataDelete from 'src/database/data-modifier/dataDelete';
 import exceptions from 'src/database/exceptions';
 import constants from 'src/database/constants';
 
