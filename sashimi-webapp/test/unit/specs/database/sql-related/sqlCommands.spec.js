@@ -101,14 +101,21 @@ describe('sqlCommands', () => {
   });
 
   describe('creation', () => {
+    after((doneAfter) => {
+      const tablesToDelete = ['a', 'b'];
+      deleteTable(tablesToDelete, testDatabaseName, () => {
+        doneAfter();
+      });
+    });
+
     it('should create table', (done) => {
       if (!window.indexedDB) {
         done(exceptions.IndexedDBNotSupported);
       }
-      const createTableString = 'abc(a NUMBER, b STRING, c DATE)';
+      const createTableString = 'a(a NUMBER, b STRING, c DATE)';
       sqlCommands.createTable(createTableString)
       .then(() => { // need to insert something before table exists
-        sqlCommands.insertContent('abc', [{ a: 123, b: 'hello', c: '2017.03.07 15:52:33' }])
+        sqlCommands.insertContent('a', [{ a: 123, b: 'hello', c: '2017.03.07 15:52:33' }])
         .catch(sqlErr => done(sqlErr));
       })
       .then(() => { // test for table exists in database
@@ -121,31 +128,36 @@ describe('sqlCommands', () => {
     });
 
     it('should insert content with correct datatype', (done) => {
-      const createTableString = 'bcd(a NUMBER, b STRING, c DATE)';
-      sqlCommands.createTable(createTableString)
-      .then(() => { // insert data
-        alasqlArray.initializeAlasqlArray();
-        alasqlArray.addKeyBasePair('a', 123);
-        alasqlArray.addKeyBasePair('b', 'hello string here');
-        alasqlArray.addKeyBasePair('c', '2017.03.07 15:52:33');
-        const correctArray = alasqlArray.endAlasqlArray();
-        alasqlArray.initializeAlasqlArray();
-        alasqlArray.addKeyBasePair('a', 123);
-        alasqlArray.addKeyBasePair('b', '2017.03.07 15:52:33');
-        alasqlArray.addKeyBasePair('c', 'hello string here');
-        const incorrectArray = alasqlArray.endAlasqlArray();
-        sqlCommands.insertContent('bcd', correctArray)
-        .then(() =>
-          sqlCommands.getFullTableData('bcd')
-          .then((data) => {
-            expect(data).to.deep.equal(correctArray);
-            expect(data).to.not.deep.equal(incorrectArray);
-            done();
-          })
-          .catch(err => done(err)))
-        .catch(sqlErr => done(sqlErr));
+      let correctArray;
+      let incorrectArray;
+
+      before((doneBefore) => {
+        const createTableString = 'b(a NUMBER, b STRING, c DATE)';
+        sqlCommands.createTable(createTableString)
+        .then(() => { // insert data
+          alasqlArray.initializeAlasqlArray();
+          alasqlArray.addKeyBasePair('a', 123);
+          alasqlArray.addKeyBasePair('b', 'hello string here');
+          alasqlArray.addKeyBasePair('c', '2017.03.07 15:52:33');
+          correctArray = alasqlArray.endAlasqlArray();
+          alasqlArray.initializeAlasqlArray();
+          alasqlArray.addKeyBasePair('a', 123);
+          alasqlArray.addKeyBasePair('b', '2017.03.07 15:52:33');
+          alasqlArray.addKeyBasePair('c', 'hello string here');
+          incorrectArray = alasqlArray.endAlasqlArray();
+          sqlCommands.insertContent('b', correctArray)
+          .then(() => doneBefore())
+          .catch(sqlErr => doneBefore(sqlErr));
+        })
+        .catch(sqlErr => doneBefore(sqlErr));
+      });
+      sqlCommands.getFullTableData('b')
+      .then((data) => {
+        expect(data).to.deep.equal(correctArray);
+        expect(data).to.not.deep.equal(incorrectArray);
       })
-      .catch(sqlErr => done(sqlErr));
+      .then(done())
+      .catch(err => done(err));
     }).timeout(20000);
   });
 });
