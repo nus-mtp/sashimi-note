@@ -25,6 +25,8 @@ export default function File(fileID, fileName, filePath, parentFolder) {
   this.name = fileName;
   this.path = filePath;
   this.parentFolder = parentFolder;
+  this.creationDate = null;
+  this.lastModifiedDate = null;
 }
 
 /* Private Functions */
@@ -164,7 +166,7 @@ File.prototype.copy = function copy() {
  * @return {Promise}
  */
 File.prototype.rename = function rename(newFileName) {
-  if (!(this instanceof Folder)) {
+  if (!(this instanceof File)) {
     throw new Error(ERROR_NOT_FILE_INSTANCE);
   }
 
@@ -185,4 +187,29 @@ File.prototype.rename = function rename(newFileName) {
       this.path = this.path.replace(oldFileName, newFileName);
     });
   }
+};
+
+/**
+ * Download file
+ * (Code transferred from Filemanger.vue)
+ *
+ * @return {Promise}
+ */
+File.prototype.download = function download() {
+  return this.load()
+  .then((data) => {
+    const element = document.createElement('a');
+    const href = 'data:text/plain;charset=utf-8,';
+    const content = encodeURIComponent(data);
+    element.setAttribute('href', href+content, data);
+    const fileName = this.name.concat('.md');
+    element.setAttribute('download', fileName);
+
+    element.style.display = 'none';
+    document.body.appendChild(element);
+
+    element.click();
+
+    document.body.removeChild(element);
+  });
 };
