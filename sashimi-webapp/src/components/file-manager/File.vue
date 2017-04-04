@@ -31,8 +31,8 @@ export default {
     focusFile() {
       this.$emit('focusFile', this.file);
     },
-    blurFile() {
-      this.$emit('blurFile');
+    blurFile(event) {
+      this.$emit('blurFile', event);
     },
     saveFileName() {
       window.getSelection().removeAllRanges();

@@ -59,8 +59,8 @@ export default {
     focus(focusedDoc) {
       eventHub.$emit('focus', focusedDoc);
     },
-    blur() {
-      eventHub.$emit('blur');
+    blur(event) {
+      eventHub.$emit('blur', event);
     },
     changeFolder(newFolder) {
       this.$emit('changeFolder', newFolder);

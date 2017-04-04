@@ -114,7 +114,8 @@ export default {
   data() {
     return {
       buttonDisabled: true,
-      focusedDoc: {},
+      focusedDoc: null,
+      holdingDoc: null,
       searchString: '',
       iconViewMode: false,
       listViewMode: true,
@@ -128,7 +129,10 @@ export default {
         case 'delete':
         case 'duplicate':
         case 'download': {
-          this.$emit('execute', action, this.focusedDoc);
+          if (this.focusedDoc) {
+            this.$emit('execute', action, this.focusedDoc);
+            this.focusedDoc = null;
+          }
           break;
         }
         default: {
@@ -158,17 +162,22 @@ export default {
     }, 500),
     $route() {
       this.searchString = '';
+    },
+    focusedDoc(theDoc) {
+      this.buttonDisabled = Boolean(!theDoc);
     }
   },
   mounted() {
     userInputsVue = this;
 
     eventHub.$on('focus', (focusedDoc) => {
-      this.buttonDisabled = false;
       this.focusedDoc = focusedDoc;
     });
-    eventHub.$on('blur', () => {
-      this.buttonDisabled = true;
+    eventHub.$on('blur', (event) => {
+      const clickTarget = (event.relatedTarget) ? event.relatedTarget.id : null;
+      if (!(clickTarget === 'button-delete' || clickTarget === 'button-file-download')) {
+        this.focusedDoc = null;
+      }
     });
   },
 };

@@ -29,8 +29,8 @@
       focusFolder() {
         this.$emit('focusFolder', this.folder);
       },
-      blurFolder() {
-        this.$emit('blurFolder');
+      blurFolder(event) {
+        this.$emit('blurFolder', event);
       },
       saveFolderName() {
         window.getSelection().removeAllRanges();
