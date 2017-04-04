@@ -558,14 +558,4 @@ export default function sqlCommands() {
       .catch(sqlError => reject(sqlError));
     });
   };
-
-  // external library not functioning so I cannot do anything here
-  this.deleteTable = function deleteTable(tableName) {
-    return new Promise((resolve, reject) => {
-      tableName = resolveSQLInjection(tableName);
-      return alasql.promise([stringManipulator.stringConcat('DROP TABLE IF EXISTS ', tableName)])
-      .then(isSuccess => resolve(isSuccess))
-      .catch(sqlError => reject(sqlError));
-    });
-  };
 }
