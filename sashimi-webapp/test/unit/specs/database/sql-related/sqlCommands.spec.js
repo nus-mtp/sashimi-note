@@ -38,23 +38,24 @@ function isTableExistsInDatabase(tableName, callback) {
   };
 }
 
-function deleteTable(tableName, databaseName) {
-  return new Promise((resolve, reject) => {
-    const thisDatabaseName = databaseName || testDatabaseName;
-    const request = indexedDB.open(thisDatabaseName);
-    request.onsuccess = function onSuccess(event) {
-      const database = event.target.result;
-      if (database.objectStoreNames.contains(tableName)) {
-        database.deleteObjectStore(tableName);
+function deleteTable(tableNames, databaseName, callback) {
+  const thisDatabaseName = databaseName || testDatabaseName;
+  const request = indexedDB.open(thisDatabaseName);
+  let database = null;
+
+  request.onsuccess = function onSuccess(event) {
+    database = request.result;
+    callback();
+  };
+
+  request.onupgradeneeded = function onUpgradeNeeded(event) {
+    database = event.target.result;
+    for (let tableToDeleteIndex = 0; tableToDeleteIndex < tableNames.length; tableToDeleteIndex+=1) {
+      if (database.objectStoreNames.contains(tableNames[tableToDeleteIndex])) {
+        database.deleteObjectStore(tableNames[tableToDeleteIndex]);
       }
-      request.result.close()
-      .then(() => resolve())
-      .catch(err => reject(err));
-    };
-    request.onupgradeneeded = function onUpgradeNeeded(event) {
-      resolve('false');
-    };
-  });
+    }
+  };
 }
 
 function deleteDatabase(databaseName) {
