@@ -164,7 +164,7 @@ File.prototype.copy = function copy() {
  * @return {Promise}
  */
 File.prototype.rename = function rename(newFileName) {
-  if (!(this instanceof Folder)) {
+  if (!(this instanceof File)) {
     throw new Error(ERROR_NOT_FILE_INSTANCE);
   }
 
