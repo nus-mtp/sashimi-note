@@ -45,6 +45,7 @@ function deleteTable(tableNames, databaseName, callback) {
 
   request.onsuccess = function onSuccess(event) {
     database = request.result;
+    database.close();
     callback();
   };
 
@@ -119,7 +120,7 @@ describe('sqlCommands', () => {
         .catch(sqlErr => done(sqlErr));
       })
       .then(() => { // test for table exists in database
-        isTableExistsInDatabase('abc', (isTableExist) => {
+        isTableExistsInDatabase('a', (isTableExist) => {
           expect(isTableExist).to.be.true;
           done();
         });
