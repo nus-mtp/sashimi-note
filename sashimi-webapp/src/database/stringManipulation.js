@@ -18,6 +18,9 @@ export default function stringManipulation() {
   };
 
   this.resolveSQLInjections = function resolveSQLInjections(stringToReplace) {
+    if (typeof stringToReplace !== 'string') {
+      return stringToReplace;
+    }
     return stringToReplace.replace(/["\\]/g, (char) => {
       switch (char) {
         case '"':
