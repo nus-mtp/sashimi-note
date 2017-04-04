@@ -259,7 +259,7 @@ export default function sqlCommands() {
       tableName = resolveSQLInjection(tableName);
       alasqlArray = resolveSQLInjection(alasqlArray);
       return alasql.promise(stringManipulator.stringConcat('INSERT INTO ', tableName,
-                                                      ' VALUES ?'), alasqlArray)
+                                                           ' VALUES ?'), alasqlArray)
       .then(data => resolve(data))
       .catch(sqlError => reject(sqlError));
     });
@@ -269,8 +269,8 @@ export default function sqlCommands() {
     return new Promise((resolve, reject) => {
       searchString = resolveSQLInjection(searchString);
       return alasql.promise([stringManipulator.stringConcat('SELECT * FROM ', constants.ENTITIES_FILE_MANAGER,
-                                                      ' WHERE ', constants.HEADER_FILE_MANAGER_FILE_NAME,
-                                                      ' LIKE "%', searchString, '%"')])
+                                                            ' WHERE ', constants.HEADER_FILE_MANAGER_FILE_NAME,
+                                                            ' LIKE "%', searchString, '%"')])
       .then(data => resolve(getArray(data)))
       .catch(sqlError => reject(sqlError));
     });
@@ -280,11 +280,11 @@ export default function sqlCommands() {
     return new Promise((resolve, reject) => {
       filePath = resolveSQLInjection(filePath);
       alasql.promise([stringManipulator.stringConcat('SELECT ', constants.HEADER_FILE_MANAGER_FILE_NAME,
-                                                      ' FROM ', constants.ENTITIES_FILE_MANAGER,
-                                                      ' WHERE ', constants.HEADER_FILE_MANAGER_PATH,
-                                                      ' LIKE "', filePath, '%"',
-                                                      ' ORDER BY ', constants.HEADER_FILE_MANAGER_FILE_NAME,
-                                                      ' ASC')])
+                                                     ' FROM ', constants.ENTITIES_FILE_MANAGER,
+                                                     ' WHERE ', constants.HEADER_FILE_MANAGER_PATH,
+                                                     ' LIKE "', filePath, '%"',
+                                                     ' ORDER BY ', constants.HEADER_FILE_MANAGER_FILE_NAME,
+                                                     ' ASC')])
       .then(data => resolve(getArray(data)))
       .catch(sqlError => reject(sqlError));
     });
@@ -294,11 +294,11 @@ export default function sqlCommands() {
     return new Promise((resolve, reject) => {
       parentFolderId = resolveSQLInjection(parentFolderId);
       return alasql.promise([stringManipulator.stringConcat('SELECT ', constants.HEADER_FOLDER_FOLDER_NAME,
-                                                      ' FROM ', constants.ENTITIES_FOLDER,
-                                                      ' WHERE ', constants.HEADER_FOLDER_PARENT_FOLDER_ID,
-                                                      ' = ', parentFolderId,
-                                                      ' ORDER BY ', constants.HEADER_FOLDER_FOLDER_NAME,
-                                                      ' ASC')])
+                                                            ' FROM ', constants.ENTITIES_FOLDER,
+                                                            ' WHERE ', constants.HEADER_FOLDER_PARENT_FOLDER_ID,
+                                                            ' = ', parentFolderId,
+                                                            ' ORDER BY ', constants.HEADER_FOLDER_FOLDER_NAME,
+                                                            ' ASC')])
       .then(data => resolve(getArray(data)))
       .catch(sqlError => reject(sqlError));
     }
@@ -308,7 +308,7 @@ export default function sqlCommands() {
   this.getMaxFileId = function getMaxFileId() {
     return new Promise((resolve, reject) =>
       alasql.promise([stringManipulator.stringConcat('SELECT max(', constants.HEADER_FILE_MANAGER_FILE_ID,
-                                                      ') FROM ', constants.ENTITIES_FILE_MANAGER)])
+                                                     ') FROM ', constants.ENTITIES_FILE_MANAGER)])
       .then((data) => {
         const maxFileId = getDataOutOfAlasql(data);
         if (typeof maxFileId === 'number') {
@@ -322,7 +322,7 @@ export default function sqlCommands() {
   this.getMaxFolderId = function getMaxFolderId() {
     return new Promise((resolve, reject) =>
       alasql.promise([stringManipulator.stringConcat('SELECT MAX(', constants.HEADER_FOLDER_FOLDER_ID,
-                                                      ') FROM ', constants.ENTITIES_FOLDER)])
+                                                     ') FROM ', constants.ENTITIES_FOLDER)])
       .then((data) => {
         const maxFolderId = getDataOutOfAlasql(data);
         if (typeof maxFolderId === 'number') {
@@ -338,8 +338,8 @@ export default function sqlCommands() {
     return new Promise((resolve, reject) => {
       fileId = resolveSQLInjection(fileId);
       alasql.promise([stringManipulator.stringConcat('SELECT * FROM ', constants.ENTITIES_FILE_MANAGER,
-                                                      ' WHERE ', constants.HEADER_FILE_MANAGER_FILE_ID,
-                                                      ' = ', fileId)])
+                                                     ' WHERE ', constants.HEADER_FILE_MANAGER_FILE_ID,
+                                                     ' = ', fileId)])
       .then(data => resolve(getArray(data)))
       .catch(sqlError => reject(sqlError));
     });
@@ -349,8 +349,8 @@ export default function sqlCommands() {
     return new Promise((resolve, reject) => {
       searchString = resolveSQLInjection(searchString);
       return alasql.promise([stringManipulator.stringConcat('SELECT * FROM ', constants.ENTITIES_FOLDER,
-                                                      ' WHERE ', constants.HEADER_FOLDER_FOLDER_NAME,
-                                                      ' LIKE "%', searchString, '%"')])
+                                                            ' WHERE ', constants.HEADER_FOLDER_FOLDER_NAME,
+                                                            ' LIKE "%', searchString, '%"')])
       .then(data => resolve(getArray(data)))
       .catch(sqlError => reject(sqlError));
     });
@@ -360,8 +360,8 @@ export default function sqlCommands() {
     return new Promise((resolve, reject) => {
       folderId = resolveSQLInjection(folderId);
       return alasql.promise([stringManipulator.stringConcat('SELECT * FROM ', constants.ENTITIES_FILE_MANAGER,
-                                                      ' WHERE ', constants.HEADER_FILE_MANAGER_FOLDER_ID,
-                                                      ' = ', folderId)])
+                                                            ' WHERE ', constants.HEADER_FILE_MANAGER_FOLDER_ID,
+                                                            ' = ', folderId)])
       .then(data => resolve(getArray(data)))
       .catch(sqlError => reject(sqlError));
     });
@@ -397,10 +397,10 @@ export default function sqlCommands() {
         reject(new exceptions.InvalidRename());
       }
       return alasql.promise([stringManipulator.stringConcat('UPDATE ', constants.ENTITIES_FILE_MANAGER,
-                                                      ' SET ', constants.HEADER_FILE_MANAGER_FILE_NAME,
-                                                      ' = "', newFileName,
-                                                      '" WHERE ', constants.HEADER_FILE_MANAGER_FILE_ID,
-                                                      ' = ', fileId)])
+                                                            ' SET ', constants.HEADER_FILE_MANAGER_FILE_NAME,
+                                                            ' = "', newFileName,
+                                                            '" WHERE ', constants.HEADER_FILE_MANAGER_FILE_ID,
+                                                            ' = ', fileId)])
       .then(() => resolve())
       .catch(sqlError => reject(sqlError));
     });
@@ -411,10 +411,10 @@ export default function sqlCommands() {
       fileId = resolveSQLInjection(fileId);
       newPath = resolveSQLInjection(newPath);
       return alasql.promise([stringManipulator.stringConcat('UPDATE ', constants.ENTITIES_FILE_MANAGER,
-                                                    ' SET ', constants.HEADER_FILE_MANAGER_PATH,
-                                                    ' = "', newPath,
-                                                    '" WHERE ', constants.HEADER_FILE_MANAGER_FILE_ID,
-                                                    ' = ', fileId)])
+                                                            ' SET ', constants.HEADER_FILE_MANAGER_PATH,
+                                                            ' = "', newPath,
+                                                            '" WHERE ', constants.HEADER_FILE_MANAGER_FILE_ID,
+                                                            ' = ', fileId)])
       .then(() => resolve())
       .catch(sqlError => reject(sqlError));
     });
@@ -480,18 +480,18 @@ export default function sqlCommands() {
     return new Promise((resolve, reject) => {
       markdownFile = resolveSQLInjection(markdownFile);
       return alasql.promise([stringManipulator.stringConcat('UPDATE ', constants.ENTITIES_FILE_MANAGER,
-                                                      ' SET ', constants.HEADER_FILE_MANAGER_FILE_MARKDOWN,
-                                                      ' = "', markdownFile,
-                                                      '" WHERE ', constants.HEADER_FILE_MANAGER_FILE_ID,
-                                                      ' = ', fileId)])
+                                                            ' SET ', constants.HEADER_FILE_MANAGER_FILE_MARKDOWN,
+                                                            ' = "', markdownFile,
+                                                            '" WHERE ', constants.HEADER_FILE_MANAGER_FILE_ID,
+                                                            ' = ', fileId)])
         .catch(sqlError => reject(sqlError))
       .then(() => {
         const currentDateTime = dateTime.getCurrentDateTime();
         return alasql.promise([stringManipulator.stringConcat('UPDATE ', constants.ENTITIES_FILE_MANAGER,
-                                                        ' SET ', constants.HEADER_FILE_MANAGER_LAST_MODIFIED_DATE,
-                                                        ' = "', currentDateTime,
-                                                        '" WHERE ', constants.HEADER_FILE_MANAGER_FILE_ID,
-                                                        ' = ', fileId)])
+                                                              ' SET ', constants.HEADER_FILE_MANAGER_LAST_MODIFIED_DATE,
+                                                              ' = "', currentDateTime,
+                                                              '" WHERE ', constants.HEADER_FILE_MANAGER_FILE_ID,
+                                                              ' = ', fileId)])
         .catch(sqlError => reject(sqlError));
       })
       .then(() => resolve(true))
@@ -503,8 +503,8 @@ export default function sqlCommands() {
     return new Promise((resolve, reject) => {
       fileId = resolveSQLInjection(fileId);
       return alasql.promise([stringManipulator.stringConcat('DELETE FROM ', constants.ENTITIES_FILE_MANAGER,
-                                                      ' WHERE ', constants.HEADER_FILE_MANAGER_FILE_ID,
-                                                      ' = ', fileId)])
+                                                            ' WHERE ', constants.HEADER_FILE_MANAGER_FILE_ID,
+                                                            ' = ', fileId)])
       .then(() => resolve())
       .catch(sqlError => reject(sqlError));
     });
