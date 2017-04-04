@@ -25,6 +25,8 @@ export default function File(fileID, fileName, filePath, parentFolder) {
   this.name = fileName;
   this.path = filePath;
   this.parentFolder = parentFolder;
+  this.creationDate = null;
+  this.lastModifiedDate = null;
 }
 
 /* Private Functions */

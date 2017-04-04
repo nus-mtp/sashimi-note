@@ -29,6 +29,8 @@ export default function Folder(folderID, folderName, folderPath) {
   this.parentFolder = null;
   this.childFolderList = []; // list of folders in current folder
   this.childFileList = []; // list of files in current folder
+  this.creationDate = null;
+  this.lastModifiedDate = null;
 }
 
 /* Private Function */
@@ -70,6 +72,8 @@ Folder.prototype.createFolder = function createFolder() {
   .then((dbFolderObj) => {
     const newFolder = new Folder(dbFolderObj.folder_id, dbFolderObj.folder_name, dbFolderObj.folder_path);
     newFolder.parentFolder = this;
+    newFolder.creationDate = dbFolderObj.creation_date;
+    newFolder.lastModifiedDate = dbFolderObj.last_modified_date;
     idMap.addFolderToMap(newFolder.id, newFolder);
     this.childFolderList.push(newFolder);
     return newFolder;
@@ -89,6 +93,8 @@ Folder.prototype.createFile = function createFile() {
   return storage.createFile(ORGANIZATION_ID, this.path, this.id)
   .then((dbFileObj) => {
     const newFile = new File(dbFileObj.file_id, dbFileObj.file_name, dbFileObj.file_path, this);
+    newFile.creationDate = dbFileObj.creation_date;
+    newFile.lastModifiedDate = dbFileObj.last_modified_date;
     idMap.addFileToMap(newFile.id, newFile);
     this.childFileList.push(newFile);
     return newFile;
