@@ -186,3 +186,26 @@ File.prototype.rename = function rename(newFileName) {
     });
   }
 };
+
+/**
+ * Download file
+ * (Code transferred from Filemanger.vue)
+ *
+ * @return {Promise}
+ */
+File.prototype.download = function download() {
+  const data = this.load();
+  const element = document.createElement('a');
+  const href = 'data:text/plain;charset=utf-8,';
+  const content = encodeURIComponent(data);
+  element.setAttribute('href', href+content, data);
+  const fileName = this.name.concat('.md');
+  element.setAttribute('download', fileName);
+
+  element.style.display = 'none';
+  document.body.appendChild(element);
+
+  element.click();
+
+  document.body.removeChild(element);
+};
