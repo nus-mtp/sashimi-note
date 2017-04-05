@@ -65,7 +65,13 @@ export default function(navInstance) {
           // The event is a gesture, but is it not executed by at least two fingers
           return;
         }
-        if (!event.ds) event.ds = (-event.deltaY / 1000);
+        if (!event.ds) {
+          // event polyfill for interactjs gesturable
+          // deltaY is only available for mousewheel event
+          // detail is only available for DOMMouseWheel event
+          event.ds = (event.deltaY) ? (-event.deltaY / 1000) : (-event.detail / 30);
+        }
+
         let scale = navInstance.transform.scale * (1 + event.ds) || navInstance.transform.scale;
         scale = guard.scale(scale);
         navInstance.transform.set({ scale });
@@ -129,6 +135,7 @@ export default function(navInstance) {
         const transitionDuration = 500;
         // Resize the element's transformer
         navInstance.el.container.style.transition = `transform ${transitionDuration}ms`;
+        navInstance.width.element = navInstance.width.element || navInstance.width.parent - marginWidth;
         navInstance.transform.set({ scale: (navInstance.width.parent - marginWidth) / navInstance.width.element });
         setTimeout(() => {
           navInstance.el.container.style.transition = '';

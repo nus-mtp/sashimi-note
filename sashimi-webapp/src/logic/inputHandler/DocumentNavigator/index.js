@@ -43,7 +43,10 @@ DocumentNavigator.prototype.updateElementWidth = function updateElementWidth() {
   if (!this.width) this.width = {};
   Object.keys(this.el).forEach((key) => {
     const elementReference = this.el[key];
-    const elementWidth = domUtils.getComputedStyle(elementReference).width;
+    let elementWidth = domUtils.getComputedStyle(elementReference).width;
+
+    // Temporary fix for Firefox computing width as auto
+    elementWidth = (elementWidth === 'auto') ? '0px' : elementWidth;
     this.width[key] = unitConverter.get(elementWidth, 'px', false);
   });
 
@@ -128,6 +131,11 @@ DocumentNavigator.prototype.addEventListeners = function addEventListeners() {
 
   this.eventListeners = [
     {
+      event: 'DOMMouseScroll',
+      fn: this.eventHandler.eventFn.mousewheel.bind(this),
+      target: iframeWin,
+      boolean: false
+    }, {
       event: 'mousewheel',
       fn: this.eventHandler.eventFn.mousewheel.bind(this),
       target: this.el.parent,
