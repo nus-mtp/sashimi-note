@@ -65,22 +65,29 @@ DocumentNavigator.prototype.addDomStyling = function addDomStyling() {
   // Reset parent height to force DOM relayout
   // [1] Initialise layout properties
   const containerReference = this.el.container;
-  const originalHeight = domUtils.getComputedStyle(containerReference).height;
+  const containerRefStyle = domUtils.getComputedStyle(containerReference);
+  containerReference.documentNavigator = {
+    originalStyle: {
+      height: containerRefStyle.height,
+      width: containerRefStyle.width
+    }
+  };
 
   setTimeout(() => {
     // [2] Initialise layout properties
     let tempContainerHeight = domUtils.getComputedStyle(this.el.container).height;
+    let tempContainerWidth = domUtils.getComputedStyle(this.el.element).width;
+
     tempContainerHeight = parseFloat(tempContainerHeight) + 500;
+    tempContainerWidth = parseFloat(tempContainerWidth);
     containerReference.documentNavigator.originalStyle.height = tempContainerHeight;
+    containerReference.documentNavigator.originalStyle.width = tempContainerWidth;
 
     const renderHeight = `${tempContainerHeight * this.transform.scale}px`;
+    const renderWidth = `${tempContainerWidth * this.transform.scale}px`;
     this.el.parent.style.height = renderHeight;
+    this.el.parent.style.width = renderWidth;
   }, 1000);
-
-  containerReference.documentNavigator = {
-    originalStyle: { height: originalHeight }
-  };
-
 
   // Store default parent reference properties before overwriting
   this.defaultProperties = {
