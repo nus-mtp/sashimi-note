@@ -125,7 +125,9 @@ DocumentNavigator.prototype.addEventListeners = function addEventListeners() {
     }
   };
 
-  this.interactable = interact(this.el.parent);
+  const iframeDoc = this.el.parent.ownerDocument;
+  const iframeWin = iframeDoc.defaultView || iframeDoc.parentWindow;
+  this.interactable = interact(this.el.parent.parentNode.parentNode);
   this.interactable.draggable(this.eventHandler.settings.draggable);
   this.interactable.gesturable(this.eventHandler.settings.gesturable);
 
@@ -138,20 +140,20 @@ DocumentNavigator.prototype.addEventListeners = function addEventListeners() {
     }, {
       event: 'mousewheel',
       fn: this.eventHandler.eventFn.mousewheel.bind(this),
-      target: this.el.parent,
+      target: iframeWin,
       boolean: false
     }, {
       event: 'pointerdown',
       fn: this.eventHandler.eventFn.pointer.down.bind(this),
-      target: this.el.parent,
+      target: iframeWin,
     }, {
       event: 'pointerup',
       fn: this.eventHandler.eventFn.pointer.up.bind(this),
-      target: this.el.parent,
+      target: iframeWin,
     }, {
       event: 'resize',
       fn: this.updateElementWidth.bind(this),
-      target: window,
+      target: iframeWin,
     }
   ];
 
