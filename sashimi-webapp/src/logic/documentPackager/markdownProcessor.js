@@ -49,7 +49,7 @@ md.use(mdTOC);
 // For drawing diagrams
 md.use(mdDiagrams);
 // For custom conditional plugin
-md.use(mdConditional);
+md.use(mdConditional.hideShowPlugin);
 
 const validateData = function validateData(data) {
   return data || '';

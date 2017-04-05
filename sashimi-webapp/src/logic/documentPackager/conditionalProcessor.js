@@ -235,9 +235,17 @@ function hideShowBlock(state, startLine, endLine, silent) {
   return true;
 }
 
-export default function hideShowPlugin(md) {
-  md.inline.ruler.after('emphasis', 'hideShowInline', hideShowInline);
-  md.block.ruler.after('table', 'hideShowBlock', hideShowBlock);
-}
+export default {
+  hideShowPlugin: function hideShowPlugin(md) {
+    md.inline.ruler.after('emphasis', 'hideShowInline', hideShowInline);
+    md.block.ruler.after('table', 'hideShowBlock', hideShowBlock);
+  },
+  setFileName: function setFileName(name) {
+    this.fileName = name;
+  },
+  clearFileName: function clearFileName() {
+    this.fileName = null;
+  }
+};
 
 // Future note: can use hideShowPlugin.setCond = function() {...} for setting fileName variable
