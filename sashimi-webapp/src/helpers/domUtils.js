@@ -12,6 +12,7 @@ export default {
    * Overwrite existing node's style with the given style
    */
   overwriteStyle(target, source) {
+    source = source || {};
     Object.keys(source).forEach((styleKey) => {
       target[styleKey] = source[styleKey];
     });
