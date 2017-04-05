@@ -203,7 +203,7 @@ export default {
     // Recreate pages for renderFrame
     virtualBookPages.forEach((page) => {
       // Create a new page
-      const pageDiv = document.createElement('DIV');
+      const pageDiv = pr.ownerDocument.createElement('DIV');
       pageDiv.setAttribute('class', CLASS_NAME_PREFIX);
       const refStyle = {
         // CSS to set up the page sizing

@@ -24,6 +24,7 @@ export default function PageRenderer(renderDomTarget, page) {
   if (!this.renderFrame) {
     throw new Error('Element provided to PageRenderer is not found at this moment');
   }
+  this.ownerDocument = renderDomTarget.ownerDocument;
 
   // Set reference frame
   this.referenceFrame = this.getReferenceFrame();
@@ -41,11 +42,11 @@ export default function PageRenderer(renderDomTarget, page) {
  */
 PageRenderer.prototype.getReferenceFrame = function getReferenceFrame() {
   const idOfReferenceFrame = defaultConfig.prefix.reference + this.renderDomId;
-  let referenceFrame = document.getElementById(idOfReferenceFrame);
+  let referenceFrame = this.ownerDocument.getElementById(idOfReferenceFrame);
 
   // Create a new reference frame if doesn't exist
   if (!referenceFrame) {
-    referenceFrame = document.createElement('DIV');
+    referenceFrame = this.ownerDocument.createElement('DIV');
     referenceFrame.setAttribute('id', idOfReferenceFrame);
 
     // Set reference frame styling by iterate through the refStyle
@@ -70,10 +71,10 @@ PageRenderer.prototype.getReferenceFrame = function getReferenceFrame() {
     helper.overwriteStyle(referenceFrame.style, refStyle);
 
     // Render reference frame to DOM
-    if (!document.body) {
+    if (!this.ownerDocument.body) {
       throw new Error('Unable to append referenceFrame to document body');
     }
-    document.body.appendChild(referenceFrame);
+    this.ownerDocument.body.appendChild(referenceFrame);
   }
 
   return referenceFrame;
