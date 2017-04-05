@@ -13,7 +13,7 @@ const ERROR_CONTAIN_ILLEGAL_CHARACTERS = 'New folder name contains illegal chara
 /* Constants */
 const ORGANIZATION_ID = 1;
 const ROOT_FOLDER_ID = 0;
-const ILLEGAL_CHARACTERS = /^[`~!@#$%^&*()-_=+\\|[\]{};:'",<.>/?]+$/;
+const ILLEGAL_CHARACTERS = /[`~!@#$%^&*()-_=+\\|[\]{};:'",<.>/?]+/;
 
 /**
 * Folder Object
