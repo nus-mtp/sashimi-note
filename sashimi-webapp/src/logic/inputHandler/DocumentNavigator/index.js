@@ -62,32 +62,45 @@ DocumentNavigator.prototype.unsetDomBehaviour = function setDomBehaviour() {
 
 
 DocumentNavigator.prototype.addDomStyling = function addDomStyling() {
-  const parentReference = this.el.parent;
-  const computedStyle = domUtils.getComputedStyle(parentReference);
+  // Reset parent height to force DOM relayout
+  // [1] Initialise layout properties
+  const containerReference = this.el.container;
+  const originalHeight = domUtils.getComputedStyle(containerReference).height;
+
+  setTimeout(() => {
+    // [2] Initialise layout properties
+    let tempContainerHeight = domUtils.getComputedStyle(this.el.container).height;
+    tempContainerHeight = parseFloat(tempContainerHeight) + 500;
+    containerReference.documentNavigator.originalStyle.height = tempContainerHeight;
+
+    const renderHeight = `${tempContainerHeight * this.transform.scale}px`;
+    this.el.parent.style.height = renderHeight;
+  }, 1000);
+
+  containerReference.documentNavigator = {
+    originalStyle: { height: originalHeight }
+  };
+
 
   // Store default parent reference properties before overwriting
   this.defaultProperties = {
     style: {
-      top: computedStyle.top,
-      bottom: computedStyle.bottom,
-      left: computedStyle.left,
-      right: computedStyle.right,
-      position: computedStyle.position,
+      top: this.el.parent.top,
+      left: this.el.parent.left,
+      overflow: 'initial',
     },
     attribute: {
-      touchEvent: parentReference.getAttribute('touch-event'),
+      touchEvent: this.el.parent.getAttribute('touch-action'),
     }
   };
 
   // Parent reference properties with the required one
-  domUtils.overwriteStyle(parentReference.style, {
+  domUtils.overwriteStyle(this.el.parent.style, {
     top: 0,
-    bottom: 0,
     left: 0,
-    right: 0,
-    position: 'absolute',
+    overflow: 'hidden',
   });
-  parentReference.setAttribute('touch-action', 'none');
+  this.el.parent.setAttribute('touch-action', 'pan-x pan-y');
 };
 
 DocumentNavigator.prototype.removeDomStyling = function removeDomStyling() {

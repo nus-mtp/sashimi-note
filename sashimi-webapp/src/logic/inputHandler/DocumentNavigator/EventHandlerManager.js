@@ -46,22 +46,12 @@ export default function(navInstance) {
       },
       dragmove(event) {
         if (navInstance.eventInstance.state.action !== 'panning') {
-          return false;
-        }
-
-        if (navInstance.eventInstance.numPointers > 1) {
-          return false; // Panning is restricted with using 1 finger only
-        }
-        const moveSpeed = (1/navInstance.transform.scale);
-        const translateY = guard.translateY(navInstance.transform.translateY + (event.dy * moveSpeed), navInstance.el.container);
-        let translateX = 0;
-        if ((navInstance.width.parent) < navInstance.width.element * navInstance.transform.scale) {
-          translateX = guard.translateX(navInstance.transform.translateX + (event.dx * moveSpeed), navInstance.el.container);
+          return;
         }
 
         // translate the element
-        navInstance.transform.set({ translateX, translateY });
-        return false;
+        const translateY = (navInstance.el.parent.scrollTop - (event.dy));
+        navInstance.el.parent.scrollTop = translateY;
       },
       dragend(event) {
         if (navInstance.eventInstance.state.action === 'panning') {
@@ -69,15 +59,21 @@ export default function(navInstance) {
         }
       },
       zoom(event) {
-        if (event.type === 'gesturemove' && navInstance.eventInstance.numPointers !== 2) {
-        // The event is a gesture, but is it not executed by two fingers
+        event.preventDefault();
+        if (event.type === 'gesturemove' && navInstance.eventInstance.numPointers < 2) {
+          // The event is a gesture, but is it not executed by at least two fingers
           return;
         }
-
         if (!event.ds) event.ds = (-event.deltaY / 1000);
-        let scale = navInstance.transform.scale * (1 + event.ds);
+        let scale = navInstance.transform.scale * (1 + event.ds) || navInstance.transform.scale;
         scale = guard.scale(scale);
         navInstance.transform.set({ scale });
+
+        if (navInstance.el.container.documentNavigator) {
+          const tempContainerHeight = navInstance.el.container.documentNavigator.originalStyle.height;
+          const renderHeight = `${tempContainerHeight * navInstance.transform.scale}px`;
+          navInstance.el.parent.style.height = renderHeight;
+        }
       },
     },
     pointer: {
@@ -112,6 +108,12 @@ export default function(navInstance) {
         setTimeout(() => {
           navInstance.el.container.style.transition = '';
         }, transitionDuration);
+
+        if (navInstance.el.container.documentNavigator) {
+          const tempContainerHeight = navInstance.el.container.documentNavigator.originalStyle.height;
+          const renderHeight = `${tempContainerHeight * navInstance.transform.scale}px`;
+          navInstance.el.parent.style.height = renderHeight;
+        }
       },
       transitioned: NOT_IMPLEMENTED
     },
@@ -120,12 +122,7 @@ export default function(navInstance) {
         // event.preventDefault() is called so that MS Edge does not
         // zoom the entire window.
         event.preventDefault();
-
         this.eventFn.gesture.zoom.call(navInstance, event);
-      } else {
-        let translateY = navInstance.transform.translateY - ((event.deltaY/4) * (1 / navInstance.transform.scale));
-        translateY = guard.translateY(translateY, navInstance.el.container);
-        navInstance.transform.set({ translateY });
       }
     }
   };
