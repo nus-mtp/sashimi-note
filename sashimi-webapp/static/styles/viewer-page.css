@@ -1,4 +1,4 @@
-body > div {
+html {
   touch-action: pan-x pan-y;
   background: #f1f1f1;
   padding: 0;

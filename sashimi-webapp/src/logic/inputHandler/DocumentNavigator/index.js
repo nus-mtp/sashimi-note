@@ -84,27 +84,17 @@ DocumentNavigator.prototype.addDomStyling = function addDomStyling() {
 
   // Store default parent reference properties before overwriting
   this.defaultProperties = {
-    style: {
-      top: this.el.parent.top,
-      left: this.el.parent.left,
-      overflow: 'initial',
-    },
     attribute: {
-      touchEvent: this.el.parent.getAttribute('touch-action'),
+      touchEvent: this.el.parent.parentNode.parentNode.getAttribute('touch-action'),
     }
   };
 
   // Parent reference properties with the required one
-  domUtils.overwriteStyle(this.el.parent.style, {
-    top: 0,
-    left: 0,
-    overflow: 'hidden',
-  });
-  this.el.parent.setAttribute('touch-action', 'pan-x pan-y');
+  this.el.parent.parentNode.parentNode.setAttribute('touch-action', 'pan-x pan-y');
 };
 
 DocumentNavigator.prototype.removeDomStyling = function removeDomStyling() {
-  const parentReference = this.el.parent;
+  const parentReference = this.el.parent.parentNode.parentNode;
 
   domUtils.overwriteStyle(parentReference.style, this.defaultProperties.style);
 

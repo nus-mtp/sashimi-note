@@ -57,7 +57,6 @@
 
         const eleParent = iframeDoc.createElement('div');
         const eleContainer = iframeDoc.createElement('div');
-        eleContainer.setAttribute('touch-action', 'pan-x pan-y');
         eleParent.appendChild(eleContainer);
         iframeDoc.body.appendChild(eleParent);
 
