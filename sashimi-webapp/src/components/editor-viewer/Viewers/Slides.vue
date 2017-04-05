@@ -52,20 +52,24 @@
           '/styles/viewer-page.css',
           '/vendors/highlight.js/styles/ocean.css',
           '/vendors/katex/katex.min.css'
-        ]);
-        const iframeDoc = iframeBuilder.getDocument(this.$el);
-
-        const eleParent = iframeDoc.createElement('div');
-        const eleContainer = iframeDoc.createElement('div');
-        eleParent.appendChild(eleContainer);
-        iframeDoc.body.appendChild(eleParent);
-
-        this.pageRenderer = new PageRenderer(eleContainer, PAGE_A6);
-        renderThrottleFn(this.htmlData, this.pageRenderer)
+        ])
         .then(() => {
-          // Initialise navigation for Slide mode
-          const resizeObserveTarget = this.$el.parentNode.parentNode;
-          this.documentNavigator = new DocumentNavigator(eleContainer, resizeObserveTarget);
+          const iframeDoc = iframeBuilder.getDocument(this.$el);
+
+          const eleParent = iframeDoc.createElement('div');
+          const eleContainer = iframeDoc.createElement('div');
+          eleParent.appendChild(eleContainer);
+          iframeDoc.body.appendChild(eleParent);
+          return eleContainer;
+        })
+        .then((renderTarget) => {
+          this.pageRenderer = new PageRenderer(renderTarget, PAGE_A6);
+          return renderThrottleFn(this.htmlData, this.pageRenderer)
+          .then(() => {
+            // Initialise navigation for Slide mode
+            const resizeObserveTarget = this.$el.parentNode.parentNode;
+            this.documentNavigator = new DocumentNavigator(renderTarget, resizeObserveTarget);
+          });
         });
       });
     },
