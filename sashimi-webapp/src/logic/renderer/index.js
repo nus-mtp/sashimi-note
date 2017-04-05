@@ -19,7 +19,7 @@ export default function PageRenderer(renderDomTarget, page) {
   this.renderHeight = helper.computeRenderHeight(this.page);
 
   // Set renderFrame and id
-  this.renderDomId = renderDomTarget || null;
+  this.renderDomId = (typeof renderDomTarget === 'string') ? renderDomTarget : 'paginated-view';
   this.renderFrame = elementUtils.resolveElement(renderDomTarget);
   if (!this.renderFrame) {
     throw new Error('Element provided to PageRenderer is not found at this moment');
