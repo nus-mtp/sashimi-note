@@ -36,6 +36,7 @@ DocumentNavigator.prototype.updateElementReference = function updateElementRefer
     container: containerReference,
     parent: containerReference.parentNode,
     element: containerReference.childNodes[0],
+    html: containerReference.ownerDocument.body.parentNode
   };
 };
 
@@ -95,16 +96,16 @@ DocumentNavigator.prototype.addDomStyling = function addDomStyling() {
   // Store default parent reference properties before overwriting
   this.defaultProperties = {
     attribute: {
-      touchEvent: this.el.parent.parentNode.parentNode.getAttribute('touch-action'),
+      touchEvent: this.el.html.getAttribute('touch-action'),
     }
   };
 
   // Parent reference properties with the required one
-  this.el.parent.parentNode.parentNode.setAttribute('touch-action', 'pan-x pan-y');
+  this.el.html.setAttribute('touch-action', 'pan-x pan-y');
 };
 
 DocumentNavigator.prototype.removeDomStyling = function removeDomStyling() {
-  const parentReference = this.el.parent.parentNode.parentNode;
+  const parentReference = this.el.html;
 
   domUtils.overwriteStyle(parentReference.style, this.defaultProperties.style);
 
@@ -127,7 +128,7 @@ DocumentNavigator.prototype.addEventListeners = function addEventListeners() {
 
   const iframeDoc = this.el.parent.ownerDocument;
   const iframeWin = iframeDoc.defaultView || iframeDoc.parentWindow;
-  this.interactable = interact(this.el.parent.parentNode.parentNode);
+  this.interactable = interact(this.el.html);
   this.interactable.draggable(this.eventHandler.settings.draggable);
   this.interactable.gesturable(this.eventHandler.settings.gesturable);
 
