@@ -1,3 +1,4 @@
+import domUtils from 'src/helpers/domUtils';
 import unitConverter from 'src/helpers/unitConverter';
 
 const NOT_IMPLEMENTED = null;
@@ -46,22 +47,12 @@ export default function(navInstance) {
       },
       dragmove(event) {
         if (navInstance.eventInstance.state.action !== 'panning') {
-          return false;
-        }
-
-        if (navInstance.eventInstance.numPointers > 1) {
-          return false; // Panning is restricted with using 1 finger only
-        }
-        const moveSpeed = (1/navInstance.transform.scale);
-        const translateY = guard.translateY(navInstance.transform.translateY + (event.dy * moveSpeed), navInstance.el.container);
-        let translateX = 0;
-        if ((navInstance.width.parent) < navInstance.width.element * navInstance.transform.scale) {
-          translateX = guard.translateX(navInstance.transform.translateX + (event.dx * moveSpeed), navInstance.el.container);
+          return;
         }
 
         // translate the element
-        navInstance.transform.set({ translateX, translateY });
-        return false;
+        const translateY = (navInstance.el.parent.scrollTop - (event.dy));
+        navInstance.el.parent.scrollTop = translateY;
       },
       dragend(event) {
         if (navInstance.eventInstance.state.action === 'panning') {
@@ -69,15 +60,51 @@ export default function(navInstance) {
         }
       },
       zoom(event) {
-        if (event.type === 'gesturemove' && navInstance.eventInstance.numPointers !== 2) {
-        // The event is a gesture, but is it not executed by two fingers
+        event.preventDefault();
+        if (event.type === 'gesturemove' && navInstance.eventInstance.numPointers < 2) {
+          // The event is a gesture, but is it not executed by at least two fingers
           return;
         }
+        if (!event.ds) {
+          // event polyfill for interactjs gesturable
+          // deltaY is only available for mousewheel event
+          // detail is only available for DOMMouseWheel event
+          event.ds = (event.deltaY) ? (-event.deltaY / 1000) : (-event.detail / 30);
+        }
 
-        if (!event.ds) event.ds = (-event.deltaY / 1000);
-        let scale = navInstance.transform.scale * (1 + event.ds);
+        let scale = navInstance.transform.scale * (1 + event.ds) || navInstance.transform.scale;
         scale = guard.scale(scale);
         navInstance.transform.set({ scale });
+
+        if (navInstance.el.container.documentNavigator) {
+          const tempContainerHeight = navInstance.el.container.documentNavigator.originalStyle.height;
+          const tempContainerWidth = navInstance.el.container.documentNavigator.originalStyle.width;
+
+          const renderHeight = tempContainerHeight * navInstance.transform.scale;
+          const renderWidth = tempContainerWidth * navInstance.transform.scale;
+
+          // Readjust scrollTop - [1] Cache original height of parent div
+          const oriHeight = domUtils.getComputedStyle(navInstance.el.parent).height;
+          const oriHeightPx = unitConverter.get(oriHeight, 'px', false);
+
+          // Readjust parent height and width to fix overall scrollbar problem
+          navInstance.el.parent.style.height = `${renderHeight}px`;
+          navInstance.el.parent.style.width = `${renderWidth}px`;
+
+          // Readjust scrollTop - [2] Compute height difference and adjust scrollTop
+          const newHeightPx = renderHeight;
+          const heightChange = newHeightPx / oriHeightPx;
+          navInstance.el.parent.parentNode.scrollTop *= heightChange;
+
+          // Readjust left position to fix scroll left problem
+          const parentParent = navInstance.el.parent.parentNode;
+          const pPStyles = domUtils.getComputedStyle(parentParent);
+          const pPWidthPx = unitConverter.get(pPStyles.width, 'px', false);
+          if (renderWidth > pPWidthPx) {
+            const eatenLeft = -(pPWidthPx - renderWidth)/2;
+            navInstance.el.parent.style.left = `${eatenLeft}px`;
+          }
+        }
       },
     },
     pointer: {
@@ -108,10 +135,17 @@ export default function(navInstance) {
         const transitionDuration = 500;
         // Resize the element's transformer
         navInstance.el.container.style.transition = `transform ${transitionDuration}ms`;
+        navInstance.width.element = navInstance.width.element || navInstance.width.parent - marginWidth;
         navInstance.transform.set({ scale: (navInstance.width.parent - marginWidth) / navInstance.width.element });
         setTimeout(() => {
           navInstance.el.container.style.transition = '';
         }, transitionDuration);
+
+        if (navInstance.el.container.documentNavigator) {
+          const tempContainerHeight = navInstance.el.container.documentNavigator.originalStyle.height;
+          const renderHeight = `${tempContainerHeight * navInstance.transform.scale}px`;
+          navInstance.el.parent.style.height = renderHeight;
+        }
       },
       transitioned: NOT_IMPLEMENTED
     },
@@ -120,12 +154,7 @@ export default function(navInstance) {
         // event.preventDefault() is called so that MS Edge does not
         // zoom the entire window.
         event.preventDefault();
-
         this.eventFn.gesture.zoom.call(navInstance, event);
-      } else {
-        let translateY = navInstance.transform.translateY - ((event.deltaY/4) * (1 / navInstance.transform.scale));
-        translateY = guard.translateY(translateY, navInstance.el.container);
-        navInstance.transform.set({ translateY });
       }
     }
   };

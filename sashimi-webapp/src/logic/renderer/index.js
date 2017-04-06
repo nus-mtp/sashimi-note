@@ -1,3 +1,4 @@
+import elementUtils from 'src/helpers/elementUtils';
 import defaultConfig from './defaultConfig';
 import renderCore from './core';
 import helper from './helper';
@@ -5,26 +6,25 @@ import helper from './helper';
 /**
  * Constructor for the PageRenderer instance that is used to contain the
  * source HTML and CSS data and the render target's id and page size
- * @param {string} renderDomId
+ * @param {string|Element} renderDomTarget - Accept either a ID string
+ *                                           of a HTML Element or HTML Element reference
  * @param {Object} page - A page config containing information about the page sizing
  * @param {string} page.width - in css width.
  * @param {string} page.height - in css height.
  * @param {Object} page.padding - for setting the inner the padding size used on the page.
  */
-export default function PageRenderer(renderDomId, page) {
+export default function PageRenderer(renderDomTarget, page) {
   // Set page sizing. Use default if not provided
   this.page = page || defaultConfig.page;
   this.renderHeight = helper.computeRenderHeight(this.page);
 
   // Set renderFrame and id
-  this.renderDomId = renderDomId;
-  if (!this.renderDomId) {
-    throw new Error('Target DOM id is not provided');
-  }
-  this.renderFrame = document.getElementById(renderDomId);
+  this.renderDomId = (typeof renderDomTarget === 'string') ? renderDomTarget : 'paginated-view';
+  this.renderFrame = elementUtils.resolveElement(renderDomTarget);
   if (!this.renderFrame) {
-    throw new Error(`Element with id='${renderDomId}' is not found at this moment`);
+    throw new Error('Element provided to PageRenderer is not found at this moment');
   }
+  this.ownerDocument = renderDomTarget.ownerDocument;
 
   // Set reference frame
   this.referenceFrame = this.getReferenceFrame();
@@ -42,11 +42,11 @@ export default function PageRenderer(renderDomId, page) {
  */
 PageRenderer.prototype.getReferenceFrame = function getReferenceFrame() {
   const idOfReferenceFrame = defaultConfig.prefix.reference + this.renderDomId;
-  let referenceFrame = document.getElementById(idOfReferenceFrame);
+  let referenceFrame = this.ownerDocument.getElementById(idOfReferenceFrame);
 
   // Create a new reference frame if doesn't exist
   if (!referenceFrame) {
-    referenceFrame = document.createElement('DIV');
+    referenceFrame = this.ownerDocument.createElement('DIV');
     referenceFrame.setAttribute('id', idOfReferenceFrame);
 
     // Set reference frame styling by iterate through the refStyle
@@ -71,10 +71,10 @@ PageRenderer.prototype.getReferenceFrame = function getReferenceFrame() {
     helper.overwriteStyle(referenceFrame.style, refStyle);
 
     // Render reference frame to DOM
-    if (!document.body) {
+    if (!this.ownerDocument.body) {
       throw new Error('Unable to append referenceFrame to document body');
     }
-    document.body.appendChild(referenceFrame);
+    this.ownerDocument.body.appendChild(referenceFrame);
   }
 
   return referenceFrame;

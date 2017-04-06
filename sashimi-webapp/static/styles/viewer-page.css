@@ -1,0 +1,22 @@
+html {
+  touch-action: pan-x pan-y;
+}
+
+body {
+  padding: 0;
+  margin: 0;
+  margin-left: auto;
+  margin-right: auto;
+  background: #f1f1f1;
+}
+
+.page-view {
+  box-shadow: 1px 1px 6px 2px rgba(0, 0, 0, 0.3);
+  position: relative;
+  box-sizing: border-box;
+  background-color: white;
+  overflow: hidden;
+  margin: 0 auto;
+  margin-top: 30px;
+  margin-bottom: 50px;
+}
