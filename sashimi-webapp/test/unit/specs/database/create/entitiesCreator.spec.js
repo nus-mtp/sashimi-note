@@ -163,7 +163,9 @@ describe('entitiesCreator', () => {
         )
         .catch(sqlErr => done(sqlErr))
       )
-      .then(() => done());
+      .then(() => {
+        done();
+      });
     });
 
     it('should fill up table with default data', (done) => {
@@ -223,9 +225,9 @@ describe('entitiesCreator', () => {
           }]);
         })
       )
-      .then(() =>
-        done()
-      )
+      .then(() => {
+        done();
+      })
       .catch(sqlErr => done(sqlErr));
     }).timeout(10000);
   });
