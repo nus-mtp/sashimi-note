@@ -40,8 +40,7 @@
         iframeBuilder.addStyles(this.$el, [
           '/styles/markdown-html.css',
           '/styles/viewer-page.css',
-          '/vendors/highlight.js/styles/ocean.css',
-          '/vendors/katex/katex.min.css'
+          '/styles/markdown-imports.css'
         ])
         .then(() => {
           const iframeDoc = iframeBuilder.getDocument(this.$el);
