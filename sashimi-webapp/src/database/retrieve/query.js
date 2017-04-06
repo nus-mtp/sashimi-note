@@ -102,8 +102,8 @@ export default class query {
     return new Promise((resolve, reject) =>
       sqlCommands.loadFile(fileId)
       .then((fileContent) => {
-        const resolvedFileContent = stringManipulator.replaceAll(fileContent, '\\\\"', '"');
-        resolve(resolvedFileContent);
+        fileContent = stringManipulator.revertSQLInjections(fileContent);
+        resolve(fileContent);
       })
       .catch(sqlError => reject(sqlError))
     );

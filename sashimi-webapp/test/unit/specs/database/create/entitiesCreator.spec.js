@@ -1,5 +1,4 @@
 import entitiesCreator from 'src/database/create/entitiesCreator';
-import dataDelete from 'src/database/data-modifier/dataDelete';
 import exceptions from 'src/database/exceptions';
 import constants from 'src/database/constants';
 
@@ -41,8 +40,18 @@ function isTableExistsInDatabase(tableName, callback) {
   };
 }
 
+function deleteDatabase(databaseName) {
+  return new Promise((resolve, reject) => {
+    const thisDatabaseName = databaseName || testDatabaseName;
+    if (!window.indexedDB) {
+      reject(exceptions.IndexedDBNotSupported);
+    }
+    resolve(window.indexedDB.deleteDatabase(thisDatabaseName));
+  });
+}
+
 function cleanTestCase() {
-  return dataDelete.deleteAllEntities(testDatabaseName);
+  return deleteDatabase(testDatabaseName);
 }
 
 describe('entitiesCreator', () => {
@@ -154,7 +163,9 @@ describe('entitiesCreator', () => {
         )
         .catch(sqlErr => done(sqlErr))
       )
-      .then(() => done());
+      .then(() => {
+        done();
+      });
     });
 
     it('should fill up table with default data', (done) => {
@@ -214,9 +225,9 @@ describe('entitiesCreator', () => {
           }]);
         })
       )
-      .then(() =>
-        done()
-      )
+      .then(() => {
+        done();
+      })
       .catch(sqlErr => done(sqlErr));
     }).timeout(10000);
   });

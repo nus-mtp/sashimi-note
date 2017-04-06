@@ -10,6 +10,7 @@ import constants from 'src/database/constants';
 import entitiesCreator from 'src/database/create/entitiesCreator';
 import query from 'src/database/retrieve/query';
 import dataModifier from 'src/database/data-modifier/dataModifier';
+import exceptions from 'src/database/exceptions';
 
 let databaseName = constants.INDEXEDDB_NAME;
 
@@ -186,4 +187,7 @@ export default class storage {
     databaseName = newDatabaseName || databaseName;
     return dataModifier.deleteAllEntities(databaseName);
   }
+
+  static exceptions;
+
 }

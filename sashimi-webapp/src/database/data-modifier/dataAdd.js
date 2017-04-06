@@ -37,7 +37,7 @@ function createNewFile(organizationId, filePath, folderId, newFileId, newFileNam
 
     return sqlCommands.insertContent(constants.ENTITIES_FILE_MANAGER, newFileData)
     .then(success => resolve(newFileData[0]))
-    .catch(err => reject(err));
+    .catch(sqlErr => reject(sqlErr));
   });
 }
 
@@ -101,6 +101,7 @@ export default class dataAdd {
         return sqlCommands.retrieveFullFile(fileId)
         .then((files) => {
           files[0].file_id = newFileId;
+          files[0].file_name = stringManipulator.stringConcat('copy of ', files[0].file_name);
           return files;
         })
         .then(duplicatedFile =>
