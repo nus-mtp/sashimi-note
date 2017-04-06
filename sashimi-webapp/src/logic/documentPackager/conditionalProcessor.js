@@ -7,7 +7,7 @@
  * If condition = student, it hides from student versions only.)
  * @param {MarkdownIt} md - MarkdownIt object containing parsed data of markdown content
  */
-let fileName;
+let fileName = null;
 
 function findName(state, startLine) {
   const indent = state.sCount[startLine];
@@ -76,9 +76,9 @@ function hideShowInline(state, silent) {
  * Outputs everything that is conditionally stated to be hidden as ''
  */
 function hideShowBlock(state, startLine, endLine, silent) {
-  let category; // variable to store conditional hiding for different document types
   let nextLine; // next line counter, to keep track of line number
   let token;  // token for use to pass into renderer to generate HTML
+  let category = null; // variable to store conditional hiding for different document types
   let hasCategory = false;
   let haveEndMarker = false;
   let pos = state.bMarks[startLine] + state.tShift[startLine]; // current "cursor" position
@@ -235,9 +235,15 @@ function hideShowBlock(state, startLine, endLine, silent) {
   return true;
 }
 
-export default function hideShowPlugin(md) {
-  md.inline.ruler.after('emphasis', 'hideShowInline', hideShowInline);
-  md.block.ruler.after('table', 'hideShowBlock', hideShowBlock);
-}
-
-// Future note: can use hideShowPlugin.setCond = function() {...} for setting fileName variable
+export default {
+  hideShowPlugin: function hideShowPlugin(md) {
+    md.inline.ruler.after('emphasis', 'hideShowInline', hideShowInline);
+    md.block.ruler.after('table', 'hideShowBlock', hideShowBlock);
+  },
+  setFileName: function setFileName(name) {
+    fileName = name;
+  },
+  clearFileName: function clearFileName() {
+    fileName = null;
+  }
+};
