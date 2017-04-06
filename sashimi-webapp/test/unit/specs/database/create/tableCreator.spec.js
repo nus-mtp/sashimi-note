@@ -1,5 +1,4 @@
 import tableCreator from 'src/database/create/tableCreator';
-import dataDelete from 'src/database/data-modifier/dataDelete';
 import exceptions from 'src/database/exceptions';
 
 const testDatabaseName = 'testTableCreator';
