@@ -5,6 +5,7 @@
       v-on:execute="executeAction"
       v-on:changeFolder="changeFolder"
           :folder-path="folderPath"
+          :view-mode="viewMode"
     ></userInputs>
     <documents 
       v-on:changeFolder="changeFolder"
@@ -45,7 +46,7 @@ export default {
       history: null,
       folderPath: [],
       changeDocViewOnResize: function() {
-        if (window.innerWidth < 768) {
+        if (window.innerWidth < 480) {
           this.viewMode = 'listView';
         }
       }

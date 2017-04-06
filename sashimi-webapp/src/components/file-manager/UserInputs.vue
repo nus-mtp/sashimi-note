@@ -121,7 +121,7 @@ export default {
       listViewMode: true,
     };
   },
-  props: ['folderPath'],
+  props: ['folderPath', 'viewMode'],
   methods: {
     execute(action) {
       eventHub.$emit('execute', action);
@@ -165,6 +165,9 @@ export default {
     },
     focusedDoc(theDoc) {
       this.buttonDisabled = Boolean(!theDoc);
+    },
+    viewMode(mode) {
+      this.setViewMode(mode);
     }
   },
   mounted() {
