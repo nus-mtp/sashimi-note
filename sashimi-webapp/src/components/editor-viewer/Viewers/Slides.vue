@@ -72,9 +72,6 @@
           });
         });
       });
-    },
-    beforeDestroy() {
-      this.documentNavigator.unsetDomBehaviour();
     }
   };
 </script>

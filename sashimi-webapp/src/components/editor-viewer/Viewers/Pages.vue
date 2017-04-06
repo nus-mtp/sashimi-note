@@ -62,9 +62,6 @@
           });
         });
       });
-    },
-    beforeDestroy() {
-      this.documentNavigator.unsetDomBehaviour();
     }
   };
 
