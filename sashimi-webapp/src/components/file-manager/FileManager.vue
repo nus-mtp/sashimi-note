@@ -19,6 +19,8 @@ import fileManager from 'src/logic/filemanager';
 import documents from './Documents';
 import userInputs from './UserInputs';
 
+let fileManagerVue = this;
+
 function constructFolderPath(folderObj) {
   const folderPath = [];
 
@@ -41,7 +43,12 @@ export default {
       viewMode: 'iconView',
       docs: {},
       history: null,
-      folderPath: []
+      folderPath: [],
+      changeDocViewOnResize: function() {
+        if (window.innerWidth < 768) {
+          this.viewMode = 'listView';
+        }
+      }
     };
   },
   watch: {
@@ -142,9 +149,17 @@ export default {
     }
   },
   mounted() {
+    fileManagerVue = this;
     const ROOT_FOLDER_ID = 0;
     this.docs = fileManager.getFolderByID(ROOT_FOLDER_ID);
     this.history = fileManager.createHistory(this.docs);
+
+    window.addEventListener('resize', this.changeDocViewOnResize.bind(fileManagerVue));
+  },
+  beforeDestroy() {
+    fileManagerVue = this;
+
+    window.removeEventListener('resize', this.changeDocViewOnResize.bind(fileManagerVue));
   }
 };
 
