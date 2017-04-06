@@ -198,18 +198,23 @@ File.prototype.rename = function rename(newFileName) {
 File.prototype.download = function download() {
   return this.load()
   .then((data) => {
-    const element = document.createElement('a');
-    const href = 'data:text/plain;charset=utf-8,';
-    const content = encodeURIComponent(data);
-    element.setAttribute('href', href+content, data);
     const fileName = this.name.concat('.md');
-    element.setAttribute('download', fileName);
+    if (window.navigator.msSaveBlob) {
+      const blobObject = new Blob([data]);
+      window.navigator.msSaveBlob(blobObject, fileName);
+    } else {
+      const element = document.createElement('a');
+      const href = 'data:text/plain;charset=utf-8,';
+      const content = encodeURIComponent(data);
+      element.setAttribute('href', href+content, data);
+      element.setAttribute('download', fileName);
 
-    element.style.display = 'none';
-    document.body.appendChild(element);
+      element.style.display = 'none';
+      document.body.appendChild(element);
 
-    element.click();
+      element.click();
 
-    document.body.removeChild(element);
+      document.body.removeChild(element);
+    }
   });
 };
