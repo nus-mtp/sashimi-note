@@ -16,7 +16,7 @@ import mdKatex from 'markdown-it-katex';
 import mdAnchor from 'markdown-it-anchor';
 import mdTOC from 'markdown-it-table-of-contents';
 // ASCIIMath Plugin
-import mdAsciiMath from 'markdown-it-asciimath';
+import mdAsciiMath from './markdown-it-asciimath';
 // Custom Fence Block Rule for textual Diagram representation
 import mdDiagrams from './markdown-it-diagram';
 // Custom conditional plugin
