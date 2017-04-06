@@ -186,7 +186,7 @@ export default {
 <style scoped lang="scss">
 @import 'src/assets/styles/variables.scss';
 .navbar {
-  padding: 20px;
+  padding-top: 20px;
   box-shadow: 0 2px 6px rgba(0,0,0,0.3);
   z-index: 999;
   position: relative;
@@ -235,7 +235,7 @@ export default {
 .userActions {
   /*background-color: $navbar-background-color;
   box-shadow: 0 2px 10px rgba(0,0,0,0.2);*/
-  padding-top: 10px 0;
+  padding-top: 20px;
 }
 
 .navbar-breadcrumb {
@@ -243,6 +243,8 @@ export default {
   font-size: $navbar-font-size;
   padding-left: 0;
   margin: 0;
+  height: 32px;
+  vertical-align: middle;
 
   li {
     display: inline;
@@ -262,7 +264,8 @@ export default {
 }
 
 .navbar-buttons {
-  margin: 0 2px; 
+  margin: 0 2px;
+  height: 32px;
 }
 
 .view-type {
