@@ -3,6 +3,8 @@
     <userInputs 
       v-on:changeViewMode="changeViewMode"
       v-on:execute="executeAction"
+      v-on:changeFolder="changeFolder"
+          :folder-path="folderPath"
     ></userInputs>
     <documents 
       v-on:changeFolder="changeFolder"
@@ -17,6 +19,19 @@ import fileManager from 'src/logic/filemanager';
 import documents from './Documents';
 import userInputs from './UserInputs';
 
+function constructFolderPath(folderObj) {
+  // blah
+  const folderPath = [];
+
+  folderPath.push(folderObj);
+  while (folderObj.parentFolder !== null) {
+    folderPath.push(folderObj.parentFolder);
+    folderObj = folderObj.parentFolder;
+  }
+
+  return folderPath.reverse();
+}
+
 export default {
   components: {
     documents,
@@ -26,25 +41,37 @@ export default {
     return {
       viewMode: 'listView',
       docs: {},
-      history: null
+      history: null,
+      folderPath: []
     };
   },
   watch: {
   },
   methods: {
-    changeFolder(newFolder) {
-      if (newFolder.id === 0) {
-        this.$router.push({ path: '' });
-      } else {
-        this.$router.push({ path: '', query: { folder: newFolder.id } });
+    changeFolder(folderObj) {
+      this.folderPath = constructFolderPath(folderObj);
+      this.updateUrlPath(folderObj);
+      this.docs = folderObj;
+      try {
+        this.history.update(this.docs);
+      } catch (error) {
+        if (error.message === 'Attempting to update the same folder') {
+          return;
+        }
+        throw error;
       }
-      this.docs = newFolder;
-      this.history.update(this.docs);
     },
     changeViewMode(viewMode) {
       this.viewMode = viewMode;
     },
-    executeAction(action, doc) {
+    updateUrlPath(folderObj) {
+      if (folderObj.id === 0) {
+        this.$router.push({ path: '' });
+      } else {
+        this.$router.push({ path: '', query: { folder: folderObj.id } });
+      }
+    },
+    executeAction(action, data) {
       switch (action) {
         case 'createFolder': {
           this.docs.createFolder('Folder');
@@ -56,42 +83,30 @@ export default {
         }
         case 'history back': {
           this.docs = this.history.previous();
+          this.folderPath = constructFolderPath(this.docs);
           break;
         }
         case 'history forward': {
           this.docs = this.history.next();
+          this.folderPath = constructFolderPath(this.docs);
           break;
         }
         case 'download': {
-          this.downloadDoc(doc);
+          this.download(data);
           break;
         }
         case 'delete': {
-          doc.remove();
+          data.remove();
           break;
         }
         case 'search': {
-          if (doc === '') {
-            this.docs = this.history.currFolder;
-          } else {
-            fileManager.searchAll(doc)
-            .then((result) => { this.docs = result; })
-            .catch((error) => {
-              // Simple alert box for message
-              // TODO: Use a less obstrusive alert message
-              alert('Opps, I have problem finding your file');
-              console.log(error);
-            });
-            // Intentionally not updating the history stack.
-            // Since, there may be multiple incomplete searching,
-            // updating the history stack may unnecessary populate the stack.
-          }
+          this.search(data);
           break;
         }
         default: break;
       }
     },
-    downloadDoc(doc) {
+    download(doc) {
       doc.load()
       .then((docContent) => {
         const element = document.createElement('a');
@@ -109,6 +124,23 @@ export default {
         document.body.removeChild(element);
       });
     },
+    search(searchStr) {
+      if (searchStr === '') {
+        this.docs = this.history.currFolder;
+      } else {
+        fileManager.searchAll(searchStr)
+        .then((result) => { this.docs = result; })
+        .catch((error) => {
+          // Simple alert box for message
+          // TODO: Use a less obstrusive alert message
+          alert('Opps, I have problem finding your file');
+          console.log(error);
+        });
+        // Intentionally not updating the history stack.
+        // Since, there may be multiple incomplete searching,
+        // updating the history stack may unnecessary populate the stack.
+      }
+    }
   },
   mounted() {
     const ROOT_FOLDER_ID = 0;

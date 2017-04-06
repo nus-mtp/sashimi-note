@@ -1,5 +1,5 @@
 <template>
-  <div class="col vertical-align-child"
+  <div class="col vertical-align-child file-wrapper"
     v-on:dblclick="openFile"
   >
     <button class="file"
@@ -11,6 +11,7 @@
         v-on:blur="saveFileName"
         v-on:keypress="onKeyPress($event)"
         v-on:keyup="onKeyUp($event)"
+        v-on:paste="removeStyle($event)"
       >{{file.name}}</p>
     </button>
   </div>
@@ -30,8 +31,8 @@ export default {
     focusFile() {
       this.$emit('focusFile', this.file);
     },
-    blurFile() {
-      this.$emit('blurFile');
+    blurFile(event) {
+      this.$emit('blurFile', event);
     },
     saveFileName() {
       window.getSelection().removeAllRanges();
@@ -59,6 +60,12 @@ export default {
         this.saveFileName();
       }
     },
+    removeStyle(event) {
+      event.preventDefault();
+
+      const pastedText = event.clipboardData.getData('text/plain');
+      document.execCommand('insertHTML', false, pastedText);
+    }
   }
 };
 </script>

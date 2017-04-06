@@ -41,6 +41,10 @@ img {
   -ms-user-select: none;
 }
 
+a {
+  color: black;
+  text-decoration: none;
+}
 :focus {
   outline: 0;
 }
@@ -144,7 +148,7 @@ img {
     }
 
     img {
-      width: 40px;
+      width: 150px;
     }
     
     p {

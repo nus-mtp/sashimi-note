@@ -1,5 +1,5 @@
 <template>
-  <div class="col vertical-align-child" 
+  <div class="col vertical-align-child folder-wrapper" 
     v-on:dblclick="openFolder"
   >
     <button tabindex="1" class="folder"
@@ -11,6 +11,7 @@
         v-on:blur="saveFolderName"
         v-on:keypress="onKeyPress($event)"
         v-on:keyup="onKeyUp($event)"
+        v-on:paste="removeStyle($event)"
       >{{folder.name}}</p>
     </button>
   </div>
@@ -28,8 +29,8 @@
       focusFolder() {
         this.$emit('focusFolder', this.folder);
       },
-      blurFolder() {
-        this.$emit('blurFolder');
+      blurFolder(event) {
+        this.$emit('blurFolder', event);
       },
       saveFolderName() {
         window.getSelection().removeAllRanges();
@@ -55,6 +56,12 @@
         if (event.keyCode === enterKey) {
           this.saveFolderName();
         }
+      },
+      removeStyle(event) {
+        event.preventDefault();
+
+        const pastedText = event.clipboardData.getData('text/plain');
+        document.execCommand('insertHTML', false, pastedText);
       }
     },
   };

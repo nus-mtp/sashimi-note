@@ -1,13 +1,13 @@
 <template>
   <div>
-    <navbar v-model="action"></navbar>
-    <div class="section group content">
-      <div class="col editor-wrapper" v-bind:class="editorCols">
+    <navbar v-model="navbarInput"></navbar>
+    <div class="section group content" v-bind:data-viewMode="viewMode">
+      <div class="col editor-wrapper">
         <editor 
           v-model="mdContent"
         ></editor>
       </div>
-      <div class="col viewer-wrapper" v-bind:class="viewerCols">
+      <div class="col viewer-wrapper">
         <viewer 
           :editor-content="mdContent" 
           :file-format="fileFormat" 
@@ -25,6 +25,8 @@ import navbar from './Navbar';
 import viewer from './Viewer';
 import editor from './Editor';
 
+let contentVue = null;
+
 export default {
   components: {
     navbar,
@@ -34,53 +36,35 @@ export default {
   data() {
     return {
       mdContent: '',
-      action: '',
       fileFormat: 'html',
       file: null,
-      editorCols: {
-        span_6_of_12: true,
-        span_12_of_12: false,
-        span_0_of_12: false
-      },
-      viewerCols: {
-        span_6_of_12: true,
-        span_12_of_12: false,
-        span_0_of_12: false
+      viewMode: 'split',
+      navbarInput: this.viewMode,
+      changeViewModeOnResize: function() {
+        if (window.innerWidth < 768 && this.viewMode === 'split') {
+          this.viewMode = 'editor';
+        }
       }
     };
   },
   watch: {
-    action(value) {
-      if (value === 'pages' || value === 'slides' || value === 'html') {
-        this.fileFormat = value;
-      } else if (value === 'editor' || value === 'viewer' || value === 'split') {
-        switch (value) {
-          case 'editor':
-            this.editorCols.span_12_of_12 = true;
-            this.editorCols.span_6_of_12 = false;
-            this.viewerCols.span_6_of_12 = false;
-            this.viewerCols.span_12_of_12 = false;
-            this.viewerCols.span_0_of_12 = true;
-            this.editorCols.span_0_of_12 = false;
-            break;
-          case 'viewer':
-            this.editorCols.span_12_of_12 = false;
-            this.editorCols.span_6_of_12 = false;
-            this.viewerCols.span_6_of_12 = false;
-            this.viewerCols.span_12_of_12 = true;
-            this.editorCols.span_0_of_12 = true;
-            this.viewerCols.span_0_of_12 = false;
-            break;
-          default:
-          // split screen
-            this.editorCols.span_6_of_12 = true;
-            this.viewerCols.span_6_of_12 = true;
-            this.editorCols.span_12_of_12 = false;
-            this.viewerCols.span_12_of_12 = false;
-            this.editorCols.span_0_of_12 = false;
-            this.viewerCols.span_0_of_12 = false;
-            break;
+    navbarInput(value) {
+      switch (value) {
+        case 'pages':
+        case 'slides':
+        case 'html': {
+          this.fileFormat = value;
+          break;
         }
+
+        case 'editor':
+        case 'viewer':
+        case 'split': {
+          this.viewMode = value;
+          break;
+        }
+
+        default: break;
       }
     },
     mdContent: _.debounce(function saveFile(value) {
@@ -92,11 +76,28 @@ export default {
   computed: {
   },
   mounted() {
-    this.file = fileManager.getFileByID(this.$route.query.id);
+    contentVue = this;
+
+    // for testing purposes
+    // will be handled by fileManager logic
+    const fileID = parseInt(this.$route.query.id);
+
+    this.file = fileManager.getFileByID(fileID);
     this.file.load()
-    .then((data) => {
-      this.mdContent = data;
-    });
+      .then((data) => {
+        this.mdContent = data;
+      });
+
+    if (window.innerWidth < 768) {
+      this.viewMode = 'editor';
+    }
+
+    window.addEventListener('resize', this.changeViewModeOnResize.bind(contentVue));
+  },
+  beforeDestroy() {
+    contentVue = this;
+
+    window.removeEventListener('resize', this.changeViewModeOnResize.bind(contentVue));
   }
 };
 
@@ -107,13 +108,40 @@ export default {
   display: none;
 }
 
-.span_6_of_12,
-.span_12_of_12,
-.span_0_of_12 {
+.viewer-wrapper,
+.editor-wrapper {
   transition: width 0.7s;
 }
 
 .content {
   overflow-x: hidden;
-}
+
+  &[data-viewMode="editor"] {
+    .viewer-wrapper {
+      width: 0;
+    }
+
+    .editor-wrapper {
+      width: 100%;
+    }
+  }
+
+  &[data-viewMode="split"] {
+    .viewer-wrapper,
+    .editor-wrapper {
+      width: 50%;
+    }
+
+  }
+
+  &[data-viewMode="viewer"] {
+    .viewer-wrapper {
+      width: 100%;
+    }
+
+    .editor-wrapper {
+      width: 0;
+    }
+  }
+} 
 </style>

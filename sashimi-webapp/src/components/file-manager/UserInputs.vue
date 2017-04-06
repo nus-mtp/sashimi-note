@@ -1,79 +1,87 @@
 <template>
-  <div>
-    <div class="section group userInputs navbar vertical-align-child">
+  <div class="navbar">
+    <div class="section group userInputs vertical-align-child">
       <div class="col button-logo inline-block">
         <router-link to="/" class="vertical-align-child">
-          <img src="../../assets/sashimi.svg" class="inline-block" alt="sashimi">
-          <p class="inline-block">
-            SASHIMI NOTE
-          </p>
+          <img src="../../assets/sashimi-note.svg" class="inline-block" alt="sashimi">
         </router-link>
       </div>
       <!--Waiting for file-manager api to be completed to implement buttons-->
-      <div class="col searchBar inline-block">
-        <input
-          type="text"
-          placeholder="Search..."
-          v-model="searchString"
-        >
+      <div class="col searchBar inline-block vertical-align-child">
+        <div class="section group vertical-align-child">
+
+          <i class="col material-icons md-dark">search</i>
+          <input
+            class="col"
+            type="text"
+            placeholder="Search"
+            v-model="searchString"
+            required="required"
+            ref="searchInput"
+          >
+          <button class="col">
+            <i class="material-icons md-dark"
+                v-on:click="clearSearchString($event)">clear</i>
+          </button>
+        </div>
       </div>
     </div>
-    <div class="section group navbar userActions vertical-align-child">
+    <div class="section group userActions vertical-align-child">
       <div class="col float-left">
+        <button class="navbar-buttons" 
+                v-on:click="execute('history back')"
+        >
+          <i class="material-icons">arrow_back</i>
+        </button>
+        <button class="navbar-buttons" 
+                v-on:click="execute('history forward')"
+        >
+          <i class="material-icons">arrow_forward</i>
+        </button>
         <ul class="navbar-breadcrumb inline-block">
-          <li>
-            <button class="navbar-buttons hover-grow" 
-                    v-on:click="execute('history back')"
-            >
-              <i class="material-icons">arrow_back</i>
-            </button>
+          <li v-if="searchString !== ''">
+            Search results
           </li>
-          <li>
-            <button class="navbar-buttons hover-grow" 
-                    v-on:click="execute('history forward')"
-            >
-              <i class="material-icons">arrow_forward</i>
-            </button>
+          <li v-else>
+            Home
+          </li>
+          <li v-for="folder in folderPath" v-if="folder.name !== 'root'">
+            <a v-on:click="action(changeFolder)">
+              {{folder.name}}
             </a>
-          </li>
-          <li>
-            <a href="\">Home</a>
           </li>
         </ul>
       </div>
       <div class="float-right">
         <div class="col vertical-align-child buttons-right inline-block">
           <!--Button yet to be implemented. Commented out for deployment-->
-          <!--<button id="button-file-upload" class="navbar-buttons hover-grow">
+          <!--<button id="button-file-upload" class="navbar-buttons">
             <i class="material-icons md-dark">file_upload</i>
           </button>-->
-          <button id="button-create-folder" class="navbar-buttons hover-grow" 
+          <button id="button-create-folder" class="navbar-buttons" 
                   v-on:click="execute('createFolder')"
           >
             <i class="material-icons md-dark">create_new_folder</i>
           </button>
-          <button id="button-create-file" class="navbar-buttons hover-grow" 
+          <button id="button-create-file" class="navbar-buttons" 
                   v-on:click="execute('createFile')"
           >
             <i class="material-icons md-dark">note_add</i>
           </button>
           <!--Button yet to be implemented. Commented out for deployment-->
           <!--<button id="button-duplicate" class="navbar-buttons" 
-                  v-bind:class="{'hover-grow': buttonEffect}"
           >
             <i class="material-icons md-dark" 
               v-bind:class="{'md-inactive': buttonDisabled}"
             >content_copy</i>-->
           </button>
           <button id="button-file-download" class="navbar-buttons" 
-                  v-bind:class="{'hover-grow': buttonEffect}"
                     v-on:click="execute('download')"
           >
             <i class="material-icons md-dark" 
                 v-bind:class="{'md-inactive': buttonDisabled}">file_download</i>
           </button>
           <button id="button-delete" class="navbar-buttons" 
-                  v-bind:class="{'hover-grow': buttonEffect}"
                   v-on:click="execute('delete')"
           >
             <i class="material-icons md-dark" 
@@ -82,11 +90,13 @@
           </button>
       </div>
       <div class="col view-type inline-block">
-        <button id="button-icon-view" class="navbar-buttons hover-grow" 
+        <button id="button-icon-view" class="navbar-buttons" 
                 v-on:click="setViewMode('iconView')"
+                    :class="{ 'toggle-view-active': iconViewMode }"
         >Icon</button>|
-        <button id="button-list-view" class="navbar-buttons hover-grow" 
+        <button id="button-list-view" class="navbar-buttons" 
                 v-on:click="setViewMode('listView')"
+                :class="{ 'toggle-view-active': listViewMode }"
         >List</button>
       </div>
     </div>
@@ -104,11 +114,14 @@ export default {
   data() {
     return {
       buttonDisabled: true,
-      buttonEffect: false,
-      focusedDoc: {},
+      focusedDoc: null,
+      holdingDoc: null,
       searchString: '',
+      iconViewMode: false,
+      listViewMode: true,
     };
   },
+  props: ['folderPath'],
   methods: {
     execute(action) {
       eventHub.$emit('execute', action);
@@ -116,34 +129,55 @@ export default {
         case 'delete':
         case 'duplicate':
         case 'download': {
-          this.$emit('execute', action, this.focusedDoc);
+          if (this.focusedDoc) {
+            this.$emit('execute', action, this.focusedDoc);
+            this.focusedDoc = null;
+          }
           break;
         }
         default: {
           this.$emit('execute', action);
+          break;
         }
       }
     },
     setViewMode(viewMode) {
+      if (viewMode === 'iconView') {
+        this.iconViewMode = true;
+        this.listViewMode = false;
+      } else {
+        this.iconViewMode = false;
+        this.listViewMode = true;
+      }
       userInputsVue.$emit('changeViewMode', viewMode);
     },
+    clearSearchString(event) {
+      this.searchString = '';
+      event.target.value = '';
+    }
   },
   watch: {
     searchString: _.debounce((result) => {
       userInputsVue.$emit('execute', 'search', result);
-    }, 500)
+    }, 500),
+    $route() {
+      this.searchString = '';
+    },
+    focusedDoc(theDoc) {
+      this.buttonDisabled = Boolean(!theDoc);
+    }
   },
   mounted() {
     userInputsVue = this;
 
     eventHub.$on('focus', (focusedDoc) => {
-      this.buttonDisabled = false;
-      this.buttonEffect = true;
       this.focusedDoc = focusedDoc;
     });
-    eventHub.$on('blur', () => {
-      this.buttonDisabled = true;
-      this.buttonEffect = false;
+    eventHub.$on('blur', (event) => {
+      const clickTarget = (event.relatedTarget) ? event.relatedTarget.id : null;
+      if (!(clickTarget === 'button-delete' || clickTarget === 'button-file-download')) {
+        this.focusedDoc = null;
+      }
     });
   },
 };
@@ -151,34 +185,56 @@ export default {
 
 <style scoped lang="scss">
 @import 'src/assets/styles/variables.scss';
-
-.userInputs {
-  border-bottom: 1px solid $navbar-border-color;
+.navbar {
+  padding: 20px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+  z-index: 999;
+  position: relative;
 }
 
 .button-logo {
   width: 100%;
-  text-align: center;
   transform: scale(1.2);
+  padding: 10px 0;
+  text-align: center;
 }
 
 .searchBar {
-  text-align: center;
   width: 100%;
-  margin-top: 3px;
+  background-color: $grey-background;
+  text-align: left;
+
+  i {
+    font-size: 20px;
+    padding: 12px;
+  }
+  
+  button {
+    background-color: $grey-background;
+    border: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
 
   input {
-    border: 1px solid $navbar-border-color;
-    width: 80%;
-    padding: 8px;
+    border: none;
+    border-radius: 6px;
+    background-color: $grey-background;
+    width: calc(100% - #{$searchbar-icons-width}*2);
+    padding: 13px;
     font-family: $font-primary;
-    font-size: $font-size-secondary;
+    font-size: 17px;
+    box-sizing: border-box;
+  }
+
+  input:invalid + button {
+    display: none;
   }
 }
 
 .userActions {
-  background-color: $navbar-background-color;
-  box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+  /*background-color: $navbar-background-color;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.2);*/
   padding-top: 10px 0;
 }
 
@@ -198,8 +254,6 @@ export default {
     }
 
     a {
-      text-decoration: underline;
-
       &:visited {
         color: black;
       }
@@ -214,6 +268,7 @@ export default {
 .view-type {
   display: none;
   font-size: $navbar-font-size;
+  font-family: $font-primary;
 
   a {
     text-decoration: none;
@@ -223,6 +278,11 @@ export default {
     }
   }
 }
+
+.toggle-view-active {
+    text-transform: uppercase;
+    font-weight: bold;
+  }
 
 @media screen and (min-width: 480px) {
   .view-type {
@@ -237,11 +297,8 @@ export default {
   }
 
   .searchBar {
-    width: calc(100% - #{$button-logo-width});
-
-    input {
-      width: 70%;
-    }
+    width: 50%;
+    margin-left: 40px;
   }
 
   .userActions  {
