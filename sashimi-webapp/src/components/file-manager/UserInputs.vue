@@ -31,12 +31,12 @@
         <button class="navbar-buttons" 
                 v-on:click="execute('history back')"
         >
-          <i class="material-icons">arrow_back</i>
+          <i class="material-icons md-dark">arrow_back</i>
         </button>
         <button class="navbar-buttons" 
                 v-on:click="execute('history forward')"
         >
-          <i class="material-icons">arrow_forward</i>
+          <i class="material-icons md-dark">arrow_forward</i>
         </button>
         <ul class="navbar-breadcrumb inline-block">
           <li v-if="searchString !== ''">
@@ -121,7 +121,7 @@ export default {
       listViewMode: true,
     };
   },
-  props: ['folderPath'],
+  props: ['folderPath', 'viewMode'],
   methods: {
     execute(action) {
       eventHub.$emit('execute', action);
@@ -165,6 +165,9 @@ export default {
     },
     focusedDoc(theDoc) {
       this.buttonDisabled = Boolean(!theDoc);
+    },
+    viewMode(mode) {
+      this.setViewMode(mode);
     }
   },
   mounted() {
@@ -186,7 +189,7 @@ export default {
 <style scoped lang="scss">
 @import 'src/assets/styles/variables.scss';
 .navbar {
-  padding: 20px;
+  padding-top: 20px;
   box-shadow: 0 2px 6px rgba(0,0,0,0.3);
   z-index: 999;
   position: relative;
@@ -197,6 +200,7 @@ export default {
   transform: scale(1.2);
   padding: 10px 0;
   text-align: center;
+  margin-bottom: 15px;
 }
 
 .searchBar {
@@ -235,7 +239,7 @@ export default {
 .userActions {
   /*background-color: $navbar-background-color;
   box-shadow: 0 2px 10px rgba(0,0,0,0.2);*/
-  padding-top: 10px 0;
+  padding-top: 15px;
 }
 
 .navbar-breadcrumb {
@@ -243,6 +247,8 @@ export default {
   font-size: $navbar-font-size;
   padding-left: 0;
   margin: 0;
+  height: 32px;
+  vertical-align: middle;
 
   li {
     display: inline;
@@ -262,7 +268,8 @@ export default {
 }
 
 .navbar-buttons {
-  margin: 0 2px; 
+  margin: 0 2px;
+  height: 32px;
 }
 
 .view-type {
@@ -287,6 +294,7 @@ export default {
 @media screen and (min-width: 480px) {
   .view-type {
     display: inline-block;
+    margin-left: 30px;
   }
 }
 
@@ -294,6 +302,8 @@ export default {
   .button-logo {
     width: $button-logo-width;
     transform: scale(1);
+    margin-bottom: 0;
+    margin-top: 5px;
   }
 
   .searchBar {
@@ -304,7 +314,6 @@ export default {
   .userActions  {
     .buttons-right {
       display: inline-block;
-      border-right: 1px solid $navbar-border-color;
     }
   }
 }

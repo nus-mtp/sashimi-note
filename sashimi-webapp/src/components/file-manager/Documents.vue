@@ -120,7 +120,7 @@ export default {
 
   .folder-wrapper,
   .file-wrapper {
-    margin-right: 30px;
+    margin: 0 30px 20px 0;
     width: 140px;
     height: 140px;
     text-align: center;
