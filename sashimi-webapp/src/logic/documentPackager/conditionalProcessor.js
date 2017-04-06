@@ -247,5 +247,3 @@ export default {
     this.fileName = null;
   }
 };
-
-// Future note: can use hideShowPlugin.setCond = function() {...} for setting fileName variable
