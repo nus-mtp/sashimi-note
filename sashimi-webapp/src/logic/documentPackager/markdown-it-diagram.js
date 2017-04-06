@@ -27,19 +27,14 @@ function filter(content) {
 
 export default function setup(md, options) {
   const defaultRender = md.renderer.rules.fence;
+  const diagramsLib = ['sequence', 'flow', 'mermaid', 'graphviz'];
 
   /* eslint no-undef: 0 */
   md.renderer.rules.fence = (tokens, idx, opts, env, self) => {
     const token = tokens[idx];
     token.content = filter(token.content);
-    if (token.info === 'sequence') {
-      return `<pre class="sequence">${token.content}</pre>`;
-    } else if (token.info === 'flow') {
-      return `<pre class="flow">${token.content}</pre>`;
-    } else if (token.info === 'mermaid') {
-      return `<pre class="mermaid">${token.content}</pre>`;
-    } else if (token.info === 'graphviz') {
-      return `<pre class="graphviz">${token.content}</pre>`;
+    if (diagramsLib.includes(token.info)) {
+      return `<pre class="${token.info}">${token.content}</pre>`;
     }
 
     // pass token to default renderer.
