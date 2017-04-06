@@ -31,12 +31,12 @@
         <button class="navbar-buttons" 
                 v-on:click="execute('history back')"
         >
-          <i class="material-icons">arrow_back</i>
+          <i class="material-icons md-dark">arrow_back</i>
         </button>
         <button class="navbar-buttons" 
                 v-on:click="execute('history forward')"
         >
-          <i class="material-icons">arrow_forward</i>
+          <i class="material-icons md-dark">arrow_forward</i>
         </button>
         <ul class="navbar-breadcrumb inline-block">
           <li v-if="searchString !== ''">
@@ -307,7 +307,6 @@ export default {
   .userActions  {
     .buttons-right {
       display: inline-block;
-      border-right: 1px solid $navbar-border-color;
     }
   }
 }
