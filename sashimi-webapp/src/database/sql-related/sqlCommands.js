@@ -479,6 +479,7 @@ export default function sqlCommands() {
   this.saveFile = function saveFile(fileId, markdownFile) {
     return new Promise((resolve, reject) => {
       markdownFile = resolveSQLInjection(markdownFile);
+      let currentDateTime = 0;
       return alasql.promise([stringManipulator.stringConcat('UPDATE ', constants.ENTITIES_FILE_MANAGER,
                                                             ' SET ', constants.HEADER_FILE_MANAGER_FILE_MARKDOWN,
                                                             ' = "', markdownFile,
@@ -486,7 +487,7 @@ export default function sqlCommands() {
                                                             ' = ', fileId)])
         .catch(sqlError => reject(sqlError))
       .then(() => {
-        const currentDateTime = dateTime.getCurrentDateTime();
+        currentDateTime = dateTime.getCurrentLongTime();
         return alasql.promise([stringManipulator.stringConcat('UPDATE ', constants.ENTITIES_FILE_MANAGER,
                                                               ' SET ', constants.HEADER_FILE_MANAGER_LAST_MODIFIED_DATE,
                                                               ' = "', currentDateTime,
@@ -494,7 +495,7 @@ export default function sqlCommands() {
                                                               ' = ', fileId)])
         .catch(sqlError => reject(sqlError));
       })
-      .then(() => resolve(true))
+      .then(() => resolve(currentDateTime))
       .catch(sqlErr => reject(sqlErr));
     });
   };
