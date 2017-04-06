@@ -20,7 +20,6 @@ import documents from './Documents';
 import userInputs from './UserInputs';
 
 function constructFolderPath(folderObj) {
-  // blah
   const folderPath = [];
 
   folderPath.push(folderObj);
@@ -39,7 +38,7 @@ export default {
   },
   data() {
     return {
-      viewMode: 'listView',
+      viewMode: 'iconView',
       docs: {},
       history: null,
       folderPath: []
