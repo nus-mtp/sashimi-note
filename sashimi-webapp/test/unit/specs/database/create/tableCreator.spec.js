@@ -39,10 +39,10 @@ describe('tableCreator', () => {
     tableCreator.callSqlToLinkToDatabase(testDatabaseName)
   );
 
-  after((done) => {
+  after((doneAfter) => {
     cleanTestCase()
     .then(() =>
-      done()
+      doneAfter()
     );
   });
 
@@ -188,4 +188,3 @@ describe('tableCreator', () => {
     });
   });
 });
-
