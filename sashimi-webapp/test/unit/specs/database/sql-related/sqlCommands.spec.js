@@ -55,9 +55,12 @@ function cleanTestCase() {
 }
 
 describe('sqlCommands', () => {
-  before(() =>
+  before((done) => {
     sqlCommands.linkDatabaseToIndexedDB(testDatabaseName)
-  );
+    .then(() => {
+      done();
+    });
+  });
 
   after((done) => {
     cleanTestCase()
@@ -84,15 +87,12 @@ describe('sqlCommands', () => {
 
   describe('creation', () => {
     it('should create table', (done) => {
-      if (!window.indexedDB) {
-        done(exceptions.IndexedDBNotSupported);
-      }
       const createTableString = 'a(a NUMBER, b STRING, c DATE)';
       sqlCommands.createTable(createTableString)
-      .then(() => { // need to insert something before table exists
-        sqlCommands.insertContent('a', [{ a: 123, b: 'hello', c: '2017.03.07 15:52:33' }])
-        .catch(sqlErr => done(sqlErr));
-      })
+      .then(() =>  // need to insert something before table exists
+         sqlCommands.insertContent('a', [{ a: 123, b: 'hello', c: '2017.03.07 15:52:33' }])
+        // .catch(sqlErr => done(sqlErr));
+      )
       .then(() => { // test for table exists in database
         isTableExistsInDatabase('a', (isTableExist) => {
           expect(isTableExist).to.be.true;
@@ -102,38 +102,46 @@ describe('sqlCommands', () => {
       .catch(sqlErr => done(sqlErr));
     });
 
-    it('should insert content with correct datatype', (done) => {
-      let correctArray;
-      let incorrectArray;
+    describe('data-filling', () => {
+      alasqlArray.initializeAlasqlArray();
+      alasqlArray.addKeyBasePair('a', 123);
+      alasqlArray.addKeyBasePair('b', 'hello string here');
+      alasqlArray.addKeyBasePair('c', '2017.03.07 15:52:33');
+      const correctArray = alasqlArray.endAlasqlArray();
+
+      alasqlArray.initializeAlasqlArray();
+      alasqlArray.addKeyBasePair('a', 123);
+      alasqlArray.addKeyBasePair('b', '2017.03.07 15:52:33');
+      alasqlArray.addKeyBasePair('c', 'hello string here');
+      const incorrectArray = alasqlArray.endAlasqlArray();
+
+      const createTableString = 'b(a NUMBER, b STRING, c DATE)';
 
       before((doneBefore) => {
-        const createTableString = 'b(a NUMBER, b STRING, c DATE)';
         sqlCommands.createTable(createTableString)
-        .then(() => { // insert data
-          alasqlArray.initializeAlasqlArray();
-          alasqlArray.addKeyBasePair('a', 123);
-          alasqlArray.addKeyBasePair('b', 'hello string here');
-          alasqlArray.addKeyBasePair('c', '2017.03.07 15:52:33');
-          correctArray = alasqlArray.endAlasqlArray();
-          alasqlArray.initializeAlasqlArray();
-          alasqlArray.addKeyBasePair('a', 123);
-          alasqlArray.addKeyBasePair('b', '2017.03.07 15:52:33');
-          alasqlArray.addKeyBasePair('c', 'hello string here');
-          incorrectArray = alasqlArray.endAlasqlArray();
+        .then(() =>
           sqlCommands.insertContent('b', correctArray)
-          .then(() => doneBefore())
-          .catch(sqlErr => doneBefore(sqlErr));
-        })
+          .then(() => {
+            doneBefore();
+          })
+        )
         .catch(sqlErr => doneBefore(sqlErr));
       });
-      sqlCommands.getFullTableData('b')
-      .then((data) => {
-        expect(data).to.deep.equal(correctArray);
-        expect(data).to.not.deep.equal(incorrectArray);
-      })
-      .then(done())
-      .catch(err => done(err));
-    }).timeout(20000);
+
+      it('should insert content with correct datatype', (done) => {
+        sqlCommands.getFullTableData('b')
+        .then((data) => {
+          expect(data).to.deep.equal(correctArray);
+          expect(data).to.not.deep.equal(incorrectArray);
+        })
+        .then(() => {
+          done();
+        })
+        .catch((err) => {
+          done(err);
+        });
+      }).timeout(20000);
+    });
   });
 
   describe('query', () => {
@@ -182,10 +190,10 @@ describe('sqlCommands', () => {
       last_modified_date: '2015.01.09 11:33:12',
       file_path: '/root/cross/'
     }];
-
-    it('should get full table data', (done) => {
+    describe('getFullTableData', () => {
       let firstArray;
       let secondArray;
+
       before((doneBefore) => {
         const createTableString = 'c(a NUMBER, b STRING, c DATE)';
         sqlCommands.createTable(createTableString)
@@ -198,90 +206,117 @@ describe('sqlCommands', () => {
           alasqlArray.initializeAlasqlArray();
           alasqlArray.addKeyBasePair('a', 321);
           alasqlArray.addKeyBasePair('b', 'creating table');
-          alasqlArray.addKeyBasePair('c', '1999.12.22 01:22:00');
+          alasqlArray.addKeyBasePair('c', '1999.12.11 01:22:00');
           secondArray = alasqlArray.endAlasqlArray();
-          sqlCommands.insertContent('c', firstArray)
-          .then(() => sqlCommands.insertContent('c', secondArray))
-          .then(() => doneBefore())
+          return sqlCommands.insertContent('c', firstArray)
+          .then(() =>
+            sqlCommands.insertContent('c', secondArray))
           .catch(sqlErr => doneBefore(sqlErr));
+        })
+        .then(() => {
+          doneBefore();
         })
         .catch(sqlErr => doneBefore(sqlErr));
       });
-      sqlCommands.getFullTableData('b')
-      .then((data) => {
-        expect(data).to.deep.equal([firstArray, secondArray]);
-        expect(data).to.not.deep.equal([secondArray, firstArray]);
-      })
-      .then(done())
-      .catch(err => done(err));
-    });
 
-    it('should be able to partially search a file name', (done) => {
-      before((doneBefore) => {
-        const createTableString = stringManipulator.stringConcat('file_manager(',
-                                  'organization_id NUMBER, ',
-                                  'folder_id NUMBER, ',
-                                  'file_id NUMBER, ',
-                                  'file_name STRING, ',
-                                  'file_markdown STRING, ',
-                                  'permission_index NUMBER, ',
-                                  'creation_date DATE, ',
-                                  'last_modified_date DATE,',
-                                  'file_path STRING',
-                                  ')');
-        sqlCommands.createTable(createTableString)
-        .then(sqlCommands.insertContent(tableName, firstFile))
-        .then(sqlCommands.insertContent(tableName, secondFile))
-        .then(sqlCommands.insertContent(tableName, thirdFile))
-        .then(doneBefore());
-      });
-
-        })
-      );
-      sqlCommands.partialSearchFileName('abc')
-      .then((data) => {
-        expect(data).to.deep.equal([firstFile, secondFile]);
-      })
-      .then(done())
-      .catch(err => done(err));
-    });
-
-    it('should be able to retrieve all file names in a folder and children folders', (done) => {
-      before((doneBefore) => {
-        const createTableString = stringManipulator.stringConcat('file_manager(',
-                                  'organization_id NUMBER, ',
-                                  'folder_id NUMBER, ',
-                                  'file_id NUMBER, ',
-                                  'file_name STRING, ',
-                                  'file_markdown STRING, ',
-                                  'permission_index NUMBER, ',
-                                  'creation_date DATE, ',
-                                  'last_modified_date DATE,',
-                                  'file_path STRING',
-                                  ')');
-        sqlCommands.createTable(createTableString)
-        .then(sqlCommands.insertContent(tableName, firstFile))
-        .then(sqlCommands.insertContent(tableName, secondFile))
-        .then(sqlCommands.insertContent(tableName, thirdFile))
-        .then(sqlCommands.insertContent(tableName, fourthFile))
-        .then(doneBefore());
-      });
-
-      sqlCommands.partialSearchFileName('/root/cross/')
-      .then((data) => {
-        expect(data).to.deep.equal([fourthFile]);
-      })
-      .then(() =>
-        sqlCommands.partialSearchFileName('/root/')
+      it('should get full table data', (done) => {
+        sqlCommands.getFullTableData('c')
         .then((data) => {
-          expect(data).to.deep.equal([firstFile, secondFile, thirdFile, fourthFile]);
+          expect(data).to.deep.equal([firstArray[0], secondArray[0]]);
+          expect(data).to.not.deep.equal([secondArray[0], firstArray[0]]);
         })
-      )
-      .then((data) => {
-        expect(data).to.deep.equal([fourthFile]);
-      })
-      .then(done())
-      .catch(err => done(err));
+        .then(() => {
+          done();
+        })
+        .catch(err => done(err));
+      });
+    });
+
+    describe('partial-search file name', () => {
+      before((doneBefore) => {
+        const createTableString = stringManipulator.stringConcat('file_manager(',
+                                  'organization_id NUMBER, ',
+                                  'folder_id NUMBER, ',
+                                  'file_id NUMBER, ',
+                                  'file_name STRING, ',
+                                  'file_markdown STRING, ',
+                                  'permission_index NUMBER, ',
+                                  'creation_date DATE, ',
+                                  'last_modified_date DATE,',
+                                  'file_path STRING',
+                                  ')');
+        sqlCommands.createTable(createTableString)
+        .then(() =>
+          sqlCommands.insertContent(tableName, firstFile)
+        )
+        .then(() =>
+          sqlCommands.insertContent(tableName, secondFile)
+        )
+        .then(() =>
+          sqlCommands.insertContent(tableName, thirdFile)
+        )
+        .then(() => {
+          doneBefore();
+        });
+      });
+
+      it('should be able to partially search a file name', (done) => {
+        sqlCommands.partialSearchFileName('abc')
+        .then((data) => {
+          expect(data).to.deep.equal([firstFile[0], secondFile[0]]);
+        })
+        .then(() => {
+          done();
+        })
+        .catch(err => done(err));
+      });
+    });
+
+    describe('get all file names from this folder', () => {
+      before((doneBefore) => {
+        const createTableString = stringManipulator.stringConcat('file_manager(',
+                                  'organization_id NUMBER, ',
+                                  'folder_id NUMBER, ',
+                                  'file_id NUMBER, ',
+                                  'file_name STRING, ',
+                                  'file_markdown STRING, ',
+                                  'permission_index NUMBER, ',
+                                  'creation_date DATE, ',
+                                  'last_modified_date DATE,',
+                                  'file_path STRING',
+                                  ')');
+        sqlCommands.createTable(createTableString)
+        .then(() =>
+          sqlCommands.insertContent(tableName, firstFile)
+        )
+        .then(() =>
+          sqlCommands.insertContent(tableName, secondFile)
+        )
+        .then(() =>
+          sqlCommands.insertContent(tableName, thirdFile)
+        )
+        .then(() =>
+          sqlCommands.insertContent(tableName, fourthFile)
+        )
+        .then(() => {
+          doneBefore();
+        });
+      });
+
+      it('should be able to retrieve all file names in a folder and children folders', (done) => {
+        sqlCommands.partialSearchFileName('/root/cross/')
+        .then((data) => {
+          expect(data).to.deep.equal([fourthFile[0]]);
+        })
+        .then(() =>
+          sqlCommands.partialSearchFileName('/root/')
+          .then((data) => {
+            expect(data).to.deep.equal([firstFile[0], secondFile[0], thirdFile[0], fourthFile[0]]);
+          })
+        )
+        .then(done())
+        .catch(err => done(err));
+      });
     });
   });
 });
