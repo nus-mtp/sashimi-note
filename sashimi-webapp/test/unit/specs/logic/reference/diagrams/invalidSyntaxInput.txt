@@ -1,0 +1,90 @@
+## UML Diagrams
+
+### These shows code block
+
+```sequence
+Alice->Bob: Hello Bob, how are you?
+Note right of Bob: Bob thinks
+Bob>Alice: I am good thanks!
+Note left of Alice: Alice responds
+Alice->Bob: Where have you been?
+```
+
+```flow
+st>start: Start
+e=>end: End
+op=>operation: My Operation
+op2=>operation: lalala
+cond=>condition: Yes or No?
+
+st->op->op2->cond
+cond(yes)->e
+cond(no)->op2
+```
+
+```graphviz
+graph { 
+		a - b; 
+		b -- c; 
+		a -- c; 
+		d -- c; 
+		e -- c; 
+		e -- a; 
+	} 
+```
+
+```mermaid
+gantt
+    title A Gantt Diagram
+
+    section Section
+    A task           a1, 2014-01-01, 30d
+    Another task     :after a1  , 20d
+    section Another
+    Task in sec      :2014-01-12  , 12d
+    anther task      : 24d
+```
+
+### These render correctly
+
+```sequence
+participant C
+participant B
+participant A
+Note right of A: By listing the participants\n you can change their order
+```
+
+```flow
+st=>start: Start|past:>http://www.google.com[blank]
+e=>end: End|future:>http://www.google.com
+op1=>operation: My Operation|past
+op2=>operation: Stuff|current
+sub1=>subroutine: My Subroutine|invalid
+cond=>condition: Yes
+or No?|approved:>http://www.google.com
+c2=>condition: Good idea|rejected
+io=>inputoutput: catch something...|future
+
+st->op1(right)->cond
+cond(yes, right)->c2
+cond(no)->sub1(left)->op1
+c2(yes)->io->e
+c2(no)->op2->e
+```
+
+```graphviz
+digraph {
+		a -> b;
+		b -> c;
+		c -> d;
+		d -> a;
+	}
+```
+
+```mermaid
+graph LR
+    A[Square Rect] -- Link text --> B((Circle))
+    A --> C(Round Rect)
+    B --> D{Rhombus}
+    C --> D
+```

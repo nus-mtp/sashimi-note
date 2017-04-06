@@ -1,3 +1,9 @@
+/**
+ * This is the Markdown-It module used for parsing markdown content and rendering
+ * the content into HTML string, for use to be displayed on Viewer component
+ * @return {string} returns the rendered HTML string
+ */
+
 // Imports:
 // Markdown-It module for markdown processing
 import MarkdownIt from 'markdown-it';
