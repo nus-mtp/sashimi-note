@@ -92,7 +92,7 @@ export default {
           break;
         }
         case 'download': {
-          this.download(data);
+          data.download();
           break;
         }
         case 'delete': {
@@ -106,24 +106,6 @@ export default {
         default: break;
       }
     },
-    download(doc) {
-      doc.load()
-      .then((docContent) => {
-        const element = document.createElement('a');
-        const href = 'data:text/plain;charset=utf-8,';
-        const content = encodeURIComponent(docContent);
-        element.setAttribute('href', href+content, docContent);
-        const fileName = doc.name;
-        element.setAttribute('download', fileName);
-
-        element.style.display = 'none';
-        document.body.appendChild(element);
-
-        element.click();
-
-        document.body.removeChild(element);
-      });
-    },
     search(searchStr) {
       if (searchStr === '') {
         this.docs = this.history.currFolder;
@@ -133,8 +115,6 @@ export default {
         .catch((error) => {
           // Simple alert box for message
           // TODO: Use a less obstrusive alert message
-          alert('Opps, I have problem finding your file');
-          console.log(error);
         });
         // Intentionally not updating the history stack.
         // Since, there may be multiple incomplete searching,
