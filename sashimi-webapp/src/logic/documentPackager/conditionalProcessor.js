@@ -241,9 +241,9 @@ export default {
     md.block.ruler.after('table', 'hideShowBlock', hideShowBlock);
   },
   setFileName: function setFileName(name) {
-    this.fileName = name;
+    fileName = name;
   },
   clearFileName: function clearFileName() {
-    this.fileName = null;
+    fileName = null;
   }
 };
