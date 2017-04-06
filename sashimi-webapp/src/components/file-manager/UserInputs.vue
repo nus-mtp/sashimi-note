@@ -197,6 +197,7 @@ export default {
   transform: scale(1.2);
   padding: 10px 0;
   text-align: center;
+  margin-bottom: 15px;
 }
 
 .searchBar {
@@ -290,6 +291,7 @@ export default {
 @media screen and (min-width: 480px) {
   .view-type {
     display: inline-block;
+    margin-left: 30px;
   }
 }
 
@@ -297,6 +299,8 @@ export default {
   .button-logo {
     width: $button-logo-width;
     transform: scale(1);
+    margin-bottom: 0;
+    margin-top: 5px;
   }
 
   .searchBar {
