@@ -131,6 +131,10 @@ export default {
 
 .button-logo {
   cursor: pointer;
+
+  img {
+    padding: 10px 0 10px 0;
+  }
 }
 
 .button-dropdown {
