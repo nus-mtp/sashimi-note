@@ -11,7 +11,7 @@ const ERROR_NOT_FILE_INSTANCE = '"this" is not an instance of "File"';
 const ERROR_CONTAIN_ILLEGAL_CHARACTERS = 'New file name contains illegal character(s)';
 
 /* Constant */
-const ILLEGAL_CHARACTERS = /[`~!@#$%^&*()-_=+\\|[\]{};:'",<.>/?]+/;
+const ILLEGAL_CHARACTERS = /[`~!@#$%^&*()\-_=+\\|[\]{};:'",<.>/?]+/;
 
 /**
 * File Object
