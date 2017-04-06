@@ -8,6 +8,13 @@
  * @return {Promise<string, error>} Promise - containing the HTML string with rendered diagrams
  */
 
+// Helper function to clear HTML Element
+function clearAll(element) {
+  while (element.firstChild) {
+    element.removeChild(element.firstChild);
+  }
+}
+
 export default function diagramsRenderer(ele) {
   const observerConfig = { childList: true };
   // get all pre tags with class name = sequence
@@ -37,7 +44,7 @@ export default function diagramsRenderer(ele) {
       let content = seqDiagrams[i].innerHTML;
       content = content.replace(/&gt;/g, '>');
       const diagram = Diagram.parse(content);
-      seqDiagrams[i].innerHTML = '';
+      clearAll(seqDiagrams[i]);
       observer.observe(seqDiagrams[i], observerConfig);
       diagram.drawSVG(seqDiagrams[i], { theme: 'simple' });
     }).catch((error) => {
@@ -58,7 +65,7 @@ export default function diagramsRenderer(ele) {
       let content = flowCharts[i].innerHTML;
       content = content.replace(/&gt;/g, '>');
       const diagram = flowchart.parse(content);
-      flowCharts[i].innerHTML = '';
+      clearAll(flowCharts[i]);
       observer.observe(flowCharts[i], observerConfig);
       diagram.drawSVG(flowCharts[i]);
     })
