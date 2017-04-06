@@ -96,6 +96,18 @@ describe('Document Packager', () => {
       });
     });
 
+    it('should handle block ASCIIMath syntax', (done) => {
+      documentPackager.getHtmlData(asciiMathBlockInput).then((output) => {
+        const base64Output = base64(output);
+
+        expect(base64Output).to.equal(asciiMathBlockOutput);
+        done();
+      })
+      .catch((error) => {
+        done(error);
+      });
+    });
+
     it('should handle code syntax highlighting', (done) => {
       documentPackager.getHtmlData(highlightjsInput).then((output) => {
         const base64Output = base64(output);
