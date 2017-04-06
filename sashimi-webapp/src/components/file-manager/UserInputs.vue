@@ -236,7 +236,7 @@ export default {
 .userActions {
   /*background-color: $navbar-background-color;
   box-shadow: 0 2px 10px rgba(0,0,0,0.2);*/
-  padding-top: 20px;
+  padding-top: 15px;
 }
 
 .navbar-breadcrumb {
