@@ -10,20 +10,7 @@
 <script>
   import Vue from 'vue';
   import diagramsRenderer from 'src/logic/renderer/diagrams';
-
-  function constructStyleLink(link) {
-    const styling = this.renderDoc.createElement('link');
-    const attributes = {
-      type: 'text/css',
-      rel: 'stylesheet',
-      href: link
-    };
-
-    Object.keys(attributes).forEach((key) => {
-      styling.setAttribute(key, attributes[key]);
-    });
-    return styling;
-  }
+  import iframeBuilder from 'src/helpers/iframeBuilder';
 
   /**
    * Diagram rendering function for HTML view
@@ -45,31 +32,22 @@
     },
     watch: {
       htmlData(data) {
-        renderUpdate(this.renderDoc.body, data);
+        if (this.renderDoc) {
+          renderUpdate(this.renderDoc.body, data);
+        }
       }
     },
     mounted() {
       Vue.nextTick(() => {
-        this.renderDoc = this.$el.contentWindow.document;
-
-        this.renderDoc.open();
-        this.renderDoc.write(`<!DOCTYPE html>
-                              <html>
-                                <head></head>
-                                <body></body>
-                              </html>
-                              `);
-        this.renderDoc.close();
-
-        const styles = [];
-        styles.push(constructStyleLink.call(this, '/styles/markdown-html.css'));
-        styles.push(constructStyleLink.call(this, '/vendors/highlight.js/styles/ocean.css'));
-        styles.push(constructStyleLink.call(this, '/vendors/katex/katex.min.css'));
-
-        styles.forEach((style) => {
-          this.renderDoc.head.appendChild(style);
+        iframeBuilder.rebuild(this.$el);
+        iframeBuilder.addStyles(this.$el, [
+          '/styles/markdown-html.css',
+          '/styles/markdown-imports.css'
+        ])
+        .then(() => {
+          this.renderDoc = this.$el.contentWindow.document;
+          renderUpdate(this.renderDoc.body, this.htmlData);
         });
-        renderUpdate(this.renderDoc.body, this.htmlData);
       });
     }
   };
