@@ -95,25 +95,80 @@ DocumentNavigator.prototype.addDomStyling = function addDomStyling() {
 
   // Store default parent reference properties before overwriting
   this.defaultProperties = {
-    attribute: {
-      touchEvent: this.el.html.getAttribute('touch-action'),
+    html: {
+      attribute: {
+        touchEvent: this.el.html.getAttribute('touch-action'),
+      }
+    },
+    parent: {
+      style: {
+        padding: this.el.parent.style.padding,
+        margin: this.el.parent.style.margin,
+        width: this.el.parent.style.width
+      }
+    },
+    container: {
+      style: {
+        /* eslint quote-props: 0 */
+        width: this.el.container.style.width,
+        margin: this.el.container.style.margin,
+        position: this.el.container.style.position,
+        'transform-origin': this.el.container.style['transform-origin']
+      }
     }
   };
 
-  // Parent reference properties with the required one
-  this.el.html.setAttribute('touch-action', 'pan-x pan-y');
+  const newProperties = {
+    html: {
+      attribute: {
+        touchEvent: 'pan-x pan-y',
+      }
+    },
+    parent: {
+      style: {
+        padding: 0,
+        margin: '0 auto',
+        width: '100%',
+      }
+    },
+    container: {
+      style: {
+        /* eslint quote-props: 0 */
+        width: '1px',
+        margin: '0 auto',
+        position: 'relative',
+        'transform-origin': 'center top',
+      }
+    }
+  };
+
+  Object.keys(newProperties)
+        .forEach((elementKey) => {
+          if (newProperties[elementKey].style) {
+            domUtils.overwriteStyle(this.el[elementKey].style, newProperties[elementKey].style);
+          }
+          if (newProperties[elementKey].attribute) {
+            Object.keys(newProperties[elementKey].attribute)
+                  .forEach((attrKey) => {
+                    this.el[elementKey].setAttribute(attrKey, newProperties[elementKey].attribute[attrKey]);
+                  });
+          }
+        });
 };
 
 DocumentNavigator.prototype.removeDomStyling = function removeDomStyling() {
-  const parentReference = this.el.html;
-
-  domUtils.overwriteStyle(parentReference.style, this.defaultProperties.style);
-
-  if (this.defaultProperties.attribute.touchEvent) {
-    parentReference.removeAttribute('touch-action');
-  } else {
-    parentReference.setAttribute('touch-action', this.defaultProperties.attribute);
-  }
+  Object.keys(this.defaultProperties)
+        .forEach((elementKey) => {
+          if (this.defaultProperties[elementKey].style) {
+            domUtils.overwriteStyle(this.el[elementKey].style, this.defaultProperties[elementKey].style);
+          }
+          if (this.defaultProperties[elementKey].attribute) {
+            Object.keys(this.defaultProperties[elementKey].attribute)
+                  .forEach((attrKey) => {
+                    this.el[elementKey].setAttribute(attrKey, this.defaultProperties[elementKey].attribute[attrKey]);
+                  });
+          }
+        });
 };
 
 DocumentNavigator.prototype.addEventListeners = function addEventListeners() {

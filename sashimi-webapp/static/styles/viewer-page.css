@@ -10,19 +10,6 @@ body {
   background: #f1f1f1;
 }
 
-body > div {
-  padding: 0;
-  margin: 0 auto;
-  width: 100%;
-}
-
-body > div > div {
-  width: 1px;
-  margin: 0 auto;
-  position: relative;
-  transform-origin: center top;
-} 
-
 .page-view {
   box-shadow: 1px 1px 6px 2px rgba(0, 0, 0, 0.3);
   position: relative;
