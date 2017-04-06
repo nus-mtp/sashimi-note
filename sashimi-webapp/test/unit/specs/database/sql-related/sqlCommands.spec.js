@@ -40,27 +40,6 @@ function isTableExistsInDatabase(tableName, callback) {
   };
 }
 
-function deleteTable(tableNames, databaseName, callback) {
-  const thisDatabaseName = databaseName || testDatabaseName;
-  const request = indexedDB.open(thisDatabaseName);
-  let database = null;
-
-  request.onsuccess = function onSuccess(event) {
-    database = request.result;
-    database.close();
-    callback();
-  };
-
-  request.onupgradeneeded = function onUpgradeNeeded(event) {
-    database = event.target.result;
-    for (let tableToDeleteIndex = 0; tableToDeleteIndex < tableNames.length; tableToDeleteIndex+=1) {
-      if (database.objectStoreNames.contains(tableNames[tableToDeleteIndex])) {
-        database.deleteObjectStore(tableNames[tableToDeleteIndex]);
-      }
-    }
-  };
-}
-
 function deleteDatabase(databaseName) {
   return new Promise((resolve, reject) => {
     const thisDatabaseName = databaseName || testDatabaseName;
@@ -104,13 +83,6 @@ describe('sqlCommands', () => {
   });
 
   describe('creation', () => {
-    after((doneAfter) => {
-      const tablesToDelete = ['a', 'b'];
-      deleteTable(tablesToDelete, testDatabaseName, () => {
-        doneAfter();
-      });
-    });
-
     it('should create table', (done) => {
       if (!window.indexedDB) {
         done(exceptions.IndexedDBNotSupported);
@@ -264,9 +236,6 @@ describe('sqlCommands', () => {
         .then(doneBefore());
       });
 
-      after(doneAfter =>
-        deleteTable([tableName], testDatabaseName, () => {
-          doneAfter();
         })
       );
       sqlCommands.partialSearchFileName('abc')
@@ -298,11 +267,6 @@ describe('sqlCommands', () => {
         .then(doneBefore());
       });
 
-      after(doneAfter =>
-        deleteTable([tableName], testDatabaseName, () => {
-          doneAfter();
-        })
-      );
       sqlCommands.partialSearchFileName('/root/cross/')
       .then((data) => {
         expect(data).to.deep.equal([fourthFile]);
