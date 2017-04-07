@@ -96,7 +96,6 @@ export default {
   props: ['value'],
   watch: {
     fileFormat(data) {
-      console.log(data);
       condProcessor.setFileName(data);
     },
     value(data) {
