@@ -15,6 +15,8 @@ import mdKatex from 'markdown-it-katex';
 // Table of Contents plugins
 import mdAnchor from 'markdown-it-anchor';
 import mdTOC from 'markdown-it-table-of-contents';
+// ASCIIMath Plugin
+import mdAsciiMath from './markdown-it-asciimath';
 // Custom Fence Block Rule for textual Diagram representation
 import mdDiagrams from './markdown-it-diagram';
 // Custom conditional plugin
@@ -41,6 +43,8 @@ const md = new MarkdownIt({
 // Getting markdown-it to use plugins
 // For KaTeX
 md.use(mdKatex);
+// For ASCIIMath
+md.use(mdAsciiMath);
 // For Code Highlighting
 md.use(mdHighlight, { auto: true, code: true });
 // For TOC generation
