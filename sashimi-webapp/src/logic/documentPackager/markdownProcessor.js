@@ -43,8 +43,6 @@ const md = new MarkdownIt({
 // Getting markdown-it to use plugins
 // For KaTeX
 md.use(mdKatex);
-// For ASCIIMath
-md.use(mdAsciiMath);
 // For Code Highlighting
 md.use(mdHighlight, { auto: true, code: true });
 // For TOC generation
@@ -52,6 +50,8 @@ md.use(mdAnchor);
 md.use(mdTOC);
 // For drawing diagrams
 md.use(mdDiagrams);
+// For ASCIIMath
+md.use(mdAsciiMath);
 // For custom conditional plugin
 md.use(mdConditional.hideShowPlugin);
 
