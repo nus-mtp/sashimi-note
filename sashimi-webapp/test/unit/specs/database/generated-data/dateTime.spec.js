@@ -9,9 +9,16 @@ describe('dateTime', () => {
       expect(currentDateTime).to.be.a.string;
     });
 
+    // the number 19 comes from the format of 'YYYY.MM.DD HH:MM:SS'
+    // which has 19 characters
     it('should have a date length of 19 characters', () => {
       const currentDateTime = dateTime.getCurrentDateTime();
       expect(currentDateTime.length).to.equal(19);
+    });
+
+    it('should be able to retrieve a long time', () => {
+      const currentDateTime = dateTime.getCurrentLongTime();
+      expect(typeof currentDateTime).to.equal('Number');
     });
   });
 });
