@@ -392,7 +392,7 @@ export default function sqlCommands() {
 
   this.changeFileName = function changeFileName(fileId, newFileName) {
     return new Promise((resolve, reject) => {
-      const invalidCharacterIndex = newFileName.search(/'"'|'\\'/);
+      const invalidCharacterIndex = newFileName.search(/"|\\/);
       if (invalidCharacterIndex === -1) {
         reject(new exceptions.InvalidRename());
       }
@@ -427,7 +427,7 @@ export default function sqlCommands() {
       let newFolderPath;
       let foldersToChangePath;
       let filesToChangePath;
-      const invalidCharacterIndex = newFolderName.search(/'"'|'\\'/);
+      const invalidCharacterIndex = newFolderName.search(/"|\\/);
       if (invalidCharacterIndex === -1) {
         reject(new exceptions.InvalidRename());
       }
