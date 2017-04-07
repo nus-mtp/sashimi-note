@@ -18,7 +18,7 @@ describe('dateTime', () => {
 
     it('should be able to retrieve a long time', () => {
       const currentDateTime = dateTime.getCurrentLongTime();
-      expect(typeof currentDateTime).to.equal('Number');
+      expect(typeof currentDateTime).to.equal('number');
     });
   });
 });
