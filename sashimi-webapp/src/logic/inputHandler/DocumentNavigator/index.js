@@ -47,6 +47,7 @@ DocumentNavigator.prototype.updateElementWidth = function updateElementWidth() {
     let elementWidth = domUtils.getComputedStyle(elementReference).width;
 
     // Temporary fix for Firefox computing width as auto
+    elementWidth = elementWidth || '0px';
     elementWidth = (elementWidth === 'auto') ? '0px' : elementWidth;
     this.width[key] = unitConverter.get(elementWidth, 'px', false);
   });

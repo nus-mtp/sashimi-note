@@ -97,12 +97,14 @@ export default function(navInstance) {
           navInstance.el.parent.parentNode.scrollTop *= heightChange;
 
           // Readjust left position to fix scroll left problem
-          const parentParent = navInstance.el.parent.parentNode;
-          const pPStyles = domUtils.getComputedStyle(parentParent);
-          const pPWidthPx = unitConverter.get(pPStyles.width, 'px', false);
-          if (renderWidth > pPWidthPx) {
-            const eatenLeft = -(pPWidthPx - renderWidth)/2;
+          const rootNode = navInstance.el.html;
+          const rootStyle = domUtils.getComputedStyle(rootNode);
+          const rootStylePx = unitConverter.get(rootStyle.width, 'px', false);
+          if (renderWidth > rootStylePx) {
+            const eatenLeft = -(rootStylePx - renderWidth)/2;
             navInstance.el.parent.style.left = `${eatenLeft}px`;
+          } else {
+            navInstance.el.parent.style.left = 0;
           }
         }
       },
@@ -135,8 +137,8 @@ export default function(navInstance) {
         const transitionDuration = 500;
         // Resize the element's transformer
         navInstance.el.container.style.transition = `transform ${transitionDuration}ms`;
-        navInstance.width.element = navInstance.width.element || navInstance.width.parent - marginWidth;
-        navInstance.transform.set({ scale: (navInstance.width.parent - marginWidth) / navInstance.width.element });
+        navInstance.width.element = navInstance.width.element || navInstance.width.html - marginWidth;
+        navInstance.transform.set({ scale: (navInstance.width.html - marginWidth) / navInstance.width.element });
         setTimeout(() => {
           navInstance.el.container.style.transition = '';
         }, transitionDuration);
