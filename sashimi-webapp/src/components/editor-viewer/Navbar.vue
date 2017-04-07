@@ -42,6 +42,16 @@
             <img class="inline-block" src="../../assets/images/symbols/symbol-arrow-down.svg" alt="add">
           </button>
           <div class="dropdown-content" :data-active="value">
+            <input 
+              v-model="fileFormat"
+              placeholder="File format"
+              style="width: 100%;
+              box-sizing: border-box;
+              font-size: 1em;
+              padding: 10px;
+              padding-left: 10px;
+              padding-right: 2px;"
+            />
             <button v-on:click="updateParent('pages')" data-format="pages">Pages</button>
             <button v-on:click="updateParent('slides')" data-format="slides">Slides</button>
             <button v-on:click="updateParent('html')" data-format="html">HTML</button>
@@ -71,6 +81,8 @@
 </template>
 
 <script>
+import condProcessor from 'src/logic/documentPackager/conditionalProcessor';
+
 export default {
   components: {
   },
@@ -78,10 +90,15 @@ export default {
     return {
       isActive: false,
       viewMode: '',
+      fileFormat: ''
     };
   },
   props: ['value'],
   watch: {
+    fileFormat(data) {
+      console.log(data);
+      condProcessor.setFileName(data);
+    },
     value(data) {
       this.viewMode = data;
     }
