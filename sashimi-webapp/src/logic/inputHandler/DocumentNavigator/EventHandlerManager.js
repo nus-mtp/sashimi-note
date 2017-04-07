@@ -84,7 +84,8 @@ export default function(navInstance) {
           const renderWidth = tempContainerWidth * navInstance.transform.scale;
 
           // Readjust scrollTop - [1] Cache original height of parent div
-          const oriHeight = domUtils.getComputedStyle(navInstance.el.parent).height;
+          let oriHeight = domUtils.getComputedStyle(navInstance.el.parent).height;
+          if (oriHeight === 'auto') oriHeight = `${navInstance.el.parent.scrollHeight}px`;
           const oriHeightPx = unitConverter.get(oriHeight, 'px', false);
 
           // Readjust parent height and width to fix overall scrollbar problem
@@ -97,9 +98,10 @@ export default function(navInstance) {
           navInstance.el.parent.parentNode.scrollTop *= heightChange;
 
           // Readjust left position to fix scroll left problem
-          const parentParent = navInstance.el.parent.parentNode;
-          const pPStyles = domUtils.getComputedStyle(parentParent);
-          const pPWidthPx = unitConverter.get(pPStyles.width, 'px', false);
+          const parentParent = navInstance.el.html;
+          let pPWidth = domUtils.getComputedStyle(parentParent).width;
+          if (pPWidth === 'auto') pPWidth = `${parentParent.scrollWidth}px`;
+          const pPWidthPx = unitConverter.get(pPWidth, 'px', false);
           if (renderWidth > pPWidthPx) {
             const eatenLeft = -(pPWidthPx - renderWidth)/2;
             navInstance.el.parent.style.left = `${eatenLeft}px`;

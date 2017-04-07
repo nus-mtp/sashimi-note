@@ -45,9 +45,7 @@ DocumentNavigator.prototype.updateElementWidth = function updateElementWidth() {
   Object.keys(this.el).forEach((key) => {
     const elementReference = this.el[key];
     let elementWidth = domUtils.getComputedStyle(elementReference).width;
-
-    // Temporary fix for Firefox computing width as auto
-    elementWidth = (elementWidth === 'auto') ? '0px' : elementWidth;
+    if (elementWidth === 'auto') elementWidth = `${elementReference.scrollWidth}px`;
     this.width[key] = unitConverter.get(elementWidth, 'px', false);
   });
 
@@ -81,6 +79,9 @@ DocumentNavigator.prototype.addDomStyling = function addDomStyling() {
     // [2] Initialise layout properties
     let tempContainerHeight = domUtils.getComputedStyle(this.el.container).height;
     let tempContainerWidth = domUtils.getComputedStyle(this.el.element).width;
+
+    if (tempContainerHeight === 'auto') tempContainerHeight = this.el.container.scrollHeight;
+    if (tempContainerWidth === 'auto') tempContainerWidth = this.el.element.scrollWidth;
 
     tempContainerHeight = parseFloat(tempContainerHeight) + 500;
     tempContainerWidth = parseFloat(tempContainerWidth);
