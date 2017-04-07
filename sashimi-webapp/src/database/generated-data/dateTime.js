@@ -14,4 +14,8 @@ export default function dateTime() {
 
     return stringManipulator.stringConcat(year, '.', month, '.', day, ' ', hour, ':', minute, ':', second);
   };
+
+  this.getCurrentLongTime = function getCurrentLongTime() {
+    return date.getTime();
+  };
 }
