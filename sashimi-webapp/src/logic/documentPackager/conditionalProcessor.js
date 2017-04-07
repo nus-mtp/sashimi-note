@@ -7,7 +7,7 @@
  * If condition = student, it hides from student versions only.)
  * @param {MarkdownIt} md - MarkdownIt object containing parsed data of markdown content
  */
-let fileName = null;
+let fileName = '';
 
 function findName(state, startLine) {
   const indent = state.sCount[startLine];
@@ -78,7 +78,7 @@ function hideShowInline(state, silent) {
 function hideShowBlock(state, startLine, endLine, silent) {
   let nextLine; // next line counter, to keep track of line number
   let token;  // token for use to pass into renderer to generate HTML
-  let category = null; // variable to store conditional hiding for different document types
+  let category = ''; // variable to store conditional hiding for different document types
   let hasCategory = false;
   let haveEndMarker = false;
   let pos = state.bMarks[startLine] + state.tShift[startLine]; // current "cursor" position
@@ -244,6 +244,6 @@ export default {
     fileName = name;
   },
   clearFileName: function clearFileName() {
-    fileName = null;
+    fileName = '';
   }
 };
