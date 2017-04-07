@@ -49,7 +49,8 @@ function renderInline(str, disp) {
 }
 
 function setup(md, options) {
-  const defaultRender = md.renderer.rules.fence;
+  const defaultFenceRender = md.renderer.rules.fence;
+  const defaultInlineRender = md.renderer.rules.code_inline;
 
   md.renderer.rules.fence = function(tokens, idx, opts, env, self) {
     const token = tokens[idx];
@@ -59,7 +60,7 @@ function setup(md, options) {
     }
 
     // pass token to default renderer.
-    return defaultRender(tokens, idx, opts, env, self);
+    return defaultFenceRender(tokens, idx, opts, env, self);
   };
 
   md.renderer.rules.code_inline = function(tokens, idx, opts, env, self) {
@@ -72,7 +73,7 @@ function setup(md, options) {
       return renderInline(trim(token.content.substr(4)), false);
     }
 
-    return defaultRender(tokens, idx, opts, env, self);
+    return defaultInlineRender(tokens, idx, opts, env, self);
   };
 }
 
