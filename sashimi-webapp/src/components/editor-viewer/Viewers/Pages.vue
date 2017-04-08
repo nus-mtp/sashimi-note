@@ -23,9 +23,18 @@
     props: ['htmlData'],
     data() {
       return {
-        renderDoc: null,
         pageRenderer: null,
-        documentNavigator: null
+        documentNavigator: null,
+        pageSize: { // PAGE_A4
+          width: '21.0cm',
+          height: '29.7cm',
+          padding: {
+            top: '2.54cm',
+            bottom: '2.54cm',
+            right: '2.54cm',
+            left: '2.54cm'
+          }
+        }
       };
     },
     watch: {
@@ -52,7 +61,7 @@
           return eleContainer;
         })
         .then((renderTarget) => {
-          this.pageRenderer = new PageRenderer(renderTarget);
+          this.pageRenderer = new PageRenderer(renderTarget, this.pageSize);
           return renderThrottleFn(this.htmlData, this.pageRenderer)
           .then(() => {
             // Initialise navigation for Pages mode
