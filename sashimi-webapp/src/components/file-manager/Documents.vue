@@ -106,10 +106,6 @@ export default {
 
     p {
       font-family: $font-primary;
-
-      &::selection {
-        background-color: white;
-      }
     }
   }
 }
