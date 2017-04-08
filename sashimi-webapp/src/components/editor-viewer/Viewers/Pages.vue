@@ -47,7 +47,7 @@
       Vue.nextTick(() => {
         iframeBuilder.rebuild(this.$el);
         iframeBuilder.addStyles(this.$el, [
-          '/styles/markdown-html.css',
+          '/styles/markdown-pages.css',
           '/styles/viewer-page.css',
           '/styles/markdown-imports.css'
         ])

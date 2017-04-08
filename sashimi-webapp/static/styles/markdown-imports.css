@@ -1,4 +1,3 @@
-@import url("/vendors/highlight.js/styles/ocean.css");
 @import url("/vendors/katex/katex.min.css");
 
 /* Customised mermaid.css taken from hackmd.io, this custom CSS resolves the issue of
