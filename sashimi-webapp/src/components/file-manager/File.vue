@@ -7,11 +7,11 @@
             v-on:blur="blurFile"
     >
       <img src="../../assets/images/icons/icon-file.svg" alt="file">
-      <p contenteditable="true" tabindex="2" class="inline-block"
+      <p contenteditable="true" tabindex="2" class="inline-block file-name"
         v-on:blur="saveFileName"
-        v-on:keypress="onKeyPress($event)"
-        v-on:keyup="onKeyUp($event)"
-        v-on:paste="removeStyle($event)"
+        v-on:keypress="onKeyPress"
+        v-on:keyup="onKeyUp"
+        v-on:paste="removeStyle"
       >{{file.name}}</p>
     </button>
   </div>

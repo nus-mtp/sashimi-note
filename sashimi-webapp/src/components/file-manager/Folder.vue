@@ -7,7 +7,7 @@
             v-on:blur="blurFolder"
     >
       <img src="../../assets/images/icons/icon-folder.svg" alt="folder">
-      <p contenteditable="true" tabindex="2" class="inline-block"
+      <p contenteditable="true" tabindex="2" class="inline-block folder-name"
         v-on:blur="saveFolderName"
         v-on:keypress="onKeyPress"
         v-on:keyup="onKeyUp"
@@ -64,4 +64,5 @@
 
 <style scoped lang="scss">
 @import 'src/assets/styles/variables.scss';
+
 </style>
