@@ -135,6 +135,7 @@ export default {
     this.docs = fileManager.getFolderByID(ROOT_FOLDER_ID);
     this.history = fileManager.createHistory(this.docs);
 
+    this.changeDocViewOnResize();
     window.addEventListener('resize', this.changeDocViewOnResize.bind(fileManagerVue));
   },
   beforeDestroy() {
