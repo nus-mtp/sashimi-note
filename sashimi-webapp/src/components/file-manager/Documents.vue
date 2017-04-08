@@ -99,8 +99,13 @@ export default {
       background-color: $documents-focus-color;
     }
 
-    p {
+    .folder-name,
+    .file-name {
       font-family: $font-primary;
+
+      &[contenteditable="true"]:focus {
+        text-decoration: underline;
+      }
     }
   }
 }
