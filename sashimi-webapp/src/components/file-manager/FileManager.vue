@@ -115,7 +115,8 @@ export default {
     },
     search(searchStr) {
       if (searchStr === '') {
-        this.docs = this.history.currFolder;
+        const folderID = this.history.currFolderID;
+        this.docs = fileManager.getFolderByID(folderID);
       } else {
         fileManager.searchAll(searchStr)
         .then((result) => { this.docs = result; })
