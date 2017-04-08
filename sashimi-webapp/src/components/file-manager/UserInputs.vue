@@ -151,9 +151,8 @@ export default {
       }
       userInputsVue.$emit('changeViewMode', viewMode);
     },
-    clearSearchString(event) {
+    clearSearchString() {
       this.searchString = '';
-      event.target.value = '';
     }
   },
   watch: {
