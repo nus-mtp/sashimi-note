@@ -196,7 +196,8 @@ export default {
 }
 
 .button-logo {
-  width: 100%;
+  width: $button-sashimi-width;
+  overflow: hidden;
   transform: scale(1.2);
   padding: 10px 0;
   text-align: center;
@@ -204,9 +205,10 @@ export default {
 }
 
 .searchBar {
-  width: 100%;
+  width: calc(100% - #{$button-sashimi-width} - #{$searchbar-mobile-margin-left});
   background-color: $grey-background;
   text-align: left;
+  margin-left: $searchbar-mobile-margin-left;
 
   i {
     font-size: 20px;
@@ -302,6 +304,7 @@ export default {
   .button-logo {
     width: $button-logo-width;
     transform: scale(1);
+    overflow: initial;
     margin-bottom: 0;
     margin-top: 5px;
   }
