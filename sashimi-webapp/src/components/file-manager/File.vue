@@ -40,13 +40,7 @@ export default {
       let newFileName = this.$el.getElementsByTagName('p')[0].innerHTML;
       newFileName = newFileName.trim().replace(/&nbsp;/gi, '');
 
-      if (newFileName === '') {
-        newFileName = 'untitled.md';
-      }
-
-      if (newFileName !== this.file.name) {
-        this.$emit('renameFile', newFileName, this.file);
-      }
+      this.file.rename(newFileName);
     },
     onKeyPress(event) {
       const enterKey = 13;

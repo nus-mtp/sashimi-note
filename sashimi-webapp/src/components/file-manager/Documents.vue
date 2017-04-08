@@ -13,7 +13,6 @@
       v-on:openFolder="changeFolder"
       v-on:focusFolder="focus"
       v-on:blurFolder="blur"
-      v-on:renameFolder="renameDoc"
           :folder="folder"
     >
     </folder>
@@ -21,7 +20,6 @@
       v-for="file in docs.childFileList"
       v-on:focusFile="focus"
       v-on:blurFile="blur"
-      v-on:renameFile="renameDoc"
           :file="file"
     >
     </file>
@@ -65,9 +63,6 @@ export default {
     changeFolder(newFolder) {
       this.$emit('changeFolder', newFolder);
     },
-    renameDoc(newDocName, docToRename) {
-      docToRename.rename(newDocName);
-    }
   },
   mounted() {
     eventHub.$on('execute', (action, data) => {
