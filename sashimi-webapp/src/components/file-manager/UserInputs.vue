@@ -43,14 +43,16 @@
             Search results
           </li>
           <li v-else>
-            <router-link to="/">
+            <router-link to="/" class="breadcrumb-active">
               Home
             </router-link>
           </li>
           <li v-for="(folder, index) in folderPath" v-if="folder.name !== 'root'">
             <template v-if="index !== folderPath.length-1" >
               <router-link 
-                :to="{ name: 'fileManager', query: { folder: folder.id } }">
+                :to="{ name: 'fileManager', query: { folder: folder.id } }"
+                class="breadcrumb-active"
+              >
                 {{folder.name}}
               </router-link>
             </template>
@@ -261,6 +263,11 @@ export default {
   margin: 0;
   height: 32px;
   vertical-align: middle;
+  color: $grey-font;
+
+  .breadcrumb-active {
+    color: black;
+  }
 
   li {
     display: inline;
