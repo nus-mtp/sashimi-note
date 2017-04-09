@@ -3,7 +3,6 @@
     <userInputs 
       v-on:changeViewMode="changeViewMode"
       v-on:execute="executeAction"
-      v-on:changeFolder="changeFolder"
           :folder-path="folderPath"
           :view-mode="viewMode"
     ></userInputs>
@@ -53,6 +52,17 @@ export default {
     };
   },
   watch: {
+    $route(path) {
+      if (path.query.folder === undefined) {
+        const ROOT_FOLDER_ID = 0;
+        const rootFolder = fileManager.getFolderByID(ROOT_FOLDER_ID);
+        this.changeFolder(rootFolder);
+      } else {
+        const folderID = path.query.folder;
+        const currFolder = fileManager.getFolderByID(folderID);
+        this.changeFolder(currFolder);
+      }
+    }
   },
   methods: {
     changeFolder(folderObj) {

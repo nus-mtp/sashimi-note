@@ -45,13 +45,6 @@ export default {
     file,
   },
   watch: {
-    $route(path) {
-      if (path.query.folder === undefined) {
-        const ROOT_FOLDER_ID = 0;
-        const rootFolder = fileManager.getFolderByID(ROOT_FOLDER_ID);
-        this.changeFolder(rootFolder);
-      }
-    }
   },
   methods: {
     focus(focusedDoc) {
