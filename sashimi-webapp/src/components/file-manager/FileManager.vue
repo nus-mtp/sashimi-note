@@ -91,11 +91,13 @@ export default {
         case 'history back': {
           this.docs = this.history.previous();
           this.folderPath = constructFolderPath(this.docs);
+          this.updateUrlPath(this.docs);
           break;
         }
         case 'history forward': {
           this.docs = this.history.next();
           this.folderPath = constructFolderPath(this.docs);
+          this.updateUrlPath(this.docs);
           break;
         }
         case 'download': {
