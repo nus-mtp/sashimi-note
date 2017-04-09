@@ -47,10 +47,16 @@
               Home
             </router-link>
           </li>
-          <li v-for="folder in folderPath" v-if="folder.name !== 'root'">
-            <router-link :to="{ name: 'fileManager', query: { folder: folder.id } }">
+          <li v-for="(folder, index) in folderPath" v-if="folder.name !== 'root'">
+            <template v-if="index !== folderPath.length-1" >
+              <router-link 
+                :to="{ name: 'fileManager', query: { folder: folder.id } }">
+                {{folder.name}}
+              </router-link>
+            </template>
+            <template v-else>
               {{folder.name}}
-            </router-link>
+            </template>
           </li>
         </ul>
       </div>
