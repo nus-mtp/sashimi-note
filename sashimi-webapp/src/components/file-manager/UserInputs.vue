@@ -117,8 +117,8 @@ export default {
       focusedDoc: null,
       holdingDoc: null,
       searchString: '',
-      iconViewMode: false,
-      listViewMode: true,
+      iconViewMode: true,
+      listViewMode: false,
     };
   },
   props: ['folderPath', 'viewMode'],
@@ -198,6 +198,7 @@ export default {
   width: $button-sashimi-width;
   overflow: hidden;
   transform: scale(1.2);
+  transition: transform 1s;
   padding: 10px 0;
   text-align: center;
   margin-bottom: 15px;
@@ -244,6 +245,7 @@ export default {
 }
 
 .navbar-breadcrumb {
+  display: none;
   list-style: none;
   font-size: $navbar-font-size;
   padding-left: 0;
@@ -317,6 +319,10 @@ export default {
     .buttons-right {
       display: inline-block;
     }
+  }
+
+  .navbar-breadcrumb {
+    display: inline-block;
   }
 }
 </style>
