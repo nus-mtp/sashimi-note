@@ -7,7 +7,10 @@
             v-on:blur="blurFile"
     >
       <img src="../../assets/images/icons/icon-file.svg" alt="file">
-      <p contenteditable="true" tabindex="2" class="inline-block file-name"
+      <p contenteditable="true" 
+        tabindex="2" 
+        class="inline-block file-name"
+        ref="nameField"
         v-on:blur="saveFileName"
         v-on:keypress="onKeyPress"
         v-on:keyup="onKeyUp"
@@ -52,6 +55,7 @@ export default {
       const enterKey = 13;
       if (event.keyCode === enterKey) {
         this.saveFileName();
+        this.$refs.nameField.blur();
       }
     },
     removeStyle(event) {

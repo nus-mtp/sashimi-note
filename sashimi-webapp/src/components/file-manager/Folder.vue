@@ -7,7 +7,10 @@
             v-on:blur="blurFolder"
     >
       <img src="../../assets/images/icons/icon-folder.svg" alt="folder">
-      <p contenteditable="true" tabindex="2" class="inline-block folder-name"
+      <p contenteditable="true"
+        tabindex="2"
+        class="inline-block folder-name"
+        ref="nameField"
         v-on:blur="saveFolderName"
         v-on:keypress="onKeyPress"
         v-on:keyup="onKeyUp"
@@ -50,6 +53,7 @@
         const enterKey = 13;
         if (event.keyCode === enterKey) {
           this.saveFolderName();
+          this.$refs.nameField.blur();
         }
       },
       removeStyle(event) {
