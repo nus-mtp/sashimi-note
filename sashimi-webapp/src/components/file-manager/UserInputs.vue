@@ -43,12 +43,14 @@
             Search results
           </li>
           <li v-else>
-            Home
+            <router-link to="/">
+              Home
+            </router-link>
           </li>
           <li v-for="folder in folderPath" v-if="folder.name !== 'root'">
-            <a v-on:click="action(changeFolder)">
+            <router-link :to="{ name: 'fileManager', query: { folder: folder.id } }">
               {{folder.name}}
-            </a>
+            </router-link>
           </li>
         </ul>
       </div>
@@ -106,6 +108,7 @@
 
 <script>
 import _ from 'lodash';
+import router from 'src/router';
 import eventHub from './EventHub';
 
 let userInputsVue = null;
