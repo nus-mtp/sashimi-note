@@ -134,8 +134,16 @@ export default {
   },
   mounted() {
     fileManagerVue = this;
+
     const ROOT_FOLDER_ID = 0;
-    this.docs = fileManager.getFolderByID(ROOT_FOLDER_ID);
+    const folderID = this.$route.query.folder;
+
+    if (folderID) {
+      this.docs = fileManager.getFolderByID(folderID);
+      this.folderPath = constructFolderPath(this.docs);
+    } else {
+      this.docs = fileManager.getFolderByID(ROOT_FOLDER_ID);
+    }
     this.history = fileManager.createHistory(this.docs);
 
     this.changeDocViewOnResize();
