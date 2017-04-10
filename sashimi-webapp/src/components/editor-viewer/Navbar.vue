@@ -81,6 +81,7 @@
 </template>
 
 <script>
+import router from 'src/router';
 import condProcessor from 'src/logic/documentPackager/conditionalProcessor';
 
 export default {

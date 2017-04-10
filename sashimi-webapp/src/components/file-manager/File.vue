@@ -7,11 +7,14 @@
             v-on:blur="blurFile"
     >
       <img src="../../assets/images/icons/icon-file.svg" alt="file">
-      <p contenteditable="true" tabindex="2" class="inline-block"
+      <p contenteditable="true" 
+        tabindex="2" 
+        class="inline-block file-name"
+        ref="nameField"
         v-on:blur="saveFileName"
-        v-on:keypress="onKeyPress($event)"
-        v-on:keyup="onKeyUp($event)"
-        v-on:paste="removeStyle($event)"
+        v-on:keypress="onKeyPress"
+        v-on:keyup="onKeyUp"
+        v-on:paste="removeStyle"
       >{{file.name}}</p>
     </button>
   </div>
@@ -37,16 +40,10 @@ export default {
     saveFileName() {
       window.getSelection().removeAllRanges();
 
-      let newFileName = this.$el.getElementsByTagName('p')[0].innerHTML;
+      let newFileName = this.$refs.nameField.innerText;
       newFileName = newFileName.trim().replace(/&nbsp;/gi, '');
 
-      if (newFileName === '') {
-        newFileName = 'untitled.md';
-      }
-
-      if (newFileName !== this.file.name) {
-        this.$emit('renameFile', newFileName, this.file);
-      }
+      this.file.rename(newFileName);
     },
     onKeyPress(event) {
       const enterKey = 13;
@@ -58,6 +55,7 @@ export default {
       const enterKey = 13;
       if (event.keyCode === enterKey) {
         this.saveFileName();
+        this.$refs.nameField.blur();
       }
     },
     removeStyle(event) {
