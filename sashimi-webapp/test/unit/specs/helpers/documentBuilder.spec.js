@@ -1,6 +1,6 @@
-import iframeBuilder from 'src/helpers/iframeBuilder';
+import documentBuilder from 'src/helpers/documentBuilder';
 
-describe('iframe Builder', () => {
+describe('document Builder', () => {
   describe('getDocument', () => {
     it('should get the document of an iframe', () => {
       // Initialise data
@@ -9,7 +9,7 @@ describe('iframe Builder', () => {
       // Insert iframe to DOM tree, this will construct the iframe
       document.body.appendChild(iframeTestObj);
       const expectedResult = iframeTestObj.contentWindow.document;
-      const outputResult = iframeBuilder.getDocument(iframeTestObj);
+      const outputResult = documentBuilder.getDocument(iframeTestObj);
       expect(outputResult).to.equal(expectedResult);
 
       // Clean up
@@ -19,12 +19,12 @@ describe('iframe Builder', () => {
     it('should get null if the iframe is not in the DOM tree', () => {
       const iframeTestObj = document.createElement('iframe');
       expect(() => {
-        iframeBuilder.getDocument(iframeTestObj);
+        documentBuilder.getDocument(iframeTestObj);
       }).to.throw(Error);
     });
 
     it('should get the document of a window object', () => {
-      const outputResult = iframeBuilder.getDocument(window);
+      const outputResult = documentBuilder.getDocument(window);
       expect(outputResult).to.equal(window.document);
     });
 
@@ -33,7 +33,7 @@ describe('iframe Builder', () => {
       const iframeTestObj = document.createElement('iframe');
       document.body.appendChild(iframeTestObj);
 
-      const outputResult = iframeBuilder.getDocument(iframeTestObj.contentWindow);
+      const outputResult = documentBuilder.getDocument(iframeTestObj.contentWindow);
       expect(outputResult).to.equal(iframeTestObj.contentWindow.document);
 
       document.body.removeChild(iframeTestObj);
@@ -44,7 +44,7 @@ describe('iframe Builder', () => {
       // Initialise data
       const iframeTestObj = document.createElement('iframe');
       document.body.appendChild(iframeTestObj);
-      iframeBuilder.rebuild(iframeTestObj);
+      documentBuilder.rebuild(iframeTestObj);
 
       const frameDoc = iframeTestObj.contentWindow.document;
 
@@ -61,7 +61,7 @@ describe('iframe Builder', () => {
       // Initialise data
       const iframeTestObj = document.createElement('iframe');
       document.body.appendChild(iframeTestObj);
-      iframeBuilder.rebuild(iframeTestObj);
+      documentBuilder.rebuild(iframeTestObj);
 
       const frameDoc = iframeTestObj.contentWindow.document;
 

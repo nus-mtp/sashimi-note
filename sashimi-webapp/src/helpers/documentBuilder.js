@@ -25,7 +25,7 @@ export default {
    * Get the document object of a iframe element
    * @param {Element} An iframe element or a window object
    * @return {Document} a document object the iframe element
-   * @throws {Error} if the iframeElement doesn't have a window object.
+   * @throws {Error} if the frameElement doesn't have a window object.
    */
   getDocument(frameElement) {
     let frameWindow = frameElement.contentWindow;
@@ -46,8 +46,8 @@ export default {
    * @param {Element} iframe element
    * @return {Object} document object of the iframe
    */
-  rebuild(iframeElement) {
-    const iframeDoc = this.getDocument(iframeElement);
+  rebuild(frameElement) {
+    const iframeDoc = this.getDocument(frameElement);
     iframeDoc.open();
     iframeDoc.write(basicHTML);
     iframeDoc.close();
@@ -56,13 +56,13 @@ export default {
 
   /**
    * Add one style to the given iframe
-   * @param {Element} iframeElement
+   * @param {Element} frameElement
    * @param {string} url string pointing to a stylesSheet
    * @return {Promise} return a promise when all the styles has been loaded
    */
-  addStyle(iframeElement, style) {
+  addStyle(frameElement, style) {
     return new Promise((resolve, reject) => {
-      const frameDoc = this.getDocument(iframeElement);
+      const frameDoc = this.getDocument(frameElement);
       const styleElement = constructStyleLink(frameDoc, style);
       frameDoc.head.appendChild(styleElement);
 
@@ -94,13 +94,13 @@ export default {
 
   /**
    * Add multiple styles to the given iframe
-   * @param {Element} iframeElement
+   * @param {Element} frameElement
    * @param {Array<string>} An array of url string pointing to a stylesSheet
    * @return {Promise} return a promise when all the styles has been loaded
    */
-  addStyles(iframeElement, styles) {
+  addStyles(frameElement, styles) {
     return Promise.all(styles.map(style =>
-      this.addStyle(iframeElement, style)
+      this.addStyle(frameElement, style)
     ));
   },
 };
