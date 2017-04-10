@@ -68,7 +68,7 @@
                 v-on:click="updateParent('split')"
         >
         <!--<i class="material-icons md-dark">chrome_reader_mode</i>-->
-        <img src="../../assets/images/buttons/button-split-screen.svg" class="button-img" alt="plugins">
+        <i class="material-icons md-dark">chrome_reader_mode</i>
         </button>
         <button class="navbar-buttons" id="button-viewer"
                 v-on:click="updateParent('viewer')"
