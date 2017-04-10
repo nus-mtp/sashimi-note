@@ -42,24 +42,26 @@
           <li v-if="searchString !== ''">
             Search results
           </li>
-          <li v-else>
-            <router-link to="/" class="breadcrumb-active">
-              Home
-            </router-link>
-          </li>
-          <li v-for="(folder, index) in folderPath" v-if="folder.name !== 'root'">
-            <template v-if="index !== folderPath.length-1" >
-              <router-link 
-                :to="{ name: 'fileManager', query: { folder: folder.id } }"
-                class="breadcrumb-active"
-              >
-                {{folder.name}}
+          <template v-else>
+            <li>
+              <router-link to="/" class="breadcrumb-active">
+                Home
               </router-link>
-            </template>
-            <template v-else>
-              {{folder.name}}
-            </template>
-          </li>
+            </li>
+            <li v-for="(folder, index) in folderPath" v-if="folder.name !== 'root'">
+              <template v-if="index !== folderPath.length-1" >
+                <router-link 
+                  :to="{ name: 'fileManager', query: { folder: folder.id } }"
+                  class="breadcrumb-active"
+                >
+                  {{folder.name}}
+                </router-link>
+              </template>
+              <template v-else>
+                {{folder.name}}
+              </template>
+            </li>
+          </template>
         </ul>
       </div>
       <div class="float-right">
