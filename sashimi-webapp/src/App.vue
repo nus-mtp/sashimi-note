@@ -131,7 +131,6 @@ a {
   overflow: hidden;
   animation: buttonLogoWidthMobile $user-input-keyframe-time;
   padding: 10px 0;
-  margin-bottom: 15px;
 
   img {
     width: $button-logo-mobile-width;
