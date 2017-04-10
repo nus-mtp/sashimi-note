@@ -40,8 +40,16 @@
         return documentPackager.getHtmlData(this.editorContent);
       }
     },
+    watch: {
+      fileFormat() {
+        // Update event listener reference on fileFormat change
+        documentPrinter.setDomBehaviour();
+      }
+    },
     mounted() {
-      documentPrinter = new DocumentPrinter(window, this, 'editorContent');
+      Vue.nextTick(() => {
+        documentPrinter = new DocumentPrinter(window, this, 'editorContent');
+      });
     },
     beforeDestroy() {
       documentPrinter.unsetDomBehaviour();
