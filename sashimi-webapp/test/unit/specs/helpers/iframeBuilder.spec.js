@@ -5,7 +5,6 @@ describe('iframe Builder', () => {
     it('should get the document of an iframe', () => {
       // Initialise data
       const iframeTestObj = document.createElement('iframe');
-      iframeTestObj.id = 'iframeBuilder-spec-iframe';
 
       // Insert iframe to DOM tree, this will construct the iframe
       document.body.appendChild(iframeTestObj);
