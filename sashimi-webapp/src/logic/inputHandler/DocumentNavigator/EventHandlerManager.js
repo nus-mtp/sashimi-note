@@ -31,6 +31,44 @@ const guard = {
   }
 };
 
+const putDocumentBackToPlace = function putDocumentBackToPlace(navInstance) {
+  if (!navInstance.el.container.documentNavigator) {
+    return;
+  }
+
+  const tempContainerHeight = navInstance.el.container.documentNavigator.originalStyle.height;
+  const tempContainerWidth = navInstance.el.container.documentNavigator.originalStyle.width;
+
+  const renderHeight = tempContainerHeight * navInstance.transform.scale;
+  const renderWidth = tempContainerWidth * navInstance.transform.scale;
+
+  // Readjust scrollTop - [1] Cache original height of parent div
+  let oriHeight = domUtils.getComputedStyle(navInstance.el.parent).height;
+  if (oriHeight === 'auto') oriHeight = `${navInstance.el.parent.scrollHeight}px`;
+  const oriHeightPx = unitConverter.get(oriHeight, 'px', false);
+
+  // Readjust parent height and width to fix overall scrollbar problem
+  navInstance.el.parent.style.height = `${renderHeight}px`;
+  navInstance.el.parent.style.width = `${renderWidth}px`;
+
+  // Readjust scrollTop - [2] Compute height difference and adjust scrollTop
+  const newHeightPx = renderHeight;
+  const heightChange = newHeightPx / oriHeightPx;
+  navInstance.el.parent.parentNode.scrollTop *= heightChange;
+
+  // Readjust left position to fix scroll left problem
+  const rootNode = navInstance.el.html;
+  let rootWidth = domUtils.getComputedStyle(rootNode).width;
+  if (rootWidth === 'auto') rootWidth = `${rootNode.scrollWidth}px`;
+  const rootWidthPx = unitConverter.get(rootWidth, 'px', false);
+  if (renderWidth > rootWidthPx) {
+    const eatenLeft = -(rootWidthPx - renderWidth)/2;
+    navInstance.el.parent.style.left = `${eatenLeft}px`;
+  } else {
+    navInstance.el.parent.style.left = 0;
+  }
+};
+
 export default function(navInstance) {
   // Event handlers
   this.eventFn = {
@@ -76,39 +114,7 @@ export default function(navInstance) {
         scale = guard.scale(scale);
         navInstance.transform.set({ scale });
 
-        if (navInstance.el.container.documentNavigator) {
-          const tempContainerHeight = navInstance.el.container.documentNavigator.originalStyle.height;
-          const tempContainerWidth = navInstance.el.container.documentNavigator.originalStyle.width;
-
-          const renderHeight = tempContainerHeight * navInstance.transform.scale;
-          const renderWidth = tempContainerWidth * navInstance.transform.scale;
-
-          // Readjust scrollTop - [1] Cache original height of parent div
-          let oriHeight = domUtils.getComputedStyle(navInstance.el.parent).height;
-          if (oriHeight === 'auto') oriHeight = `${navInstance.el.parent.scrollHeight}px`;
-          const oriHeightPx = unitConverter.get(oriHeight, 'px', false);
-
-          // Readjust parent height and width to fix overall scrollbar problem
-          navInstance.el.parent.style.height = `${renderHeight}px`;
-          navInstance.el.parent.style.width = `${renderWidth}px`;
-
-          // Readjust scrollTop - [2] Compute height difference and adjust scrollTop
-          const newHeightPx = renderHeight;
-          const heightChange = newHeightPx / oriHeightPx;
-          navInstance.el.parent.parentNode.scrollTop *= heightChange;
-
-          // Readjust left position to fix scroll left problem
-          const rootNode = navInstance.el.html;
-          let rootWidth = domUtils.getComputedStyle(rootNode).width;
-          if (rootWidth === 'auto') rootWidth = `${rootNode.scrollWidth}px`;
-          const rootWidthPx = unitConverter.get(rootWidth, 'px', false);
-          if (renderWidth > rootWidthPx) {
-            const eatenLeft = -(rootWidthPx - renderWidth)/2;
-            navInstance.el.parent.style.left = `${eatenLeft}px`;
-          } else {
-            navInstance.el.parent.style.left = 0;
-          }
-        }
+        putDocumentBackToPlace(navInstance);
       },
     },
     pointer: {
@@ -145,11 +151,7 @@ export default function(navInstance) {
           navInstance.el.container.style.transition = '';
         }, transitionDuration);
 
-        if (navInstance.el.container.documentNavigator) {
-          const tempContainerHeight = navInstance.el.container.documentNavigator.originalStyle.height;
-          const renderHeight = `${tempContainerHeight * navInstance.transform.scale}px`;
-          navInstance.el.parent.style.height = renderHeight;
-        }
+        putDocumentBackToPlace(navInstance);
       },
       transitioned: NOT_IMPLEMENTED
     },
