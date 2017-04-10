@@ -94,7 +94,7 @@ export default function(navInstance) {
           // The event is a gesture, but is it not executed by at least two fingers
           return;
         }
-        if (!event.ds) {
+        if (event.ds == null) {
           // event polyfill for interactjs gesturable
           // deltaY is only available for mousewheel event
           // detail is only available for DOMMouseWheel event
