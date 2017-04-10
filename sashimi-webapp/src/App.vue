@@ -162,7 +162,7 @@ a {
   vertical-align: middle;
 }
 
-@media screen and (min-width: 480px) {
+@media screen and (max-width: 480px) {
   .col {
     margin: 0;
   }
