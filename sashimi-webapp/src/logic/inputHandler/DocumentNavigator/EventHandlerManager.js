@@ -52,7 +52,7 @@ const putDocumentBackToPlace = function putDocumentBackToPlace(navInstance) {
 
   // Readjust parent height and width to fix overall scrollbar problem
   navInstance.el.parent.style.height = `${renderHeight}px`;
-  navInstance.el.parent.style.width = `${renderWidth}px`;
+  navInstance.el.parent.style.width = `${renderWidth - (MARGIN_WIDTH/2)}px`;
 
   // Readjust scrollTop - [2] Compute height difference and adjust scrollTop
   const newHeightPx = renderHeight;
