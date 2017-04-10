@@ -3,6 +3,9 @@ import unitConverter from 'src/helpers/unitConverter';
 
 const NOT_IMPLEMENTED = null;
 
+const MARGIN_WIDTH = 60;
+const TRANSITION_DURATION = 500;
+
 const guard = {
   translateY(translateY, parentEle) {
     const bottomLimit = (() => {
@@ -129,15 +132,13 @@ export default function(navInstance) {
     dom: {
       resize(event) {
         // Retrieve the resized width
-        const marginWidth = 60;
-        const transitionDuration = 500;
         // Resize the element's transformer
-        navInstance.el.container.style.transition = `transform ${transitionDuration}ms`;
-        navInstance.width.element = navInstance.width.element || navInstance.width.html - marginWidth;
-        navInstance.transform.set({ scale: (navInstance.width.html - marginWidth) / navInstance.width.element });
+        navInstance.el.container.style.transition = `transform ${TRANSITION_DURATION}ms`;
+        navInstance.width.element = navInstance.width.element || navInstance.width.html - MARGIN_WIDTH;
+        navInstance.transform.set({ scale: (navInstance.width.html - MARGIN_WIDTH) / navInstance.width.element });
         setTimeout(() => {
           navInstance.el.container.style.transition = '';
-        }, transitionDuration);
+        }, TRANSITION_DURATION);
 
         putDocumentBackToPlace(navInstance);
       },
