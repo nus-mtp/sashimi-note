@@ -134,7 +134,7 @@ export default function(navInstance) {
         // Retrieve the resized width
         // Resize the element's transformer
         navInstance.el.container.style.transition = `transform ${TRANSITION_DURATION}ms`;
-        navInstance.width.element = navInstance.width.element || navInstance.width.html - MARGIN_WIDTH;
+        navInstance.width.element = navInstance.width.element || (navInstance.width.html - MARGIN_WIDTH);
         navInstance.transform.set({ scale: (navInstance.width.html - MARGIN_WIDTH) / navInstance.width.element });
         setTimeout(() => {
           navInstance.el.container.style.transition = '';
