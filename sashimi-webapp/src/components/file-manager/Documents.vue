@@ -72,7 +72,7 @@ export default {
 @import 'src/assets/styles/variables.scss';
 .documents {
   overflow-y: auto;
-  height: calc(100vh - #{$file-manager-navbar-height-mobile});
+  height: calc(100vh - #{$file-manager-navbar-height});
   background-color: $grey-background;
 
   .folder,
