@@ -146,10 +146,6 @@ a {
     &:visited {
       color: $grey-font;
     }
-
-    &:hover {
-      color: $orange;
-    }
     
     p {
       margin-left: 5px;
