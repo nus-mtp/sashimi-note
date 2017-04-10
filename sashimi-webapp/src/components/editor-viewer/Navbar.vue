@@ -130,7 +130,7 @@ export default {
   box-shadow: 0px 1px 10px rgba(0,0,0,0.4);
   height: $content-navbar-height;
 
-  &[data-viewMode="editor"],
+  &[data-viewMode="editor"], 
   &[data-viewMode="split"] {
     #button-editor, 
     #button-split-screen {
@@ -172,6 +172,7 @@ export default {
 
 .navbar-dropdown {
   box-sizing: border-box;
+  margin-top: -6px;
 
   .button-dropdown {
     border: 1px solid transparent;  
@@ -244,6 +245,28 @@ export default {
       #button-editor,
       #button-viewer {
         display: inline-block;
+      }
+    }
+
+    &[data-viewMode="editor"] {
+      #button-editor {
+        .material-icons.md-dark {
+          color: $orange;
+        }
+      }
+    }
+    &[data-viewMode="split"] {
+      #button-split-screen {
+        .material-icons.md-dark {
+          color: $orange;
+        }
+      }
+    }
+    &[data-viewMode="viewer"] {
+      #button-viewer {
+        .material-icons.md-dark {
+          color: $orange;
+        }
       }
     }
   }
