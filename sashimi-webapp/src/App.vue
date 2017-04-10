@@ -68,7 +68,7 @@ a {
 .navbar {
   overflow: hidden;
   box-sizing: border-box;
-  padding: 10px 20px;
+  padding: 22px 20px 10px 20px;
   text-align: left;
 }
 
