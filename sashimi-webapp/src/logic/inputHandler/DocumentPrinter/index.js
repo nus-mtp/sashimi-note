@@ -2,8 +2,9 @@ import elementUtils from 'src/helpers/elementUtils';
 import core from './core';
 
 const keyEventListener = function keyEventListener(event) {
-  // TODO: Intercept command key for Mac too
-  if (event.key === 'p' && event.ctrlKey) {
+  if (event.key === 'p' && (event.ctrlKey || event.metaKey)) {
+    // metaKey will match Window key and Mac's CMD key
+    // TODO: Prevent Windows + P to execute print
     event.preventDefault();
     this.print();
   }
