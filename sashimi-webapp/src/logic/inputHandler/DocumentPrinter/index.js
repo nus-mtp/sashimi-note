@@ -10,7 +10,7 @@ const keyEventListener = function keyEventListener(event) {
 };
 
 const DocumentPrinter = function DocumentPrinter(elementRef, vueInstance, propName) {
-  this.elementRef = elementRef;
+  this.elementRef = elementUtils.resolveElement(elementRef);
   this.vueInstance = vueInstance;
   this.propName = propName;
 
