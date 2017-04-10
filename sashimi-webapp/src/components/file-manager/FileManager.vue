@@ -53,7 +53,6 @@ export default {
   },
   watch: {
     $route(path) {
-      console.log('bye');
       if (path.query.folder === undefined) {
         const ROOT_FOLDER_ID = 0;
         const rootFolder = fileManager.getFolderByID(ROOT_FOLDER_ID);
