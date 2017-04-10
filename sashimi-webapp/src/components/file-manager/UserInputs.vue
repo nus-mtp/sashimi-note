@@ -39,7 +39,7 @@
       </div>
     </div>
     <div class="section group userActions vertical-align-child">
-      <div class="col float-left">
+      <div class="col float-left vertical-align-child">
         <button class="navbar-buttons" 
                 v-on:click="execute('history back')"
         >
@@ -207,6 +207,8 @@ export default {
   box-shadow: 0 2px 6px rgba(0,0,0,0.3);
   z-index: 999;
   position: relative;
+  box-sizing: border-box;
+  height: $file-manager-navbar-height;
 }
 
 .searchBar-wrapper {
@@ -214,11 +216,13 @@ export default {
   text-align: left;
   overflow: hidden;
   animation: userInput $user-input-keyframe-time;
+  height: 45px;
 
   .searchBar {
     background-color: $grey-background;
     width: 90%;
     margin: 0 auto;
+    height: 100%;
   }
 
   i {
