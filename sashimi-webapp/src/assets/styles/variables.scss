@@ -19,10 +19,13 @@ $button-sashimi-width: 42px;
 $navbar-elements-left-margin: 18px;
 $navbar-button-dropdown-width: 140px;
 
+$view-type-buttons-width: 100.36px;
+
 $searchbar-icons-width: 44px;
 $searchbar-mobile-margin-left: 15px;
-
-$view-type-buttons-width: 100.36px;
+$searbar-wrapper-mobile-width: calc(100% - #{$button-sashimi-width});
+$searchbar-wrapper-480px-width: calc(100% - #{$button-sashimi-width} - #{$view-type-buttons-width}); 
+$searchbar-wrapper-768px-width: calc(100% - #{$button-logo-width} - #{$view-type-buttons-width}); 
 
 // colors
 $grey-background: #F2F2F2;

@@ -1,4 +1,14 @@
-@keyframes viewType {
+@keyframes viewTypeWidth {
   0% { width: 0 }
   100% { width: $view-type-buttons-width }
+}
+
+@keyframes buttonLogoWidthMobile {
+  0% { width: 0 }
+  100% { width: $button-sashimi-width }
+}
+
+@keyframes buttonLogoWidth {
+  0% { width: 0 }
+  100% { width: $button-logo-width }
 }

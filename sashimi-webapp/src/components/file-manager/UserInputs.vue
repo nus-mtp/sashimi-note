@@ -212,7 +212,7 @@ export default {
 .button-logo {
   width: $button-sashimi-width;
   overflow: hidden;
-  transition: width $user-input-keyframe-time;
+  animation: buttonLogoWidthMobile $user-input-keyframe-time;
   padding: 10px 0;
   text-align: center;
   margin-bottom: 15px;
@@ -223,9 +223,10 @@ export default {
 }
 
 .searchBar-wrapper {
-  width: calc(100% - #{$button-sashimi-width});
-  transition: width $user-input-keyframe-time;
+  width: $searbar-wrapper-mobile-width;
   text-align: left;
+  overflow: hidden;
+  animation: userInput $user-input-keyframe-time;
 
   .searchBar {
     background-color: $grey-background;
@@ -308,7 +309,7 @@ export default {
   font-size: $navbar-font-size;
   font-family: $font-primary;
   float: right;
-  animation: viewType $user-input-keyframe-time;
+  animation: viewTypeWidth $user-input-keyframe-time;
 
   .view-type {
     width:$view-type-buttons-width;
@@ -330,8 +331,9 @@ export default {
 
 @media screen and (min-width: 480px) {
   .searchBar-wrapper {
-    width: calc(100% - #{$button-sashimi-width} - #{$view-type-buttons-width});
+    width: $searchbar-wrapper-480px-width;
   }
+
   .view-type-wrapper {
     padding: 5px 0;
     display: inline-block;
@@ -339,18 +341,19 @@ export default {
 }
 
 @media screen and (min-width: 768px) {
+  .searchBar-wrapper {
+     width: $searchbar-wrapper-768px-width;
+   }
+
   .button-logo {
     width: $button-logo-width;
     overflow: initial;
     margin-bottom: 0;
+    animation: buttonLogoWidth $user-input-keyframe-time;
 
     img {
       width: 150px;
     }
-  }
-
-  .searchBar-wrapper {
-    width: calc(100% - #{$button-logo-width} - #{$view-type-buttons-width});
   }
 
   .userActions  {
