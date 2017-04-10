@@ -53,6 +53,7 @@ export default {
   },
   watch: {
     $route(path) {
+      console.log('bye');
       if (path.query.folder === undefined) {
         const ROOT_FOLDER_ID = 0;
         const rootFolder = fileManager.getFolderByID(ROOT_FOLDER_ID);
@@ -67,7 +68,7 @@ export default {
   methods: {
     changeFolder(folderObj) {
       this.folderPath = constructFolderPath(folderObj);
-      this.updateUrlPath(folderObj);
+      this.updateUrlPath(folderObj.id);
       this.docs = folderObj;
       try {
         this.history.update(this.docs);
@@ -81,11 +82,11 @@ export default {
     changeViewMode(viewMode) {
       this.viewMode = viewMode;
     },
-    updateUrlPath(folderObj) {
-      if (folderObj.id === 0) {
+    updateUrlPath(folderID) {
+      if (folderID === 0) {
         this.$router.push({ path: '' });
       } else {
-        this.$router.push({ path: '', query: { folder: folderObj.id } });
+        this.$router.push({ path: '', query: { folder: folderID } });
       }
     },
     executeAction(action, data) {
@@ -101,13 +102,13 @@ export default {
         case 'history back': {
           this.docs = this.history.previous();
           this.folderPath = constructFolderPath(this.docs);
-          this.updateUrlPath(this.docs);
+          this.updateUrlPath(this.docs.id);
           break;
         }
         case 'history forward': {
           this.docs = this.history.next();
           this.folderPath = constructFolderPath(this.docs);
-          this.updateUrlPath(this.docs);
+          this.updateUrlPath(this.docs.id);
           break;
         }
         case 'download': {
@@ -147,12 +148,12 @@ export default {
 
     const ROOT_FOLDER_ID = 0;
     const folderID = this.$route.query.folder;
-
-    if (folderID) {
+    if (folderID && fileManager.getFolderByID(folderID)) {
       this.docs = fileManager.getFolderByID(folderID);
       this.folderPath = constructFolderPath(this.docs);
     } else {
       this.docs = fileManager.getFolderByID(ROOT_FOLDER_ID);
+      this.updateUrlPath(ROOT_FOLDER_ID);
     }
     this.history = fileManager.createHistory(this.docs);
 
