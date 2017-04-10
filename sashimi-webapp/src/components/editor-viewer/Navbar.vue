@@ -111,6 +111,13 @@ export default {
       this.$router.push({ path: '/' });
     }
   },
+  mounted() {
+    if (window.innerWidth < 768) {
+      this.viewMode = 'editor';
+    } else {
+      this.viewMode = 'split';
+    }
+  }
 };
 </script>
 
