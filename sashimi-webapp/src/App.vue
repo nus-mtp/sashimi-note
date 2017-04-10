@@ -73,7 +73,6 @@ a {
 }
 
 .material-icons { 
-
   &.md-54 { 
     font-size: 54px; 
   }
@@ -128,9 +127,15 @@ a {
 }
 
 .button-logo {
-  text-align: left;
-  position: relative;
-  width: $button-logo-width;
+  width: $button-sashimi-width;
+  overflow: hidden;
+  animation: buttonLogoWidthMobile $user-input-keyframe-time;
+  padding: 10px 0;
+  margin-bottom: 15px;
+
+  img {
+    width: $button-logo-mobile-width;
+  }
 
   a {
     font-size: $logo-font-size;
@@ -146,10 +151,6 @@ a {
     &:hover {
       color: $orange;
     }
-
-    img {
-      width: 150px;
-    }
     
     p {
       margin-left: 5px;
@@ -161,10 +162,26 @@ a {
   vertical-align: middle;
 }
 
-@media screen and (max-width: 480px) {
+@media screen and (min-width: 480px) {
   .col {
     margin: 0;
   }
 }
+
+@media screen and (min-width: 768px) {
+  .button-logo {
+    width: $button-logo-width;
+    overflow: initial;
+    margin-bottom: 0;
+    animation: buttonLogoWidth $user-input-keyframe-time;
+
+    img {
+      width: $button-logo-width;
+    }
+  }
+}
+
+
+
 
 </style>

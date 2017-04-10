@@ -209,19 +209,6 @@ export default {
   position: relative;
 }
 
-.button-logo {
-  width: $button-sashimi-width;
-  overflow: hidden;
-  animation: buttonLogoWidthMobile $user-input-keyframe-time;
-  padding: 10px 0;
-  text-align: center;
-  margin-bottom: 15px;
-
-  img {
-    width: 180px;
-  }
-}
-
 .searchBar-wrapper {
   width: $searbar-wrapper-mobile-width;
   text-align: left;
@@ -344,17 +331,6 @@ export default {
   .searchBar-wrapper {
      width: $searchbar-wrapper-768px-width;
    }
-
-  .button-logo {
-    width: $button-logo-width;
-    overflow: initial;
-    margin-bottom: 0;
-    animation: buttonLogoWidth $user-input-keyframe-time;
-
-    img {
-      width: 150px;
-    }
-  }
 
   .userActions  {
     .buttons-right {
