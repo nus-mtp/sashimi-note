@@ -217,6 +217,7 @@ export default {
   overflow: hidden;
   animation: userInput $user-input-keyframe-time;
   height: 45px;
+  margin-top: -5px;
 
   .searchBar {
     background-color: $grey-background;
@@ -265,7 +266,6 @@ export default {
   font-size: $navbar-font-size;
   padding-left: 0;
   margin: 0;
-  height: 32px;
   vertical-align: middle;
   color: $grey-font;
 
@@ -326,7 +326,6 @@ export default {
   }
 
   .view-type-wrapper {
-    padding: 5px 0;
     display: inline-block;
   }
 }
