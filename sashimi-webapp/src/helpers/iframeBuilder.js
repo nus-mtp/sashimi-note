@@ -46,8 +46,9 @@ export default {
    */
   addStyle(iframeElement, style) {
     return new Promise((resolve, reject) => {
-      const styleElement = constructStyleLink(iframeElement.contentWindow.document, style);
-      this.getDocument(iframeElement).head.appendChild(styleElement);
+      const frameDoc = this.getDocument(iframeElement);
+      const styleElement = constructStyleLink(frameDoc, style);
+      frameDoc.head.appendChild(styleElement);
 
       // Resolve only when the style has been loaded.
       // https://www.phpied.com/when-is-a-stylesheet-really-loaded/
@@ -59,8 +60,7 @@ export default {
       //   is sufficient to ensure all css get loaded and rendered.
       // TODO: Implement a better solution for this problem
       const poller = setInterval(() => {
-        const styleSheets = iframeElement.contentWindow.document.styleSheets;
-
+        const styleSheets = frameDoc.styleSheets;
         for (let i = 0; i < styleSheets.length; i += 1) {
           const stylesheet = styleSheets[i];
 
