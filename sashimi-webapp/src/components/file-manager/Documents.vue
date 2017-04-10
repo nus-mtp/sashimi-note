@@ -27,7 +27,6 @@
 </template>
 
 <script>
-import fileManager from 'src/logic/filemanager';
 import eventHub from './EventHub';
 import folder from './Folder';
 import file from './File';
@@ -114,6 +113,7 @@ export default {
     height: 140px;
     text-align: center;
     box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.2);
+    animation: docIcons 0.5s;
   }
 
   .folder,

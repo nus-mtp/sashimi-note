@@ -12,3 +12,9 @@
   0% { width: 0 }
   100% { width: $button-logo-width }
 }
+
+@keyframes docIcons {
+  0% { transform: scale(1.05) }
+  50% { transform: scale(0.98) }  
+  100% { transform: scale(1) }
+}
