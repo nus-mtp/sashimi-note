@@ -40,7 +40,7 @@ export default {
     saveFileName() {
       window.getSelection().removeAllRanges();
 
-      let newFileName = this.$el.getElementsByTagName('p')[0].innerHTML;
+      let newFileName = this.$refs.nameField.innerText;
       newFileName = newFileName.trim().replace(/&nbsp;/gi, '');
 
       this.file.rename(newFileName);

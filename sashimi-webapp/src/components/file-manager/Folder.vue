@@ -38,7 +38,7 @@
       saveFolderName() {
         window.getSelection().removeAllRanges();
 
-        let newFolderName = this.$el.getElementsByTagName('p')[0].innerText;
+        let newFolderName = this.$refs.nameField.innerText;
         newFolderName = newFolderName.trim().replace(/&nbsp;/gi, '');
 
         this.folder.rename(newFolderName);
