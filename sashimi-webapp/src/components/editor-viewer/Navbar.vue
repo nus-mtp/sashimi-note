@@ -119,7 +119,8 @@ export default {
 
 .navbar {
   box-sizing: border-box;
-  border-bottom: 3px solid $navbar-border-color;
+  // border-bottom: 3px solid $navbar-border-color;
+  box-shadow: 0px 1px 10px rgba(0,0,0,0.2);
 
   &[data-viewMode="editor"],
   &[data-viewMode="split"] {
