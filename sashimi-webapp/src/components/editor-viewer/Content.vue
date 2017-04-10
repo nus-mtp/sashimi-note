@@ -82,12 +82,15 @@ export default {
     // for testing purposes
     // will be handled by fileManager logic
     const fileID = parseInt(this.$route.query.id);
-
-    this.file = fileManager.getFileByID(fileID);
-    this.file.load()
-      .then((data) => {
-        this.mdContent = data;
-      });
+    if (fileID && fileManager.getFileByID(fileID)) {
+      this.file = fileManager.getFileByID(fileID);
+      this.file.load()
+        .then((data) => {
+          this.mdContent = data;
+        });
+    } else {
+      this.$router.push('/');
+    }
 
     if (window.innerWidth < 768) {
       this.viewMode = 'editor';
