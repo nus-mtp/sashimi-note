@@ -42,6 +42,15 @@
           '/styles/viewer-page.css',
           '/styles/markdown-imports.css'
         ])
+        .catch((error) => {
+          /* eslint no-console: 0 */
+          if (error.message.includes('Error loading style')) {
+            // Disregard loading error and continue to render document.
+            console.error(error.message);
+          } else {
+            throw error;
+          }
+        })
         .then(() => {
           const iframeDoc = documentBuilder.getDocument(this.$el);
 

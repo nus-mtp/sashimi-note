@@ -24,9 +24,10 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
 
+/* eslint max-len:0 */
 
 const AMTcgiloc = '';    // set to the URL of your LaTex renderer
-const noMathRender = false;
+// const noMathRender = false;
 
 const config = {
   translateOnLoad: false,    // true to autotranslate
@@ -368,15 +369,15 @@ function AMinitSymbols() {
 }
 
 
-function newcommand(oldstr, newstr) {
-  AMsymbols.push({ input: oldstr, tag: 'mo', output: newstr, tex: null, ttype: DEFINITION });
-  refreshSymbols();
-}
+// function newcommand(oldstr, newstr) {
+//   AMsymbols.push({ input: oldstr, tag: 'mo', output: newstr, tex: null, ttype: DEFINITION });
+//   refreshSymbols();
+// }
 
-function newsymbol(symbolobj) {
-  AMsymbols.push(symbolobj);
-  refreshSymbols();
-}
+// function newsymbol(symbolobj) {
+//   AMsymbols.push(symbolobj);
+//   refreshSymbols();
+// }
 
 function AMremoveCharsAndBlanks(str, n) {
 // remove n characters and any following blanks
@@ -543,17 +544,15 @@ function AMgetSymbol(str) {
 
 /* eslint no-use-before-define: ["error", { "functions": false }]*/
 function AMTparseIexpr(str) {
-  let symbol;
-  let sym1;
   let sym2;
   let node;
   let result;
   str = AMremoveCharsAndBlanks(str, 0);
-  sym1 = AMgetSymbol(str);
+  const sym1 = AMgetSymbol(str);
   result = AMTparseSexpr(str);
   node = result[0];
   str = result[1];
-  symbol = AMgetSymbol(str);
+  const symbol = AMgetSymbol(str);
   if (symbol.ttype === INFIX && symbol.input !== '/') {
     str = AMremoveCharsAndBlanks(str, symbol.input.length);
    // if (symbol.input == "/") result = AMTparseIexpr(str); else
@@ -599,7 +598,7 @@ function AMTparseExpr(str, rightbracket) {
   let node;
   let result;
   let i;
-  const nodeList = [];
+  // const nodeList = [];
   let newFrag = '';
   let addedright = false;
   do {
@@ -670,28 +669,28 @@ function AMTparseExpr(str, rightbracket) {
           let lastmxsubcnt = -1;
           if (mxnestingd===0 && pos.length>0 && matrix) {
             for (i=0; i<pos.length-1; i+=1) {
+              let subarr;
               if (i>0) mxout += '\\\\';
               if (i===0) {
               // var subarr = newFrag.substr(pos[i]+7,pos[i+1]-pos[i]-15).split(',');
                 if (subpos[pos[i]].length===1) {
-                  const subarr = [newFrag.substr(pos[i]+7, pos[i+1]-pos[i]-15)];
+                  subarr = [newFrag.substr(pos[i]+7, pos[i+1]-pos[i]-15)];
                 } else {
-                  const subarr = [newFrag.substring(pos[i]+7, subpos[pos[i]][1])];
+                  subarr = [newFrag.substring(pos[i]+7, subpos[pos[i]][1])];
                   for (let j=2; j<subpos[pos[i]].length; j+=1) {
                     subarr.push(newFrag.substring(subpos[pos[i]][j-1]+1, subpos[pos[i]][j]));
                   }
                   subarr.push(newFrag.substring(subpos[pos[i]][subpos[pos[i]].length-1]+1, pos[i+1]-8));
                 }
               } else if (subpos[pos[i]].length===1) { // var subarr = newFrag.substr(pos[i]+8,pos[i+1]-pos[i]-16).split(',');
-                const subarr = [newFrag.substr(pos[i]+8, pos[i+1]-pos[i]-16)];
+                subarr = [newFrag.substr(pos[i]+8, pos[i+1]-pos[i]-16)];
               } else {
-                const subarr = [newFrag.substring(pos[i]+8, subpos[pos[i]][1])];
+                subarr = [newFrag.substring(pos[i]+8, subpos[pos[i]][1])];
                 for (let j=2; j<subpos[pos[i]].length; j+=1) {
                   subarr.push(newFrag.substring(subpos[pos[i]][j-1]+1, subpos[pos[i]][j]));
                 }
                 subarr.push(newFrag.substring(subpos[pos[i]][subpos[pos[i]].length-1]+1, pos[i+1]-8));
               }
-              let subarr;
               if (lastmxsubcnt>0 && subarr.length!==lastmxsubcnt) {
                 matrix = false;
               } else if (lastmxsubcnt===-1) {
@@ -1016,55 +1015,55 @@ function AMprocessNode(n, linebreaks, spanclassAM) {
   }
 }
 
-let AMbody;
-let AMtranslated = false;
-const AMnoMathML = true;
+// let AMbody;
+// let AMtranslated = false;
+// const AMnoMathML = true;
 
-function translate(spanclassAM) {
-  if (!AMtranslated) { // run this only once
-    AMtranslated = true;
-    const body = document.getElementsByTagName('body')[0];
-    const processN = document.getElementById(config.AMdocumentId);
-    AMprocessNode((processN!=null?processN:body), false, spanclassAM);
-  }
-}
+// function translate(spanclassAM) {
+//   if (!AMtranslated) { // run this only once
+//     AMtranslated = true;
+//     const body = document.getElementsByTagName('body')[0];
+//     const processN = document.getElementById(config.AMdocumentId);
+//     AMprocessNode((processN!=null?processN:body), false, spanclassAM);
+//   }
+// }
 
 AMinitSymbols();
 
-function generic() {
-  if (config.translateOnLoad) {
-    translate();
-  }
-}
+// function generic() {
+//   if (config.translateOnLoad) {
+//     translate();
+//   }
+// }
 
-// setup onload function
-if (typeof window.addEventListener != 'undefined') {
-  // .. gecko, safari, konqueror and standard
-  window.addEventListener('load', generic, false);
-} else if (typeof document.addEventListener != 'undefined') {
-  // .. opera 7
-  document.addEventListener('load', generic, false);
-} else if (typeof window.attachEvent != 'undefined') {
-  // .. win/ie
-  window.attachEvent('onload', generic);
-} else if (typeof window.onload == 'function') {
-  // .. mac/ie5 and anything else that gets this far
-  // if there's an existing onload function
-  // store it
-  const existing = onload;
-  // add new onload handler
-  window.onload = function() {
-    // call existing onload function
-    existing();
-    // call generic onload function
-    generic();
-  };
-} else {
-  window.onload = generic;
-}
+// // setup onload function
+// if (typeof window.addEventListener != 'undefined') {
+//   // .. gecko, safari, konqueror and standard
+//   window.addEventListener('load', generic, false);
+// } else if (typeof document.addEventListener != 'undefined') {
+//   // .. opera 7
+//   document.addEventListener('load', generic, false);
+// } else if (typeof window.attachEvent != 'undefined') {
+//   // .. win/ie
+//   window.attachEvent('onload', generic);
+// } else if (typeof window.onload == 'function') {
+//   // .. mac/ie5 and anything else that gets this far
+//   // if there's an existing onload function
+//   // store it
+//   const existing = onload;
+//   // add new onload handler
+//   window.onload = function() {
+//     // call existing onload function
+//     existing();
+//     // call generic onload function
+//     generic();
+//   };
+// } else {
+//   window.onload = generic;
+// }
 
 export default {
-  translate,
+  // translate,
   AMTconfig: config,
   AMprocessNode,
   AMparseMath,

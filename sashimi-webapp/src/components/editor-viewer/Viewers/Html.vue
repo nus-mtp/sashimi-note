@@ -44,6 +44,15 @@
           '/styles/markdown-html.css',
           '/styles/markdown-imports.css'
         ])
+        .catch((error) => {
+          /* eslint no-console: 0 */
+          if (error.message.includes('Error loading style')) {
+            // Disregard loading error and continue to render document.
+            console.error(error.message);
+          } else {
+            throw error;
+          }
+        })
         .then(() => {
           this.renderDoc = this.$el.contentWindow.document;
           renderUpdate(this.renderDoc.body, this.htmlData);
