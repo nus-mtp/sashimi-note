@@ -19,11 +19,14 @@
   import Vue from 'vue';
   import AsyncComputed from 'vue-async-computed';
   import documentPackager from 'src/logic/documentPackager';
+  import DocumentPrinter from 'src/logic/inputHandler/DocumentPrinter';
   import viewerPages from './Viewers/Pages';
   import viewerSlides from './Viewers/Slides';
   import viewerHtml from './Viewers/Html';
 
   Vue.use(AsyncComputed);
+
+  let documentPrinter = null;
 
   export default {
     components: {
@@ -37,6 +40,20 @@
         return documentPackager.getHtmlData(this.editorContent);
       }
     },
+    watch: {
+      fileFormat() {
+        // Update event listener reference on fileFormat change
+        documentPrinter.setDomBehaviour();
+      }
+    },
+    mounted() {
+      Vue.nextTick(() => {
+        documentPrinter = new DocumentPrinter(window, this, 'editorContent');
+      });
+    },
+    beforeDestroy() {
+      documentPrinter.unsetDomBehaviour();
+    }
   };
 
 </script>

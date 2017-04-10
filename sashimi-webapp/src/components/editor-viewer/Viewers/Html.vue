@@ -10,7 +10,7 @@
 <script>
   import Vue from 'vue';
   import diagramsRenderer from 'src/logic/renderer/diagrams';
-  import iframeBuilder from 'src/helpers/iframeBuilder';
+  import documentBuilder from 'src/helpers/documentBuilder';
 
   /**
    * Diagram rendering function for HTML view
@@ -39,8 +39,8 @@
     },
     mounted() {
       Vue.nextTick(() => {
-        iframeBuilder.rebuild(this.$el);
-        iframeBuilder.addStyles(this.$el, [
+        documentBuilder.rebuild(this.$el);
+        documentBuilder.addStyles(this.$el, [
           '/styles/markdown-html.css',
           '/styles/markdown-imports.css'
         ])

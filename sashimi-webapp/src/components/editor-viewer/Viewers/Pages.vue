@@ -12,7 +12,7 @@
   import _ from 'lodash';
   import PageRenderer from 'src/logic/renderer';
   import DocumentNavigator from 'src/logic/inputHandler/DocumentNavigator';
-  import iframeBuilder from 'src/helpers/iframeBuilder';
+  import documentBuilder from 'src/helpers/documentBuilder';
 
   // Throttle function used to limit the rate which
   // the render function is called
@@ -36,8 +36,8 @@
     mounted() {
       // Mount does not gurrantee DOM to be ready, thus nextTick is used
       Vue.nextTick(() => {
-        iframeBuilder.rebuild(this.$el);
-        iframeBuilder.addStyles(this.$el, [
+        documentBuilder.rebuild(this.$el);
+        documentBuilder.addStyles(this.$el, [
           '/styles/markdown-html.css',
           '/styles/viewer-page.css',
           '/styles/markdown-imports.css'
@@ -52,7 +52,7 @@
           }
         })
         .then(() => {
-          const iframeDoc = iframeBuilder.getDocument(this.$el);
+          const iframeDoc = documentBuilder.getDocument(this.$el);
 
           const eleParent = iframeDoc.createElement('div');
           const eleContainer = iframeDoc.createElement('div');

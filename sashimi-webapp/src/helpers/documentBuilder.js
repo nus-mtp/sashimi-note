@@ -21,17 +21,33 @@ function constructStyleLink(renderDoc, link) {
 }
 
 export default {
-  getDocument(iframeElement) {
-    return iframeElement.contentWindow.document;
+  /**
+   * Get the document object of a iframe element
+   * @param {Element | Window} An iframe element or a window object
+   * @return {Document} a document object the iframe element
+   * @throws {Error} if the frameElement doesn't have a window object.
+   */
+  getDocument(frameElement) {
+    let frameWindow = frameElement.contentWindow;
+
+    // Check if frameElement is itself a window object
+    if (frameElement.window === frameElement) {
+      frameWindow = frameElement;
+    }
+
+    if (frameWindow == null) {
+      throw new Error(`The parameter doesn't have a window object. Received parameter: ${frameWindow}`);
+    }
+    return frameWindow.document;
   },
 
   /**
    * Rebuild the iframe document to have HTML5 standard.
-   * @param {Element} iframe element
+   * @param {Element | Window} An iframe element or a window object
    * @return {Object} document object of the iframe
    */
-  rebuild(iframeElement) {
-    const iframeDoc = this.getDocument(iframeElement);
+  rebuild(frameElement) {
+    const iframeDoc = this.getDocument(frameElement);
     iframeDoc.open();
     iframeDoc.write(basicHTML);
     iframeDoc.close();
@@ -40,14 +56,15 @@ export default {
 
   /**
    * Add one style to the given iframe
-   * @param {Element} iframeElement
+   * @param {Element | Window} An iframe element or a window object
    * @param {string} url string pointing to a stylesSheet
    * @return {Promise} return a promise when all the styles has been loaded
    * @throws {Error} "Error loading style link..." if link failed to load or is empty.
    */
-  addStyle(iframeElement, styleUrl) {
+  addStyle(frameElement, styleUrl) {
     return new Promise((resolve, reject) => {
-      const styleElement = constructStyleLink(iframeElement.contentWindow.document, styleUrl);
+      const frameDoc = this.getDocument(frameElement);
+      const styleElement = constructStyleLink(frameDoc, styleUrl);
 
       // Resolve only when the style has been loaded.
       // Monitoring is done before stylesheet got inserted.
@@ -70,12 +87,12 @@ export default {
           // If the iframe window doesn't exist, loading of style should be terminated.
           //   Since the content no longer exist. There is no need to load the style anymore.
           //   Therefore, no error should be thrown.
-          if (!iframeElement.contentWindow) {
+          if (!frameElement.contentWindow) {
             clearInterval(poller);
             return;
           }
 
-          const styleSheets = iframeElement.contentWindow.document.styleSheets;
+          const styleSheets = frameElement.contentWindow.document.styleSheets;
           for (let i = 0; i < styleSheets.length; i += 1) {
             const stylesheet = styleSheets[i];
 
@@ -100,20 +117,20 @@ export default {
       }
 
       // Insert style link into stylesheet
-      this.getDocument(iframeElement).head.appendChild(styleElement);
+      frameDoc.head.appendChild(styleElement);
     });
   },
 
   /**
    * Add multiple styles to the given iframe
-   * @param {Element} iframeElement
+   * @param {Element | Window} An iframe element or a window object
    * @param {Array<string>} An array of url string pointing to a stylesSheet
    * @return {Promise} return a promise when all the styles has been loaded
    * @throws {Error} "Error loading style link..." if link failed to load or is empty.
    */
-  addStyles(iframeElement, stylesUrl) {
+  addStyles(frameElement, stylesUrl) {
     return Promise.all(stylesUrl.map(styleUrl =>
-      this.addStyle(iframeElement, styleUrl)
+      this.addStyle(frameElement, styleUrl)
     ));
   },
 };
