@@ -68,7 +68,7 @@ a {
 .navbar {
   overflow: hidden;
   box-sizing: border-box;
-  padding: 22px 20px 10px 20px;
+  padding: 22px 20px;
   text-align: left;
 }
 
@@ -130,7 +130,7 @@ a {
   width: $button-sashimi-width;
   overflow: hidden;
   animation: buttonLogoWidthMobile $user-input-keyframe-time;
-  padding: 10px 0;
+  padding-top: 6px;
 
   img {
     width: $button-logo-mobile-width;
