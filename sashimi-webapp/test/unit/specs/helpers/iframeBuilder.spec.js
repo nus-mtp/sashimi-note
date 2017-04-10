@@ -23,4 +23,40 @@ describe('iframe Builder', () => {
       }).to.throw(Error);
     });
   });
+  describe('rebuild', () => {
+    it('should return a document with proper doctype', () => {
+      // Initialise data
+      const iframeTestObj = document.createElement('iframe');
+      document.body.appendChild(iframeTestObj);
+      iframeBuilder.rebuild(iframeTestObj);
+
+      const frameDoc = iframeTestObj.contentWindow.document;
+
+      // .doctype is a null if the document does not have a doctype
+      expect(frameDoc.doctype).to.not.be.a.null;
+      if (frameDoc.doctype) {
+        expect(frameDoc.doctype.name).to.equal('html');
+      }
+
+      document.body.removeChild(iframeTestObj);
+    });
+
+    it('should return a document of HTML with head and body', () => {
+      // Initialise data
+      const iframeTestObj = document.createElement('iframe');
+      document.body.appendChild(iframeTestObj);
+      iframeBuilder.rebuild(iframeTestObj);
+
+      const frameDoc = iframeTestObj.contentWindow.document;
+
+      expect(frameDoc.head).to.not.be.a.null;
+      expect(frameDoc.body).to.not.be.a.null;
+
+      document.body.removeChild(iframeTestObj);
+    });
+  });
+
+  // TODO Write test for addStyle
+    // describe('addStyle', () => {
+    // describe('addStyles', () => {
 });
