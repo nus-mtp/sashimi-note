@@ -22,6 +22,22 @@ describe('iframe Builder', () => {
         iframeBuilder.getDocument(iframeTestObj);
       }).to.throw(Error);
     });
+
+    it('should get the document of a window object', () => {
+      const outputResult = iframeBuilder.getDocument(window);
+      expect(outputResult).to.equal(window.document);
+    });
+
+    it('should get the document of an iframe window object', () => {
+      // Initialise data
+      const iframeTestObj = document.createElement('iframe');
+      document.body.appendChild(iframeTestObj);
+
+      const outputResult = iframeBuilder.getDocument(iframeTestObj.contentWindow);
+      expect(outputResult).to.equal(iframeTestObj.contentWindow.document);
+
+      document.body.removeChild(iframeTestObj);
+    });
   });
   describe('rebuild', () => {
     it('should return a document with proper doctype', () => {

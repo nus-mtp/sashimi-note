@@ -23,12 +23,18 @@ function constructStyleLink(renderDoc, link) {
 export default {
   /**
    * Get the document object of a iframe element
-   * @param {Element} iframeElement
+   * @param {Element} An iframe element or a window object
    * @return {Document} a document object the iframe element
    * @throws {Error} if the iframeElement doesn't have a window object.
    */
-  getDocument(iframeElement) {
-    const frameWindow = iframeElement.contentWindow;
+  getDocument(frameElement) {
+    let frameWindow = frameElement.contentWindow;
+
+    // Check if frameElement is itself a window object
+    if (frameElement.window === frameElement) {
+      frameWindow = frameElement;
+    }
+
     if (frameWindow == null) {
       throw new Error(`The parameter doesn't have a window object. Received parameter: ${frameWindow}`);
     }
