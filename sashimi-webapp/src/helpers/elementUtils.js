@@ -10,6 +10,9 @@ export default {
     if (typeof targetReference === 'string') {
       const doc = altDocument || document;
       return doc.getElementById(targetReference);
+    } else if (targetReference.window === targetReference) {
+      // targetReference is a window object
+      return targetReference;
     } else {
       const doc = targetReference.ownerDocument;
       const windowObject = doc.defaultView || doc.parentWindow;
