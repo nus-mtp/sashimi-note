@@ -43,6 +43,7 @@ export default {
       changeViewModeOnResize: function() {
         if (window.innerWidth < 768 && this.viewMode === 'split') {
           this.viewMode = 'editor';
+          this.navbarInput = 'editor';
         }
       }
     };
