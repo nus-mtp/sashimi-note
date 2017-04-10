@@ -43,12 +43,12 @@
         <button class="navbar-buttons" 
                 v-on:click="execute('history back')"
         >
-          <i class="material-icons md-dark">arrow_back</i>
+          <i class="material-icons md-dark">keyboard_arrow_left</i>
         </button>
         <button class="navbar-buttons" 
                 v-on:click="execute('history forward')"
         >
-          <i class="material-icons md-dark">arrow_forward</i>
+          <i class="material-icons md-dark">keyboard_arrow_right</i>
         </button>
         <ul class="navbar-breadcrumb inline-block">
           <li v-if="searchString !== ''">
