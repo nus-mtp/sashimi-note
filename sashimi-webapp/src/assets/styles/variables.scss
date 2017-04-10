@@ -9,11 +9,12 @@ $documents-name-font-size: 13px;
 
 // widths and heights
 $content-navbar-height: 71px;
-$file-manager-navbar-height: 134px;
-$file-manager-navbar-height-mobile: 174px;
+
+$file-manager-navbar-height: 131px;
+$file-manager-navbar-height-mobile: 138px;
 
 $button-logo-width: 158px;
-$button-sashimi-width: 35px;
+$button-sashimi-width: 42px;
 
 $navbar-elements-left-margin: 18px;
 $navbar-button-dropdown-width: 140px;
@@ -21,8 +22,10 @@ $navbar-button-dropdown-width: 140px;
 $searchbar-icons-width: 44px;
 $searchbar-mobile-margin-left: 15px;
 
+$view-type-buttons-width: 100.36px;
+
 // colors
-$grey-background: #F7F7F7;
+$grey-background: #F2F2F2;
 $grey-border: #D5D5D5;
 $grey-font: #95989A;
 $green: #d3e2e2;
@@ -31,3 +34,6 @@ $orange: #ff8c00;
 $navbar-background-color: $grey-background;
 $navbar-border-color: $grey-border;
 $documents-focus-color: $green;
+
+// keyframes time
+$user-input-keyframe-time: 0.5s;

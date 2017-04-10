@@ -7,8 +7,8 @@
         </router-link>
       </div>
       <!--Waiting for file-manager api to be completed to implement buttons-->
-      <div class="col searchBar inline-block vertical-align-child">
-        <div class="section group vertical-align-child">
+      <div class="col searchBar-wrapper inline-block vertical-align-child">
+        <div class="section group searchBar vertical-align-child">
 
           <i class="col material-icons md-dark">search</i>
           <input
@@ -23,6 +23,18 @@
             <i class="material-icons md-dark"
                 v-on:click="clearSearchString($event)">clear</i>
           </button>
+        </div>
+      </div>
+      <div class="col view-type-wrapper inline-block">
+        <div class="view-type">
+          <button id="button-icon-view" class="navbar-buttons" 
+                  v-on:click="setViewMode('iconView')"
+                      :class="{ 'toggle-view-active': iconViewMode }"
+          >Icon</button>|
+          <button id="button-list-view" class="navbar-buttons" 
+                  v-on:click="setViewMode('listView')"
+                  :class="{ 'toggle-view-active': listViewMode }"
+          >List</button>
         </div>
       </div>
     </div>
@@ -100,16 +112,6 @@
                 v-bind:class="{'md-inactive': buttonDisabled}"
             >delete</i>
           </button>
-      </div>
-      <div class="col view-type inline-block">
-        <button id="button-icon-view" class="navbar-buttons" 
-                v-on:click="setViewMode('iconView')"
-                    :class="{ 'toggle-view-active': iconViewMode }"
-        >Icon</button>|
-        <button id="button-list-view" class="navbar-buttons" 
-                v-on:click="setViewMode('listView')"
-                :class="{ 'toggle-view-active': listViewMode }"
-        >List</button>
       </div>
     </div>
     </div>
@@ -201,7 +203,7 @@ export default {
 <style scoped lang="scss">
 @import 'src/assets/styles/variables.scss';
 .navbar {
-  padding-top: 20px;
+  padding-top: 22px;
   box-shadow: 0 2px 6px rgba(0,0,0,0.3);
   z-index: 999;
   position: relative;
@@ -210,18 +212,26 @@ export default {
 .button-logo {
   width: $button-sashimi-width;
   overflow: hidden;
-  transform: scale(1.2);
-  transition: transform 1s;
+  transition: width $user-input-keyframe-time;
   padding: 10px 0;
   text-align: center;
   margin-bottom: 15px;
+
+  img {
+    width: 180px;
+  }
 }
 
-.searchBar {
-  width: calc(100% - #{$button-sashimi-width} - #{$searchbar-mobile-margin-left});
-  background-color: $grey-background;
+.searchBar-wrapper {
+  width: calc(100% - #{$button-sashimi-width});
+  transition: width $user-input-keyframe-time;
   text-align: left;
-  margin-left: $searchbar-mobile-margin-left;
+
+  .searchBar {
+    background-color: $grey-background;
+    width: 90%;
+    margin: 0 auto;
+  }
 
   i {
     font-size: 20px;
@@ -293,10 +303,16 @@ export default {
   height: 32px;
 }
 
-.view-type {
+.view-type-wrapper {
   display: none;
   font-size: $navbar-font-size;
   font-family: $font-primary;
+  float: right;
+  animation: viewType $user-input-keyframe-time;
+
+  .view-type {
+    width:$view-type-buttons-width;
+  }
 
   a {
     text-decoration: none;
@@ -313,24 +329,28 @@ export default {
   }
 
 @media screen and (min-width: 480px) {
-  .view-type {
+  .searchBar-wrapper {
+    width: calc(100% - #{$button-sashimi-width} - #{$view-type-buttons-width});
+  }
+  .view-type-wrapper {
+    padding: 5px 0;
     display: inline-block;
-    margin-left: 30px;
   }
 }
 
 @media screen and (min-width: 768px) {
   .button-logo {
     width: $button-logo-width;
-    transform: scale(1);
     overflow: initial;
     margin-bottom: 0;
-    margin-top: 5px;
+
+    img {
+      width: 150px;
+    }
   }
 
-  .searchBar {
-    width: 50%;
-    margin-left: 40px;
+  .searchBar-wrapper {
+    width: calc(100% - #{$button-logo-width} - #{$view-type-buttons-width});
   }
 
   .userActions  {
