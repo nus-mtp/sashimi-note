@@ -23,7 +23,7 @@ function constructStyleLink(renderDoc, link) {
 export default {
   /**
    * Get the document object of a iframe element
-   * @param {Element} An iframe element or a window object
+   * @param {Element | Window} An iframe element or a window object
    * @return {Document} a document object the iframe element
    * @throws {Error} if the frameElement doesn't have a window object.
    */
@@ -43,7 +43,7 @@ export default {
 
   /**
    * Rebuild the iframe document to have HTML5 standard.
-   * @param {Element} iframe element
+   * @param {Element | Window} An iframe element or a window object
    * @return {Object} document object of the iframe
    */
   rebuild(frameElement) {
@@ -56,7 +56,7 @@ export default {
 
   /**
    * Add one style to the given iframe
-   * @param {Element} frameElement
+   * @param {Element | Window} An iframe element or a window object
    * @param {string} url string pointing to a stylesSheet
    * @return {Promise} return a promise when all the styles has been loaded
    */
@@ -94,7 +94,7 @@ export default {
 
   /**
    * Add multiple styles to the given iframe
-   * @param {Element} frameElement
+   * @param {Element | Window} An iframe element or a window object
    * @param {Array<string>} An array of url string pointing to a stylesSheet
    * @return {Promise} return a promise when all the styles has been loaded
    */
