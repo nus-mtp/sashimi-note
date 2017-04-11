@@ -16,12 +16,13 @@ var webapp = {
 var statusBuild = -1;
 var statusStart = -1;
 
+printTitle('Install web application dependency');
+cd(`./${webapp.path}`);
+exec(CMD_INSTALL);
+
 // Don't need to build web app if NODE_ENV is testing
 if (process.env.NODE_ENV !== 'testing') {
-  printTitle('Build web application');
-
-  cd(`./${webapp.path}`);
-  exec(CMD_INSTALL);
+  printTitle('Build web app to dist folder');
   statusBuild = exec(CMD_BINARY + ' run build').code;
   throwErrorIfFailedToExec(statusBuild, 'build failed')
 

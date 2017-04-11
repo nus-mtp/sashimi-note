@@ -75,7 +75,7 @@ export default class entitiesCreator {
     tableCreator.addHeader(constants.HEADER_USER_EMAIL, 'STRING');
     tableCreator.addHeader(constants.HEADER_USER_USERNAME, 'STRING');
     tableCreator.addHeader(constants.HEADER_USER_USER_ID, 'NUMBER');
-    tableCreator.addHeader(constants.HEADER_USER_CREATION_DATE, 'DATE');
+    tableCreator.addHeader(constants.HEADER_USER_CREATION_DATE, 'NUMBER');
 
     tableCreator.setPrimaryKeys(constants.HEADER_USER_USER_ID);
 
@@ -86,7 +86,7 @@ export default class entitiesCreator {
     tableCreator.initCreateTable(constants.ENTITIES_ORGANIZATION);
 
     tableCreator.addHeader(constants.HEADER_ORGANIZATION_ORGANIZATION_NAME, 'STRING');
-    tableCreator.addHeader(constants.HEADER_ORGANIZATION_CREATION_DATE, 'DATE');
+    tableCreator.addHeader(constants.HEADER_ORGANIZATION_CREATION_DATE, 'NUMBER');
     tableCreator.addHeader(constants.HEADER_ORGANIZATION_ORGANIZATION_TYPE, 'NUMBER');
     tableCreator.addHeader(constants.HEADER_ORGANIZATION_ORGANIZATION_ID, 'NUMBER');
     tableCreator.addHeader(constants.HEADER_ORGANIZATION_USER_ID, 'NUMBER');
@@ -107,8 +107,8 @@ export default class entitiesCreator {
     tableCreator.addHeader(constants.HEADER_FILE_MANAGER_FILE_NAME, 'STRING');
     tableCreator.addHeader(constants.HEADER_FILE_MANAGER_FILE_MARKDOWN, 'STRING');
     tableCreator.addHeader(constants.HEADER_FILE_MANAGER_PERMISSION_INDEX, 'NUMBER');
-    tableCreator.addHeader(constants.HEADER_FILE_MANAGER_CREATION_DATE, 'DATE');
-    tableCreator.addHeader(constants.HEADER_FILE_MANAGER_LAST_MODIFIED_DATE, 'DATE');
+    tableCreator.addHeader(constants.HEADER_FILE_MANAGER_CREATION_DATE, 'NUMBER');
+    tableCreator.addHeader(constants.HEADER_FILE_MANAGER_LAST_MODIFIED_DATE, 'NUMBER');
     tableCreator.addHeader(constants.HEADER_FILE_MANAGER_PATH, 'STRING');
 
     tableCreator.setPrimaryKeys(constants.HEADER_FILE_MANAGER_FILE_ID,
@@ -123,9 +123,9 @@ export default class entitiesCreator {
     tableCreator.addHeader(constants.HEADER_FOLDER_PARENT_FOLDER_ID, 'NUMBER');
     tableCreator.addHeader(constants.HEADER_FOLDER_PERMISSION_INDEX, 'NUMBER');
     tableCreator.addHeader(constants.HEADER_FOLDER_ORGANIZATION_ID, 'NUMBER');
-    tableCreator.addHeader(constants.HEADER_FOLDER_CREATION_DATE, 'DATE');
+    tableCreator.addHeader(constants.HEADER_FOLDER_CREATION_DATE, 'NUMBER');
     tableCreator.addHeader(constants.HEADER_FOLDER_FOLDER_NAME, 'STRING');
-    tableCreator.addHeader(constants.HEADER_FOLDER_LAST_MODIFIED_DATE, 'DATE');
+    tableCreator.addHeader(constants.HEADER_FOLDER_LAST_MODIFIED_DATE, 'NUMBER');
     tableCreator.addHeader(constants.HEADER_FOLDER_PATH, 'STRING');
 
     tableCreator.setPrimaryKeys(constants.HEADER_FOLDER_ORGANIZATION_ID,

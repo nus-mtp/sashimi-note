@@ -20,6 +20,7 @@
   import _ from 'lodash';
   import AsyncComputed from 'vue-async-computed';
   import documentPackager from 'src/logic/documentPackager';
+  import DocumentPrinter from 'src/logic/inputHandler/DocumentPrinter';
   import viewerPages from './Viewers/Pages';
   import viewerSlides from './Viewers/Slides';
   import viewerHtml from './Viewers/Html';
@@ -27,7 +28,7 @@
   Vue.use(AsyncComputed);
 
   const convertThrottle = _.throttle((data) => { documentPackager.getHtmlData(data); }, 1000);
-
+  let documentPrinter = null;
 
   export default {
     components: {
@@ -44,20 +45,22 @@
     watch: {
       editorContent(data) {
         convertThrottle(data);
+      },
+      fileFormat() {
+        // Update event listener reference on fileFormat change
+        documentPrinter.setDomBehaviour();
       }
     },
-    // asyncComputed: {
-    //   getHtmlData() {
-    //     return documentPackager.getHtmlData(this.editorContent);
-    //   }
-    // },
     mounted() {
       documentPackager.init((event) => {
         this.htmlData = event.data;
       });
-      // setInterval(() => {
-      //   documentPackager.getHtmlData('haha');
-      // }, 1500);
+      Vue.nextTick(() => {
+        documentPrinter = new DocumentPrinter(window, this, 'editorContent');
+      });
+    }
+    beforeDestroy() {
+      documentPrinter.unsetDomBehaviour();
     }
   };
 

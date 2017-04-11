@@ -12,7 +12,7 @@
   import _ from 'lodash';
   import PageRenderer from 'src/logic/renderer';
   import DocumentNavigator from 'src/logic/inputHandler/DocumentNavigator';
-  import iframeBuilder from 'src/helpers/iframeBuilder';
+  import documentBuilder from 'src/helpers/documentBuilder';
 
   // Throttle function used to limit the rate which
   // the render function is called
@@ -23,9 +23,18 @@
     props: ['htmlData'],
     data() {
       return {
-        renderDoc: null,
         pageRenderer: null,
-        documentNavigator: null
+        documentNavigator: null,
+        pageSize: { // PAGE_A4
+          width: '21.0cm',
+          height: '29.7cm',
+          padding: {
+            top: '2.54cm',
+            bottom: '2.54cm',
+            right: '2.54cm',
+            left: '2.54cm'
+          }
+        }
       };
     },
     watch: {
@@ -36,14 +45,23 @@
     mounted() {
       // Mount does not gurrantee DOM to be ready, thus nextTick is used
       Vue.nextTick(() => {
-        iframeBuilder.rebuild(this.$el);
-        iframeBuilder.addStyles(this.$el, [
-          '/styles/markdown-html.css',
+        documentBuilder.rebuild(this.$el);
+        documentBuilder.addStyles(this.$el, [
+          '/styles/markdown-pages.css',
           '/styles/viewer-page.css',
           '/styles/markdown-imports.css'
         ])
+        .catch((error) => {
+          /* eslint no-console: 0 */
+          if (error.message.includes('Error loading style')) {
+            // Disregard loading error and continue to render document.
+            console.error(error.message);
+          } else {
+            throw error;
+          }
+        })
         .then(() => {
-          const iframeDoc = iframeBuilder.getDocument(this.$el);
+          const iframeDoc = documentBuilder.getDocument(this.$el);
 
           const eleParent = iframeDoc.createElement('div');
           const eleContainer = iframeDoc.createElement('div');
@@ -52,7 +70,7 @@
           return eleContainer;
         })
         .then((renderTarget) => {
-          this.pageRenderer = new PageRenderer(renderTarget);
+          this.pageRenderer = new PageRenderer(renderTarget, this.pageSize);
           return renderThrottleFn(this.htmlData, this.pageRenderer)
           .then(() => {
             // Initialise navigation for Pages mode

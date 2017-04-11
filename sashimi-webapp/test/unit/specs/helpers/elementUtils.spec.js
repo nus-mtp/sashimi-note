@@ -60,5 +60,10 @@ describe('Element Utils', () => {
       // Clean up create element
       document.body.removeChild(frame);
     });
+
+    it('should resolve window object to itself', () => {
+      const outputData = elementUtils.resolveElement(window);
+      expect(outputData).to.equal(window);
+    });
   });
 });

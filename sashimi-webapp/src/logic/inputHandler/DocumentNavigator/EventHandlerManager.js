@@ -84,7 +84,8 @@ export default function(navInstance) {
           const renderWidth = tempContainerWidth * navInstance.transform.scale;
 
           // Readjust scrollTop - [1] Cache original height of parent div
-          const oriHeight = domUtils.getComputedStyle(navInstance.el.parent).height;
+          let oriHeight = domUtils.getComputedStyle(navInstance.el.parent).height;
+          if (oriHeight === 'auto') oriHeight = `${navInstance.el.parent.scrollHeight}px`;
           const oriHeightPx = unitConverter.get(oriHeight, 'px', false);
 
           // Readjust parent height and width to fix overall scrollbar problem
@@ -97,12 +98,15 @@ export default function(navInstance) {
           navInstance.el.parent.parentNode.scrollTop *= heightChange;
 
           // Readjust left position to fix scroll left problem
-          const parentParent = navInstance.el.parent.parentNode;
-          const pPStyles = domUtils.getComputedStyle(parentParent);
-          const pPWidthPx = unitConverter.get(pPStyles.width, 'px', false);
-          if (renderWidth > pPWidthPx) {
-            const eatenLeft = -(pPWidthPx - renderWidth)/2;
+          const rootNode = navInstance.el.html;
+          let rootWidth = domUtils.getComputedStyle(rootNode).width;
+          if (rootWidth === 'auto') rootWidth = `${rootNode.scrollWidth}px`;
+          const rootWidthPx = unitConverter.get(rootWidth, 'px', false);
+          if (renderWidth > rootWidthPx) {
+            const eatenLeft = -(rootWidthPx - renderWidth)/2;
             navInstance.el.parent.style.left = `${eatenLeft}px`;
+          } else {
+            navInstance.el.parent.style.left = 0;
           }
         }
       },
@@ -135,8 +139,8 @@ export default function(navInstance) {
         const transitionDuration = 500;
         // Resize the element's transformer
         navInstance.el.container.style.transition = `transform ${transitionDuration}ms`;
-        navInstance.width.element = navInstance.width.element || navInstance.width.parent - marginWidth;
-        navInstance.transform.set({ scale: (navInstance.width.parent - marginWidth) / navInstance.width.element });
+        navInstance.width.element = navInstance.width.element || navInstance.width.html - marginWidth;
+        navInstance.transform.set({ scale: (navInstance.width.html - marginWidth) / navInstance.width.element });
         setTimeout(() => {
           navInstance.el.container.style.transition = '';
         }, transitionDuration);

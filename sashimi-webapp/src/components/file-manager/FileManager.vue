@@ -3,7 +3,6 @@
     <userInputs 
       v-on:changeViewMode="changeViewMode"
       v-on:execute="executeAction"
-      v-on:changeFolder="changeFolder"
           :folder-path="folderPath"
           :view-mode="viewMode"
     ></userInputs>
@@ -53,6 +52,17 @@ export default {
     };
   },
   watch: {
+    $route(path) {
+      if (path.query.folder === undefined) {
+        const ROOT_FOLDER_ID = 0;
+        const rootFolder = fileManager.getFolderByID(ROOT_FOLDER_ID);
+        this.changeFolder(rootFolder);
+      } else {
+        const folderID = path.query.folder;
+        const currFolder = fileManager.getFolderByID(folderID);
+        this.changeFolder(currFolder);
+      }
+    }
   },
   methods: {
     changeFolder(folderObj) {
@@ -91,11 +101,13 @@ export default {
         case 'history back': {
           this.docs = this.history.previous();
           this.folderPath = constructFolderPath(this.docs);
+          this.updateUrlPath(this.docs);
           break;
         }
         case 'history forward': {
           this.docs = this.history.next();
           this.folderPath = constructFolderPath(this.docs);
+          this.updateUrlPath(this.docs);
           break;
         }
         case 'download': {
@@ -115,7 +127,8 @@ export default {
     },
     search(searchStr) {
       if (searchStr === '') {
-        this.docs = this.history.currFolder;
+        const folderID = this.history.currFolderID;
+        this.docs = fileManager.getFolderByID(folderID);
       } else {
         fileManager.searchAll(searchStr)
         .then((result) => { this.docs = result; })
@@ -131,10 +144,19 @@ export default {
   },
   mounted() {
     fileManagerVue = this;
+
     const ROOT_FOLDER_ID = 0;
-    this.docs = fileManager.getFolderByID(ROOT_FOLDER_ID);
+    const folderID = this.$route.query.folder;
+
+    if (folderID) {
+      this.docs = fileManager.getFolderByID(folderID);
+      this.folderPath = constructFolderPath(this.docs);
+    } else {
+      this.docs = fileManager.getFolderByID(ROOT_FOLDER_ID);
+    }
     this.history = fileManager.createHistory(this.docs);
 
+    this.changeDocViewOnResize();
     window.addEventListener('resize', this.changeDocViewOnResize.bind(fileManagerVue));
   },
   beforeDestroy() {

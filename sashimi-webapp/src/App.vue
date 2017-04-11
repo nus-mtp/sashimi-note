@@ -123,7 +123,7 @@ a {
   }
 
   &-img {
-    width: $button-img-width;
+    width: $button-sashimi-width;
   }
 }
 

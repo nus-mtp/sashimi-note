@@ -8,6 +8,12 @@
     "./sashimi-platform", "./sashimi-webapp"
   ],
 
+  // Emmet
+  "emmet.syntaxProfiles": {
+    "vue-html": "html",
+    "vue": "html"
+  },
+
   // Aggressive eslint auto fix
   "eslint.autoFixOnSave": true,
 
@@ -17,7 +23,9 @@
     ]
   },
   "eslint.validate": [
-    "javascript", "html"
+    "javascript", "html",
+    "javascriptreact",
+    "vue"
   ],
   "vsicons.presets.angular": false
 }

@@ -1,8 +1,11 @@
 import documentPackager from 'src/logic/documentPackager';
-import diagramsInput from './reference/diagrams/diagramsInput.txt';
-import diagramsBase64Output from './reference/diagrams/diagramsBase64Output.txt';
+import asciiMathBlockOutput from './reference/asciiMathBlockOutput.txt';
+import asciiMathBlockInput from './reference/asciiMathBlockInput.txt';
+import asciiMathInlineOutput from './reference/asciiMathInlineOutput.txt';
 import conditionalInput from './reference/conditionalInput.txt';
 import conditionalOutput from './reference/conditionalOutput.txt';
+import diagramsInput from './reference/diagrams/diagramsInput.txt';
+import diagramsBase64Output from './reference/diagrams/diagramsBase64Output.txt';
 import highlightjsInput from './reference/highlightjsInput.txt';
 import highlightjsOutput from './reference/highlightjsOutput.txt';
 import katexInput from './reference/katexInput.txt';
@@ -74,6 +77,30 @@ describe('Document Packager', () => {
         const base64Output = base64(output);
 
         expect(base64Output).to.equal(katexOutput);
+        done();
+      })
+      .catch((error) => {
+        done(error);
+      });
+    });
+
+    it('should handle inline ASCIIMath syntax', (done) => {
+      documentPackager.getHtmlData('`math sum_(i=1)^n i^3=((n(n+1))/2)^2`').then((output) => {
+        const base64Output = base64(output);
+
+        expect(base64Output).to.equal(asciiMathInlineOutput);
+        done();
+      })
+      .catch((error) => {
+        done(error);
+      });
+    });
+
+    it('should handle block ASCIIMath syntax', (done) => {
+      documentPackager.getHtmlData(asciiMathBlockInput).then((output) => {
+        const base64Output = base64(output);
+
+        expect(base64Output).to.equal(asciiMathBlockOutput);
         done();
       })
       .catch((error) => {
