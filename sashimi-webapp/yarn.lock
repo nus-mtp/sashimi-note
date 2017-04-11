@@ -3909,12 +3909,6 @@ markdown-it-anchor@^3.0.0:
   dependencies:
     string "^3.0.1"
 
-markdown-it-asciimath@^0.1.0:
-  version "0.1.0"
-  resolved "https://registry.yarnpkg.com/markdown-it-asciimath/-/markdown-it-asciimath-0.1.0.tgz#33ef4f8818762075e1920b771a3c6bc60d43fa5b"
-  dependencies:
-    katex "^0.6.0"
-
 markdown-it-highlightjs@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/markdown-it-highlightjs/-/markdown-it-highlightjs-2.0.0.tgz#f9b55723d037ec1e71bc66e3499d4f7487018b26"
