@@ -21,3 +21,13 @@ body {
   margin-top: 30px;
   margin-bottom: 50px;
 }
+
+@media print {
+  .page-view {
+    left: 0 !important;
+    margin: 0 auto !important;
+  }
+}
+@page {
+  margin: 0;
+}

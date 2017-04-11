@@ -13,7 +13,6 @@
       v-on:openFolder="changeFolder"
       v-on:focusFolder="focus"
       v-on:blurFolder="blur"
-      v-on:renameFolder="renameDoc"
           :folder="folder"
     >
     </folder>
@@ -21,7 +20,6 @@
       v-for="file in docs.childFileList"
       v-on:focusFile="focus"
       v-on:blurFile="blur"
-      v-on:renameFile="renameDoc"
           :file="file"
     >
     </file>
@@ -47,13 +45,6 @@ export default {
     file,
   },
   watch: {
-    $route(path) {
-      if (path.query.folder === undefined) {
-        const ROOT_FOLDER_ID = 0;
-        const rootFolder = fileManager.getFolderByID(ROOT_FOLDER_ID);
-        this.changeFolder(rootFolder);
-      }
-    }
   },
   methods: {
     focus(focusedDoc) {
@@ -65,9 +56,6 @@ export default {
     changeFolder(newFolder) {
       this.$emit('changeFolder', newFolder);
     },
-    renameDoc(newDocName, docToRename) {
-      docToRename.rename(newDocName);
-    }
   },
   mounted() {
     eventHub.$on('execute', (action, data) => {
@@ -104,11 +92,12 @@ export default {
       background-color: $documents-focus-color;
     }
 
-    p {
+    .folder-name,
+    .file-name {
       font-family: $font-primary;
 
-      &::selection {
-        background-color: white;
+      &[contenteditable="true"]:focus {
+        text-decoration: underline;
       }
     }
   }

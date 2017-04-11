@@ -7,11 +7,14 @@
             v-on:blur="blurFolder"
     >
       <img src="../../assets/images/icons/icon-folder.svg" alt="folder">
-      <p contenteditable="true" tabindex="2" class="inline-block"
+      <p contenteditable="true"
+        tabindex="2"
+        class="inline-block folder-name"
+        ref="nameField"
         v-on:blur="saveFolderName"
-        v-on:keypress="onKeyPress($event)"
-        v-on:keyup="onKeyUp($event)"
-        v-on:paste="removeStyle($event)"
+        v-on:keypress="onKeyPress"
+        v-on:keyup="onKeyUp"
+        v-on:paste="removeStyle"
       >{{folder.name}}</p>
     </button>
   </div>
@@ -35,15 +38,10 @@
       saveFolderName() {
         window.getSelection().removeAllRanges();
 
-        let newFolderName = this.$el.getElementsByTagName('p')[0].innerHTML;
+        let newFolderName = this.$refs.nameField.innerText;
         newFolderName = newFolderName.trim().replace(/&nbsp;/gi, '');
-        if (newFolderName === '') {
-          newFolderName = 'untitled';
-        }
 
-        if (newFolderName !== this.folder.name) {
-          this.$emit('renameFolder', newFolderName, this.folder);
-        }
+        this.folder.rename(newFolderName);
       },
       onKeyPress(event) {
         const enterKey = 13;
@@ -55,6 +53,7 @@
         const enterKey = 13;
         if (event.keyCode === enterKey) {
           this.saveFolderName();
+          this.$refs.nameField.blur();
         }
       },
       removeStyle(event) {
@@ -69,4 +68,5 @@
 
 <style scoped lang="scss">
 @import 'src/assets/styles/variables.scss';
+
 </style>

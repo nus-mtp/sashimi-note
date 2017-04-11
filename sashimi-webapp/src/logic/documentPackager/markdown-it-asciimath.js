@@ -44,14 +44,14 @@ function render(str, disp) {
 }
 
 function renderInline(str, disp) {
-  console.log(preprocessMath(str));
   return renderElement(preprocessMath(str), disp);
 }
 
 function setup(md, options) {
-  const defaultRender = md.renderer.rules.fence;
+  const defaultFenceRender = md.renderer.rules.fence;
+  const defaultInlineRender = md.renderer.rules.code_inline;
 
-  md.renderer.rules.fence = function(tokens, idx, opts, env, self) {
+  md.renderer.rules.fence = (tokens, idx, opts, env, self) => {
     const token = tokens[idx];
 
     if (token.info === 'math') {
@@ -59,20 +59,17 @@ function setup(md, options) {
     }
 
     // pass token to default renderer.
-    return defaultRender(tokens, idx, opts, env, self);
+    return defaultFenceRender(tokens, idx, opts, env, self);
   };
 
-  md.renderer.rules.code_inline = function(tokens, idx, opts, env, self) {
+  md.renderer.rules.code_inline = (tokens, idx, opts, env, self) => {
     const token = tokens[idx];
 
     if (token.content.substr(0, 4) === 'math') {
-      console.log('match');
-      console.log(trim(token.content.substr(4)));
-
       return renderInline(trim(token.content.substr(4)), false);
     }
 
-    return defaultRender(tokens, idx, opts, env, self);
+    return defaultInlineRender(tokens, idx, opts, env, self);
   };
 }
 

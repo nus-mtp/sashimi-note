@@ -42,14 +42,26 @@
           <li v-if="searchString !== ''">
             Search results
           </li>
-          <li v-else>
-            Home
-          </li>
-          <li v-for="folder in folderPath" v-if="folder.name !== 'root'">
-            <a v-on:click="action(changeFolder)">
-              {{folder.name}}
-            </a>
-          </li>
+          <template v-else>
+            <li>
+              <router-link to="/" class="breadcrumb-active">
+                Home
+              </router-link>
+            </li>
+            <li v-for="(folder, index) in folderPath" v-if="folder.name !== 'root'">
+              <template v-if="index !== folderPath.length-1" >
+                <router-link 
+                  :to="{ name: 'fileManager', query: { folder: folder.id } }"
+                  class="breadcrumb-active"
+                >
+                  {{folder.name}}
+                </router-link>
+              </template>
+              <template v-else>
+                {{folder.name}}
+              </template>
+            </li>
+          </template>
         </ul>
       </div>
       <div class="float-right">
@@ -106,6 +118,7 @@
 
 <script>
 import _ from 'lodash';
+import router from 'src/router';
 import eventHub from './EventHub';
 
 let userInputsVue = null;
@@ -117,8 +130,8 @@ export default {
       focusedDoc: null,
       holdingDoc: null,
       searchString: '',
-      iconViewMode: false,
-      listViewMode: true,
+      iconViewMode: true,
+      listViewMode: false,
     };
   },
   props: ['folderPath', 'viewMode'],
@@ -151,9 +164,8 @@ export default {
       }
       userInputsVue.$emit('changeViewMode', viewMode);
     },
-    clearSearchString(event) {
+    clearSearchString() {
       this.searchString = '';
-      event.target.value = '';
     }
   },
   watch: {
@@ -196,17 +208,20 @@ export default {
 }
 
 .button-logo {
-  width: 100%;
+  width: $button-sashimi-width;
+  overflow: hidden;
   transform: scale(1.2);
+  transition: transform 1s;
   padding: 10px 0;
   text-align: center;
   margin-bottom: 15px;
 }
 
 .searchBar {
-  width: 100%;
+  width: calc(100% - #{$button-sashimi-width} - #{$searchbar-mobile-margin-left});
   background-color: $grey-background;
   text-align: left;
+  margin-left: $searchbar-mobile-margin-left;
 
   i {
     font-size: 20px;
@@ -243,12 +258,18 @@ export default {
 }
 
 .navbar-breadcrumb {
+  display: none;
   list-style: none;
   font-size: $navbar-font-size;
   padding-left: 0;
   margin: 0;
   height: 32px;
   vertical-align: middle;
+  color: $grey-font;
+
+  .breadcrumb-active {
+    color: black;
+  }
 
   li {
     display: inline;
@@ -302,6 +323,7 @@ export default {
   .button-logo {
     width: $button-logo-width;
     transform: scale(1);
+    overflow: initial;
     margin-bottom: 0;
     margin-top: 5px;
   }
@@ -315,6 +337,10 @@ export default {
     .buttons-right {
       display: inline-block;
     }
+  }
+
+  .navbar-breadcrumb {
+    display: inline-block;
   }
 }
 </style>

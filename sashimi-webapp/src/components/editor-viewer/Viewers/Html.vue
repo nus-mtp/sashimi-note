@@ -10,7 +10,7 @@
 <script>
   import Vue from 'vue';
   import diagramsRenderer from 'src/logic/renderer/diagrams';
-  import iframeBuilder from 'src/helpers/iframeBuilder';
+  import documentBuilder from 'src/helpers/documentBuilder';
 
   /**
    * Diagram rendering function for HTML view
@@ -39,11 +39,20 @@
     },
     mounted() {
       Vue.nextTick(() => {
-        iframeBuilder.rebuild(this.$el);
-        iframeBuilder.addStyles(this.$el, [
+        documentBuilder.rebuild(this.$el);
+        documentBuilder.addStyles(this.$el, [
           '/styles/markdown-html.css',
           '/styles/markdown-imports.css'
         ])
+        .catch((error) => {
+          /* eslint no-console: 0 */
+          if (error.message.includes('Error loading style')) {
+            // Disregard loading error and continue to render document.
+            console.error(error.message);
+          } else {
+            throw error;
+          }
+        })
         .then(() => {
           this.renderDoc = this.$el.contentWindow.document;
           renderUpdate(this.renderDoc.body, this.htmlData);
