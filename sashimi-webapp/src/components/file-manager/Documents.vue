@@ -113,7 +113,7 @@ export default {
     height: 140px;
     text-align: center;
     box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.2);
-    animation: docIcons 0.5s;
+    animation: docIconView 0.5s;
   }
 
   .folder,
@@ -160,6 +160,7 @@ export default {
     white-space: nowrap;
     box-sizing: border-box;
     text-align: left;
+    animation: docListView 0.5s;
 
     img {
       width: 50px;
@@ -171,12 +172,6 @@ export default {
       text-overflow: ellipsis;
       white-space: nowrap;
     }
-  }
-}
-
-@media screen and (min-width: 768px) {
-  .documents {
-    height: calc(100vh - #{$file-manager-navbar-height});
   }
 }
 </style>
