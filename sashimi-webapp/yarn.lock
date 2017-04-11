@@ -3816,7 +3816,7 @@ lodash.uniq@^4.3.0:
   version "4.5.0"
   resolved "https://registry.yarnpkg.com/lodash.uniq/-/lodash.uniq-4.5.0.tgz#d0225373aeb652adc1bc82e4945339a842754773"
 
-"lodash@>= 3.2.0 < 4.0.0", lodash@^3.10.0, lodash@^3.8.0:
+"lodash@>= 3.2.0 < 4.0.0", lodash@^3.8.0:
   version "3.10.1"
   resolved "https://registry.yarnpkg.com/lodash/-/lodash-3.10.1.tgz#5bf45e8e49ba4189e17d482789dfd15bd140b7b6"
 
@@ -6294,6 +6294,10 @@ webpack@^2.2.1:
     watchpack "^1.2.0"
     webpack-sources "^0.1.4"
     yargs "^6.0.0"
+
+webworkify-webpack@^2.0.4:
+  version "2.0.4"
+  resolved "https://registry.yarnpkg.com/webworkify-webpack/-/webworkify-webpack-2.0.4.tgz#39a12fb5f04b041121f4d78c60f550c440f18789"
 
 whet.extend@~0.9.9:
   version "0.9.9"

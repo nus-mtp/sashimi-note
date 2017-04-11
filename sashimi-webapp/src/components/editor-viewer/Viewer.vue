@@ -2,21 +2,22 @@
   <div class="viewer" v-bind:data-fileFormat='fileFormat'>
     <viewerPages 
       v-if="fileFormat === 'pages'"
-      v-bind:htmlData="getHtmlData"
+      v-bind:htmlData="htmlData"
     ></viewerPages>
     <viewerSlides 
       v-else-if="fileFormat === 'slides'"
-      v-bind:htmlData="getHtmlData"
+      v-bind:htmlData="htmlData"
     ></viewerSlides>
     <viewerHtml 
       v-else 
-      v-bind:htmlData="getHtmlData"
+      v-bind:htmlData="htmlData"
     ></viewerHtml>
   </div>
 </template>
 
 <script>
   import Vue from 'vue';
+  import _ from 'lodash';
   import AsyncComputed from 'vue-async-computed';
   import documentPackager from 'src/logic/documentPackager';
   import viewerPages from './Viewers/Pages';
@@ -25,18 +26,39 @@
 
   Vue.use(AsyncComputed);
 
+  const convertThrottle = _.throttle((data) => { documentPackager.getHtmlData(data); }, 1000);
+
+
   export default {
     components: {
       viewerPages,
       viewerSlides,
       viewerHtml,
     },
+    data() {
+      return {
+        htmlData: ''
+      };
+    },
     props: ['editorContent', 'fileFormat'],
-    asyncComputed: {
-      getHtmlData() {
-        return documentPackager.getHtmlData(this.editorContent);
+    watch: {
+      editorContent(data) {
+        convertThrottle(data);
       }
     },
+    // asyncComputed: {
+    //   getHtmlData() {
+    //     return documentPackager.getHtmlData(this.editorContent);
+    //   }
+    // },
+    mounted() {
+      documentPackager.init((event) => {
+        this.htmlData = event.data;
+      });
+      // setInterval(() => {
+      //   documentPackager.getHtmlData('haha');
+      // }, 1500);
+    }
   };
 
 </script>
