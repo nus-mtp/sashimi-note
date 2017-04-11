@@ -24,7 +24,17 @@
     data() {
       return {
         pageRenderer: null,
-        documentNavigator: null
+        documentNavigator: null,
+        pageSize: { // PAGE_A6
+          width: '16.51cm',
+          height: '13.159cm',
+          padding: {
+            top: '1.2cm',
+            bottom: '1.2cm',
+            right: '1.2cm',
+            left: '1.2cm'
+          }
+        }
       };
     },
     watch: {
@@ -33,17 +43,6 @@
       }
     },
     mounted() {
-      const PAGE_A6 = {
-        width: '16.51cm',
-        height: '13.159cm',
-        padding: {
-          top: '1.2cm',
-          bottom: '1.2cm',
-          right: '1.2cm',
-          left: '1.2cm'
-        }
-      };
-
       // Mount does not gurrantee DOM to be ready, thus nextTick is used
       Vue.nextTick(() => {
         documentBuilder.rebuild(this.$el);
@@ -71,7 +70,7 @@
           return eleContainer;
         })
         .then((renderTarget) => {
-          this.pageRenderer = new PageRenderer(renderTarget, PAGE_A6);
+          this.pageRenderer = new PageRenderer(renderTarget, this.pageSize);
           return renderThrottleFn(this.htmlData, this.pageRenderer)
           .then(() => {
             // Initialise navigation for Slide mode
