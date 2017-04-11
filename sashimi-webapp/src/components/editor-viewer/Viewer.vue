@@ -58,7 +58,7 @@
       Vue.nextTick(() => {
         documentPrinter = new DocumentPrinter(window, this, 'editorContent');
       });
-    }
+    },
     beforeDestroy() {
       documentPrinter.unsetDomBehaviour();
     }
