@@ -86,7 +86,7 @@ export default {
     
     h1 {
       color: #BBBBBB;
-      margin-bottom: 80px;
+      margin-bottom: 30px;
       margin-top: 80px;
     }
     img {
