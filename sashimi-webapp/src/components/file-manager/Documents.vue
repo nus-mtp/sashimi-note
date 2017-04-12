@@ -23,6 +23,12 @@
           :file="file"
     >
     </file>
+    <template v-if="!docs || (docs.childFileList.length === 0 && docs.childFolderList.length === 0)">
+      <div class="doc-empty-wrapper">
+        <h1>Folder is empty</h1>
+        <img src="../../assets/images/sashimi-no-files.png" alt="">
+      </div>
+    </template>
   </div>
 </template>
 
@@ -74,6 +80,19 @@ export default {
   overflow-y: auto;
   height: calc(100vh - #{$file-manager-navbar-height});
   background-color: $grey-background;
+
+  .doc-empty-wrapper {
+    text-align: center;
+    
+    h1 {
+      color: #BBBBBB;
+      margin-bottom: 80px;
+      margin-top: 80px;
+    }
+    img {
+      width: 250px;
+    }
+  }
 
   .folder,
   .file {
