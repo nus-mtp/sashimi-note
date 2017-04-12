@@ -303,7 +303,7 @@ export default {
   animation: viewTypeWidth $user-input-keyframe-time;
 
   .view-type {
-    width:$view-type-buttons-width;
+    width: $view-type-buttons-width;
   }
 
   a {
