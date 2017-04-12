@@ -19,7 +19,8 @@
     },
     methods: {
       goFullScreen() {
-        alert('what?');
+        /* eslint no-console: 0 */
+        console.log('in fullscreen mode');
       }
     },
     mounted() {}
