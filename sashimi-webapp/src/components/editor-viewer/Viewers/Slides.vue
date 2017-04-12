@@ -12,12 +12,15 @@
   import _ from 'lodash';
   import PageRenderer from 'src/logic/renderer';
   import DocumentNavigator from 'src/logic/inputHandler/DocumentNavigator';
+  import SlidesNavigator from 'src/logic/inputHandler/SlidesNavigator';
   import documentBuilder from 'src/helpers/documentBuilder';
 
   // Throttle function used to limit the rate which
   // the render function is called
   const throttleTime = 600;
   const renderThrottleFn = _.throttle((htmlData, pr) => pr.write(htmlData), throttleTime);
+
+  let slidesNavigator = null;
 
   export default {
     props: ['htmlData'],
@@ -76,6 +79,7 @@
             // Initialise navigation for Slide mode
             const resizeObserveTarget = this.$el.parentNode.parentNode;
             this.documentNavigator = new DocumentNavigator(renderTarget, resizeObserveTarget);
+            slidesNavigator = new SlidesNavigator(renderTarget.ownerDocument.defaultView);
           });
         });
       });
