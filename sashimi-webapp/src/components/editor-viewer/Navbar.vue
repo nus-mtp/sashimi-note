@@ -45,12 +45,7 @@
             <input 
               v-model="fileFormat"
               placeholder="File format"
-              style="width: 100%;
-              box-sizing: border-box;
-              font-size: 1em;
-              padding: 10px;
-              padding-left: 10px;
-              padding-right: 2px;"
+              class="file-format-input-box"
             />
             <button v-on:click="updateParent('pages')" data-format="pages">Pages</button>
             <button v-on:click="updateParent('slides')" data-format="slides">Slides</button>
@@ -231,6 +226,16 @@ export default {
   &[data-active="html"] button[data-format="html"] {
     background-color: rgba(0,0,0,0.2);
     font-weight: 600;
+  }
+  
+  // Dropdown input box
+  .file-format-input-box {
+    width: 100%;
+    box-sizing: border-box;
+    font-size: 1em;
+    padding: 10px;
+    padding-left: 10px;
+    padding-right: 2px;
   }
 }
 
