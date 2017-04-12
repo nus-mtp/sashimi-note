@@ -1,6 +1,6 @@
 @keyframes viewTypeWidth {
   0% { width: 0 }
-  100% { width: $view-type-buttons-width }
+  100% { width: #{$view-type-buttons-width} }
 }
 
 @keyframes buttonLogoWidthMobile {
