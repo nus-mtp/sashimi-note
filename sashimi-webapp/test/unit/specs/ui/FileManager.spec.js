@@ -34,7 +34,7 @@ describe('FileManager.vue', () => {
       .to.not.equal(null);
   });
   it('should render Documents component', () => {
-    expect(vm.$el.querySelector('.documents'))
-      .to.not.equal(null);
+    const documentEle = vm.$el.getElementsByClassName('documents');
+    expect(documentEle).to.not.equal(null);
   });
 });
