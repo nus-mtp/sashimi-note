@@ -23,7 +23,7 @@
           :file="file"
     >
     </file>
-    <template v-if="!docs || (docs.childFileList.length === 0 && docs.childFolderList.length === 0)">
+    <template v-if="checkEmptyFolder()">
       <div class="doc-empty-wrapper">
         <h1>Folder is empty</h1>
         <img src="../../assets/images/sashimi-no-files.png" alt="">
@@ -42,7 +42,7 @@ export default {
   data() {
     return {
       modal: false,
-      value: ''
+      value: '',
     };
   },
   components: {
@@ -61,6 +61,17 @@ export default {
     changeFolder(newFolder) {
       this.$emit('changeFolder', newFolder);
     },
+    checkEmptyFolder() {
+      if (!(this.docs)) {
+        return true;
+      } else if (!this.docs.childFolderList && !this.docs.childFileList) {
+        return true;
+      } else if (this.docs.childFolderList.length === 0 && this.docs.childFileList.length === 0) {
+        return true;
+      }
+
+      return false;
+    }
   },
   mounted() {
     eventHub.$on('execute', (action, data) => {
