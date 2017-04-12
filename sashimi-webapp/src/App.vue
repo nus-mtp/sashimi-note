@@ -68,12 +68,11 @@ a {
 .navbar {
   overflow: hidden;
   box-sizing: border-box;
-  padding: 10px 20px;
+  padding: 22px 20px;
   text-align: left;
 }
 
 .material-icons { 
-
   &.md-54 { 
     font-size: 54px; 
   }
@@ -128,9 +127,14 @@ a {
 }
 
 .button-logo {
-  text-align: left;
-  position: relative;
-  width: $button-logo-width;
+  width: $button-sashimi-width;
+  overflow: hidden;
+  animation: buttonLogoWidthMobile $user-input-keyframe-time;
+  padding-top: 6px;
+
+  img {
+    width: $button-logo-mobile-width;
+  }
 
   a {
     font-size: $logo-font-size;
@@ -141,14 +145,6 @@ a {
     &:focus,
     &:visited {
       color: $grey-font;
-    }
-
-    &:hover {
-      color: $orange;
-    }
-
-    img {
-      width: 150px;
     }
     
     p {
@@ -166,5 +162,21 @@ a {
     margin: 0;
   }
 }
+
+@media screen and (min-width: 768px) {
+  .button-logo {
+    width: $button-logo-width;
+    overflow: initial;
+    margin-bottom: 0;
+    animation: buttonLogoWidth $user-input-keyframe-time;
+
+    img {
+      width: $button-logo-width;
+    }
+  }
+}
+
+
+
 
 </style>

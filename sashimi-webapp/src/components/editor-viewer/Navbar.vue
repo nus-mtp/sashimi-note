@@ -63,7 +63,7 @@
                 v-on:click="updateParent('split')"
         >
         <!--<i class="material-icons md-dark">chrome_reader_mode</i>-->
-        <img src="../../assets/images/buttons/button-split-screen.svg" class="button-img" alt="plugins">
+        <i class="material-icons md-dark">chrome_reader_mode</i>
         </button>
         <button class="navbar-buttons" id="button-viewer"
                 v-on:click="updateParent('viewer')"
@@ -106,6 +106,13 @@ export default {
       this.$router.push({ path: '/' });
     }
   },
+  mounted() {
+    if (window.innerWidth < 768) {
+      this.viewMode = 'editor';
+    } else {
+      this.viewMode = 'split';
+    }
+  }
 };
 </script>
 
@@ -114,9 +121,11 @@ export default {
 
 .navbar {
   box-sizing: border-box;
-  border-bottom: 3px solid $navbar-border-color;
+  border-bottom: 2px solid $navbar-border-color;
+  box-shadow: 0px 1px 10px rgba(0,0,0,0.4);
+  height: $content-navbar-height;
 
-  &[data-viewMode="editor"],
+  &[data-viewMode="editor"], 
   &[data-viewMode="split"] {
     #button-editor, 
     #button-split-screen {
@@ -141,14 +150,6 @@ export default {
   }
 }
 
-.button-logo {
-  cursor: pointer;
-
-  img {
-    padding: 10px 0 10px 0;
-  }
-}
-
 .button-dropdown {
   font-size: $logo-font-size;
   padding: 10px;
@@ -166,6 +167,7 @@ export default {
 
 .navbar-dropdown {
   box-sizing: border-box;
+  margin-top: -6px;
 
   .button-dropdown {
     border: 1px solid transparent;  
@@ -248,6 +250,28 @@ export default {
       #button-editor,
       #button-viewer {
         display: inline-block;
+      }
+    }
+
+    &[data-viewMode="editor"] {
+      #button-editor {
+        .material-icons.md-dark {
+          color: $orange;
+        }
+      }
+    }
+    &[data-viewMode="split"] {
+      #button-split-screen {
+        .material-icons.md-dark {
+          color: $orange;
+        }
+      }
+    }
+    &[data-viewMode="viewer"] {
+      #button-viewer {
+        .material-icons.md-dark {
+          color: $orange;
+        }
       }
     }
   }

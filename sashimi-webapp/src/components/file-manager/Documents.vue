@@ -23,11 +23,16 @@
           :file="file"
     >
     </file>
+    <template v-if="checkEmptyFolder()">
+      <div class="doc-empty-wrapper">
+        <h1>Folder is empty</h1>
+        <img src="../../assets/images/sashimi-no-files.png" alt="">
+      </div>
+    </template>
   </div>
 </template>
 
 <script>
-import fileManager from 'src/logic/filemanager';
 import eventHub from './EventHub';
 import folder from './Folder';
 import file from './File';
@@ -37,7 +42,7 @@ export default {
   data() {
     return {
       modal: false,
-      value: ''
+      value: '',
     };
   },
   components: {
@@ -56,6 +61,17 @@ export default {
     changeFolder(newFolder) {
       this.$emit('changeFolder', newFolder);
     },
+    checkEmptyFolder() {
+      if (!(this.docs)) {
+        return true;
+      } else if (!this.docs.childFolderList && !this.docs.childFileList) {
+        return true;
+      } else if (this.docs.childFolderList.length === 0 && this.docs.childFileList.length === 0) {
+        return true;
+      }
+
+      return false;
+    }
   },
   mounted() {
     eventHub.$on('execute', (action, data) => {
@@ -73,8 +89,21 @@ export default {
 @import 'src/assets/styles/variables.scss';
 .documents {
   overflow-y: auto;
-  height: calc(100vh - #{$file-manager-navbar-height-mobile});
+  height: calc(100vh - #{$file-manager-navbar-height});
   background-color: $grey-background;
+
+  .doc-empty-wrapper {
+    text-align: center;
+    
+    h1 {
+      color: #BBBBBB;
+      margin-bottom: 30px;
+      margin-top: 80px;
+    }
+    img {
+      width: 250px;
+    }
+  }
 
   .folder,
   .file {
@@ -114,6 +143,7 @@ export default {
     height: 140px;
     text-align: center;
     box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.2);
+    animation: docIconView 0.5s;
   }
 
   .folder,
@@ -160,6 +190,7 @@ export default {
     white-space: nowrap;
     box-sizing: border-box;
     text-align: left;
+    animation: docListView 0.5s;
 
     img {
       width: 50px;
@@ -171,12 +202,6 @@ export default {
       text-overflow: ellipsis;
       white-space: nowrap;
     }
-  }
-}
-
-@media screen and (min-width: 768px) {
-  .documents {
-    height: calc(100vh - #{$file-manager-navbar-height});
   }
 }
 </style>

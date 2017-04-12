@@ -7,8 +7,8 @@
         </router-link>
       </div>
       <!--Waiting for file-manager api to be completed to implement buttons-->
-      <div class="col searchBar inline-block vertical-align-child">
-        <div class="section group vertical-align-child">
+      <div class="col searchBar-wrapper inline-block vertical-align-child">
+        <div class="section group searchBar vertical-align-child">
 
           <i class="col material-icons md-dark">search</i>
           <input
@@ -25,18 +25,30 @@
           </button>
         </div>
       </div>
+      <div class="col view-type-wrapper inline-block">
+        <div class="view-type">
+          <button id="button-icon-view" class="navbar-buttons" 
+                  v-on:click="setViewMode('iconView')"
+                      :class="{ 'toggle-view-active': iconViewMode }"
+          >Icon</button>|
+          <button id="button-list-view" class="navbar-buttons" 
+                  v-on:click="setViewMode('listView')"
+                  :class="{ 'toggle-view-active': listViewMode }"
+          >List</button>
+        </div>
+      </div>
     </div>
     <div class="section group userActions vertical-align-child">
-      <div class="col float-left">
+      <div class="col float-left vertical-align-child">
         <button class="navbar-buttons" 
                 v-on:click="execute('history back')"
         >
-          <i class="material-icons md-dark">arrow_back</i>
+          <i class="material-icons md-dark">keyboard_arrow_left</i>
         </button>
         <button class="navbar-buttons" 
                 v-on:click="execute('history forward')"
         >
-          <i class="material-icons md-dark">arrow_forward</i>
+          <i class="material-icons md-dark">keyboard_arrow_right</i>
         </button>
         <ul class="navbar-breadcrumb inline-block">
           <li v-if="searchString !== ''">
@@ -100,16 +112,6 @@
                 v-bind:class="{'md-inactive': buttonDisabled}"
             >delete</i>
           </button>
-      </div>
-      <div class="col view-type inline-block">
-        <button id="button-icon-view" class="navbar-buttons" 
-                v-on:click="setViewMode('iconView')"
-                    :class="{ 'toggle-view-active': iconViewMode }"
-        >Icon</button>|
-        <button id="button-list-view" class="navbar-buttons" 
-                v-on:click="setViewMode('listView')"
-                :class="{ 'toggle-view-active': listViewMode }"
-        >List</button>
       </div>
     </div>
     </div>
@@ -201,27 +203,28 @@ export default {
 <style scoped lang="scss">
 @import 'src/assets/styles/variables.scss';
 .navbar {
-  padding-top: 20px;
+  padding-top: 22px;
   box-shadow: 0 2px 6px rgba(0,0,0,0.3);
   z-index: 999;
   position: relative;
+  box-sizing: border-box;
+  height: $file-manager-navbar-height;
 }
 
-.button-logo {
-  width: $button-sashimi-width;
-  overflow: hidden;
-  transform: scale(1.2);
-  transition: transform 1s;
-  padding: 10px 0;
-  text-align: center;
-  margin-bottom: 15px;
-}
-
-.searchBar {
-  width: calc(100% - #{$button-sashimi-width} - #{$searchbar-mobile-margin-left});
-  background-color: $grey-background;
+.searchBar-wrapper {
+  width: $searchbar-wrapper-mobile-width;
   text-align: left;
-  margin-left: $searchbar-mobile-margin-left;
+  overflow: hidden;
+  animation: userInput $user-input-keyframe-time;
+  height: 45px;
+  margin-top: -5px;
+
+  .searchBar {
+    background-color: $grey-background;
+    width: 90%;
+    margin: 0 auto;
+    height: 100%;
+  }
 
   i {
     font-size: 20px;
@@ -263,7 +266,6 @@ export default {
   font-size: $navbar-font-size;
   padding-left: 0;
   margin: 0;
-  height: 32px;
   vertical-align: middle;
   color: $grey-font;
 
@@ -293,10 +295,16 @@ export default {
   height: 32px;
 }
 
-.view-type {
+.view-type-wrapper {
   display: none;
   font-size: $navbar-font-size;
   font-family: $font-primary;
+  float: right;
+  animation: viewTypeWidth $user-input-keyframe-time;
+
+  .view-type {
+    width: $view-type-buttons-width;
+  }
 
   a {
     text-decoration: none;
@@ -313,25 +321,19 @@ export default {
   }
 
 @media screen and (min-width: 480px) {
-  .view-type {
+  .searchBar-wrapper {
+    width: $searchbar-wrapper-480px-width;
+  }
+
+  .view-type-wrapper {
     display: inline-block;
-    margin-left: 30px;
   }
 }
 
 @media screen and (min-width: 768px) {
-  .button-logo {
-    width: $button-logo-width;
-    transform: scale(1);
-    overflow: initial;
-    margin-bottom: 0;
-    margin-top: 5px;
-  }
-
-  .searchBar {
-    width: 50%;
-    margin-left: 40px;
-  }
+  .searchBar-wrapper {
+     width: $searchbar-wrapper-768px-width;
+   }
 
   .userActions  {
     .buttons-right {
