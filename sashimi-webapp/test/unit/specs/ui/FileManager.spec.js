@@ -26,11 +26,11 @@ describe('FileManager.vue', () => {
       .to.not.equal(null);
   });
   it('should render icon view button', () => {
-    expect(vm.$el.querySelector('.userActions #button-icon-view'))
+    expect(vm.$el.querySelector('#button-icon-view'))
       .to.not.equal(null);
   });
   it('should render list view button', () => {
-    expect(vm.$el.querySelector('.userActions #button-list-view'))
+    expect(vm.$el.querySelector('#button-list-view'))
       .to.not.equal(null);
   });
   it('should render Documents component', () => {
