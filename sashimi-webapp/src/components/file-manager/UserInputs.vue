@@ -212,7 +212,7 @@ export default {
 }
 
 .searchBar-wrapper {
-  width: $searbar-wrapper-mobile-width;
+  width: $searchbar-wrapper-mobile-width;
   text-align: left;
   overflow: hidden;
   animation: userInput $user-input-keyframe-time;
