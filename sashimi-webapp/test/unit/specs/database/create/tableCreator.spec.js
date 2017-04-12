@@ -1,5 +1,4 @@
 import tableCreator from 'src/database/create/tableCreator';
-import dataDelete from 'src/database/data-modifier/dataDelete';
 import exceptions from 'src/database/exceptions';
 
 const testDatabaseName = 'testTableCreator';
@@ -20,8 +19,19 @@ function isDatabaseExists(databaseName, callback) {
   };
 }
 
+
+function deleteDatabase(databaseName) {
+  return new Promise((resolve, reject) => {
+    const thisDatabaseName = databaseName || testDatabaseName;
+    if (!window.indexedDB) {
+      reject(exceptions.IndexedDBNotSupported);
+    }
+    resolve(window.indexedDB.deleteDatabase(thisDatabaseName));
+  });
+}
+
 function cleanTestCase() {
-  return dataDelete.deleteAllEntities(testDatabaseName);
+  return deleteDatabase(testDatabaseName);
 }
 
 describe('tableCreator', () => {
@@ -29,9 +39,12 @@ describe('tableCreator', () => {
     tableCreator.callSqlToLinkToDatabase(testDatabaseName)
   );
 
-  after(() =>
+  after((doneAfter) => {
     cleanTestCase()
-  );
+    .then(() =>
+      doneAfter()
+    );
+  });
 
   describe('link to indexeddb database', () => {
     it('should link to indexeddb database', (done) => {
@@ -42,8 +55,8 @@ describe('tableCreator', () => {
       .then(() => {
         isDatabaseExists(testDatabaseName, (isDBExists) => {
           expect(isDBExists).to.be.true;
+          done();
         });
-        done();
       })
       .catch(err => done(err));
     });
@@ -175,4 +188,3 @@ describe('tableCreator', () => {
     });
   });
 });
-

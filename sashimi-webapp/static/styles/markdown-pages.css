@@ -1,0 +1,7 @@
+@import url("/vendors/gutenberg-css/gutenberg.custom.css");
+@import url("/vendors/gutenberg-css/themes/oldstyle.min.css");
+@import url("/vendors/highlight.js/styles/ascetic.css");
+
+body {
+  text-align: initial;
+}

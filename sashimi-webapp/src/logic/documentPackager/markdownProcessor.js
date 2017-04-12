@@ -1,3 +1,9 @@
+/**
+ * This is the Markdown-It module used for parsing markdown content and rendering
+ * the content into HTML string, for use to be displayed on Viewer component
+ * @return {string} returns the rendered HTML string
+ */
+
 // Imports:
 // Markdown-It module for markdown processing
 import MarkdownIt from 'markdown-it';
@@ -9,8 +15,10 @@ import mdKatex from 'markdown-it-katex';
 // Table of Contents plugins
 import mdAnchor from 'markdown-it-anchor';
 import mdTOC from 'markdown-it-table-of-contents';
-// Sequence Diagram plugin
-// import mdSeqDiagram from 'js-sequence-diagrams';
+// ASCIIMath Plugin
+import mdAsciiMath from './markdown-it-asciimath';
+// Custom Fence Block Rule for textual Diagram representation
+import mdDiagrams from './markdown-it-diagram';
 // Custom conditional plugin
 import mdConditional from './conditionalProcessor';
 
@@ -40,10 +48,12 @@ md.use(mdHighlight, { auto: true, code: true });
 // For TOC generation
 md.use(mdAnchor);
 md.use(mdTOC);
-// For Sequence diagrams
-// md.use(mdSeqDiagram);
+// For drawing diagrams
+md.use(mdDiagrams);
+// For ASCIIMath
+md.use(mdAsciiMath);
 // For custom conditional plugin
-md.use(mdConditional);
+md.use(mdConditional.hideShowPlugin);
 
 const validateData = function validateData(data) {
   return data || '';

@@ -1,3 +1,4 @@
+import diagramsRenderer from './diagrams';
 import VirtualBook from './VirtualBook';
 import helper from './helper';
 
@@ -110,41 +111,45 @@ export default {
     const rf = pageRenderer.referenceFrame;
     rf.innerHTML = pageRenderer.sourceHTML;
 
-    // Additional element styling
-    const imgElements = rf.getElementsByTagName('IMG');
-    for (let i = 0; i < imgElements.length; i += 1) {
-      helper.overwriteStyle(imgElements[i].style, {
-        maxWidth: '100%',
-        maxHeight: `${pageRenderer.renderHeight}px`
-      });
-    }
-
-    // Special check for image loading
-    // A similar checking might be needed for external plugin
-    return new Promise((resolve, reject) => {
-      // TODO: Need to reject promise after timeout
-      // in case the images is taking too long to load.
-
-      const imageArray = rf.getElementsByTagName('IMG');
-      let countLoadedImage = 0;
-      const checkForLoadingCompletion = () => {
-        if (countLoadedImage === imageArray.length) {
-          resolve(rf);
-        }
-      };
-      const increateLoadedImageCount = () => {
-        countLoadedImage += 1;
-        checkForLoadingCompletion();
-      };
-      for (let i = 0; i < imageArray.length; i += 1) {
-        // Increment image load count as long as the image is processed.
-        imageArray[i].onload = increateLoadedImageCount;
-        imageArray[i].onerror = increateLoadedImageCount;
-
-        // Handle case where image does not have a src attribute
-        if (!imageArray[i].getAttribute.src) increateLoadedImageCount();
+    // Render UML diagrams first before rendering to page view
+    return diagramsRenderer(rf)
+    .then(() => {
+      // Additional element styling
+      const imgElements = rf.getElementsByTagName('IMG');
+      for (let i = 0; i < imgElements.length; i += 1) {
+        helper.overwriteStyle(imgElements[i].style, {
+          maxWidth: '100%',
+          maxHeight: `${pageRenderer.renderHeight}px`
+        });
       }
-      checkForLoadingCompletion();
+
+      // Special check for image loading
+      // A similar checking might be needed for external plugin
+      return new Promise((resolve, reject) => {
+        // TODO: Need to reject promise after timeout
+        // in case the images is taking too long to load.
+
+        const imageArray = rf.getElementsByTagName('IMG');
+        let countLoadedImage = 0;
+        const checkForLoadingCompletion = () => {
+          if (countLoadedImage === imageArray.length) {
+            resolve(rf);
+          }
+        };
+        const increateLoadedImageCount = () => {
+          countLoadedImage += 1;
+          checkForLoadingCompletion();
+        };
+        for (let i = 0; i < imageArray.length; i += 1) {
+          // Increment image load count as long as the image is processed.
+          imageArray[i].onload = increateLoadedImageCount;
+          imageArray[i].onerror = increateLoadedImageCount;
+
+          // Handle case where image does not have a src attribute
+          if (!imageArray[i].getAttribute.src) increateLoadedImageCount();
+        }
+        checkForLoadingCompletion();
+      });
     });
   },
 
@@ -198,7 +203,7 @@ export default {
     // Recreate pages for renderFrame
     virtualBookPages.forEach((page) => {
       // Create a new page
-      const pageDiv = document.createElement('DIV');
+      const pageDiv = pr.ownerDocument.createElement('DIV');
       pageDiv.setAttribute('class', CLASS_NAME_PREFIX);
       const refStyle = {
         // CSS to set up the page sizing

@@ -1,0 +1,5 @@
+```math
+a^2 + b^2 = c^2
+P(A | B) = (P(B | A)P(A)) / P(B)
+varphi = int_0^10 x^2 dx
+```

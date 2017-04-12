@@ -1,28 +1,25 @@
 <template>
-  <div class="section group navbar">
+  <div class="section group navbar" v-bind:data-viewMode="viewMode">
     <div class="col button-logo vertical-align-child">
-        <router-link to="\" class="vertical-align-child navbar-buttons hover-grow">
-            <img src="../../assets/sashimi.svg" class="inline-block" alt="sashimi">
-            <p class="inline-block">
-              SASHIMI NOTE
-            </p>
+        <router-link to="/" class="vertical-align-child navbar-buttons">
+            <img src="../../assets/sashimi-note.svg" class="inline-block" alt="sashimi">
         </router-link>
     </div>
     <!--Waiting for file-manager api to be completed to implement buttons-->
     <!--<div class="col float-left vertical-align-child button-group-margin">
       <div class="image-upload">
-        <label for="file-input" class="navbar-buttons hover-grow" id="upload-image">
+        <label for="file-input" class="navbar-buttons" id="upload-image">
           <i class="material-icons md-dark">photo_camera</i>
         </label>
         <input type="file" id="file-input">
       </div>
-      <button class="navbar-buttons hover-grow" id="plugins">
+      <button class="navbar-buttons" id="plugins">
         <img src="../../assets/images/buttons/button-plugins.svg" class="button-img" alt="plugins">
       </button>
-      <button class="navbar-buttons hover-grow" id="annotate">
+      <button class="navbar-buttons" id="annotate">
         <img src="../../assets/images/buttons/button-annotate.svg" class="button-img" alt="annotate">
       </button>
-      <button class="navbar-buttons hover-grow" id="share-file">
+      <button class="navbar-buttons" id="share-file">
         <i class="material-icons md-dark">share</i>
       </button>
     </div>-->
@@ -30,7 +27,7 @@
       <div class="col inline-block">
         <!--Waiting for file-manager api to be completed to implement buttons-->    
         <!--<div class="navbar-dropdown inline-block">
-          <button class="button-dropdown button-group-margin vertical-align-child navbar-buttons hover-grow" id="new-file">
+          <button class="button-dropdown button-group-margin vertical-align-child navbar-buttons" id="new-file">
             <img class="inline-block" src="../../assets/images/symbols/symbol-add.svg" alt="add"> 
             <p class="inline-block">New</p>  
           </button>
@@ -40,11 +37,16 @@
           </div>
         </div>-->
         <div class="navbar-dropdown inline-block">
-          <button class="button-dropdown button-group-margin vertical-align-child navbar-buttons hover-grow" id="manage-file">
+          <button class="button-dropdown button-group-margin vertical-align-child navbar-buttons" id="manage-file">
             <p class="inline-block">Manage</p> 
             <img class="inline-block" src="../../assets/images/symbols/symbol-arrow-down.svg" alt="add">
           </button>
           <div class="dropdown-content" :data-active="value">
+            <input 
+              v-model="fileFormat"
+              placeholder="File format"
+              class="file-format-input-box"
+            />
             <button v-on:click="updateParent('pages')" data-format="pages">Pages</button>
             <button v-on:click="updateParent('slides')" data-format="slides">Slides</button>
             <button v-on:click="updateParent('html')" data-format="html">HTML</button>
@@ -52,15 +54,21 @@
         </div>
       </div>
       <div class="col vertical-align-child button-group-margin">
-        <button v-on:click="updateParent('editor')" class="navbar-buttons hover-grow" id="button-editor">
-        <i class="material-icons md-dark md-dark">edit</i>
+        <button class="navbar-buttons" id="button-editor"
+                v-on:click="updateParent('editor')"
+        >
+        <i class="material-icons md-dark">edit</i>
         </button>
-        <button v-on:click="updateParent('split')" class="navbar-buttons hover-grow" id="button-split-screen">
-        <!--<i class="material-icons md-dark md-dark">chrome_reader_mode</i>-->
+        <button class="navbar-buttons" id="button-split-screen"
+                v-on:click="updateParent('split')"
+        >
+        <!--<i class="material-icons md-dark">chrome_reader_mode</i>-->
         <img src="../../assets/images/buttons/button-split-screen.svg" class="button-img" alt="plugins">
         </button>
-        <button v-on:click="updateParent('viewer')" class="navbar-buttons hover-grow" id="button-viewer">
-        <i class="material-icons md-dark md-dark md-dark">remove_red_eye</i>
+        <button class="navbar-buttons" id="button-viewer"
+                v-on:click="updateParent('viewer')"
+        >
+        <i class="material-icons md-dark">remove_red_eye</i>
         </button>
       </div>
     </div>
@@ -68,15 +76,28 @@
 </template>
 
 <script>
+import router from 'src/router';
+import condProcessor from 'src/logic/documentPackager/conditionalProcessor';
+
 export default {
   components: {
   },
   data() {
     return {
       isActive: false,
+      viewMode: '',
+      fileFormat: ''
     };
   },
   props: ['value'],
+  watch: {
+    fileFormat(data) {
+      condProcessor.setFileName(data);
+    },
+    value(data) {
+      this.viewMode = data;
+    }
+  },
   methods: {
     updateParent(action) {
       this.$emit('input', action);
@@ -94,6 +115,21 @@ export default {
 .navbar {
   box-sizing: border-box;
   border-bottom: 3px solid $navbar-border-color;
+
+  &[data-viewMode="editor"],
+  &[data-viewMode="split"] {
+    #button-editor, 
+    #button-split-screen {
+      display: none;
+    }
+  }
+
+  &[data-viewMode="viewer"] {
+    #button-viewer,
+    #button-split-screen {
+      display: none;
+    }
+  }
 }
 
 .image-upload {
@@ -107,10 +143,9 @@ export default {
 
 .button-logo {
   cursor: pointer;
-  .hover-grow{
-    &:hover {
-      transform: scale(1.1);
-    }
+
+  img {
+    padding: 10px 0 10px 0;
   }
 }
 
@@ -191,6 +226,30 @@ export default {
   &[data-active="html"] button[data-format="html"] {
     background-color: rgba(0,0,0,0.2);
     font-weight: 600;
+  }
+  
+  // Dropdown input box
+  .file-format-input-box {
+    width: 100%;
+    box-sizing: border-box;
+    font-size: 1em;
+    padding: 10px;
+    padding-left: 10px;
+    padding-right: 2px;
+  }
+}
+
+@media screen and (min-width: 768px) {
+  .navbar {
+    &[data-viewMode="editor"],
+    &[data-viewMode="viewer"],
+    &[data-viewMode="split"] {
+      #button-split-screen,
+      #button-editor,
+      #button-viewer {
+        display: inline-block;
+      }
+    }
   }
 }
 </style>

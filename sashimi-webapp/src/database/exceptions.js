@@ -22,5 +22,11 @@ export default Object.freeze({
     this.message = message || 'Exception: IndexedDB thread blocked.';
     this.name = 'IndexedDBOnBlock';
     this.stack = (new Error()).stack;
+  },
+
+  InvalidRename: function InvalidRename(message) {
+    this.message = message || 'Exception: Invalid name that violates SQL injection';
+    this.name = 'InvalidRename';
+    this.stack = (new Error()).stack;
   }
 });

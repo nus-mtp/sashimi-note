@@ -1,5 +1,5 @@
 <template>
-  <div class="col vertical-align-child"
+  <div class="col vertical-align-child file-wrapper"
     v-on:dblclick="openFile"
   >
     <button class="file"
@@ -7,10 +7,14 @@
             v-on:blur="blurFile"
     >
       <img src="../../assets/images/icons/icon-file.svg" alt="file">
-      <p contenteditable="true" tabindex="2" class="inline-block"
+      <p contenteditable="true" 
+        tabindex="2" 
+        class="inline-block file-name"
+        ref="nameField"
         v-on:blur="saveFileName"
-        v-on:keypress="onKeyPress($event)"
-        v-on:keyup="onKeyUp($event)"
+        v-on:keypress="onKeyPress"
+        v-on:keyup="onKeyUp"
+        v-on:paste="removeStyle"
       >{{file.name}}</p>
     </button>
   </div>
@@ -30,22 +34,16 @@ export default {
     focusFile() {
       this.$emit('focusFile', this.file);
     },
-    blurFile() {
-      this.$emit('blurFile');
+    blurFile(event) {
+      this.$emit('blurFile', event);
     },
     saveFileName() {
       window.getSelection().removeAllRanges();
 
-      let newFileName = this.$el.getElementsByTagName('p')[0].innerHTML;
+      let newFileName = this.$refs.nameField.innerText;
       newFileName = newFileName.trim().replace(/&nbsp;/gi, '');
 
-      if (newFileName === '') {
-        newFileName = 'untitled.md';
-      }
-
-      if (newFileName !== this.file.name) {
-        this.$emit('renameFile', newFileName, this.file);
-      }
+      this.file.rename(newFileName);
     },
     onKeyPress(event) {
       const enterKey = 13;
@@ -57,8 +55,15 @@ export default {
       const enterKey = 13;
       if (event.keyCode === enterKey) {
         this.saveFileName();
+        this.$refs.nameField.blur();
       }
     },
+    removeStyle(event) {
+      event.preventDefault();
+
+      const pastedText = event.clipboardData.getData('text/plain');
+      document.execCommand('insertHTML', false, pastedText);
+    }
   }
 };
 </script>

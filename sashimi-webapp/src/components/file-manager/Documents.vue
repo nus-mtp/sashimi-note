@@ -13,7 +13,6 @@
       v-on:openFolder="changeFolder"
       v-on:focusFolder="focus"
       v-on:blurFolder="blur"
-      v-on:renameFolder="renameDoc"
           :folder="folder"
     >
     </folder>
@@ -21,7 +20,6 @@
       v-for="file in docs.childFileList"
       v-on:focusFile="focus"
       v-on:blurFile="blur"
-      v-on:renameFile="renameDoc"
           :file="file"
     >
     </file>
@@ -47,27 +45,17 @@ export default {
     file,
   },
   watch: {
-    $route(path) {
-      if (path.query.folder === undefined) {
-        const ROOT_FOLDER_ID = 0;
-        const rootFolder = fileManager.getFolderByID(ROOT_FOLDER_ID);
-        this.changeFolder(rootFolder);
-      }
-    }
   },
   methods: {
     focus(focusedDoc) {
       eventHub.$emit('focus', focusedDoc);
     },
-    blur() {
-      eventHub.$emit('blur');
+    blur(event) {
+      eventHub.$emit('blur', event);
     },
     changeFolder(newFolder) {
       this.$emit('changeFolder', newFolder);
     },
-    renameDoc(newDocName, docToRename) {
-      docToRename.rename(newDocName);
-    }
   },
   mounted() {
     eventHub.$on('execute', (action, data) => {
@@ -86,8 +74,9 @@ export default {
 .documents {
   overflow-y: auto;
   height: calc(100vh - #{$file-manager-navbar-height-mobile});
+  background-color: $grey-background;
 
-  .folder, 
+  .folder,
   .file {
     cursor: pointer;
     box-sizing: border-box;
@@ -103,11 +92,12 @@ export default {
       background-color: $documents-focus-color;
     }
 
-    p {
+    .folder-name,
+    .file-name {
       font-family: $font-primary;
 
-      &::selection {
-        background-color: white;
+      &[contenteditable="true"]:focus {
+        text-decoration: underline;
       }
     }
   }
@@ -117,29 +107,39 @@ export default {
   padding: 20px;
   box-sizing: border-box;
 
+  .folder-wrapper,
+  .file-wrapper {
+    margin: 0 30px 20px 0;
+    width: 140px;
+    height: 140px;
+    text-align: center;
+    box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.2);
+  }
+
   .folder,
   .file   {
-    width: 120px;
-    height: 120px;
     text-align: center;
     position: relative;
-    margin-right: 30px;
+    width: 100%;
+    height: 100%;
+    background-color: white;
 
     img {
-      width: 120px;
+      width: 50px;
     }
 
     p {
+      display: block;
       font-size: $documents-name-font-size;
-      position: absolute;
-      top: 15px;
-      left: 0;
-      bottom: 0;
-      right: 0;
-      width: 60px;
-      height: 40px;
-      margin: auto;
-      overflow: auto;
+      // position: absolute;
+      // top: 15px;
+      // left: 0;
+      // bottom: 0;
+      // right: 0;
+      // width: 60px;
+      // height: 40px;
+      // margin: auto;
+      // overflow: auto;
       overflow-wrap: break-word;
     }
   }
@@ -149,6 +149,7 @@ export default {
   .col {
     width: 100%;
   }
+
   .folder,
   .file {
     width: 100%;

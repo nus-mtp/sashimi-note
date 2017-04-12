@@ -1,5 +1,4 @@
 import entitiesCreator from 'src/database/create/entitiesCreator';
-import dataDelete from 'src/database/data-modifier/dataDelete';
 import exceptions from 'src/database/exceptions';
 import constants from 'src/database/constants';
 
@@ -41,8 +40,18 @@ function isTableExistsInDatabase(tableName, callback) {
   };
 }
 
+function deleteDatabase(databaseName) {
+  return new Promise((resolve, reject) => {
+    const thisDatabaseName = databaseName || testDatabaseName;
+    if (!window.indexedDB) {
+      reject(exceptions.IndexedDBNotSupported);
+    }
+    resolve(window.indexedDB.deleteDatabase(thisDatabaseName));
+  });
+}
+
 function cleanTestCase() {
-  return dataDelete.deleteAllEntities(testDatabaseName);
+  return deleteDatabase(testDatabaseName);
 }
 
 describe('entitiesCreator', () => {
@@ -66,8 +75,8 @@ describe('entitiesCreator', () => {
       .then(() => {
         isDatabaseExists(testDatabaseName, (isDBExists) => {
           expect(isDBExists).to.be.true;
+          done();
         });
-        done();
       })
       .catch(err => done(err));
     });
@@ -82,8 +91,8 @@ describe('entitiesCreator', () => {
       .then(() => {
         isTableExistsInDatabase(constants.ENTITIES_USER, (isTableExists) => {
           expect(isTableExists).to.be.true;
+          done();
         });
-        done();
       })
       .catch(err => done(err));
     });
@@ -96,8 +105,8 @@ describe('entitiesCreator', () => {
       .then(() => {
         isTableExistsInDatabase(constants.ENTITIES_ORGANIZATION, (isTableExists) => {
           expect(isTableExists).to.be.true;
+          done();
         });
-        done();
       })
       .catch(err => done(err));
     });
@@ -110,8 +119,8 @@ describe('entitiesCreator', () => {
       .then(() => {
         isTableExistsInDatabase(constants.ENTITIES_FILE_MANAGER, (isTableExists) => {
           expect(isTableExists).to.be.true;
+          done();
         });
-        done();
       })
       .catch(err => done(err));
     });
@@ -124,8 +133,8 @@ describe('entitiesCreator', () => {
       .then(() => {
         isTableExistsInDatabase(constants.ENTITIES_FOLDER, (isTableExists) => {
           expect(isTableExists).to.be.true;
+          done();
         });
-        done();
       })
       .catch(err => done(err));
     });
@@ -154,7 +163,9 @@ describe('entitiesCreator', () => {
         )
         .catch(sqlErr => done(sqlErr))
       )
-      .then(() => done());
+      .then(() => {
+        done();
+      });
     });
 
     it('should fill up table with default data', (done) => {
@@ -190,7 +201,7 @@ describe('entitiesCreator', () => {
             organization_id: 1,
             folder_id: 0,
             file_id: 1,
-            file_name: 'newFile.md',
+            file_name: 'newFile',
             file_markdown: '',
             permission_index: 1,
             creation_date: creationDate,
@@ -214,9 +225,9 @@ describe('entitiesCreator', () => {
           }]);
         })
       )
-      .then(() =>
-        done()
-      )
+      .then(() => {
+        done();
+      })
       .catch(sqlErr => done(sqlErr));
     }).timeout(10000);
   });

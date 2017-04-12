@@ -1,0 +1,5 @@
+@import url("/vendors/katex/katex.min.css");
+
+/* Customised mermaid.css taken from hackmd.io, this custom CSS resolves the issue of
+   the styling applying to the whole HTML document */
+@import url("/vendors/mermaid.css");

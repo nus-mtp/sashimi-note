@@ -1,11 +1,17 @@
 import StringManipulator from 'src/database/stringManipulation';
 import constants from 'src/database/constants';
 import DateTime from 'src/database/generated-data/dateTime';
+import exceptions from 'src/database/exceptions';
 
 const alasql = require('alasql');
 
 const stringManipulator = new StringManipulator();
 const dateTime = new DateTime();
+
+
+function resolveSQLInjection(sqlContent) {
+  return stringManipulator.resolveSQLInjections(sqlContent);
+}
 
 function getDataOutOfAlasql(data) {
   return Object.values(data[0][0])[0];
@@ -25,7 +31,7 @@ function getCurrentFilePath(fileId) {
                                                    ' FROM ', constants.ENTITIES_FILE_MANAGER,
                                                    ' WHERE ', constants.HEADER_FILE_MANAGER_FILE_ID,
                                                    ' = ', fileId)])
-    .then(filePath => resolve(filePath))
+    .then(filePath => resolve(getDataOutOfAlasql(filePath)))
     .catch(sqlErr => reject(sqlErr))
   );
 }
@@ -36,7 +42,7 @@ function getCurrentFolderPath(folderId) {
                                                    ' FROM ', constants.ENTITIES_FOLDER,
                                                    ' WHERE ', constants.HEADER_FOLDER_FOLDER_ID,
                                                    ' = ', folderId)])
-    .then(folderPath => resolve(folderPath))
+    .then(folderPath => resolve(getDataOutOfAlasql(folderPath)))
     .catch(sqlErr => reject(sqlErr))
   );
 }
@@ -106,7 +112,6 @@ function cascadeChangeFolderPath(index, prevBasePath, newBasePath, folderArr) {
     if (index >= folderArr.length) {
       resolve(true);
     }
-    console.log(index);
     const folderToChangePathIndex = Object.values(folderArr[index])[0];
     let newPath;
     return getCurrentFolderPath(folderToChangePathIndex)
@@ -140,7 +145,6 @@ function cascadeDeleteFolder(index, folderArr) {
     if (index >= folderArr.length) {
       resolve(true);
     }
-    console.log(index);
     const folderToDeleteIndex = Object.values(folderArr[index])[0];
     return deleteSingleFolder(folderToDeleteIndex)
     .then(() => {
@@ -168,7 +172,6 @@ function cascadeDeleteFile(index, fileArr) {
     if (index >= fileArr.length) {
       resolve(true);
     }
-    console.log(index);
     const fileToDeleteIndex = Object.values(fileArr[index])[0];
     return deleteSingleFile(fileToDeleteIndex)
     .then(() => {
@@ -197,7 +200,10 @@ function getListOfFolderIdsWithSamePath(folderPath) {
     alasql.promise([stringManipulator.stringConcat('SELECT ', constants.HEADER_FOLDER_FOLDER_ID,
                                                    ' FROM ', constants.ENTITIES_FOLDER,
                                                    ' WHERE ', constants.HEADER_FOLDER_PATH,
-                                                   ' LIKE "', folderPath, '%"')])
+                                                   ' LIKE "', folderPath, '%"',
+                                                   // omit the folders in the same folder with same name
+                                                   ' AND ', constants.HEADER_FOLDER_PATH,
+                                                   ' != "', folderPath, '"')])
     .then(folderList => resolve(folderList))
     .catch(sqlErr => reject(sqlErr))
   );
@@ -217,6 +223,7 @@ function getListOfFilesIdsWithSamePath(folderPath) {
 export default function sqlCommands() {
   this.linkDatabaseToIndexedDB = function linkDatabaseToIndexedDB(databaseName) {
     return new Promise((resolve, reject) => {
+      databaseName = resolveSQLInjection(databaseName);
       const databaseRequestStr = stringManipulator.stringConcat(
         'CREATE INDEXEDDB DATABASE IF NOT EXISTS ', databaseName, ';',
         'ATTACH INDEXEDDB DATABASE ', databaseName, ';',
@@ -229,74 +236,85 @@ export default function sqlCommands() {
 
   this.getFullTableData = function getFullTableData(tableName) {
     // ensure working in browsers that support Promise
-    return new Promise((resolve, reject) =>
-      alasql.promise([stringManipulator.stringConcat('SELECT * FROM ', tableName)])
+    return new Promise((resolve, reject) => {
+      tableName = resolveSQLInjection(tableName);
+      return alasql.promise([stringManipulator.stringConcat('SELECT * FROM ', tableName)])
       .then(data => resolve(getArray(data)))
-      .catch(sqlError => reject(sqlError)));
+      .catch(sqlError => reject(sqlError));
+    });
   };
 
   this.createTable = function createTable(sqlStatement) {
-    return new Promise((resolve, reject) =>
-      alasql.promise([stringManipulator.stringConcat('CREATE TABLE IF NOT EXISTS ', sqlStatement)])
+    return new Promise((resolve, reject) => {
+      sqlStatement = resolveSQLInjection(sqlStatement);
+      return alasql.promise([stringManipulator.stringConcat('CREATE TABLE IF NOT EXISTS ', sqlStatement)])
       .then(() => resolve(true))
-      .catch(sqlError => reject(sqlError))
+      .catch(sqlError => reject(sqlError));
+    }
     );
   };
 
   this.insertContent = function insertContent(tableName, alasqlArray) {
-    return new Promise((resolve, reject) =>
-      alasql.promise(stringManipulator.stringConcat('INSERT INTO ', tableName,
-                                                      ' VALUES ?'), alasqlArray)
+    return new Promise((resolve, reject) => {
+      tableName = resolveSQLInjection(tableName);
+      alasqlArray = resolveSQLInjection(alasqlArray);
+      return alasql.promise(stringManipulator.stringConcat('INSERT INTO ', tableName,
+                                                           ' VALUES ?'), alasqlArray)
       .then(data => resolve(data))
-      .catch(sqlError => reject(sqlError)));
+      .catch(sqlError => reject(sqlError));
+    });
   };
 
   this.partialSearchFileName = function partialSearchFileName(searchString) {
-    return new Promise((resolve, reject) =>
-      alasql.promise([stringManipulator.stringConcat('SELECT * FROM ', constants.ENTITIES_FILE_MANAGER,
-                                                      ' WHERE ', constants.HEADER_FILE_MANAGER_FILE_NAME,
-                                                      ' LIKE "%', searchString, '%"')])
+    return new Promise((resolve, reject) => {
+      searchString = resolveSQLInjection(searchString);
+      return alasql.promise([stringManipulator.stringConcat('SELECT * FROM ', constants.ENTITIES_FILE_MANAGER,
+                                                            ' WHERE ', constants.HEADER_FILE_MANAGER_FILE_NAME,
+                                                            ' LIKE "%', searchString, '%"')])
       .then(data => resolve(getArray(data)))
-      .catch(sqlError => reject(sqlError))
-    );
+      .catch(sqlError => reject(sqlError));
+    });
   };
 
   this.exactSearchStartFileNameInFolder = function exactSearchStartFileNameInFolder(filePath) {
-    return new Promise((resolve, reject) =>
+    return new Promise((resolve, reject) => {
+      filePath = resolveSQLInjection(filePath);
       alasql.promise([stringManipulator.stringConcat('SELECT ', constants.HEADER_FILE_MANAGER_FILE_NAME,
-                                                      ' FROM ', constants.ENTITIES_FILE_MANAGER,
-                                                      ' WHERE ', constants.HEADER_FILE_MANAGER_PATH,
-                                                      ' LIKE "', filePath, '%"',
-                                                      ' ORDER BY ', constants.HEADER_FILE_MANAGER_FILE_NAME,
-                                                      ' ASC')])
+                                                     ' FROM ', constants.ENTITIES_FILE_MANAGER,
+                                                     ' WHERE ', constants.HEADER_FILE_MANAGER_PATH,
+                                                     ' LIKE "', filePath, '%"',
+                                                     ' ORDER BY ', constants.HEADER_FILE_MANAGER_FILE_NAME,
+                                                     ' ASC')])
       .then(data => resolve(getArray(data)))
-      .catch(sqlError => reject(sqlError))
-    );
+      .catch(sqlError => reject(sqlError));
+    });
   };
 
   this.exactSearchStartFolderNameInFolder = function exactSearchStartFolderNameInFolder(parentFolderId) {
-    return new Promise((resolve, reject) =>
-      alasql.promise([stringManipulator.stringConcat('SELECT ', constants.HEADER_FOLDER_FOLDER_NAME,
-                                                      ' FROM ', constants.ENTITIES_FOLDER,
-                                                      ' WHERE ', constants.HEADER_FOLDER_PARENT_FOLDER_ID,
-                                                      ' = ', parentFolderId,
-                                                      ' ORDER BY ', constants.HEADER_FOLDER_FOLDER_NAME,
-                                                      ' ASC')])
+    return new Promise((resolve, reject) => {
+      parentFolderId = resolveSQLInjection(parentFolderId);
+      return alasql.promise([stringManipulator.stringConcat('SELECT ', constants.HEADER_FOLDER_FOLDER_NAME,
+                                                            ' FROM ', constants.ENTITIES_FOLDER,
+                                                            ' WHERE ', constants.HEADER_FOLDER_PARENT_FOLDER_ID,
+                                                            ' = ', parentFolderId,
+                                                            ' ORDER BY ', constants.HEADER_FOLDER_FOLDER_NAME,
+                                                            ' ASC')])
       .then(data => resolve(getArray(data)))
-      .catch(sqlError => reject(sqlError))
+      .catch(sqlError => reject(sqlError));
+    }
     );
   };
 
   this.getMaxFileId = function getMaxFileId() {
     return new Promise((resolve, reject) =>
       alasql.promise([stringManipulator.stringConcat('SELECT max(', constants.HEADER_FILE_MANAGER_FILE_ID,
-                                                      ') FROM ', constants.ENTITIES_FILE_MANAGER)])
+                                                     ') FROM ', constants.ENTITIES_FILE_MANAGER)])
       .then((data) => {
         const maxFileId = getDataOutOfAlasql(data);
         if (typeof maxFileId === 'number') {
           resolve(maxFileId);
         } else {
-          resolve(-1);
+          resolve(0);
         }
       }).catch(sqlError => reject(sqlError))
     );
@@ -304,7 +322,7 @@ export default function sqlCommands() {
   this.getMaxFolderId = function getMaxFolderId() {
     return new Promise((resolve, reject) =>
       alasql.promise([stringManipulator.stringConcat('SELECT MAX(', constants.HEADER_FOLDER_FOLDER_ID,
-                                                      ') FROM ', constants.ENTITIES_FOLDER)])
+                                                     ') FROM ', constants.ENTITIES_FOLDER)])
       .then((data) => {
         const maxFolderId = getDataOutOfAlasql(data);
         if (typeof maxFolderId === 'number') {
@@ -316,69 +334,91 @@ export default function sqlCommands() {
     );
   };
 
-  this.partialSearchFolderName = function partialSearchFolderName(searchString) {
-    return new Promise((resolve, reject) =>
-      alasql.promise([stringManipulator.stringConcat('SELECT * FROM ', constants.ENTITIES_FOLDER,
-                                                      ' WHERE ', constants.HEADER_FOLDER_FOLDER_NAME,
-                                                      ' LIKE "%', searchString, '%"')])
+  this.retrieveFullFile = function retrieveFullFile(fileId) {
+    return new Promise((resolve, reject) => {
+      fileId = resolveSQLInjection(fileId);
+      alasql.promise([stringManipulator.stringConcat('SELECT * FROM ', constants.ENTITIES_FILE_MANAGER,
+                                                     ' WHERE ', constants.HEADER_FILE_MANAGER_FILE_ID,
+                                                     ' = ', fileId)])
       .then(data => resolve(getArray(data)))
-      .catch(sqlError => reject(sqlError))
-    );
+      .catch(sqlError => reject(sqlError));
+    });
+  };
+
+  this.partialSearchFolderName = function partialSearchFolderName(searchString) {
+    return new Promise((resolve, reject) => {
+      searchString = resolveSQLInjection(searchString);
+      return alasql.promise([stringManipulator.stringConcat('SELECT * FROM ', constants.ENTITIES_FOLDER,
+                                                            ' WHERE ', constants.HEADER_FOLDER_FOLDER_NAME,
+                                                            ' LIKE "%', searchString, '%"')])
+      .then(data => resolve(getArray(data)))
+      .catch(sqlError => reject(sqlError));
+    });
   };
 
   this.loadFilesFromFolder = function loadFilesFromFolder(folderId) {
-    return new Promise((resolve, reject) =>
-      alasql.promise([stringManipulator.stringConcat('SELECT * FROM ', constants.ENTITIES_FILE_MANAGER,
-                                                      ' WHERE ', constants.HEADER_FILE_MANAGER_FOLDER_ID,
-                                                      ' = ', folderId)])
+    return new Promise((resolve, reject) => {
+      folderId = resolveSQLInjection(folderId);
+      return alasql.promise([stringManipulator.stringConcat('SELECT * FROM ', constants.ENTITIES_FILE_MANAGER,
+                                                            ' WHERE ', constants.HEADER_FILE_MANAGER_FOLDER_ID,
+                                                            ' = ', folderId)])
       .then(data => resolve(getArray(data)))
-      .catch(sqlError => reject(sqlError))
-    );
+      .catch(sqlError => reject(sqlError));
+    });
   };
 
   this.loadFoldersFromFolder = function loadFoldersFromFolder(folderId) {
-    return new Promise((resolve, reject) =>
+    return new Promise((resolve, reject) => {
+      folderId = resolveSQLInjection(folderId);
       alasql.promise([stringManipulator.stringConcat('SELECT * FROM ', constants.ENTITIES_FOLDER,
                                                       ' WHERE ', constants.HEADER_FOLDER_PARENT_FOLDER_ID,
                                                       ' = ', folderId)])
       .then(data => resolve(getArray(data)))
-      .catch(sqlError => reject(sqlError))
-    );
+      .catch(sqlError => reject(sqlError));
+    });
   };
 
   this.loadFile = function loadFile(fileId) {
-    return new Promise((resolve, reject) =>
+    return new Promise((resolve, reject) => {
+      fileId = resolveSQLInjection(fileId);
       alasql.promise([stringManipulator.stringConcat('SELECT ', constants.HEADER_FILE_MANAGER_FILE_MARKDOWN,
                                                       ' FROM ', constants.ENTITIES_FILE_MANAGER,
                                                       ' WHERE ', constants.HEADER_FILE_MANAGER_FILE_ID,
                                                       ' = ', fileId)])
       .then(data => resolve(getDataOutOfAlasql(data)))
-      .catch(sqlError => reject(sqlError))
-    );
+      .catch(sqlError => reject(sqlError));
+    });
   };
 
   this.changeFileName = function changeFileName(fileId, newFileName) {
-    return new Promise((resolve, reject) =>
-      alasql.promise([stringManipulator.stringConcat('UPDATE ', constants.ENTITIES_FILE_MANAGER,
-                                                      ' SET ', constants.HEADER_FILE_MANAGER_FILE_NAME,
-                                                      ' = "', newFileName,
-                                                      '" WHERE ', constants.HEADER_FILE_MANAGER_FILE_ID,
-                                                      ' = ', fileId)])
+    return new Promise((resolve, reject) => {
+      const invalidCharacterIndex = newFileName.search(/"|\\/);
+      if (invalidCharacterIndex !== -1) {
+        reject(new exceptions.InvalidRename());
+        return false;
+      }
+      return alasql.promise([stringManipulator.stringConcat('UPDATE ', constants.ENTITIES_FILE_MANAGER,
+                                                            ' SET ', constants.HEADER_FILE_MANAGER_FILE_NAME,
+                                                            ' = "', newFileName,
+                                                            '" WHERE ', constants.HEADER_FILE_MANAGER_FILE_ID,
+                                                            ' = ', fileId)])
       .then(() => resolve())
-      .catch(sqlError => reject(sqlError))
-    );
+      .catch(sqlError => reject(sqlError));
+    });
   };
 
   this.changeFilePath = function changeFilePath(fileId, newPath) {
-    return new Promise((resolve, reject) =>
-    alasql.promise([stringManipulator.stringConcat('UPDATE ', constants.ENTITIES_FILE_MANAGER,
-                                                  ' SET ', constants.HEADER_FILE_MANAGER_PATH,
-                                                  ' = "', newPath,
-                                                  '" WHERE ', constants.HEADER_FILE_MANAGER_FILE_ID,
-                                                  ' = ', fileId)])
-    .then(() => resolve())
-    .catch(sqlError => reject(sqlError))
-      );
+    return new Promise((resolve, reject) => {
+      fileId = resolveSQLInjection(fileId);
+      newPath = resolveSQLInjection(newPath);
+      return alasql.promise([stringManipulator.stringConcat('UPDATE ', constants.ENTITIES_FILE_MANAGER,
+                                                            ' SET ', constants.HEADER_FILE_MANAGER_PATH,
+                                                            ' = "', newPath,
+                                                            '" WHERE ', constants.HEADER_FILE_MANAGER_FILE_ID,
+                                                            ' = ', fileId)])
+      .then(() => resolve())
+      .catch(sqlError => reject(sqlError));
+    });
   };
 
   this.changeFolderName = function changeFolderName(folderId, newFolderName) {
@@ -388,11 +428,17 @@ export default function sqlCommands() {
       let newFolderPath;
       let foldersToChangePath;
       let filesToChangePath;
+      const invalidCharacterIndex = newFolderName.search(/"|\\/);
+      if (invalidCharacterIndex !== -1) {
+        reject(new exceptions.InvalidRename());
+        return false;
+      }
       // step 1: get the folder path and folder name
       return getFolderPathAndNameFromId(folderId)
       .then((folderData) => {
         // step 2: get all the folders to have their path and name changed
-        prevFolderPath = getDataOutOfAlasql(folderData);
+        prevFolderPath = stringManipulator.getPreviousPath(getDataOutOfAlasql(folderData),
+          getSecondDataOutOfAlasql(folderData));
         const thisFolderName = getSecondDataOutOfAlasql(folderData);
         thisFolderPath = stringManipulator.stringConcat(prevFolderPath, thisFolderName, '/');
         newFolderPath = stringManipulator.stringConcat(prevFolderPath, newFolderName, '/');
@@ -433,34 +479,38 @@ export default function sqlCommands() {
   };
 
   this.saveFile = function saveFile(fileId, markdownFile) {
-    return new Promise((resolve, reject) =>
-      alasql.promise([stringManipulator.stringConcat('UPDATE ', constants.ENTITIES_FILE_MANAGER,
-                                                      ' SET ', constants.HEADER_FILE_MANAGER_FILE_MARKDOWN,
-                                                      ' = "', markdownFile,
-                                                      '" WHERE ', constants.HEADER_FILE_MANAGER_FILE_ID,
-                                                      ' = ', fileId)])
+    return new Promise((resolve, reject) => {
+      markdownFile = resolveSQLInjection(markdownFile);
+      let currentDateTime = 0;
+      return alasql.promise([stringManipulator.stringConcat('UPDATE ', constants.ENTITIES_FILE_MANAGER,
+                                                            ' SET ', constants.HEADER_FILE_MANAGER_FILE_MARKDOWN,
+                                                            ' = "', markdownFile,
+                                                            '" WHERE ', constants.HEADER_FILE_MANAGER_FILE_ID,
+                                                            ' = ', fileId)])
         .catch(sqlError => reject(sqlError))
       .then(() => {
-        const currentDateTime = dateTime.getCurrentDateTime();
+        currentDateTime = dateTime.getCurrentLongTime();
         return alasql.promise([stringManipulator.stringConcat('UPDATE ', constants.ENTITIES_FILE_MANAGER,
-                                                        ' SET ', constants.HEADER_FILE_MANAGER_LAST_MODIFIED_DATE,
-                                                        ' = "', currentDateTime,
-                                                        '" WHERE ', constants.HEADER_FILE_MANAGER_FILE_ID,
-                                                        ' = ', fileId)])
+                                                              ' SET ', constants.HEADER_FILE_MANAGER_LAST_MODIFIED_DATE,
+                                                              ' = "', currentDateTime,
+                                                              '" WHERE ', constants.HEADER_FILE_MANAGER_FILE_ID,
+                                                              ' = ', fileId)])
         .catch(sqlError => reject(sqlError));
       })
-      .then(() => resolve(true))
-      .catch(sqlErr => reject(sqlErr)));
+      .then(() => resolve(currentDateTime))
+      .catch(sqlErr => reject(sqlErr));
+    });
   };
 
   this.deleteFile = function deleteFile(fileId) {
-    return new Promise((resolve, reject) =>
-      alasql.promise([stringManipulator.stringConcat('DELETE FROM ', constants.ENTITIES_FILE_MANAGER,
-                                                      ' WHERE ', constants.HEADER_FILE_MANAGER_FILE_ID,
-                                                      ' = ', fileId)])
+    return new Promise((resolve, reject) => {
+      fileId = resolveSQLInjection(fileId);
+      return alasql.promise([stringManipulator.stringConcat('DELETE FROM ', constants.ENTITIES_FILE_MANAGER,
+                                                            ' WHERE ', constants.HEADER_FILE_MANAGER_FILE_ID,
+                                                            ' = ', fileId)])
       .then(() => resolve())
-      .catch(sqlError => reject(sqlError))
-    );
+      .catch(sqlError => reject(sqlError));
+    });
   };
 
   this.deleteFolder = function deleteFolder(folderId) {
@@ -468,13 +518,12 @@ export default function sqlCommands() {
       let thisFolderPath;
       let foldersToDelete;
       let filesToDelete;
+      folderId = resolveSQLInjection(folderId);
       // step 1: get the folder path and folder name
       return getFolderPathAndNameFromId(folderId)
       .then((folderData) => {
         // step 2: get all the folders to be deleted
         thisFolderPath = getDataOutOfAlasql(folderData);
-        const thisFolderName = getSecondDataOutOfAlasql(folderData);
-        thisFolderPath = stringManipulator.stringConcat(thisFolderPath, thisFolderName, '/');
         return getListOfFolderIdsWithSamePath(thisFolderPath)
         .then((folderIds) => {
           foldersToDelete = getArray(folderIds);
@@ -503,17 +552,13 @@ export default function sqlCommands() {
         .then(() => {})
         .catch(sqlErr => reject(sqlErr))
       )
+      .then(() =>
+        deleteSingleFolder(folderId)
+        .then(() => {})
+        .catch(sqlErr => reject(sqlErr))
+      )
       .then(() => resolve())
       .catch(sqlError => reject(sqlError));
     });
-  };
-
-  // external library not functioning so I cannot do anything here
-  this.deleteTable = function deleteTable(tableName) {
-    return new Promise((resolve, reject) =>
-      alasql.promise([stringManipulator.stringConcat('DROP TABLE IF EXISTS ', tableName)])
-      .then(isSuccess => resolve(isSuccess))
-      .catch(sqlError => reject(sqlError))
-    );
   };
 }
