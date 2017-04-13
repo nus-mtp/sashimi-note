@@ -301,9 +301,15 @@ export default {
   font-family: $font-primary;
   float: right;
   animation: viewTypeWidth $user-input-keyframe-time;
+  width: $view-type-buttons-width;
 
   .view-type {
-    width: $view-type-buttons-width;
+    width: 110px;
+    overflow: hidden;
+
+    button {
+      font-family: $font-primary;
+    }
   }
 
   a {
