@@ -58,7 +58,7 @@ export default {
         clearTimeout(this.clearIsClick);
       } else {
         this.isClickInProgress = true;
-        setTimeout(this.clearIsClick, 1500);
+        setTimeout(this.clearIsClick, 1000);
       }
     },
     onKeyPress(event) {
