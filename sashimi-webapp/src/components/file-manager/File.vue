@@ -56,12 +56,10 @@ export default {
       this.file.rename(newFileName);
     },
     onClick(event) {
-      if (this.onClickDetails.isClickInProgress) {
-        if (event.x === this.onClickDetails.x && event.y === this.onClickDetails.y) {
-          this.openFile();
-          this.clearIsClick();
-          clearTimeout(this.clearIsClick);
-        }
+      if (this.onClickDetails.isClickInProgress && event.x === this.onClickDetails.x && event.y === this.onClickDetails.y) {
+        this.openFile();
+        this.clearIsClick();
+        clearTimeout(this.clearIsClick);
       } else {
         this.onClickDetails.x = event.x;
         this.onClickDetails.y = event.y;
