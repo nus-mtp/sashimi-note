@@ -26,6 +26,11 @@ export default new Router({
       component: Content,
     },
     {
+      path: '/features',
+      name: 'Features',
+      component: Content,
+    },
+    {
       path: '*',
       redirect: '/'
     },
