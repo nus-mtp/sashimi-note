@@ -1,6 +1,6 @@
 <template>
   <div class="col vertical-align-child folder-wrapper" 
-    v-on:dblclick="openFolder"
+    v-on:click="onClick"
   >
     <button tabindex="1" class="folder"
             v-on:focus="focusFolder"
@@ -24,6 +24,12 @@
   export default {
     props: ['folder'],
     data() {
+      return {
+        isClickInProgress: false,
+        clearIsClick: () => {
+          this.isClickInProgress = false;
+        }
+      };
     },
     methods: {
       openFolder() {
@@ -42,6 +48,17 @@
         newFolderName = newFolderName.trim().replace(/&nbsp;/gi, '');
 
         this.folder.rename(newFolderName);
+      },
+      onClick() {
+        if (this.isClickInProgress) {
+          console.log('double');
+          this.openFolder();
+          this.clearIsClick();
+          clearTimeout(this.clearIsClick);
+        } else {
+          this.isClickInProgress = true;
+          setTimeout(this.clearIsClick, 1500);
+        }
       },
       onKeyPress(event) {
         const enterKey = 13;
