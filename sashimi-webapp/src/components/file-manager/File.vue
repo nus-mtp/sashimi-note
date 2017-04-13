@@ -25,7 +25,11 @@ export default {
   props: ['file'],
   data() {
     return {
-      isClickInProgress: false,
+      onClickDetails: {
+        x: '',
+        y: '',
+        isClickInProgress: false
+      },
       clearIsClick: () => {
         this.isClickInProgress = false;
       }
@@ -51,13 +55,17 @@ export default {
 
       this.file.rename(newFileName);
     },
-    onClick() {
-      if (this.isClickInProgress) {
-        this.openFile();
-        this.clearIsClick();
-        clearTimeout(this.clearIsClick);
+    onClick(event) {
+      if (this.onClickDetails.isClickInProgress) {
+        if (event.x === this.onClickDetails.x && event.y === this.onClickDetails.y) {
+          this.openFile();
+          this.clearIsClick();
+          clearTimeout(this.clearIsClick);
+        }
       } else {
-        this.isClickInProgress = true;
+        this.onClickDetails.x = event.x;
+        this.onClickDetails.y = event.y;
+        this.onClickDetails.isClickInProgress = true;
         setTimeout(this.clearIsClick, 1000);
       }
     },

@@ -25,7 +25,11 @@
     props: ['folder'],
     data() {
       return {
-        isClickInProgress: false,
+        onClickDetails: {
+          x: '',
+          y: '',
+          isClickInProgress: false
+        },
         clearIsClick: () => {
           this.isClickInProgress = false;
         }
@@ -49,13 +53,17 @@
 
         this.folder.rename(newFolderName);
       },
-      onClick() {
-        if (this.isClickInProgress) {
-          this.openFolder();
-          this.clearIsClick();
-          clearTimeout(this.clearIsClick);
+      onClick(event) {
+        if (this.onClickDetails.isClickInProgress) {
+          if (event.x === this.onClickDetails.x && event.y === this.onClickDetails.y) {
+            this.openFolder();
+            this.clearIsClick();
+            clearTimeout(this.clearIsClick);
+          }
         } else {
-          this.isClickInProgress = true;
+          this.onClickDetails.x = event.x;
+          this.onClickDetails.y = event.y;
+          this.onClickDetails.isClickInProgress = true;
           setTimeout(this.clearIsClick, 1000);
         }
       },
