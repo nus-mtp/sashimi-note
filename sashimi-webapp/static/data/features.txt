@@ -211,7 +211,7 @@ Like this,
 [id]: https://octodex.github.com/images/dojocat.jpg  "The Dojocat"
 
 ## Conditional Hiding
-You can even choose what content to hide from View! To do so simply, include this line on the first line of the editor `fileName:*insert condition here*`, then use the following syntax:
+You can even choose what content to hide from View! To do so simply, Go to **Manage** and under **File Format** type in the condition, then use the following syntax:
 
 ```
 For inline hiding from ALL conditions use:
@@ -223,7 +223,7 @@ Content here
 <==
 
 Note: Only condition specified by fileName above will hide the contents
-e.g. if fileName:Students, 
+e.g. if under File Forma, "Students" is written, 
 
 This hides
 
@@ -284,10 +284,19 @@ $$
 $$
 \Gamma(z) = \int_0^\infty t^{z-1}e^{-t}dt\,.
 $$
-
-
-
 > More information about **LaTeX** mathematical expressions [here](http://meta.math.stackexchange.com/questions/5020/mathjax-basic-tutorial-and-quick-reference).
+
+Even better, you can use ASCIIMath to write mathematical expressions too! Much simpler and intuitive, like how you would use it in chats, MS Word etc! Check this out!
+
+For Inline, `math sum_(i=1)^n i^3=((n(n+1))/2)^2`
+
+For Block, 
+```math
+1+1=2
+a^2 + b^2 = c^2
+P(A | B) = (P(B | A)P(A)) / P(B)
+varphi = int_0^10 x^2 dx
+```
 > Note: There are some mathematical expressions that KaTeX has yet to support. See [here](http://www.intmath.com/cg5/katex-mathjax-comparison.php)
 
 ## UML Diagrams
@@ -303,6 +312,7 @@ Bob-->Alice: I am good thanks!
 Note left of Alice: Alice responds
 Alice->Bob: Where have you been?
 ```
+> More information about **sequence diagrams** syntax [here](http://bramp.github.io/js-sequence-diagrams/).
 
 ### Flow Charts
 
@@ -318,6 +328,7 @@ st->op->op2->cond
 cond(yes)->e
 cond(no)->op2
 ```
+> More information about **flow charts** syntax [here](http://adrai.github.io/flowchart.js/).
 
 ### Graphviz
 ```graphviz
@@ -334,6 +345,7 @@ digraph hierarchy {
                 {rank=same;ITManager Teacher1 Teacher2}  // Put them on the same level
 }
 ```
+> More information about **graphviz** syntax [here](http://www.tonyballantyne.com/graphs.html)
 
 ### Mermaid
 ```mermaid
@@ -348,7 +360,4 @@ gantt
     anther task      : 24d
 ```
 
-> More information about **sequence diagrams** syntax [here](http://bramp.github.io/js-sequence-diagrams/).
-> More information about **flow charts** syntax [here](http://adrai.github.io/flowchart.js/).
-> More information about **graphviz** syntax [here](http://www.tonyballantyne.com/graphs.html)
 > More information about **mermaid** syntax [here](http://knsv.github.io/mermaid)
