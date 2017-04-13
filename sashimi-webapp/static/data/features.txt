@@ -223,7 +223,7 @@ Content here
 <==
 
 Note: Only condition specified by fileName above will hide the contents
-e.g. if under File Forma, "Students" is written, 
+e.g. if under File Format, "Students" is written, 
 
 This hides
 
