@@ -51,7 +51,6 @@
       },
       onClick() {
         if (this.isClickInProgress) {
-          console.log('double');
           this.openFolder();
           this.clearIsClick();
           clearTimeout(this.clearIsClick);
