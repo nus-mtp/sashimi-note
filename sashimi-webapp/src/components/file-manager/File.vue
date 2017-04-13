@@ -1,6 +1,6 @@
 <template>
   <div class="col vertical-align-child file-wrapper"
-    v-on:dblclick="openFile"
+    v-on:click="onClick"
   >
     <button class="file"
             v-on:focus="focusFile"
@@ -24,6 +24,12 @@
 export default {
   props: ['file'],
   data() {
+    return {
+      isClickInProgress: false,
+      clearIsClick: () => {
+        this.isClickInProgress = false;
+      }
+    };
   },
   watch: {
   },
@@ -44,6 +50,16 @@ export default {
       newFileName = newFileName.trim().replace(/&nbsp;/gi, '');
 
       this.file.rename(newFileName);
+    },
+    onClick() {
+      if (this.isClickInProgress) {
+        this.openFile();
+        this.clearIsClick();
+        clearTimeout(this.clearIsClick);
+      } else {
+        this.isClickInProgress = true;
+        setTimeout(this.clearIsClick, 1500);
+      }
     },
     onKeyPress(event) {
       const enterKey = 13;
