@@ -1,14 +1,14 @@
-<p>fileName:waha</p>
-<p>This is the question:<br>
+<p class="code-line" data-line-start="1" data-line-end="1">fileName:waha</p>
+<p class="code-line" data-line-start="3" data-line-end="4">This is the question:<br>
 What is the first app you make from all coding tutorials?</p>
-<p></p>
-<p>This is the second question:<br>
+<p class="code-line" data-line-start="6" data-line-end="6"></p>
+<p class="code-line" data-line-start="8" data-line-end="9">This is the second question:<br>
 What is 1+1?</p>
-<p>Ans:</p>
-<p>==&gt;hide<br>
+<p class="code-line" data-line-start="11" data-line-end="11">Ans:</p>
+<p class="code-line" data-line-start="29" data-line-end="30">==&gt;hide<br>
 This unclosed block and its hide syntax wont hide!</p>
-<p>==&gt;hide:waha<br>
+<p class="code-line" data-line-start="32" data-line-end="33">==&gt;hide:waha<br>
 This unclosed categorised block and its hide syntax wont hide too!</p>
-<p>This won’t hide, but its hide syntax will be removed!</p>
-<p>==&gt;hide<br>
+<p class="code-line" data-line-start="40" data-line-end="40">This won’t hide, but its hide syntax will be removed!</p>
+<p class="code-line" data-line-start="43" data-line-end="44">==&gt;hide<br>
 This unclosed block wont hide! the hide start syntax should stay too</p>
