@@ -268,7 +268,7 @@ describe('Renderer', () => {
   describe('Diagrams Renderer', () => {
     it('should handle empty data', (done) => {
       toRender = iframeDoc.getElementsByTagName('div')[0];
-      diagramsRenderer.render(toRender)
+      diagramsRenderer.process(toRender)
       .then((output) => {
         expect(toRender.innerHTML).to.equal('');
         done();
@@ -286,7 +286,7 @@ describe('Renderer', () => {
       invalidHtmlData.then((output) => {
         toRender.innerHTML = output;
         // Render any diagrams to be drawn
-        diagramsRenderer.render(toRender)
+        diagramsRenderer.process(toRender)
         .then((out) => {
           // Check if Expected output === Actual rendered output
           const diff = compareDom(invalidSyntaxOutput, toRender);
@@ -312,7 +312,7 @@ describe('Renderer', () => {
       seqHtmlData.then((output) => {
         toRender.innerHTML = output;
         // Render any diagrams to be drawn
-        diagramsRenderer.render(toRender)
+        diagramsRenderer.process(toRender)
         .then((out) => {
           // Check if Expected output === Actual rendered output
           const diff = compareDom(seqDiagramsOutput, toRender);
@@ -337,7 +337,7 @@ describe('Renderer', () => {
       flowHtmlData.then((output) => {
         toRender.innerHTML = output;
         // Render any diagrams to be drawn
-        diagramsRenderer.render(toRender)
+        diagramsRenderer.process(toRender)
         .then((out) => {
           // Check if Expected output === Actual rendered output
           const diff = compareDom(flowChartsOutput, toRender);
@@ -362,7 +362,7 @@ describe('Renderer', () => {
       vizHtmlData.then((output) => {
         // Render any diagrams to be drawn
         toRender.innerHTML = output;
-        diagramsRenderer.render(toRender)
+        diagramsRenderer.process(toRender)
         .then((out) => {
           // Check if Expected output === Actual rendered output
           const diff = compareDom(graphvizOutput, toRender);
@@ -387,7 +387,7 @@ describe('Renderer', () => {
       mermaidHtmlData.then((output) => {
         toRender.innerHTML = output;
         // Render any diagrams to be drawn
-        diagramsRenderer.render(toRender)
+        diagramsRenderer.process(toRender)
         .then((out) => {
           // Check if Expected output === Actual rendered output
           const diff = compareDom(mermaidOutput, toRender);
@@ -412,7 +412,7 @@ describe('Renderer', () => {
       fullHtmlData.then((output) => {
         toRender.innerHTML = output;
         // Render any diagrams to be drawn
-        diagramsRenderer.render(toRender)
+        diagramsRenderer.process(toRender)
         .then((out) => {
           // Check if Expected output === Actual rendered output
           const diff = compareDom(diagramsRenderedOutput, toRender);
