@@ -1,3 +1,4 @@
+import registerPromiseWorker from 'promise-worker/register';
 import markdownProcessor from './markdownProcessor';
 import xssFilter from './xssFilter';
 
@@ -6,6 +7,7 @@ import xssFilter from './xssFilter';
 
   * @param {string} markdown - can be mixed with html and css
   */
+  /*
 export default function worker(self) {
   self.addEventListener('message', (event) => {
     const markdownString = event.data;
@@ -14,3 +16,20 @@ export default function worker(self) {
     self.postMessage(data);
   });
 }
+*/
+
+/* eslint arrow-body-style: 0 */
+registerPromiseWorker((data) => {
+  const markdownString = data;
+  let processedData = markdownProcessor.process(markdownString);
+  processedData = xssFilter.filter(processedData);
+  return processedData;
+  /*
+  return Promise.resolve().then((rawData) => {
+    const markdownString = rawData;
+    let processedData = markdownProcessor.process(markdownString);
+    processedData = xssFilter.filter(processedData);
+    return processedData;
+  });
+  */
+});
