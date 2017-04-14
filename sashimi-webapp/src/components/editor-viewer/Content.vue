@@ -21,6 +21,7 @@
 <script>
 import _ from 'lodash';
 import fileManager from 'src/logic/filemanager';
+import featureData from 'src/../static/data/features.txt';
 import navbar from './Navbar';
 import viewer from './Viewer';
 import editor from './Editor';
@@ -69,7 +70,9 @@ export default {
       }
     },
     mdContent: _.debounce(function saveFile(value) {
-      this.file.save(value);
+      if (this.file) {
+        this.file.save(value);
+      }
     }, 1000),
   },
   method: {
@@ -79,17 +82,22 @@ export default {
   mounted() {
     contentVue = this;
 
-    // for testing purposes
-    // will be handled by fileManager logic
-    const fileID = parseInt(this.$route.query.id);
-    if (fileID && fileManager.getFileByID(fileID)) {
-      this.file = fileManager.getFileByID(fileID);
-      this.file.load()
-        .then((data) => {
-          this.mdContent = data;
-        });
+    if (this.$route.path === '/features') {
+      // Special case to handle feature document
+      this.mdContent = featureData;
     } else {
-      this.$router.push('/');
+      // for testing purposes
+      // will be handled by fileManager logic
+      const fileID = parseInt(this.$route.query.id);
+      if (fileID && fileManager.getFileByID(fileID)) {
+        this.file = fileManager.getFileByID(fileID);
+        this.file.load()
+          .then((data) => {
+            this.mdContent = data;
+          });
+      } else {
+        this.$router.push('/');
+      }
     }
 
     if (window.innerWidth < 768) {
