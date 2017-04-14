@@ -56,7 +56,7 @@ export default {
       this.file.rename(newFileName);
     },
     onClick(event) {
-      if (this.onClickDetails.isClickInProgress && event.x === this.onClickDetails.x && event.y === this.onClickDetails.y) {
+      if (this.dblClickCheck(event)) {
         this.openFile();
         this.clearIsClick();
         clearTimeout(this.clearIsClick);
@@ -66,6 +66,12 @@ export default {
         this.onClickDetails.isClickInProgress = true;
         setTimeout(this.clearIsClick, 1000);
       }
+    },
+    dblClickCheck(event) {
+      const threshold = 20;
+      return (this.onClickDetails.isClickInProgress &&
+              (Math.abs(event.x - this.onClickDetails.x) < threshold) &&
+              (Math.abs(event.y - this.onClickDetails.y) < threshold));
     },
     onKeyPress(event) {
       const enterKey = 13;
