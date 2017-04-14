@@ -111,8 +111,7 @@ export default {
     const rf = pageRenderer.referenceFrame;
     rf.innerHTML = pageRenderer.sourceHTML;
 
-    // Render UML diagrams first before rendering to page view
-    return diagramsRenderer(rf)
+    Promise.all(pageRenderer.postProcessPromiseFns)
     .then(() => {
       // Additional element styling
       const imgElements = rf.getElementsByTagName('IMG');

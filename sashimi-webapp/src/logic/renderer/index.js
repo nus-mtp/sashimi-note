@@ -12,8 +12,11 @@ import helper from './helper';
  * @param {string} page.width - in css width.
  * @param {string} page.height - in css height.
  * @param {Object} page.padding - for setting the inner the padding size used on the page.
+ * @param {Array} postProcessingFunctions - an array of promise function that should be executed
+ *                                          before the pagination process is executed.
+ *                                          All of the function will receive the referenceFrame.
  */
-export default function PageRenderer(renderDomTarget, page) {
+export default function PageRenderer(renderDomTarget, page, postProcessPromiseFns) {
   // Set page sizing. Use default if not provided
   this.page = page || defaultConfig.page;
   this.renderHeight = helper.computeRenderHeight(this.page);
@@ -28,6 +31,13 @@ export default function PageRenderer(renderDomTarget, page) {
 
   // Set reference frame
   this.referenceFrame = this.getReferenceFrame();
+  if (Array.isArray(postProcessPromiseFns) && postProcessPromiseFns.length > 0) {
+    this.postProcessPromiseFns = postProcessPromiseFns.map(promiseFn =>
+      promiseFn.bind(null, this.referenceFrame)
+    );
+  } else {
+    this.postProcessPromiseFns = [];
+  }
 
   // Set sourceHTML
   this.sourceHTML = null;

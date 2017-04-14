@@ -73,7 +73,9 @@
           return eleContainer;
         })
         .then((renderTarget) => {
-          this.pageRenderer = new PageRenderer(renderTarget, this.pageSize);
+          this.pageRenderer = new PageRenderer(renderTarget, this.pageSize, [
+            // diagramRenderer.render,
+          ]);
           return renderThrottleFn(this.htmlData, this.pageRenderer)
           .then(() => {
             // Initialise navigation for Slide mode
