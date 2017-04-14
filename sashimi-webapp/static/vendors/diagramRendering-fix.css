@@ -1,0 +1,6 @@
+pre.sequence > svg,
+pre.flow > svg,
+pre.graphviz > svg,
+pre.mermaid > svg {
+  width: 100%
+}
