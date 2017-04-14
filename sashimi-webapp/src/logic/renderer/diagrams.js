@@ -9,9 +9,9 @@
  */
 
 
-export default function DiagramsRenderer(ele) {
-  this.mermaid = null;
-  this.renderedData = this.render(ele);
+export default function DiagramsRenderer() {
+  this.mermaid = mermaidAPI;
+  this.mermaid.initialize({ startOnLoad: false });
 }
 
 // Helper function to clear HTML Element
@@ -21,7 +21,7 @@ function clearAll(element) {
   }
 }
 
-DiagramsRenderer.prototype.render = function render(ele) {
+DiagramsRenderer.prototype.process = function process(ele) {
   const observerConfig = { childList: true };
   // get all pre tags with class name = sequence
   const seqDiagrams = ele.querySelectorAll('pre.sequence');
@@ -94,10 +94,6 @@ DiagramsRenderer.prototype.render = function render(ele) {
   }
 
   // Draws all the mermaid diagrams found
-  if (mermaidDiagrams.length !== 0 && this.mermaid == null) {
-    this.mermaid = mermaidAPI;
-    this.mermaid.initialize({ startOnLoad: false });
-  }
   for (let i = 0; i < mermaidDiagrams.length; i+=1) {
     let content = mermaidDiagrams[i].innerHTML;
     content = content.replace(/&gt;/g, '>');
