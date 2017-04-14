@@ -1,5 +1,5 @@
 import domCompare from 'dom-compare';
-import diagramsRenderer from 'src/logic/renderer/diagrams';
+import DiagramsRenderer from 'src/logic/renderer/diagrams';
 import documentPackager from 'src/logic/documentPackager';
 import diagramsInput from './reference/diagrams/diagramsInput.txt';
 import diagramsRenderedOutput from './reference/diagrams/diagramsRenderedOutput.txt';
@@ -30,6 +30,9 @@ const textActual = new Map();
 const iframe = document.createElement('IFRAME');
 let iframeDoc;
 let toRender;
+
+// DiagramsRender Object
+let diagramsRenderer;
 
 /**
  * Helper function for checking for 'Expected text' Error (See case 4 in regex helper below)
@@ -259,12 +262,13 @@ describe('Renderer', () => {
     };
     // Initialise the above
     iframe.onload();
+    diagramsRenderer = new DiagramsRenderer(iframeDoc);
   });
 
   describe('Diagrams Renderer', () => {
     it('should handle empty data', (done) => {
       toRender = iframeDoc.getElementsByTagName('div')[0];
-      diagramsRenderer(toRender)
+      diagramsRenderer.render(toRender)
       .then((output) => {
         expect(toRender.innerHTML).to.equal('');
         done();
@@ -282,7 +286,7 @@ describe('Renderer', () => {
       invalidHtmlData.then((output) => {
         toRender.innerHTML = output;
         // Render any diagrams to be drawn
-        diagramsRenderer(toRender)
+        diagramsRenderer.render(toRender)
         .then((out) => {
           // Check if Expected output === Actual rendered output
           const diff = compareDom(invalidSyntaxOutput, toRender);
@@ -308,7 +312,7 @@ describe('Renderer', () => {
       seqHtmlData.then((output) => {
         toRender.innerHTML = output;
         // Render any diagrams to be drawn
-        diagramsRenderer(toRender)
+        diagramsRenderer.render(toRender)
         .then((out) => {
           // Check if Expected output === Actual rendered output
           const diff = compareDom(seqDiagramsOutput, toRender);
@@ -333,7 +337,7 @@ describe('Renderer', () => {
       flowHtmlData.then((output) => {
         toRender.innerHTML = output;
         // Render any diagrams to be drawn
-        diagramsRenderer(toRender)
+        diagramsRenderer.render(toRender)
         .then((out) => {
           // Check if Expected output === Actual rendered output
           const diff = compareDom(flowChartsOutput, toRender);
@@ -358,7 +362,7 @@ describe('Renderer', () => {
       vizHtmlData.then((output) => {
         // Render any diagrams to be drawn
         toRender.innerHTML = output;
-        diagramsRenderer(toRender)
+        diagramsRenderer.render(toRender)
         .then((out) => {
           // Check if Expected output === Actual rendered output
           const diff = compareDom(graphvizOutput, toRender);
@@ -383,7 +387,7 @@ describe('Renderer', () => {
       mermaidHtmlData.then((output) => {
         toRender.innerHTML = output;
         // Render any diagrams to be drawn
-        diagramsRenderer(toRender)
+        diagramsRenderer.render(toRender)
         .then((out) => {
           // Check if Expected output === Actual rendered output
           const diff = compareDom(mermaidOutput, toRender);
@@ -408,7 +412,7 @@ describe('Renderer', () => {
       fullHtmlData.then((output) => {
         toRender.innerHTML = output;
         // Render any diagrams to be drawn
-        diagramsRenderer(toRender)
+        diagramsRenderer.render(toRender)
         .then((out) => {
           // Check if Expected output === Actual rendered output
           const diff = compareDom(diagramsRenderedOutput, toRender);
