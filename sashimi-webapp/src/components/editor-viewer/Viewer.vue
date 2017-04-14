@@ -2,22 +2,21 @@
   <div class="viewer" v-bind:data-fileFormat='fileFormat'>
     <viewerPages 
       v-if="fileFormat === 'pages'"
-      v-bind:htmlData="htmlData"
+      v-bind:htmlData="getHtmlData"
     ></viewerPages>
     <viewerSlides 
       v-else-if="fileFormat === 'slides'"
-      v-bind:htmlData="htmlData"
+      v-bind:htmlData="getHtmlData"
     ></viewerSlides>
     <viewerHtml 
       v-else 
-      v-bind:htmlData="htmlData"
+      v-bind:htmlData="getHtmlData"
     ></viewerHtml>
   </div>
 </template>
 
 <script>
   import Vue from 'vue';
-  import _ from 'lodash';
   import AsyncComputed from 'vue-async-computed';
   import documentPackager from 'src/logic/documentPackager';
   import DocumentPrinter from 'src/logic/inputHandler/DocumentPrinter';
@@ -27,7 +26,6 @@
 
   Vue.use(AsyncComputed);
 
-  const convertThrottle = _.throttle((data) => { documentPackager.getHtmlData(data); }, 1000);
   let documentPrinter = null;
 
   export default {
@@ -36,25 +34,19 @@
       viewerSlides,
       viewerHtml,
     },
-    data() {
-      return {
-        htmlData: ''
-      };
-    },
     props: ['editorContent', 'fileFormat'],
+    asyncComputed: {
+      getHtmlData() {
+        return documentPackager.getHtmlData(this.editorContent);
+      }
+    },
     watch: {
-      editorContent(data) {
-        convertThrottle(data);
-      },
       fileFormat() {
         // Update event listener reference on fileFormat change
         documentPrinter.setDomBehaviour();
       }
     },
     mounted() {
-      documentPackager.init((event) => {
-        this.htmlData = event.data;
-      });
       Vue.nextTick(() => {
         documentPrinter = new DocumentPrinter(window, this, 'editorContent');
       });

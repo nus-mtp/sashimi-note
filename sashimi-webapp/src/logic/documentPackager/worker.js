@@ -33,3 +33,6 @@ registerPromiseWorker((data) => {
   });
   */
 });
+
+// to pacify webworkify-webpack
+export default function worker() {}
