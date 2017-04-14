@@ -14,7 +14,7 @@ import helper from './helper';
  * @param {Object} page.padding - for setting the inner the padding size used on the page.
  * @param {Array} postProcessingPlugins - an optional array of plugins that contain a `.process` function.
  *                                        These functions are to be executed on the referenceFrame.
- *                                        These functions will receive the referenceFrame object and 
+ *                                        These functions will receive the referenceFrame object and
  *                                        should return a promise when it is done.
  */
 export default function PageRenderer(renderDomTarget, page, postProcessPromiseFns) {
