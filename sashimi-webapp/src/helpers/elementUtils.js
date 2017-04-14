@@ -24,5 +24,63 @@ export default {
         return null;
       }
     }
+  },
+
+  getDocument(elementReference) {
+    return elementReference.ownerDocument;
+  },
+
+  getWindow(elementReference) {
+    if (elementReference.contentWindow) {
+      return elementReference.contentWindow;
+    }
+
+    const doc = this.getDocument(elementReference);
+    return doc.defaultView || doc.parentWindow;
+  },
+
+  scrollTo(destinationElement, duration = 200, easing = 'linear', callback) {
+    const easings = {
+      linear(t) {
+        return t;
+      }
+    };
+    const viewerDoc = this.getDocument(destinationElement);
+    const viewWindow = this.getWindow(destinationElement);
+
+    const start = viewWindow.pageYOffset;
+    const startTime = 'now' in viewWindow.performance ? performance.now() : new Date().getTime();
+
+    const documentHeight = Math.max(viewerDoc.body.scrollHeight, viewerDoc.body.offsetHeight, viewerDoc.documentElement.clientHeight, viewerDoc.documentElement.scrollHeight, viewerDoc.documentElement.offsetHeight);
+    const windowHeight = viewWindow.innerHeight || viewerDoc.documentElement.clientHeight || viewerDoc.getElementsByTagName('body')[0].clientHeight;
+    const destinationOffset = typeof destinationElement === 'number' ? destinationElement : destinationElement.offsetTop;
+    const destinationOffsetToScroll = Math.round(documentHeight - destinationOffset < windowHeight ? documentHeight - windowHeight : destinationOffset);
+
+    if ('requestAnimationFrame' in viewWindow === false) {
+      scrollTo(destinationOffsetToScroll);
+      // viewWindow.scroll(0, destinationOffsetToScroll);
+      if (callback) {
+        callback();
+      }
+      return;
+    }
+
+    function scroll() {
+      const now = 'now' in viewWindow.performance ? performance.now() : new Date().getTime();
+      const time = Math.min(1, ((now - startTime) / duration));
+      const timeFunction = easings[easing](time);
+      viewWindow.scroll(0, Math.ceil((timeFunction * (destinationOffsetToScroll - start)) + start));
+
+      if (viewWindow.pageYOffset === destinationOffsetToScroll) {
+        if (callback) {
+          callback();
+        }
+        return;
+      }
+
+      requestAnimationFrame(scroll);
+    }
+
+    scroll();
   }
 };
