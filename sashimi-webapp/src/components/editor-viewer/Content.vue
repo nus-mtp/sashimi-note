@@ -5,12 +5,16 @@
       <div class="col editor-wrapper">
         <editor 
           v-model="mdContent"
+          :scrollPosition="scrollPosition"
+          v-on:updateScrollPosition="updateScrollPosition"
         ></editor>
       </div>
       <div class="col viewer-wrapper">
         <viewer 
-          :editor-content="mdContent" 
-          :file-format="fileFormat" 
+          :editor-content="mdContent"
+          :file-format="fileFormat"
+          :scrollPosition="scrollPosition"
+          v-on:updateScrollPosition="updateScrollPosition"
           >
         </viewer>
       </div>
@@ -41,7 +45,8 @@ export default {
       file: null,
       viewMode: 'split',
       navbarInput: this.viewMode,
-      changeViewModeOnResize: function() {
+      scrollPosition: 1,
+      changeViewModeOnResize() {
         if (window.innerWidth < 768 && this.viewMode === 'split') {
           this.viewMode = 'editor';
           this.navbarInput = 'editor';
@@ -75,7 +80,11 @@ export default {
       }
     }, 1000),
   },
-  method: {
+  methods: {
+    updateScrollPosition(position) {
+      this.scrollPosition = position;
+      console.log('changing position to ', this.scrollPosition);
+    }
   },
   computed: {
   },

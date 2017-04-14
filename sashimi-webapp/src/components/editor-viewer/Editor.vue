@@ -18,11 +18,12 @@ export default {
   components: {
     codemirror
   },
-  props: ['value'],
+  props: ['value', 'scrollPosition'],
   data() {
     return {
       isBeingLoaded: true,
       mdContent: this.value,
+      localScrollPosition: 1,
       editorOptions: {
         tabSize: 4,
         mode: 'text/x-markdown',
@@ -50,10 +51,21 @@ export default {
         codeMirrorInstance.setCursor(data.length);
         this.isBeingLoaded = false;
       }
+    },
+    scrollPosition(position) {
+      if (this.localScrollPosition !== position) {
+        codeMirrorInstance.scrollIntoView({ line: position, ch: 0 });
+      }
     }
   },
   mounted() {
     codeMirrorInstance = this.$refs.myEditor.editor;
+    codeMirrorInstance.on('scroll', (cmInstance) => {
+      const cmScrollTop = cmInstance.getScrollInfo().top;
+      const newLinePosition = cmInstance.lineAtHeight(cmScrollTop, 'local') + 2;
+      this.localScrollPosition = newLinePosition;
+      this.$emit('updateScrollPosition', newLinePosition);
+    });
   }
 };
 
