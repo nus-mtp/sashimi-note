@@ -9,7 +9,7 @@
 import xssFilter from 'xss';
 
 // some standard attributes that will be allowed
-const allowedAttr = ['id', 'class', 'style'];
+const allowedAttr = ['id', 'class', 'style', 'data-line-start', 'data-line-end'];
 
 // get a copy of default whiteList
 const whiteList = xssFilter.getDefaultWhiteList();
