@@ -32,7 +32,6 @@ export default function PageRenderer(renderDomTarget, page, postProcessPromiseFn
   // Set reference frame
   this.referenceFrame = this.getReferenceFrame();
   this.postProcessPromiseFns = postProcessPromiseFns || [];
-  console.log(this.postProcessPromiseFns);
 
   // Set sourceHTML
   this.sourceHTML = null;

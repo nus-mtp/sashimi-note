@@ -54,7 +54,7 @@
           this.renderDoc = this.$el.contentWindow.document;
           this.renderDoc.body.innerHTML = this.htmlData;
           this.diagramsRenderer = new DiagramsRenderer();
-          this.diagramsRenderer.render(this.renderDoc.body);
+          this.diagramsRenderer.process(this.renderDoc.body);
         });
       });
     }
