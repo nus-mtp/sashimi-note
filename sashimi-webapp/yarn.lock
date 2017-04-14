@@ -3053,6 +3053,10 @@ ignore@^3.2.0:
   version "3.2.4"
   resolved "https://registry.yarnpkg.com/ignore/-/ignore-3.2.4.tgz#4055e03596729a8fabe45a43c100ad5ed815c4e8"
 
+immediate@~3.0.5:
+  version "3.0.6"
+  resolved "https://registry.yarnpkg.com/immediate/-/immediate-3.0.6.tgz#9db1dbd0faf8de6fbe0f5dd5e56bb606280de69b"
+
 imurmurhash@^0.1.4:
   version "0.1.4"
   resolved "https://registry.yarnpkg.com/imurmurhash/-/imurmurhash-0.1.4.tgz#9218b9b2b928a238b13dc4fb6b6d576f231453ea"
@@ -3271,6 +3275,10 @@ is-posix-bracket@^0.1.0:
 is-primitive@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/is-primitive/-/is-primitive-2.0.0.tgz#207bab91638499c07b2adf240a41a87210034575"
+
+is-promise@^2.1.0:
+  version "2.1.0"
+  resolved "https://registry.yarnpkg.com/is-promise/-/is-promise-2.1.0.tgz#79a2a9ece7f096e80f36d2b2f3bc16c1ff4bf3fa"
 
 is-property@^1.0.0:
   version "1.0.2"
@@ -3615,6 +3623,12 @@ levn@^0.3.0, levn@~0.3.0:
   dependencies:
     prelude-ls "~1.1.2"
     type-check "~0.3.2"
+
+lie@^3.0.2:
+  version "3.1.1"
+  resolved "https://registry.yarnpkg.com/lie/-/lie-3.1.1.tgz#9a436b2cc7746ca59de7a41fa469b3efb76bd87e"
+  dependencies:
+    immediate "~3.0.5"
 
 linkify-it@^2.0.0:
   version "2.0.3"
@@ -4913,6 +4927,13 @@ process@^0.11.0, process@~0.11.0:
 progress@^1.1.8, progress@~1.1.8:
   version "1.1.8"
   resolved "https://registry.yarnpkg.com/progress/-/progress-1.1.8.tgz#e260c78f6161cdd9b0e56cc3e0a85de17c7a57be"
+
+promise-worker@^1.1.1:
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/promise-worker/-/promise-worker-1.1.1.tgz#c2b75d045d249625c02264e2dff9ad22e031c69b"
+  dependencies:
+    is-promise "^2.1.0"
+    lie "^3.0.2"
 
 proto-list@~1.2.1:
   version "1.2.4"
@@ -6294,6 +6315,10 @@ webpack@^2.2.1:
     watchpack "^1.2.0"
     webpack-sources "^0.1.4"
     yargs "^6.0.0"
+
+webworkify-webpack@^2.0.4:
+  version "2.0.4"
+  resolved "https://registry.yarnpkg.com/webworkify-webpack/-/webworkify-webpack-2.0.4.tgz#39a12fb5f04b041121f4d78c60f550c440f18789"
 
 whet.extend@~0.9.9:
   version "0.9.9"
