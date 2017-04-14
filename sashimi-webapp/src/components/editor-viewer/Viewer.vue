@@ -2,15 +2,21 @@
   <div class="viewer" v-bind:data-fileFormat='fileFormat'>
     <viewerPages 
       v-if="fileFormat === 'pages'"
-      v-bind:htmlData="getHtmlData"
+      :htmlData="getHtmlData"
+      :scrollPosition="scrollPosition"
+      v-on:updatescrollPosition="updatescrollPosition"
     ></viewerPages>
     <viewerSlides 
       v-else-if="fileFormat === 'slides'"
-      v-bind:htmlData="getHtmlData"
+      :htmlData="getHtmlData"
+      :scrollPosition="scrollPosition"
+      v-on:updatescrollPosition="updatescrollPosition"
     ></viewerSlides>
     <viewerHtml 
       v-else 
-      v-bind:htmlData="getHtmlData"
+      :htmlData="getHtmlData"
+      :scrollPosition="scrollPosition"
+      v-on:updatescrollPosition="updatescrollPosition"
     ></viewerHtml>
   </div>
 </template>
@@ -34,7 +40,7 @@
       viewerSlides,
       viewerHtml,
     },
-    props: ['editorContent', 'fileFormat'],
+    props: ['editorContent', 'fileFormat', 'scrollPosition'],
     asyncComputed: {
       getHtmlData() {
         return documentPackager.getHtmlData(this.editorContent);
@@ -44,6 +50,11 @@
       fileFormat() {
         // Update event listener reference on fileFormat change
         documentPrinter.setDomBehaviour();
+      }
+    },
+    methods: {
+      updatescrollPosition(newLinePosition) {
+        this.$emit('updatescrollPosition', newLinePosition);
       }
     },
     mounted() {
