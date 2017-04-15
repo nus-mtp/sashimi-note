@@ -62,7 +62,7 @@ export default {
     codeMirrorInstance = this.$refs.myEditor.editor;
     codeMirrorInstance.on('scroll', (cmInstance) => {
       const cmScrollTop = cmInstance.getScrollInfo().top;
-      const newLinePosition = cmInstance.lineAtHeight(cmScrollTop, 'local') + 2;
+      const newLinePosition = cmInstance.lineAtHeight(cmScrollTop, 'local') + 1;
       this.localScrollPosition = newLinePosition;
       this.$emit('updateScrollPosition', newLinePosition);
     });
