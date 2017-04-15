@@ -58,7 +58,6 @@
           this.renderDoc = this.$el.contentWindow.document;
           renderUpdate(this.renderDoc.body, this.htmlData);
           scrollSync.vueHelper.setDomBehaviour.call(this, 'scrollPosition', this.renderDoc);
-          console.log(this);
         });
       });
     }
