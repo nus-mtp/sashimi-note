@@ -53,6 +53,7 @@ export default Object.freeze({
   DEFAULT_ORGANIZATION_ID: '0',
   DEFAULT_FOLDER_ID: '0',
   DEFAULT_FILE_ID: '1',
+  DEFAULT_FEATURE_FILE_PATH: 'src/database/create/defaultFeatureFile.md',
   DEFAULT_FOLDER_NAME: 'newFolder',
   DEFAULT_ROOT_FOLDER_NAME: 'root',
   DEFAULT_FILE_NAME: 'newFile',
@@ -61,7 +62,7 @@ export default Object.freeze({
   ORGANIZATION_TYPE_USER: '1',
 
 
-  PERMISSION_CREATOR: '1',
+  PERMISSION_CREATOR: 1,
 
 
   STRING_UNDEFINED: 'undefined',
