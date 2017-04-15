@@ -13,6 +13,7 @@
   import PageRenderer from 'src/logic/renderer';
   import DocumentNavigator from 'src/logic/inputHandler/DocumentNavigator';
   import documentBuilder from 'src/helpers/documentBuilder';
+  import scrollSync from 'src/logic/inputHandler/scrollSync';
 
   // Throttle function used to limit the rate which
   // the render function is called
@@ -20,7 +21,7 @@
   const renderThrottleFn = _.throttle((htmlData, pr) => pr.write(htmlData), throttleTime);
 
   export default {
-    props: ['htmlData'],
+    props: ['htmlData', 'scrollPosition'],
     data() {
       return {
         pageRenderer: null,
@@ -76,6 +77,7 @@
             // Initialise navigation for Pages mode
             const resizeObserveTarget = this.$el.parentNode.parentNode;
             this.documentNavigator = new DocumentNavigator(renderTarget, resizeObserveTarget, this.$el);
+            scrollSync.vueHelper.setDomBehaviour.call(this, 'scrollPosition', renderTarget);
           });
         });
       });
