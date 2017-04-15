@@ -32,6 +32,7 @@ export default {
       },
       clearIsClick: () => {
         this.isClickInProgress = false;
+        this.focusFile();
       }
     };
   },
@@ -56,6 +57,7 @@ export default {
       this.file.rename(newFileName);
     },
     onClick(event) {
+      event.preventDefault();
       if (this.dblClickCheck(event)) {
         this.openFile();
         this.clearIsClick();
