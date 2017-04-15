@@ -44,8 +44,8 @@
         let codeLineElement = null;
         for (let i = 0; i < codeLines.length; i += 1) {
           codeLineElement = codeLines[i];
-          lineStart = codeLineElement.dataset.lineStart;
-          lineEnd = codeLineElement.dataset.lineEnd;
+          lineStart = parseInt(codeLineElement.dataset.lineStart, 10);
+          lineEnd = parseInt(codeLineElement.dataset.lineEnd, 10);
           if (lineStart <= position && position <= lineEnd) {
             elementUtils.scrollTo(codeLineElement, 500);
             console.log(codeLineElement, lineStart, lineEnd);
