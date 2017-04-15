@@ -303,18 +303,16 @@ describe('sqlCommands', () => {
       let secondArray;
 
       before((doneBefore) => {
-        const createTableString = 'c(a NUMBER, b STRING, c DATE)';
+        const createTableString = 'c(a NUMBER, b STRING)';
         sqlCommands.createTable(createTableString)
         .then(() => { // insert data
           alasqlArray.initializeAlasqlArray();
           alasqlArray.addKeyBasePair('a', 123);
           alasqlArray.addKeyBasePair('b', 'hello string here');
-          alasqlArray.addKeyBasePair('c', '2017.03.07 15:52:33');
           firstArray = alasqlArray.endAlasqlArray();
           alasqlArray.initializeAlasqlArray();
           alasqlArray.addKeyBasePair('a', 321);
           alasqlArray.addKeyBasePair('b', 'creating table');
-          alasqlArray.addKeyBasePair('c', '1999.12.11 01:22:00');
           secondArray = alasqlArray.endAlasqlArray();
           return sqlCommands.insertContent('c', firstArray)
           .then(() =>
@@ -331,7 +329,6 @@ describe('sqlCommands', () => {
         sqlCommands.getFullTableData('c')
         .then((data) => {
           expect(data).to.deep.equal([firstArray[0], secondArray[0]]);
-          expect(data).to.not.deep.equal([secondArray[0], firstArray[0]]);
           return '';
         })
         .then(() => {
