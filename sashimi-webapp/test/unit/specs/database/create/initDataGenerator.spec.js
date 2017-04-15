@@ -1,4 +1,8 @@
 import initDataGenerator from 'src/database/create/initDataGenerator';
+import defaultFeatureFile from 'src/../static/data/features.txt';
+import StringManipulator from 'src/database/stringManipulation';
+
+const stringManipulator = new StringManipulator();
 
 describe('initDataGenerator', () => {
   describe('generate correct default data', () => {
@@ -33,12 +37,13 @@ describe('initDataGenerator', () => {
     it('should create default fileManager data', (done) => {
       const userData = initDataGenerator.getInitDataFileManager();
       const creationDate = userData[0].creation_date; // can't be determined
+      userData[0].file_markdown = stringManipulator.revertSQLInjections(userData[0].file_markdown);
       expect(userData).to.deep.equal([{
         organization_id: 1,
         folder_id: 0,
         file_id: 1,
-        file_name: 'newFile',
-        file_markdown: '',
+        file_name: 'Features',
+        file_markdown: defaultFeatureFile,
         permission_index: 1,
         creation_date: creationDate,
         last_modified_date: creationDate,
