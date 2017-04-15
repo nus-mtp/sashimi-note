@@ -4,19 +4,19 @@
       v-if="fileFormat === 'pages'"
       :htmlData="getHtmlData"
       :scrollPosition="scrollPosition"
-      v-on:updatescrollPosition="updatescrollPosition"
+      v-on:updateScrollPosition="updateScrollPosition"
     ></viewerPages>
     <viewerSlides 
       v-else-if="fileFormat === 'slides'"
       :htmlData="getHtmlData"
       :scrollPosition="scrollPosition"
-      v-on:updatescrollPosition="updatescrollPosition"
+      v-on:updateScrollPosition="updateScrollPosition"
     ></viewerSlides>
     <viewerHtml 
       v-else 
       :htmlData="getHtmlData"
       :scrollPosition="scrollPosition"
-      v-on:updatescrollPosition="updatescrollPosition"
+      v-on:updateScrollPosition="updateScrollPosition"
     ></viewerHtml>
   </div>
 </template>
@@ -53,8 +53,8 @@
       }
     },
     methods: {
-      updatescrollPosition(newLinePosition) {
-        this.$emit('updatescrollPosition', newLinePosition);
+      updateScrollPosition(newLinePosition) {
+        this.$emit('updateScrollPosition', newLinePosition);
       }
     },
     mounted() {
