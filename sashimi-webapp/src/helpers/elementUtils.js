@@ -79,12 +79,13 @@ export default {
     const windowHeight = viewWindow.innerHeight ||
                          viewerDoc.documentElement.clientHeight ||
                          viewerDoc.getElementsByTagName('body')[0].clientHeight;
-    const destinationOffset = typeof destination === 'number' ? destination : destination.offsetTop;
+    const destinationOffset = typeof destination === 'number'
+                              ? destination
+                              : destination.getBoundingClientRect().top - viewerDoc.body.getBoundingClientRect().top;
     const destinationOffsetToScroll = Math.round((documentHeight - destinationOffset) < windowHeight
                                                   ? documentHeight - windowHeight
                                                   : destinationOffset
                                                 );
-
     // If requestAnimationFrame is not supported
     // Move window to destination position and trigger callback function
     if ('requestAnimationFrame' in viewWindow === false) {
@@ -95,6 +96,7 @@ export default {
 
     // function resolves position of a window and moves to exact amount of pixels
     // Resolved by calculating delta and timing function choosen by user
+    const errorThreshold = 40;
     function scroll() {
       const now = 'now' in viewWindow.performance ? performance.now() : new Date().getTime();
       const time = Math.min(1, ((now - startTime) / duration));
@@ -103,7 +105,8 @@ export default {
 
       // Stop requesting animation when window reached its destination
       // And run a callback function
-      if (viewWindow.pageYOffset === destinationOffsetToScroll) {
+      const scrollResult = Math.round(Math.abs(viewerDoc.body.getBoundingClientRect().top));
+      if (Math.abs(scrollResult - destinationOffsetToScroll) < errorThreshold) {
         if (callback) { callback(); }
         return;
       }
