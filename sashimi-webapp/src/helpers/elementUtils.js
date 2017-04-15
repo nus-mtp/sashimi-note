@@ -42,20 +42,10 @@ export default {
   /**
    * @param {(number|HTMLElement)} destination - Destination to scroll to (DOM element or number)
    * @param {number} duration - Duration of scrolling animation
-   * @param {string} easing - Timing function name (Allowed values: 'linear')
    * @param {function} callback - Optional callback invoked after animation
    * @author Pawel Grzybek
    */
-  scrollTo(destination, duration = 200, easing = 'linear', callback) {
-    // Predefine list of available timing functions
-    // If you need more, tween js is full of great examples
-    // https://github.com/tweenjs/tween.js/blob/master/src/Tween.js#L421-L737
-    const easings = {
-      linear(t) {
-        return t;
-      },
-    };
-
+  scrollTo(destination, duration = 200, callback) {
     // Handle case where this code is used in an iframe element
     let viewerDoc = this.getDocument(destination);
     let viewWindow = this.getWindow(destination);
@@ -100,7 +90,7 @@ export default {
     function scroll() {
       const now = 'now' in viewWindow.performance ? performance.now() : new Date().getTime();
       const time = Math.min(1, ((now - startTime) / duration));
-      const timeFunction = easings[easing](time);
+      const timeFunction = time;
       viewWindow.scroll(0, Math.ceil((timeFunction * (destinationOffsetToScroll - start)) + start));
 
       // Stop requesting animation when window reached its destination
