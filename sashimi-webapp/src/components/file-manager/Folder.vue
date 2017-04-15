@@ -32,6 +32,7 @@
         },
         clearIsClick: () => {
           this.isClickInProgress = false;
+          this.focusFolder();
         }
       };
     },
