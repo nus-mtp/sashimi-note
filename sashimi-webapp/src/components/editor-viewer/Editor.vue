@@ -10,6 +10,7 @@
 
 <script>
 import { codemirror } from 'vue-codemirror';
+import elementUtils from 'src/helpers/elementUtils';
 import 'codemirror/keymap/sublime';
 
 let codeMirrorInstance = null;
@@ -80,9 +81,8 @@ export default {
         this.userScrollListeners.forEach(clearTimeout);
 
         // Retrieve scroll information for setting height
-        const destinationOffSetHeight = codeMirrorInstance.heightAtLine(position) - 82;
-        const destinationPosition = destinationOffSetHeight + codeMirrorInstance.getScrollInfo().top;
-        codeMirrorInstance.scrollTo(0, destinationPosition);
+        const destinationPosition = codeMirrorInstance.heightAtLine(position - 1, 'local');
+        codeMirrorInstance.scrollTo(null, destinationPosition);
 
         // listener for scroll position from
         this.userScrollListeners.push(setTimeout(this.enableUserScrollListener, 1000));
