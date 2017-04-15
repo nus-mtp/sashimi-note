@@ -36,7 +36,18 @@ export default {
         gutters: ['CodeMirror-linenumbers', 'CodeMirror-foldgutter'],
         styleSelectedText: true,
         highlightSelectionMatches: { showToken: /\w/, annotateScrollbar: true },
-      }
+      },
+      isBeingScrolled: false,
+      scrollCheck: (cmInstance) => {
+        const cmScrollTop = cmInstance.getScrollInfo().top;
+        const newLinePosition = cmInstance.lineAtHeight(cmScrollTop, 'local') + 1;
+        this.localScrollPosition = newLinePosition;
+        if (!this.isBeingScrolled) {
+          this.$emit('updateViewerScrollPosition', newLinePosition);
+        }
+      },
+      enableScrollListener: () => { this.isBeingScrolled = false; },
+      disableScrollListener: () => { this.isBeingScrolled = true; }
     };
   },
   methods: {
@@ -54,18 +65,16 @@ export default {
     },
     scrollPosition(position) {
       if (this.localScrollPosition !== position) {
+        this.disableScrollListener();
         codeMirrorInstance.scrollIntoView({ line: position, ch: 0 });
+        clearTimeout(this.enableScrollListener);
+        setTimeout(this.enableScrollListener, 500);
       }
     }
   },
   mounted() {
     codeMirrorInstance = this.$refs.myEditor.editor;
-    codeMirrorInstance.on('scroll', (cmInstance) => {
-      const cmScrollTop = cmInstance.getScrollInfo().top;
-      const newLinePosition = cmInstance.lineAtHeight(cmScrollTop, 'local') + 1;
-      this.localScrollPosition = newLinePosition;
-      this.$emit('updateScrollPosition', newLinePosition);
-    });
+    codeMirrorInstance.on('scroll', this.scrollCheck);
   }
 };
 

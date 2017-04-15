@@ -31,7 +31,18 @@
     data() {
       return {
         renderDoc: null,
-        localScrollPosition: null
+        localScrollPosition: null,
+        updateScrollPosition: _.throttle((positionToUpdate) => {
+          this.localScrollPosition = positionToUpdate;
+          this.$emit('updateEditorScrollPosition', positionToUpdate);
+        }, 100),
+        isBeingScrolled: false,
+        checkScroll: (event) => {
+          const newLinePosition = scrollSync.getScrollPositionByDocument(this.renderDoc);
+          if (newLinePosition != null && !this.isBeingScrolled) {
+            this.updateScrollPosition(newLinePosition);
+          }
+        }
       };
     },
     watch: {
@@ -45,7 +56,10 @@
         if (Math.abs(this.localScrollPosition - position) < 2) return;
         const elementToScroll = scrollSync.getElementInScrollPosition(position, this.$el.contentWindow.document);
         if (elementToScroll) {
-          elementUtils.scrollTo(elementToScroll, 400);
+          this.isBeingScrolled = true;
+          elementUtils.scrollTo(elementToScroll, 400, () => {
+            this.isBeingScrolled = false;
+          });
         }
       }
     },
@@ -69,21 +83,7 @@
           this.renderDoc = this.$el.contentWindow.document;
           renderUpdate(this.renderDoc.body, this.htmlData);
 
-          const updateScrollPosition = _.debounce((positionToUpdate) => {
-            this.localScrollPosition = positionToUpdate;
-            this.$emit('updateScrollPosition', positionToUpdate);
-          }, 500);
-
-
-          const checkScroll = (event) => {
-            const newLinePosition = scrollSync.getScrollPositionByDocument(this.renderDoc);
-            console.log(newLinePosition);
-            if (newLinePosition != null) {
-              updateScrollPosition(newLinePosition);
-            }
-          };
-
-          this.$el.contentWindow.addEventListener('scroll', checkScroll);
+          this.$el.contentWindow.addEventListener('scroll', this.checkScroll);
         });
       });
     }
