@@ -27,10 +27,18 @@ export default {
   },
 
   getDocument(elementReference) {
-    return elementReference.ownerDocument;
+    if (elementReference.ownerDocument) {
+      return elementReference.ownerDocument;
+    } else if (elementReference.toString() === '[object HTMLDocument]') {
+      return elementReference;
+    } else if (elementReference.toString() === '[object Window]') {
+      return elementReference.document;
+    }
+    return null;
   },
 
   getWindow(elementReference) {
+    // Handle special case for iframe element
     if (elementReference.contentWindow) {
       return elementReference.contentWindow;
     }
