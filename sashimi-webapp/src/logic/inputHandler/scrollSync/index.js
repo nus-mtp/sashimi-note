@@ -37,11 +37,10 @@ function isElementWithinScrollPosition(scrollPosition) {
 function searchElement(scrollDocument = document) {
   const x = scrollDocument.defaultView.innerWidth/2;
   const yLimit = scrollDocument.defaultView.innerHeight * 0.25; // Search only the top 25% of the window
-  const interval = 10;
 
-  for (let i = 0; i < interval; i += 1) {
+  for (let i = 0; i < yLimit; i += 1) {
     const searchX = x;
-    const searchY = (yLimit / interval);
+    const searchY = i;
 
     const theElement = scrollDocument.elementFromPoint(searchX, searchY);
 
