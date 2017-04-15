@@ -293,6 +293,13 @@ export default {
 .navbar-buttons {
   margin: 0 2px;
   height: 32px;
+  padding-left: 3px;
+  padding-right: 3px;
+
+  @media screen and (min-width: 480px) {
+    padding-left: 6px;
+    padding-right: 6px;
+  }
 }
 
 .view-type-wrapper {
