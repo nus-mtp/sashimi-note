@@ -12,6 +12,7 @@
   import diagramsRenderer from 'src/logic/renderer/diagrams';
   import documentBuilder from 'src/helpers/documentBuilder';
   import elementUtils from 'src/helpers/elementUtils';
+  import scrollSync from 'src/logic/inputHandler/scrollSync';
 
   /**
    * Diagram rendering function for HTML view
@@ -38,19 +39,9 @@
         }
       },
       scrollPosition(position) {
-        const codeLines = this.$el.contentWindow.document.getElementsByClassName('code-line');
-        let lineStart;
-        let lineEnd;
-        let codeLineElement = null;
-        for (let i = 0; i < codeLines.length; i += 1) {
-          codeLineElement = codeLines[i];
-          lineStart = parseInt(codeLineElement.dataset.lineStart, 10);
-          lineEnd = parseInt(codeLineElement.dataset.lineEnd, 10);
-          if (lineStart <= position && position <= lineEnd) {
-            elementUtils.scrollTo(codeLineElement, 500);
-            console.log(codeLineElement, lineStart, lineEnd);
-            break;
-          }
+        const elementToScroll = scrollSync.getElementInScrollPosition(position, this.$el.contentWindow.document);
+        if (elementToScroll) {
+          elementUtils.scrollTo(elementToScroll, 500);
         }
       }
     },
