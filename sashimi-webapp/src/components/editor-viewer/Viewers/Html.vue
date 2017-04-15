@@ -9,10 +9,8 @@
 
 <script>
   import Vue from 'vue';
-  import _ from 'lodash';
   import diagramsRenderer from 'src/logic/renderer/diagrams';
   import documentBuilder from 'src/helpers/documentBuilder';
-  import elementUtils from 'src/helpers/elementUtils';
   import scrollSync from 'src/logic/inputHandler/scrollSync';
 
   /**
@@ -30,15 +28,7 @@
     props: ['htmlData', 'scrollPosition'],
     data() {
       return {
-        renderDoc: null,
-        broadcastNewScrollPosition: (event) => {
-          const newLinePosition = scrollSync.getScrollPositionByDocument(this.renderDoc);
-          if (newLinePosition != null) { this.$emit('updateEditorScrollPosition', newLinePosition); }
-        },
-        updateScrollPosition: (position) => {
-          const elementToScroll = scrollSync.getElementInScrollPosition(position, this.$el.contentWindow.document);
-          if (elementToScroll) { elementUtils.scrollTo(elementToScroll, 400); }
-        }
+        renderDoc: null
       };
     },
     watch: {
@@ -46,8 +36,7 @@
         if (this.renderDoc) {
           renderUpdate(this.renderDoc.body, data);
         }
-      },
-      scrollPosition(position) { this.updateScrollPosition(position); }
+      }
     },
     mounted() {
       Vue.nextTick(() => {
@@ -68,8 +57,8 @@
         .then(() => {
           this.renderDoc = this.$el.contentWindow.document;
           renderUpdate(this.renderDoc.body, this.htmlData);
-
-          this.$el.contentWindow.addEventListener('scroll', this.broadcastNewScrollPosition);
+          scrollSync.vueHelper.setDomBehaviour.call(this, 'scrollPosition', this.renderDoc);
+          console.log(this);
         });
       });
     }

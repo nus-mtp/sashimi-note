@@ -1,4 +1,5 @@
 import domUtils from 'src/helpers/domUtils';
+import elementUtils from 'src/helpers/elementUtils';
 
 const targetClassName = 'code-line';
 /**
@@ -61,7 +62,7 @@ function searchElement(scrollDocument = document) {
   return null;
 }
 
-export default {
+const scrollSync = {
   getElementInScrollPosition(scrollPosition, scrollDocument = document) {
     return getCodeLines(scrollDocument).find(isElementWithinScrollPosition(scrollPosition));
   },
@@ -69,6 +70,28 @@ export default {
   getScrollPositionByDocument(scrollDocument = document) {
     const element = searchElement(scrollDocument);
     return (element) ? getLines(element).lineStart : null;
+  },
+
+  vueHelper: {
+    broadcastNewScrollPosition: function broadcastNewScrollPosition(event) {
+      const newLinePosition = scrollSync.getScrollPositionByDocument(this.renderDoc);
+      if (newLinePosition != null) { this.$emit('updateEditorScrollPosition', newLinePosition); }
+    },
+    updateScrollPosition: function updateScrollPosition(position) {
+      const elementToScroll = scrollSync.getElementInScrollPosition(position, this.$el.contentWindow.document);
+      if (elementToScroll) { elementUtils.scrollTo(elementToScroll, 400); }
+    },
+    setDomBehaviour: function setDomBehaviour(scrollPositionWatcher, scrollDoc = document) {
+      const scrollWindow = elementUtils.getWindow(scrollDoc);
+      scrollWindow.addEventListener('scroll', scrollSync.vueHelper.broadcastNewScrollPosition.bind(this));
+      this.$watch(scrollPositionWatcher, scrollSync.vueHelper.updateScrollPosition.bind(this));
+    },
+    unsetDomBehaviour: function unsetDomBehaviour(scrollPositionWatcher, scrollDoc = document) {
+      const scrollWindow = elementUtils.getWindow(scrollDoc);
+      scrollWindow.removeEventListener('scroll', scrollSync.vueHelper.broadcastNewScrollPosition);
+      this.$watch(scrollPositionWatcher, null);
+    }
   }
 };
 
+export default scrollSync;
