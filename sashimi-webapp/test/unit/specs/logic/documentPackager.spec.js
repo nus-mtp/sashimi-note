@@ -43,7 +43,7 @@ describe('Document Packager', () => {
     it('should handle plaintext data', (done) => {
       documentPackager.getHtmlData('test')
       .then((output) => {
-        expect(output).to.equal('<p>test</p>\n');
+        expect(output).to.equal('<p class="code-line" data-line-start="1" data-line-end="1">test</p>\n');
         done();
       })
       .catch((error) => {
@@ -54,7 +54,9 @@ describe('Document Packager', () => {
     it('should handle markdown data', (done) => {
       documentPackager.getHtmlData('# Hello World!')
       .then((output) => {
-        expect(output).to.equal('<h1 id="hello-world">Hello World!</h1>\n');
+        expect(output).to.equal(
+          '<h1 id="hello-world" class="code-line" data-line-start="1" data-line-end="1">Hello World!</h1>\n'
+        );
         done();
       })
       .catch((error) => {
@@ -75,7 +77,6 @@ describe('Document Packager', () => {
     it('should handle mathematical formula typed in LaTeX', (done) => {
       documentPackager.getHtmlData(katexInput).then((output) => {
         const base64Output = base64(output);
-
         expect(base64Output).to.equal(katexOutput);
         done();
       })
@@ -87,7 +88,6 @@ describe('Document Packager', () => {
     it('should handle inline ASCIIMath syntax', (done) => {
       documentPackager.getHtmlData('`math sum_(i=1)^n i^3=((n(n+1))/2)^2`').then((output) => {
         const base64Output = base64(output);
-
         expect(base64Output).to.equal(asciiMathInlineOutput);
         done();
       })
@@ -99,7 +99,6 @@ describe('Document Packager', () => {
     it('should handle block ASCIIMath syntax', (done) => {
       documentPackager.getHtmlData(asciiMathBlockInput).then((output) => {
         const base64Output = base64(output);
-
         expect(base64Output).to.equal(asciiMathBlockOutput);
         done();
       })
@@ -111,7 +110,6 @@ describe('Document Packager', () => {
     it('should handle code syntax highlighting', (done) => {
       documentPackager.getHtmlData(highlightjsInput).then((output) => {
         const base64Output = base64(output);
-
         expect(base64Output).to.equal(highlightjsOutput);
         done();
       })
@@ -143,7 +141,6 @@ describe('Document Packager', () => {
     it('should handle generation of diagram pre tags for drawing diagrams', (done) => {
       documentPackager.getHtmlData(diagramsInput).then((output) => {
         const base64Output = base64(output);
-
         expect(base64Output).to.equal(diagramsBase64Output);
         done();
       })

@@ -11,14 +11,14 @@ describe('Test for MarkdownProcessor', () => {
     const testAltH1 = myMod.process('Alt-H1!\n======');
     const testAltH2 = myMod.process('Alt-H2!\n------');
 
-    expect(testH1).to.equal('<h1 id="hello-world">Hello World!</h1>\n');
-    expect(testH2).to.equal('<h2 id="h2">H2!</h2>\n');
-    expect(testH3).to.equal('<h3 id="h3">H3!</h3>\n');
-    expect(testH4).to.equal('<h4 id="h4">H4!</h4>\n');
-    expect(testH5).to.equal('<h5 id="h5">H5!</h5>\n');
-    expect(testH6).to.equal('<h6 id="h6">H6!</h6>\n');
-    expect(testAltH1).to.equal('<h1 id="alt-h1">Alt-H1!</h1>\n');
-    expect(testAltH2).to.equal('<h2 id="alt-h2">Alt-H2!</h2>\n');
+    expect(testH1).to.equal('<h1 id="hello-world" class="code-line" data-line-start="1" data-line-end="1">Hello World!</h1>\n');
+    expect(testH2).to.equal('<h2 id="h2" class="code-line" data-line-start="1" data-line-end="1">H2!</h2>\n');
+    expect(testH3).to.equal('<h3 id="h3" class="code-line" data-line-start="1" data-line-end="1">H3!</h3>\n');
+    expect(testH4).to.equal('<h4 id="h4" class="code-line" data-line-start="1" data-line-end="1">H4!</h4>\n');
+    expect(testH5).to.equal('<h5 id="h5" class="code-line" data-line-start="1" data-line-end="1">H5!</h5>\n');
+    expect(testH6).to.equal('<h6 id="h6" class="code-line" data-line-start="1" data-line-end="1">H6!</h6>\n');
+    expect(testAltH1).to.equal('<h1 id="alt-h1" class="code-line" data-line-start="1" data-line-end="2">Alt-H1!</h1>\n');
+    expect(testAltH2).to.equal('<h2 id="alt-h2" class="code-line" data-line-start="1" data-line-end="2">Alt-H2!</h2>\n');
   });
   it('should render correct typhographical Emphasis', () => {
     const testEm1 = myMod.process('Emphasis, aka italics, with *asterisks*'
@@ -30,15 +30,19 @@ describe('Test for MarkdownProcessor', () => {
     const testEm4 = myMod.process('Strikethrough uses two tildes.'
                                   + ' ~~Scratch this.~~');
 
-    expect(testEm1).to.equal('<p>Emphasis, aka italics, with '
+    expect(testEm1).to.equal('<p class="code-line" data-line-start="1" data-line-end="1">'
+                            + 'Emphasis, aka italics, with '
                             + '<em>asterisks</em> or <em>underscores</em>'
                             + '.</p>\n');
-    expect(testEm2).to.equal('<p>Strong emphasis, aka bold, with '
+    expect(testEm2).to.equal('<p class="code-line" data-line-start="1" data-line-end="1">'
+                            + 'Strong emphasis, aka bold, with '
                             + '<strong>asterisks</strong> or '
                             + '<strong>underscores</strong>.</p>\n');
-    expect(testEm3).to.equal('<p>Combined emphasis with <strong>asterisks'
+    expect(testEm3).to.equal('<p class="code-line" data-line-start="1" data-line-end="1">'
+                            + 'Combined emphasis with <strong>asterisks'
                             + ' and <em>underscores</em></strong>.</p>\n');
-    expect(testEm4).to.equal('<p>Strikethrough uses two tildes.'
+    expect(testEm4).to.equal('<p class="code-line" data-line-start="1" data-line-end="1">'
+                            + 'Strikethrough uses two tildes.'
                             + ' <s>Scratch this.</s></p>\n');
   });
   it('should render correct HTML format for Lists', () => {
