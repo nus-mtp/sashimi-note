@@ -23,7 +23,6 @@ export default {
     return {
       isBeingLoaded: true,
       mdContent: this.value,
-      localScrollPosition: 1,
       editorOptions: {
         tabSize: 4,
         mode: 'text/x-markdown',
@@ -37,17 +36,57 @@ export default {
         styleSelectedText: true,
         highlightSelectionMatches: { showToken: /\w/, annotateScrollbar: true },
       },
-      isBeingScrolled: false,
-      scrollCheck: (cmInstance) => {
+      // Scroll related functions
+      localScrollPosition: 1,
+      canUserScroll: true,
+      canOtherScroll: true,
+      enableUserScrollListener: () => { this.canUserScroll = true; },
+      disableUserScrollListener: () => { this.canUserScroll = false; },
+      userScrollListeners: [],
+      enableOtherScrolledListener: () => { this.canOtherScroll = true; },
+      disableOtherScrolledListener: () => { this.canOtherScroll = false; },
+      otherScrollListeners: [],
+      /**
+       * This function is called user is scrolling the component
+       */
+      broadcastNewScrollPosition: (cmInstance) => {
+        // If it is being scrolled by other component,
+        // no need to broadcast scroll position again
+        if (!this.canUserScroll) return;
+
+        // Prevent programatic updating by own component
+        this.disableOtherScrolledListener();
+        this.userScrollListeners.forEach(clearTimeout);
+
+        // Retrieve scroll information for emitting
         const cmScrollTop = cmInstance.getScrollInfo().top;
         const newLinePosition = cmInstance.lineAtHeight(cmScrollTop, 'local') + 1;
-        this.localScrollPosition = newLinePosition;
-        if (!this.isBeingScrolled) {
-          this.$emit('updateViewerScrollPosition', newLinePosition);
-        }
+        this.$emit('updateViewerScrollPosition', newLinePosition);
+
+        // Welcome programatic updating by own component again after a while
+        this.userScrollListeners.push(setTimeout(this.enableOtherScrolledListener, 1000));
       },
-      enableScrollListener: () => { this.isBeingScrolled = false; },
-      disableScrollListener: () => { this.isBeingScrolled = true; }
+      /**
+       * This function is called when the component receive scroll update signal
+       * from other component
+       */
+      updateScrollPosition: (position) => {
+        // If user is scrolling this component, disable scroll manipulation
+        if (!this.canOtherScroll) return;
+        if (this.localScrollPosition === position) return;
+
+        // Prevent scroll position listener from manually adjusting the scroll height again
+        this.disableUserScrollListener();
+        this.userScrollListeners.forEach(clearTimeout);
+
+        // Retrieve scroll information for setting height
+        const destinationOffSetHeight = codeMirrorInstance.heightAtLine(position) - 82;
+        const destinationPosition = destinationOffSetHeight + codeMirrorInstance.getScrollInfo().top;
+        codeMirrorInstance.scrollTo(0, destinationPosition);
+
+        // listener for scroll position from
+        this.userScrollListeners.push(setTimeout(this.enableUserScrollListener, 1000));
+      }
     };
   },
   methods: {
@@ -64,17 +103,12 @@ export default {
       }
     },
     scrollPosition(position) {
-      if (this.localScrollPosition !== position) {
-        this.disableScrollListener();
-        codeMirrorInstance.scrollIntoView({ line: position, ch: 0 });
-        clearTimeout(this.enableScrollListener);
-        setTimeout(this.enableScrollListener, 500);
-      }
+      this.updateScrollPosition(position);
     }
   },
   mounted() {
     codeMirrorInstance = this.$refs.myEditor.editor;
-    codeMirrorInstance.on('scroll', this.scrollCheck);
+    codeMirrorInstance.on('scroll', this.broadcastNewScrollPosition);
   }
 };
 
