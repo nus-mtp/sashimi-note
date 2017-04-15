@@ -21,6 +21,7 @@ import mdAsciiMath from './markdown-it-asciimath';
 import mdDiagrams from './markdown-it-diagram';
 // Custom conditional plugin
 import mdConditional from './conditionalProcessor';
+import mdLineNumber from './plugins/markdown-it-line-number';
 
 
 const md = new MarkdownIt({
@@ -54,6 +55,8 @@ md.use(mdDiagrams);
 md.use(mdAsciiMath);
 // For custom conditional plugin
 md.use(mdConditional.hideShowPlugin);
+// For injecting line number into the html content
+md.use(mdLineNumber);
 
 const validateData = function validateData(data) {
   return data || '';
