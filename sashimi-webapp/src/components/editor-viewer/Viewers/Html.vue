@@ -31,17 +31,13 @@
     data() {
       return {
         renderDoc: null,
-        localScrollPosition: null,
-        updateScrollPosition: _.throttle((positionToUpdate) => {
-          this.localScrollPosition = positionToUpdate;
-          this.$emit('updateEditorScrollPosition', positionToUpdate);
-        }, 100),
-        isBeingScrolled: false,
-        checkScroll: (event) => {
+        broadcastNewScrollPosition: (event) => {
           const newLinePosition = scrollSync.getScrollPositionByDocument(this.renderDoc);
-          if (newLinePosition != null && !this.isBeingScrolled) {
-            this.updateScrollPosition(newLinePosition);
-          }
+          if (newLinePosition != null) { this.$emit('updateEditorScrollPosition', newLinePosition); }
+        },
+        updateScrollPosition: (position) => {
+          const elementToScroll = scrollSync.getElementInScrollPosition(position, this.$el.contentWindow.document);
+          if (elementToScroll) { elementUtils.scrollTo(elementToScroll, 400); }
         }
       };
     },
@@ -51,16 +47,7 @@
           renderUpdate(this.renderDoc.body, data);
         }
       },
-      scrollPosition(position) {
-        if (Math.abs(this.localScrollPosition - position) < 2) return;
-        const elementToScroll = scrollSync.getElementInScrollPosition(position, this.$el.contentWindow.document);
-        if (elementToScroll) {
-          this.isBeingScrolled = true;
-          elementUtils.scrollTo(elementToScroll, 400, () => {
-            this.isBeingScrolled = false;
-          });
-        }
-      }
+      scrollPosition(position) { this.updateScrollPosition(position); }
     },
     mounted() {
       Vue.nextTick(() => {
@@ -82,7 +69,7 @@
           this.renderDoc = this.$el.contentWindow.document;
           renderUpdate(this.renderDoc.body, this.htmlData);
 
-          this.$el.contentWindow.addEventListener('scroll', this.checkScroll);
+          this.$el.contentWindow.addEventListener('scroll', this.broadcastNewScrollPosition);
         });
       });
     }
