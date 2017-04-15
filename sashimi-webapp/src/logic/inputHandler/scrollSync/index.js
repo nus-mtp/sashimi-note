@@ -1,3 +1,5 @@
+import domUtils from 'src/helpers/domUtils';
+
 const targetClassName = 'code-line';
 /**
  * Return an array of code lines element found inside a document object
@@ -12,16 +14,62 @@ function getCodeLines(scrollDocument = document) {
   return codeLinesArray;
 }
 
-function isElementWithinScrollPosition(scrollPosition) {
-  return (element) => {
-    const lineStart = parseInt(element.dataset.lineStart, 10);
-    const lineEnd = parseInt(element.dataset.lineEnd, 10);
-    return (lineStart <= scrollPosition && scrollPosition <= lineEnd);
+function getLines(element) {
+  return {
+    lineStart: parseInt(element.dataset.lineStart, 10),
+    lineEnd: parseInt(element.dataset.lineEnd, 10)
   };
+}
+
+function isWithinLines(lineInfo, scrollPosition) {
+  return (lineInfo.lineStart <= scrollPosition && scrollPosition <= lineInfo.lineEnd);
+}
+
+/**
+ * Return a function for checking if an elemnet is within the specified scrollPosition
+ * @param {number} scrollPosition
+ * @return {function}
+ */
+function isElementWithinScrollPosition(scrollPosition) {
+  return element => isWithinLines(getLines(element), scrollPosition);
+}
+
+function searchElement(scrollDocument = document) {
+  const x = scrollDocument.defaultView.innerWidth/2;
+  const yLimit = scrollDocument.defaultView.innerHeight * 0.25; // Search only the top 25% of the window
+  const interval = 10;
+
+  for (let i = 0; i < interval; i += 1) {
+    const searchX = x;
+    const searchY = (yLimit / interval);
+
+    const theElement = scrollDocument.elementFromPoint(searchX, searchY);
+
+    if (theElement) {
+      const endNode = scrollDocument.body;
+
+      let searchNode = theElement;
+      let foundNode = null;
+      do {
+        if (domUtils.hasClass(searchNode, targetClassName)) {
+          foundNode = searchNode;
+          return foundNode;
+        }
+        searchNode = searchNode.parentNode;
+      } while (searchNode !== endNode && searchNode != null);
+    }
+  }
+  return null;
 }
 
 export default {
   getElementInScrollPosition(scrollPosition, scrollDocument = document) {
     return getCodeLines(scrollDocument).find(isElementWithinScrollPosition(scrollPosition));
   },
+
+  getScrollPositionByDocument(scrollDocument = document) {
+    const element = searchElement(scrollDocument);
+    return (element) ? getLines(element).lineStart : null;
+  }
 };
+
