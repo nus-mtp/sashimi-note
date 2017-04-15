@@ -45,6 +45,7 @@ export default function sqlArray() {
     // case 2: return multiple objects
     } else if (isAlasqlArrayInitialized && sqlArrayOfObjects.length > 0) {
       isAlasqlArrayInitialized = constants.CONST_ALASQL_CREATION_CLOSED;
+      sqlArrayOfObjects.push(sqlObject);
       return sqlArrayOfObjects;
     } else {
       // return empty alasql array of array of object
