@@ -10,7 +10,6 @@
 
 <script>
 import { codemirror } from 'vue-codemirror';
-import elementUtils from 'src/helpers/elementUtils';
 import 'codemirror/keymap/sublime';
 
 let codeMirrorInstance = null;
@@ -109,6 +108,7 @@ export default {
   mounted() {
     codeMirrorInstance = this.$refs.myEditor.editor;
     codeMirrorInstance.on('scroll', this.broadcastNewScrollPosition);
+    console.log(codeMirrorInstance)
   }
 };
 
