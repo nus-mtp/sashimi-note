@@ -7,6 +7,7 @@
 import constants from 'src/database/constants';
 
 let sqlObject = {};
+const sqlArrayOfObjects = [];
 let isAlasqlArrayInitialized = constants.CONST_ALASQL_CREATION_CLOSED;
 
 function endOfCreateAlasqlStringForAlasql() {
@@ -21,6 +22,14 @@ export default function sqlArray() {
     }
   };
 
+  this.initializeNextAlasqlArray = function initializeNextAlasqlArray() {
+    if (isAlasqlArrayInitialized) {
+      sqlArrayOfObjects.push(sqlObject);
+      isAlasqlArrayInitialized = constants.CONST_ALASQL_CREATION_CLOSED;
+      this.initializeAlasqlArray();
+    }
+  };
+
   this.addKeyBasePair = function addKeyBasePair(key, value) {
     if (isAlasqlArrayInitialized) {
       sqlObject[key] = value;
@@ -28,10 +37,15 @@ export default function sqlArray() {
   };
 
   this.endAlasqlArray = function endAlasqlArray() {
-    if (isAlasqlArrayInitialized) {
+    // case 1: only 1 object to return
+    if (isAlasqlArrayInitialized && sqlArrayOfObjects.length === 0) {
       isAlasqlArrayInitialized = constants.CONST_ALASQL_CREATION_CLOSED;
       const returnSqlArrayObject = endOfCreateAlasqlStringForAlasql();
       return returnSqlArrayObject;
+    // case 2: return multiple objects
+    } else if (isAlasqlArrayInitialized && sqlArrayOfObjects.length > 0) {
+      isAlasqlArrayInitialized = constants.CONST_ALASQL_CREATION_CLOSED;
+      return sqlArrayOfObjects;
     } else {
       // return empty alasql array of array of object
       return [{}];
