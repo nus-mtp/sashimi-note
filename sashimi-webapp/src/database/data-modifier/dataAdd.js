@@ -80,15 +80,10 @@ export default class dataAdd {
       sqlCommands.getMaxFileId()
         .then((maxId) => {
           const newFileId = maxId + 1;
-          // search all possible identical fileNames
-          return sqlCommands.exactSearchStartFileNameInFolder(filePath)
-          .then((queryFiles) => {
-            const newFileName = constants.DEFAULT_FILE_NAME;
-            return createNewFile(organizationId, filePath, folderId, newFileId, newFileName)
-            .then(data => resolve(data))
-            .catch(err => reject(err));
-          })
-          .catch(sqlErr => reject(sqlErr));
+          const newFileName = constants.DEFAULT_FILE_NAME;
+          return createNewFile(organizationId, filePath, folderId, newFileId, newFileName)
+          .then(data => resolve(data))
+          .catch(err => reject(err));
         }).catch(sqlError => reject(sqlError))
     );
   }
