@@ -108,7 +108,6 @@ export default {
   mounted() {
     codeMirrorInstance = this.$refs.myEditor.editor;
     codeMirrorInstance.on('scroll', this.broadcastNewScrollPosition);
-    console.log(codeMirrorInstance)
   }
 };
 
