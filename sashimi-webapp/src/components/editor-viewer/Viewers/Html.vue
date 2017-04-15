@@ -52,7 +52,6 @@
         }
       },
       scrollPosition(position) {
-        console.log(this.localScrollPosition, position);
         if (Math.abs(this.localScrollPosition - position) < 2) return;
         const elementToScroll = scrollSync.getElementInScrollPosition(position, this.$el.contentWindow.document);
         if (elementToScroll) {
