@@ -73,16 +73,18 @@ const scrollSync = {
   },
 
   vueHelper: {
+    scrollDoc: null,
     broadcastNewScrollPosition: function broadcastNewScrollPosition(event) {
-      const newLinePosition = scrollSync.getScrollPositionByDocument(this.renderDoc);
+      const newLinePosition = scrollSync.getScrollPositionByDocument(scrollSync.vueHelper.scrollDoc);
       if (newLinePosition != null) { this.$emit('updateEditorScrollPosition', newLinePosition); }
     },
     updateScrollPosition: function updateScrollPosition(position) {
-      const elementToScroll = scrollSync.getElementInScrollPosition(position, this.$el.contentWindow.document);
+      const elementToScroll = scrollSync.getElementInScrollPosition(position, scrollSync.vueHelper.scrollDoc);
       if (elementToScroll) { elementUtils.scrollTo(elementToScroll, 400); }
     },
     setDomBehaviour: function setDomBehaviour(scrollPositionWatcher, scrollDoc = document) {
       const scrollWindow = elementUtils.getWindow(scrollDoc);
+      scrollSync.vueHelper.scrollDoc = elementUtils.getDocument(scrollDoc);
       scrollWindow.addEventListener('scroll', scrollSync.vueHelper.broadcastNewScrollPosition.bind(this));
       this.$watch(scrollPositionWatcher, scrollSync.vueHelper.updateScrollPosition.bind(this));
     },
@@ -90,6 +92,7 @@ const scrollSync = {
       const scrollWindow = elementUtils.getWindow(scrollDoc);
       scrollWindow.removeEventListener('scroll', scrollSync.vueHelper.broadcastNewScrollPosition);
       this.$watch(scrollPositionWatcher, null);
+      scrollSync.vueHelper.scrollDoc = null;
     }
   }
 };
