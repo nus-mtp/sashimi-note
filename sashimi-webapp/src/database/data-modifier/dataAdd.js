@@ -11,7 +11,7 @@ const stringManipulator = new StringManipulation();
 
 function createNewFile(organizationId, filePath, folderId, newFileId, newFileName) {
   return new Promise((resolve, reject) => {
-    const currentDateTime = dateTime.getCurrentDateTime();
+    const currentDateTime = dateTime.getCurrentLongTime();
 
     const fileOrganizationId = organizationId;
     const fileFolderId = folderId;
@@ -43,7 +43,7 @@ function createNewFile(organizationId, filePath, folderId, newFileId, newFileNam
 
 function createNewFolder(organizationId, folderPath, currentFolderId, newFolderId, newFolderName) {
   return new Promise((resolve, reject) => {
-    const currentDateTime = dateTime.getCurrentDateTime();
+    const currentDateTime = dateTime.getCurrentLongTime();
 
     const folderId = newFolderId;
     const folderParentFolderId = currentFolderId;
@@ -100,8 +100,11 @@ export default class dataAdd {
         const newFileId = maxId + 1;
         return sqlCommands.retrieveFullFile(fileId)
         .then((files) => {
+          const currentDateTime = dateTime.getCurrentLongTime();
           files[0].file_id = newFileId;
           files[0].file_name = stringManipulator.stringConcat('copy of ', files[0].file_name);
+          files[0].last_modified_date = currentDateTime;
+          files[0].creation_date = currentDateTime;
           return files;
         })
         .then(duplicatedFile =>
@@ -122,16 +125,11 @@ export default class dataAdd {
       sqlCommands.getMaxFolderId()
       .then((maxId) => {
         const newFolderId = maxId + 1;
-        // search all possible identical folderNames
-        return sqlCommands.exactSearchStartFolderNameInFolder(folderId)
-        .then((queryFiles) => {
-          const newFolderName = constants.DEFAULT_FOLDER_NAME;
-          const newFolderPath = stringManipulator.stringConcat(folderPath, newFolderName, '/');
-          return createNewFolder(organizationId, newFolderPath, folderId, newFolderId, newFolderName)
-          .then(data => resolve(data))
-          .catch(err => reject(err));
-        })
-        .catch(sqlErr => reject(sqlErr));
+        const newFolderName = constants.DEFAULT_FOLDER_NAME;
+        const newFolderPath = stringManipulator.stringConcat(folderPath, newFolderName, '/');
+        return createNewFolder(organizationId, newFolderPath, folderId, newFolderId, newFolderName)
+        .then(data => resolve(data))
+        .catch(err => reject(err));
       }).catch(sqlError => reject(sqlError))
     );
   }
