@@ -422,6 +422,8 @@ describe('Renderer', () => {
           const diff = compareDom(diagramsRenderedOutput, toRender);
           const errorArray = regexHelper(diff, diagramsRenderedOutput, toRender);
           errorArray.forEach((errorLine) => {
+            /* eslint no-console: 0 */
+            // console.log to be shown on travis for debugging purposes
             console.log(errorLine);
           });
           expect(errorArray.length).to.equal(0);

@@ -22,6 +22,8 @@
   const throttleTime = 600;
   const renderThrottleFn = _.throttle((htmlData, pr) => pr.write(htmlData), throttleTime);
 
+  /* eslint no-unused-vars: 0 */
+  // Use to cache the instance of slidesNavigator
   let slidesNavigator = null;
 
   export default {
