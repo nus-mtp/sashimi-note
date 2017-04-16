@@ -155,6 +155,9 @@ function regexHelper(diff, exp, act) {
           } else if ((arr1[3].indexOf('arrowhead') !== -1
               && arr1[4].indexOf('arrowhead') !== -1)) {
                 // Ignore, not an actual error.
+          } else if ((arr1[3].indexOf('actor') !== -1
+              && arr1[4].indexOf('actor') !== -1)) {
+                // Ignore, not an actual error.
           } else {
             errorArray.push(line);
           }
