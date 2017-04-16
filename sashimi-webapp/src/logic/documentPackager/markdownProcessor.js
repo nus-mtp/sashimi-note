@@ -15,12 +15,13 @@ import mdKatex from 'markdown-it-katex';
 // Table of Contents plugins
 import mdAnchor from 'markdown-it-anchor';
 import mdTOC from 'markdown-it-table-of-contents';
+// Customised/DIY plugins
 // ASCIIMath Plugin
-import mdAsciiMath from './markdown-it-asciimath';
+import mdAsciiMath from './plugins/markdown-it-asciimath';
 // Custom Fence Block Rule for textual Diagram representation
-import mdDiagrams from './markdown-it-diagram';
+import mdDiagrams from './plugins/markdown-it-diagram';
 // Custom conditional plugin
-import mdConditional from './conditionalProcessor';
+import mdConditional from './plugins/conditionalProcessor';
 import mdLineNumber from './plugins/markdown-it-line-number';
 
 
