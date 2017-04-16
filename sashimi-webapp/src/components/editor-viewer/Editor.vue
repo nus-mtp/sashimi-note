@@ -47,7 +47,7 @@ export default {
       disableOtherScrolledListener: () => { this.canOtherScroll = false; },
       otherScrollListeners: [],
       /**
-       * This function is called user is scrolling the component
+       * This function is called when user is scrolling the component
        */
       broadcastNewScrollPosition: (cmInstance) => {
         // If it is being scrolled by other component,
