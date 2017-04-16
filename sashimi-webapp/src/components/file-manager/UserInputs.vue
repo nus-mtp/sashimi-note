@@ -120,7 +120,6 @@
 
 <script>
 import _ from 'lodash';
-import router from 'src/router';
 import eventHub from './EventHub';
 
 let userInputsVue = null;

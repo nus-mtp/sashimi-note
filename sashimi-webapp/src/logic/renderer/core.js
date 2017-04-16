@@ -1,4 +1,3 @@
-import DiagramsRenderer from './diagrams';
 import VirtualBook from './VirtualBook';
 import helper from './helper';
 

@@ -1,5 +1,8 @@
 import myMod from 'src/logic/documentPackager/markdownProcessor';
 
+/* eslint max-len: 0 */
+// Remove all warning about max-len in this test file
+
 describe('Test for MarkdownProcessor', () => {
   it('should produce correct HTML format for Headers', () => {
     const testH1 = myMod.process('# Hello World!');
