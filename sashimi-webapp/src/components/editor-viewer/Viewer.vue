@@ -2,19 +2,19 @@
   <div class="viewer" v-bind:data-fileFormat='fileFormat'>
     <viewerPages 
       v-if="fileFormat === 'pages'"
-      :htmlData="getHtmlData"
+      :htmlData="htmlData"
       :scrollPosition="scrollPosition"
       v-on:updateEditorScrollPosition="updateEditorScrollPosition"
     ></viewerPages>
     <viewerSlides 
       v-else-if="fileFormat === 'slides'"
-      :htmlData="getHtmlData"
+      :htmlData="htmlData"
       :scrollPosition="scrollPosition"
       v-on:updateEditorScrollPosition="updateEditorScrollPosition"
     ></viewerSlides>
     <viewerHtml 
       v-else 
-      :htmlData="getHtmlData"
+      :htmlData="htmlData"
       :scrollPosition="scrollPosition"
       v-on:updateEditorScrollPosition="updateEditorScrollPosition"
     ></viewerHtml>
@@ -23,6 +23,7 @@
 
 <script>
   import Vue from 'vue';
+  import _ from 'lodash';
   import AsyncComputed from 'vue-async-computed';
   import documentPackager from 'src/logic/documentPackager';
   import DocumentPrinter from 'src/logic/inputHandler/DocumentPrinter';
@@ -33,6 +34,12 @@
   Vue.use(AsyncComputed);
 
   let documentPrinter = null;
+  const htmlParserTrottleFn = _.throttle(function parseFn(data) {
+    documentPackager.getHtmlData(data)
+    .then((htmlData) => {
+      this.htmlData = htmlData;
+    });
+  }, 1000);
 
   export default {
     components: {
@@ -40,16 +47,19 @@
       viewerSlides,
       viewerHtml,
     },
-    props: ['editorContent', 'fileFormat', 'scrollPosition'],
-    asyncComputed: {
-      getHtmlData() {
-        return documentPackager.getHtmlData(this.editorContent);
-      }
+    data() {
+      return {
+        htmlData: '',
+      };
     },
+    props: ['editorContent', 'fileFormat', 'scrollPosition'],
     watch: {
       fileFormat() {
         // Update event listener reference on fileFormat change
         documentPrinter.setDomBehaviour();
+      },
+      editorContent(data) {
+        htmlParserTrottleFn.call(this, data);
       }
     },
     methods: {
