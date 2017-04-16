@@ -15,6 +15,7 @@
   import DocumentNavigator from 'src/logic/inputHandler/DocumentNavigator';
   import SlidesNavigator from 'src/logic/inputHandler/SlidesNavigator';
   import documentBuilder from 'src/helpers/documentBuilder';
+  import scrollSync from 'src/logic/inputHandler/scrollSync';
 
   // Throttle function used to limit the rate which
   // the render function is called
@@ -24,7 +25,7 @@
   let slidesNavigator = null;
 
   export default {
-    props: ['htmlData'],
+    props: ['htmlData', 'scrollPosition'],
     data() {
       return {
         diagramsRenderer: null,
@@ -85,6 +86,7 @@
             const resizeObserveTarget = this.$el.parentNode.parentNode;
             this.documentNavigator = new DocumentNavigator(renderTarget, resizeObserveTarget);
             slidesNavigator = new SlidesNavigator(renderTarget.ownerDocument.defaultView);
+            scrollSync.vueHelper.setDomBehaviour.call(this, 'scrollPosition', renderTarget);
           });
         });
       });

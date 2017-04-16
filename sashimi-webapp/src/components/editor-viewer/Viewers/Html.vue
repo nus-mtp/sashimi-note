@@ -11,6 +11,7 @@
   import Vue from 'vue';
   import DiagramsRenderer from 'src/logic/renderer/diagrams';
   import documentBuilder from 'src/helpers/documentBuilder';
+  import scrollSync from 'src/logic/inputHandler/scrollSync';
 
   /**
    * Diagram rendering function for HTML view
@@ -19,11 +20,11 @@
    */
 
   export default {
-    props: ['htmlData'],
+    props: ['htmlData', 'scrollPosition'],
     data() {
       return {
-        diagramsRenderer: null,
         renderDoc: null,
+        diagramsRenderer: null,
       };
     },
     watch: {
@@ -53,8 +54,11 @@
         .then(() => {
           this.renderDoc = this.$el.contentWindow.document;
           this.renderDoc.body.innerHTML = this.htmlData;
+          
           this.diagramsRenderer = new DiagramsRenderer();
           this.diagramsRenderer.process(this.renderDoc.body);
+          
+          scrollSync.vueHelper.setDomBehaviour.call(this, 'scrollPosition', this.renderDoc);
         });
       });
     }

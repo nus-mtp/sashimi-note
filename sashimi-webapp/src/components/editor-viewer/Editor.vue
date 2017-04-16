@@ -18,7 +18,7 @@ export default {
   components: {
     codemirror
   },
-  props: ['value'],
+  props: ['value', 'scrollPosition'],
   data() {
     return {
       isBeingLoaded: true,
@@ -35,6 +35,56 @@ export default {
         gutters: ['CodeMirror-linenumbers', 'CodeMirror-foldgutter'],
         styleSelectedText: true,
         highlightSelectionMatches: { showToken: /\w/, annotateScrollbar: true },
+      },
+      // Scroll related functions
+      localScrollPosition: 1,
+      canUserScroll: true,
+      canOtherScroll: true,
+      enableUserScrollListener: () => { this.canUserScroll = true; },
+      disableUserScrollListener: () => { this.canUserScroll = false; },
+      userScrollListeners: [],
+      enableOtherScrolledListener: () => { this.canOtherScroll = true; },
+      disableOtherScrolledListener: () => { this.canOtherScroll = false; },
+      otherScrollListeners: [],
+      /**
+       * This function is called when user is scrolling the component
+       */
+      broadcastNewScrollPosition: (cmInstance) => {
+        // If it is being scrolled by other component,
+        // no need to broadcast scroll position again
+        if (!this.canUserScroll) return;
+
+        // Prevent programatic updating by own component
+        this.disableOtherScrolledListener();
+        this.userScrollListeners.forEach(clearTimeout);
+
+        // Retrieve scroll information for emitting
+        const cmScrollTop = cmInstance.getScrollInfo().top;
+        const newLinePosition = cmInstance.lineAtHeight(cmScrollTop, 'local') + 1;
+        this.$emit('updateViewerScrollPosition', newLinePosition);
+
+        // Welcome programatic updating by own component again after a while
+        this.userScrollListeners.push(setTimeout(this.enableOtherScrolledListener, 1000));
+      },
+      /**
+       * This function is called when the component receive scroll update signal
+       * from other component
+       */
+      updateScrollPosition: (position) => {
+        // If user is scrolling this component, disable scroll manipulation
+        if (!this.canOtherScroll) return;
+        if (this.localScrollPosition === position) return;
+
+        // Prevent scroll position listener from manually adjusting the scroll height again
+        this.disableUserScrollListener();
+        this.userScrollListeners.forEach(clearTimeout);
+
+        // Retrieve scroll information for setting height
+        const destinationPosition = codeMirrorInstance.heightAtLine(position - 1, 'local');
+        codeMirrorInstance.scrollTo(null, destinationPosition);
+
+        // listener for scroll position from
+        this.userScrollListeners.push(setTimeout(this.enableUserScrollListener, 1000));
       }
     };
   },
@@ -50,10 +100,14 @@ export default {
         codeMirrorInstance.setCursor(data.length);
         this.isBeingLoaded = false;
       }
+    },
+    scrollPosition(position) {
+      this.updateScrollPosition(position);
     }
   },
   mounted() {
     codeMirrorInstance = this.$refs.myEditor.editor;
+    codeMirrorInstance.on('scroll', this.broadcastNewScrollPosition);
   }
 };
 
