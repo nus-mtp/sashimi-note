@@ -1,4 +1,4 @@
-import diagramsRenderer from './diagrams';
+import DiagramsRenderer from './diagrams';
 import VirtualBook from './VirtualBook';
 import helper from './helper';
 
@@ -111,8 +111,11 @@ export default {
     const rf = pageRenderer.referenceFrame;
     rf.innerHTML = pageRenderer.sourceHTML;
 
-    // Render UML diagrams first before rendering to page view
-    return diagramsRenderer(rf)
+    const pPPFs = pageRenderer.postProcessPromiseFns;
+
+    return Promise.all(pPPFs.map(promiseFn =>
+      promiseFn.process.call(promiseFn, rf)
+    ))
     .then(() => {
       // Additional element styling
       const imgElements = rf.getElementsByTagName('IMG');

@@ -1,10 +1,12 @@
 import entitiesCreator from 'src/database/create/entitiesCreator';
 import exceptions from 'src/database/exceptions';
 import constants from 'src/database/constants';
-
+import defaultFeatureFile from 'src/../static/data/features.txt';
+import StringManipulator from 'src/database/stringManipulation';
 import SqlCommands from 'src/database/sql-related/sqlCommands';
 
 const sqlCommands = new SqlCommands();
+const stringManipulator = new StringManipulator();
 
 const testDatabaseName = 'testEntitiesCreator';
 
@@ -197,12 +199,14 @@ describe('entitiesCreator', () => {
       .then(() => sqlCommands.getFullTableData(constants.ENTITIES_FILE_MANAGER)
         .then((fileManagerData) => {
           const creationDate = fileManagerData[0].creation_date; // cannot be determined
+          fileManagerData[0].file_markdown =
+            stringManipulator.revertSQLInjections(fileManagerData[0].file_markdown);
           return expect(fileManagerData).to.deep.equal([{
             organization_id: 1,
             folder_id: 0,
             file_id: 1,
-            file_name: 'newFile',
-            file_markdown: '',
+            file_name: 'Features',
+            file_markdown: defaultFeatureFile,
             permission_index: 1,
             creation_date: creationDate,
             last_modified_date: creationDate,

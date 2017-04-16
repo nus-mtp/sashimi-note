@@ -41,9 +41,9 @@ describe('tableCreator', () => {
 
   after((doneAfter) => {
     cleanTestCase()
-    .then(() =>
-      doneAfter()
-    );
+    .then(() => {
+      doneAfter();
+    });
   });
 
   describe('link to indexeddb database', () => {

@@ -10,6 +10,7 @@
 <script>
   import Vue from 'vue';
   import _ from 'lodash';
+  import DiagramsRenderer from 'src/logic/renderer/diagrams';
   import PageRenderer from 'src/logic/renderer';
   import DocumentNavigator from 'src/logic/inputHandler/DocumentNavigator';
   import documentBuilder from 'src/helpers/documentBuilder';
@@ -24,6 +25,7 @@
     props: ['htmlData', 'scrollPosition'],
     data() {
       return {
+        diagramsRenderer: null,
         pageRenderer: null,
         documentNavigator: null,
         pageSize: { // PAGE_A4
@@ -46,6 +48,7 @@
     mounted() {
       // Mount does not gurrantee DOM to be ready, thus nextTick is used
       Vue.nextTick(() => {
+        this.diagramsRenderer = new DiagramsRenderer();
         documentBuilder.rebuild(this.$el);
         documentBuilder.addStyles(this.$el, [
           '/styles/markdown-pages.css',
@@ -71,7 +74,9 @@
           return eleContainer;
         })
         .then((renderTarget) => {
-          this.pageRenderer = new PageRenderer(renderTarget, this.pageSize);
+          this.pageRenderer = new PageRenderer(renderTarget, this.pageSize, [
+            this.diagramsRenderer
+          ]);
           return renderThrottleFn(this.htmlData, this.pageRenderer)
           .then(() => {
             // Initialise navigation for Pages mode

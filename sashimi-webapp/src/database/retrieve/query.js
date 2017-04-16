@@ -14,6 +14,8 @@ const stringManipulator = new StringManipulator();
 
 const sqlCommands = new SqlCommands();
 
+let thisDatabaseName = constants.INDEXEDDB_NAME;
+
 // dummy function to init sequence running for code aesthetic below
 function initPromiseSequence() {
   return new Promise((resolve, reject) =>
@@ -23,6 +25,12 @@ function initPromiseSequence() {
 
 export default class query {
   static constructor() {}
+
+  // optional: this is to set up the correct database for testing
+  static initializeDatabase(databaseName) {
+    thisDatabaseName = databaseName || constants.INDEXEDDB_NAME;
+    return sqlCommands.linkDatabaseToIndexedDB(thisDatabaseName);
+  }
 
   static getAllFilesAndFolders() {
     return new Promise((resolve, reject) => {
@@ -43,8 +51,8 @@ export default class query {
 
   static isTableExistsInDatabase(tableName, databaseName) {
     return new Promise((resolve, reject) => {
-      const thisDatabaseName = databaseName || constants.INDEXEDDB_NAME;
-      const requestOpenDatabase = indexedDB.open(thisDatabaseName);
+      const tableDatabaseName = databaseName || constants.INDEXEDDB_NAME;
+      const requestOpenDatabase = indexedDB.open(tableDatabaseName);
       requestOpenDatabase.onsuccess = function onSuccess(event) {
         const tableNames = event.target.result.objectStoreNames;
         if (tableNames.contains(tableName) === false) {

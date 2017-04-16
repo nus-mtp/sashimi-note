@@ -1,9 +1,12 @@
 import SqlArray from 'src/database/generated-data/sqlArray';
 import constants from 'src/database/constants';
 import DateTime from 'src/database/generated-data/dateTime';
+import StringManipulator from 'src/database/stringManipulation';
+import featureFile from 'src/../static/data/features.txt';
 
 const alasqlArray = new SqlArray();
 const dateTime = new DateTime();
+const stringManipulator = new StringManipulator();
 
 export default class initDataGenerator {
   static constructor() {}
@@ -33,12 +36,13 @@ export default class initDataGenerator {
 
   static getInitDataFileManager() {
     const createdDateTime = dateTime.getCurrentLongTime();
+    const defaultFeatureFile = stringManipulator.resolveSQLInjections(featureFile);
     alasqlArray.initializeAlasqlArray();
     alasqlArray.addKeyBasePair(constants.HEADER_FILE_MANAGER_ORGANIZATION_ID, 1);
     alasqlArray.addKeyBasePair(constants.HEADER_FILE_MANAGER_FOLDER_ID, 0);
     alasqlArray.addKeyBasePair(constants.HEADER_FILE_MANAGER_FILE_ID, 1);
-    alasqlArray.addKeyBasePair(constants.HEADER_FILE_MANAGER_FILE_NAME, constants.DEFAULT_FILE_NAME);
-    alasqlArray.addKeyBasePair(constants.HEADER_FILE_MANAGER_FILE_MARKDOWN, '');
+    alasqlArray.addKeyBasePair(constants.HEADER_FILE_MANAGER_FILE_NAME, 'Features');
+    alasqlArray.addKeyBasePair(constants.HEADER_FILE_MANAGER_FILE_MARKDOWN, defaultFeatureFile);
     alasqlArray.addKeyBasePair(constants.HEADER_FILE_MANAGER_PERMISSION_INDEX, 1);
     alasqlArray.addKeyBasePair(constants.HEADER_FILE_MANAGER_CREATION_DATE, createdDateTime);
     alasqlArray.addKeyBasePair(constants.HEADER_FILE_MANAGER_LAST_MODIFIED_DATE, createdDateTime);

@@ -10,7 +10,6 @@ import constants from 'src/database/constants';
 import entitiesCreator from 'src/database/create/entitiesCreator';
 import query from 'src/database/retrieve/query';
 import dataModifier from 'src/database/data-modifier/dataModifier';
-import exceptions from 'src/database/exceptions';
 
 let databaseName = constants.INDEXEDDB_NAME;
 
@@ -103,6 +102,11 @@ function creationOfTables() {
 export default class storage {
   static constructor() {}
 
+  /**
+   * Initialize indexedDB with default database name
+   *
+   * @return {Promise}
+  */
   static initializeDatabase(newDatabaseName) {
     return new Promise((resolve, reject) => {
       databaseName = newDatabaseName || databaseName;
@@ -129,65 +133,143 @@ export default class storage {
     });
   }
 
+  /**
+   * retrieve all files and folders in database
+   *
+   * @return {Promise}
+   * @return [[files],[folders]]
+  */
   static loadAllFilesAndFolders() {
     return query.getAllFilesAndFolders();
   }
 
-  // Searching the filename and foldername ONLY
+  /**
+   * searching files and folders with partial phrase
+   *
+   * @param string searchString
+   * @return {Promise}
+   * @return [[files],[folders]]
+  */
   static partialSearch(searchString) {
     return query.searchString(searchString);
   }
 
+  /**
+   * get all files and folders inside this folder
+   *
+   * @param number folderId
+   * @return {Promise}
+   * @return [[files],[folders]]
+  */
   static getList(folderId) {
     return query.loadFolder(folderId);
   }
 
+  /**
+   * retrieve md string in file
+   *
+   * @param number fileId
+   * @return {Promise}
+   * @return string
+  */
   static loadFile(fileId) {
     return query.loadFile(fileId);
   }
 
+  /**
+   * retrieve md string in file
+   *
+   * @param number fileId, string fileString
+   * @return {Promise}
+  */
   static saveFile(fileId, fileString) {
     return dataModifier.saveFile(fileId, fileString);
   }
 
+  /**
+   * create a new file
+   *
+   * @param number organizationId, string filePath, number folderId
+   * @return {Promise}
+  */
   static createFile(organizationId, filePath, folderId) {
     return dataModifier.createNewFile(organizationId, filePath, folderId);
   }
 
+  /**
+   * relocate a file to a new location
+   *
+   * @param number fileId, string newPath
+   * @return {Promise}
+  */
   static moveFile(fileId, newPath) {
     return dataModifier.moveFile(fileId, newPath);
   }
 
+  /**
+   * duplicate a file
+   *
+   * @param number fileId
+   * @return {Promise}
+  */
   static copyFile(fileId) {
     return dataModifier.copyFile(fileId);
   }
 
+  /**
+   * rename a file
+   *
+   * @param number fileId, string newFileName
+   * @return {Promise}
+  */
   static renameFile(fileId, newFileName) {
     return dataModifier.renameFileName(fileId, newFileName);
   }
 
+  /**
+   * rename a folder and all its children
+   *
+   * @param number folderId, string newFolderName
+   * @return {Promise}
+  */
   static renameFolder(folderId, newFolderName) {
     return dataModifier.renameFolderName(folderId, newFolderName);
   }
 
+  /**
+   * removes a file from database
+   *
+   * @param number fileId
+   * @return {Promise}
+  */
   static deleteFile(fileId) {
     return dataModifier.deleteFile(fileId);
   }
 
+  /**
+   * creates a new folder in database
+   *
+   * @param number organizationId, string folderPath, number currentFolderId
+   * @return {Promise}
+  */
   static createFolder(organizationId, folderPath, currentFolderId) {
     return dataModifier.createNewFolder(organizationId, folderPath, currentFolderId);
   }
 
-  // only delete folder for now without cascade delete
+  /**
+   * removes a folder and cascade delete
+   *
+   * @param number folderId
+   * @return {Promise}
+  */
   static deleteFolder(folderId) {
     return dataModifier.deleteFolder(folderId);
   }
 
-  static deleteAll(newDatabaseName) {
-    databaseName = newDatabaseName || databaseName;
-    return dataModifier.deleteAllEntities(databaseName);
-  }
-
+  /**
+   * exceptions to check if called
+   * @return exceptions
+  */
   static exceptions;
 
 }
