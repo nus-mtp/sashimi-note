@@ -44,7 +44,7 @@ export default {
       docs: {},
       history: null,
       folderPath: [],
-      changeDocViewOnResize: function() {
+      changeDocViewOnResize: function changeDocViewOnResize() {
         if (window.innerWidth < 480) {
           this.viewMode = 'listView';
         }
