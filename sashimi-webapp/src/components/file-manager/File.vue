@@ -17,15 +17,6 @@
         v-on:keyup="onKeyUp"
         v-on:paste="removeStyle"
       >{{file.name}}</p>
-      <!--<input type="text" 
-        class="inline-block file-name"
-        ref="nameField"
-        v-model="file.name"
-        v-on:blur="saveFileName"
-        v-on:keypress="onKeyPress"
-        v-on:keyup="onKeyUp"
-        v-on:paste="removeStyle"
-      >-->
     </button>
   </div>
 </template>
