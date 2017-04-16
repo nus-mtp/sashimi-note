@@ -12,7 +12,6 @@
         class="inline-block file-name"
         ref="nameField"
             :class="{ renameError: hasError }"
-            :style="renameAnimation"
         v-on:blur="saveFileName"
         v-on:keypress="onKeyPress"
         v-on:keyup="onKeyUp"
@@ -46,9 +45,6 @@ export default {
         this.focusFile();
       },
       hasError: false,
-      // renameAnimation: {
-      //   animation: renameError, '0.2s'
-      // }
     };
   },
   watch: {
@@ -122,6 +118,8 @@ export default {
 </script>
 
 <style scoped lang="scss">
+@import 'src/assets/styles/keyframes.scss';
+
 .renameError {
   animation: renameError 0.2s;
 }
