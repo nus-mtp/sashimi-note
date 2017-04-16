@@ -11,11 +11,22 @@
         tabindex="2" 
         class="inline-block file-name"
         ref="nameField"
+            :class="{ renameError: hasError }"
+            :style="renameAnimation"
         v-on:blur="saveFileName"
         v-on:keypress="onKeyPress"
         v-on:keyup="onKeyUp"
         v-on:paste="removeStyle"
       >{{file.name}}</p>
+      <!--<input type="text" 
+        class="inline-block file-name"
+        ref="nameField"
+        v-model="file.name"
+        v-on:blur="saveFileName"
+        v-on:keypress="onKeyPress"
+        v-on:keyup="onKeyUp"
+        v-on:paste="removeStyle"
+      >-->
     </button>
   </div>
 </template>
@@ -33,7 +44,11 @@ export default {
       clearIsClick: () => {
         this.isClickInProgress = false;
         this.focusFile();
-      }
+      },
+      hasError: false,
+      // renameAnimation: {
+      //   animation: renameError, '0.2s'
+      // }
     };
   },
   watch: {
@@ -49,12 +64,20 @@ export default {
       this.$emit('blurFile', event);
     },
     saveFileName() {
-      window.getSelection().removeAllRanges();
-
       let newFileName = this.$refs.nameField.innerText;
       newFileName = newFileName.trim().replace(/&nbsp;/gi, '');
-
-      this.file.rename(newFileName);
+      this.file.rename(newFileName)
+        .then(() => {
+          this.hasError = false;
+          window.getSelection().removeAllRanges();
+        })
+        .catch((error) => {
+          this.hasError = true;
+          this.$refs.nameField.innerText = this.file.name;
+          setTimeout(() => {
+            this.hasError = false;
+          }, 500);
+        });
     },
     onClick(event) {
       event.preventDefault();
@@ -99,4 +122,7 @@ export default {
 </script>
 
 <style scoped lang="scss">
+.renameError {
+  animation: renameError 0.2s;
+}
 </style>
