@@ -74,11 +74,13 @@ function cascadeChangeFilePath(index, prevBasePath, newBasePath, fileArr) {
       return changeSingleFilePath(fileToChangePathIndex, newPath)
       .catch(sqlErr => reject(sqlErr));
     })
-    .then(() => {
+    .then(() =>
       cascadeChangeFilePath(index + 1, prevBasePath, newBasePath, fileArr)
-      .catch(err => reject(err));
-      resolve();
-    })
+      .catch(err => reject(err))
+    )
+    .then(() =>
+      resolve()
+    )
     .catch(err => reject(err));
   });
 }
@@ -121,11 +123,13 @@ function cascadeChangeFolderPath(index, prevBasePath, newBasePath, folderArr) {
       return changeSingleFolderPath(folderToChangePathIndex, newPath)
       .catch(sqlErr => reject(sqlErr));
     })
-    .then(() => {
+    .then(() =>
       cascadeChangeFolderPath(index + 1, prevBasePath, newBasePath, folderArr)
-      .catch(err => reject(err));
-      resolve();
-    })
+      .catch(err => reject(err))
+    )
+    .then(() =>
+      resolve()
+    )
     .catch(err => reject(err));
   });
 }
@@ -220,6 +224,17 @@ function getListOfFilesIdsWithSamePath(folderPath) {
   );
 }
 
+function getFolderIDFromPath(path) {
+  return new Promise((resolve, reject) => {
+    alasql.promise([stringManipulator.stringConcat('SELECT ', constants.HEADER_FOLDER_FOLDER_ID,
+                                                    ' FROM ', constants.ENTITIES_FOLDER,
+                                                    ' WHERE ', constants.HEADER_FOLDER_PATH,
+                                                    ' = "', path, '"')])
+    .then(newFolderId => resolve(getDataOutOfAlasql(newFolderId)))
+    .catch(sqlError => reject(sqlError));
+  });
+}
+
 export default function sqlCommands() {
   this.linkDatabaseToIndexedDB = function linkDatabaseToIndexedDB(databaseName) {
     return new Promise((resolve, reject) => {
@@ -290,10 +305,10 @@ export default function sqlCommands() {
     });
   };
 
-  this.exactSearchStartFolderNameInFolder = function exactSearchStartFolderNameInFolder(parentFolderId) {
+  this.loadFoldersFromFolder = function loadFoldersFromFolder(parentFolderId) {
     return new Promise((resolve, reject) => {
       parentFolderId = resolveSQLInjection(parentFolderId);
-      return alasql.promise([stringManipulator.stringConcat('SELECT ', constants.HEADER_FOLDER_FOLDER_NAME,
+      return alasql.promise([stringManipulator.stringConcat('SELECT *',
                                                             ' FROM ', constants.ENTITIES_FOLDER,
                                                             ' WHERE ', constants.HEADER_FOLDER_PARENT_FOLDER_ID,
                                                             ' = ', parentFolderId,
@@ -367,17 +382,6 @@ export default function sqlCommands() {
     });
   };
 
-  this.loadFoldersFromFolder = function loadFoldersFromFolder(folderId) {
-    return new Promise((resolve, reject) => {
-      folderId = resolveSQLInjection(folderId);
-      alasql.promise([stringManipulator.stringConcat('SELECT * FROM ', constants.ENTITIES_FOLDER,
-                                                      ' WHERE ', constants.HEADER_FOLDER_PARENT_FOLDER_ID,
-                                                      ' = ', folderId)])
-      .then(data => resolve(getArray(data)))
-      .catch(sqlError => reject(sqlError));
-    });
-  };
-
   this.loadFile = function loadFile(fileId) {
     return new Promise((resolve, reject) => {
       fileId = resolveSQLInjection(fileId);
@@ -411,11 +415,22 @@ export default function sqlCommands() {
     return new Promise((resolve, reject) => {
       fileId = resolveSQLInjection(fileId);
       newPath = resolveSQLInjection(newPath);
-      return alasql.promise([stringManipulator.stringConcat('UPDATE ', constants.ENTITIES_FILE_MANAGER,
-                                                            ' SET ', constants.HEADER_FILE_MANAGER_PATH,
-                                                            ' = "', newPath,
-                                                            '" WHERE ', constants.HEADER_FILE_MANAGER_FILE_ID,
-                                                            ' = ', fileId)])
+      getFolderIDFromPath(newPath)
+      .then(folderID =>
+        alasql.promise([stringManipulator.stringConcat('UPDATE ', constants.ENTITIES_FILE_MANAGER,
+                                                      ' SET ', constants.HEADER_FILE_MANAGER_FOLDER_ID,
+                                                      ' = ', folderID,
+                                                      ' WHERE ', constants.HEADER_FILE_MANAGER_FILE_ID,
+                                                      ' = ', fileId)])
+      ) // will not update new path if folder ID does not exist
+      .then(() =>
+        alasql.promise([stringManipulator.stringConcat('UPDATE ', constants.ENTITIES_FILE_MANAGER,
+                                                      ' SET ', constants.HEADER_FILE_MANAGER_PATH,
+                                                      ' = "', newPath,
+                                                      '" WHERE ', constants.HEADER_FILE_MANAGER_FILE_ID,
+                                                      ' = ', fileId)])
+        .catch(sqlError => reject(sqlError))
+      )
       .then(() => resolve())
       .catch(sqlError => reject(sqlError));
     });
@@ -459,17 +474,22 @@ export default function sqlCommands() {
         .catch(sqlError => reject(sqlError))
       )
       .then(() =>
-        // step 6: change current folder name to new name
+        // step 4: change current folder path to new path
         changeSingleFolderName(folderId, newFolderName)
         .catch(sqlErr => reject(sqlErr))
       )
       .then(() =>
-        // step 4: cascade change folder path of all the current and children folders
+        // step 5: change current folder name to new name
+        changeSingleFolderPath(folderId, newFolderPath)
+        .catch(sqlErr => reject(sqlErr))
+      )
+      .then(() =>
+        // step 6: cascade change folder path of all the current and children folders
         cascadeChangeFolderPath(0, thisFolderPath, newFolderPath, foldersToChangePath)
         .catch(sqlErr => reject(sqlErr))
       )
       .then(() =>
-        // step 5: cascade change folder path of all children files
+        // step 7: cascade change folder path of all children files
         cascadeChangeFilePath(0, thisFolderPath, newFolderPath, filesToChangePath)
         .catch(sqlErr => reject(sqlErr))
       )

@@ -10,6 +10,7 @@
 <script>
   import Vue from 'vue';
   import _ from 'lodash';
+  import DiagramsRenderer from 'src/logic/renderer/diagrams';
   import PageRenderer from 'src/logic/renderer';
   import DocumentNavigator from 'src/logic/inputHandler/DocumentNavigator';
   import SlidesNavigator from 'src/logic/inputHandler/SlidesNavigator';
@@ -26,6 +27,7 @@
     props: ['htmlData'],
     data() {
       return {
+        diagramsRenderer: null,
         pageRenderer: null,
         documentNavigator: null,
         pageSize: { // PAGE_A6
@@ -48,6 +50,7 @@
     mounted() {
       // Mount does not gurrantee DOM to be ready, thus nextTick is used
       Vue.nextTick(() => {
+        this.diagramsRenderer = new DiagramsRenderer();
         documentBuilder.rebuild(this.$el);
         documentBuilder.addStyles(this.$el, [
           '/styles/markdown-html.css',
@@ -73,7 +76,9 @@
           return eleContainer;
         })
         .then((renderTarget) => {
-          this.pageRenderer = new PageRenderer(renderTarget, this.pageSize);
+          this.pageRenderer = new PageRenderer(renderTarget, this.pageSize, [
+            this.diagramsRenderer
+          ]);
           return renderThrottleFn(this.htmlData, this.pageRenderer)
           .then(() => {
             // Initialise navigation for Slide mode

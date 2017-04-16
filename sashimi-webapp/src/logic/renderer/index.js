@@ -12,8 +12,12 @@ import helper from './helper';
  * @param {string} page.width - in css width.
  * @param {string} page.height - in css height.
  * @param {Object} page.padding - for setting the inner the padding size used on the page.
+ * @param {Array} postProcessingPlugins - an optional array of plugins that contain a `.process` function.
+ *                                        These functions are to be executed on the referenceFrame.
+ *                                        These functions will receive the referenceFrame object and
+ *                                        should return a promise when it is done.
  */
-export default function PageRenderer(renderDomTarget, page) {
+export default function PageRenderer(renderDomTarget, page, postProcessPromiseFns) {
   // Set page sizing. Use default if not provided
   this.page = page || defaultConfig.page;
   this.renderHeight = helper.computeRenderHeight(this.page);
@@ -28,6 +32,7 @@ export default function PageRenderer(renderDomTarget, page) {
 
   // Set reference frame
   this.referenceFrame = this.getReferenceFrame();
+  this.postProcessPromiseFns = postProcessPromiseFns || [];
 
   // Set sourceHTML
   this.sourceHTML = null;
