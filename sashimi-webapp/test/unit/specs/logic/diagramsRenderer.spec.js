@@ -395,6 +395,9 @@ describe('Renderer', () => {
           // Check if Expected output === Actual rendered output
           const diff = compareDom(mermaidOutput, toRender);
           const errorArray = regexHelper(diff, mermaidOutput, toRender);
+          errorArray.forEach((errorLine) => {
+            console.log(errorLine);
+          });
           expect(errorArray.length).to.equal(0);
           done();
         })
