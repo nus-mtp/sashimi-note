@@ -23,7 +23,7 @@
     props: ['htmlData', 'scrollPosition'],
     data() {
       return {
-        renderDoc: null
+        renderDoc: null,
         diagramsRenderer: null,
       };
     },
