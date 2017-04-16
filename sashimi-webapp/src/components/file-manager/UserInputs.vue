@@ -120,7 +120,6 @@
 
 <script>
 import _ from 'lodash';
-import router from 'src/router';
 import eventHub from './EventHub';
 
 let userInputsVue = null;
@@ -293,6 +292,13 @@ export default {
 .navbar-buttons {
   margin: 0 2px;
   height: 32px;
+  padding-left: 3px;
+  padding-right: 3px;
+
+  @media screen and (min-width: 480px) {
+    padding-left: 6px;
+    padding-right: 6px;
+  }
 }
 
 .view-type-wrapper {
@@ -301,9 +307,15 @@ export default {
   font-family: $font-primary;
   float: right;
   animation: viewTypeWidth $user-input-keyframe-time;
+  width: $view-type-buttons-width;
 
   .view-type {
-    width: $view-type-buttons-width;
+    width: 110px;
+    overflow: hidden;
+
+    button {
+      font-family: $font-primary;
+    }
   }
 
   a {

@@ -33,8 +33,10 @@ export default function setup(md, options) {
   md.renderer.rules.fence = (tokens, idx, opts, env, self) => {
     const token = tokens[idx];
     token.content = filter(token.content);
-    if (diagramsLib.includes(token.info)) {
-      return `<pre class="${token.info}">${token.content}</pre>`;
+    for (let i = 0; i < diagramsLib.length; i += 1) {
+      if (diagramsLib[i] === token.info) {
+        return `<pre class="${token.info}">${token.content}</pre>`;
+      }
     }
 
     // pass token to default renderer.

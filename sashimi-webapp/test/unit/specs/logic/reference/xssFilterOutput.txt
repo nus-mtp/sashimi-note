@@ -1,11 +1,11 @@
-<h1 id="simple-xss">Simple XSS</h1>
+<h1 id="simple-xss" class="code-line" data-line-start="1" data-line-end="1">Simple XSS</h1>
 &lt;script&gt;alert('xss');&lt;/script&gt;
-<h1 id="whitelistblacklist-insufficient">Whitelist/Blacklist insufficient</h1>
-<p>hello <a href><em>you</em></a></p>
-<h1 id="striping-html-tags-is-not-enough">Striping HTML tags is not enough</h1>
-<p>[some text](javascript:alert(‘xss’))</p>
-<h1 id="mixed-htmlmarkdown-xss-attack">Mixed HTML/Markdown XSS attack</h1>
-<p>hello <a href><em>you</em></a></p>
-<p>%3Cscript%3Ealert%28document.cookie%29%3B%3C%2Fscript%3E</p>
+<h1 id="whitelistblacklist-insufficient" class="code-line" data-line-start="4" data-line-end="4">Whitelist/Blacklist insufficient</h1>
+<p class="code-line" data-line-start="5" data-line-end="5">hello <a href><em>you</em></a></p>
+<h1 id="striping-html-tags-is-not-enough" class="code-line" data-line-start="7" data-line-end="7">Striping HTML tags is not enough</h1>
+<p class="code-line" data-line-start="8" data-line-end="8">[some text](javascript:alert(‘xss’))</p>
+<h1 id="mixed-htmlmarkdown-xss-attack" class="code-line" data-line-start="10" data-line-end="10">Mixed HTML/Markdown XSS attack</h1>
+<p class="code-line" data-line-start="11" data-line-end="12">hello <a href><em>you</em></a></p>
+<p class="code-line" data-line-start="14" data-line-end="14">%3Cscript%3Ealert%28document.cookie%29%3B%3C%2Fscript%3E</p>
 <img src />
 <img src="abc.jpg" />

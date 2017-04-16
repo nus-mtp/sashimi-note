@@ -76,8 +76,7 @@
 </template>
 
 <script>
-import router from 'src/router';
-import condProcessor from 'src/logic/documentPackager/conditionalProcessor';
+import condProcessor from 'src/logic/documentPackager/plugins/conditionalProcessor';
 
 export default {
   components: {

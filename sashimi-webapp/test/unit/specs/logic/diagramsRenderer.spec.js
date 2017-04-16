@@ -1,5 +1,5 @@
 import domCompare from 'dom-compare';
-import diagramsRenderer from 'src/logic/renderer/diagrams';
+import DiagramsRenderer from 'src/logic/renderer/diagrams';
 import documentPackager from 'src/logic/documentPackager';
 import diagramsInput from './reference/diagrams/diagramsInput.txt';
 import diagramsRenderedOutput from './reference/diagrams/diagramsRenderedOutput.txt';
@@ -30,6 +30,9 @@ const textActual = new Map();
 const iframe = document.createElement('IFRAME');
 let iframeDoc;
 let toRender;
+
+// DiagramsRender Object
+let diagramsRenderer;
 
 /**
  * Helper function for checking for 'Expected text' Error (See case 4 in regex helper below)
@@ -128,7 +131,7 @@ function regexHelper(diff, exp, act) {
   diff.forEach((line) => {
     const regex1 = /(.*) '(.*)':.* '(.*)'.*'(.*)'/g;
     const regex2 = /(.*) '(.*)' (is missed)/g;
-    const regex3 = /Extra attribute '(.*)'/g;
+    const regex3 = /Extra (attribute|element) '(.*)'/g;
     const regex4 = /Expected text '(.*)' instead of '(.*)'/g;
     const arr1 = regex1.exec(line.message);
     const arr2 = regex2.exec(line.message);
@@ -151,6 +154,9 @@ function regexHelper(diff, exp, act) {
                 // Ignore, not an actual error. Just randomly generated id value
           } else if ((arr1[3].indexOf('arrowhead') !== -1
               && arr1[4].indexOf('arrowhead') !== -1)) {
+                // Ignore, not an actual error.
+          } else if ((arr1[3].indexOf('actor') !== -1
+              && arr1[4].indexOf('actor') !== -1)) {
                 // Ignore, not an actual error.
           } else {
             errorArray.push(line);
@@ -192,12 +198,13 @@ function regexHelper(diff, exp, act) {
         errorArray.push(line);
       }
     } else if (arr3 !== null) {
-      // ignore extra attribute error
+      // ignore extra attribute/element error
       if (missedArray.length !== 0) {
-        const pos = missedArray.indexOf(arr3[1]);
+        const pos = missedArray.indexOf(arr3[2]);
         if (pos !== -1) {
+          // Ignore, not an actual error
           missedArray.splice(pos, 1);
-        } else {
+        } else if (arr3[1] !== 'element') {
           errorArray.push(line);
         }
       }
@@ -259,12 +266,13 @@ describe('Renderer', () => {
     };
     // Initialise the above
     iframe.onload();
+    diagramsRenderer = new DiagramsRenderer(iframeDoc);
   });
 
   describe('Diagrams Renderer', () => {
     it('should handle empty data', (done) => {
       toRender = iframeDoc.getElementsByTagName('div')[0];
-      diagramsRenderer(toRender)
+      diagramsRenderer.process(toRender)
       .then((output) => {
         expect(toRender.innerHTML).to.equal('');
         done();
@@ -282,7 +290,7 @@ describe('Renderer', () => {
       invalidHtmlData.then((output) => {
         toRender.innerHTML = output;
         // Render any diagrams to be drawn
-        diagramsRenderer(toRender)
+        diagramsRenderer.process(toRender)
         .then((out) => {
           // Check if Expected output === Actual rendered output
           const diff = compareDom(invalidSyntaxOutput, toRender);
@@ -308,7 +316,7 @@ describe('Renderer', () => {
       seqHtmlData.then((output) => {
         toRender.innerHTML = output;
         // Render any diagrams to be drawn
-        diagramsRenderer(toRender)
+        diagramsRenderer.process(toRender)
         .then((out) => {
           // Check if Expected output === Actual rendered output
           const diff = compareDom(seqDiagramsOutput, toRender);
@@ -333,7 +341,7 @@ describe('Renderer', () => {
       flowHtmlData.then((output) => {
         toRender.innerHTML = output;
         // Render any diagrams to be drawn
-        diagramsRenderer(toRender)
+        diagramsRenderer.process(toRender)
         .then((out) => {
           // Check if Expected output === Actual rendered output
           const diff = compareDom(flowChartsOutput, toRender);
@@ -358,7 +366,7 @@ describe('Renderer', () => {
       vizHtmlData.then((output) => {
         // Render any diagrams to be drawn
         toRender.innerHTML = output;
-        diagramsRenderer(toRender)
+        diagramsRenderer.process(toRender)
         .then((out) => {
           // Check if Expected output === Actual rendered output
           const diff = compareDom(graphvizOutput, toRender);
@@ -383,7 +391,7 @@ describe('Renderer', () => {
       mermaidHtmlData.then((output) => {
         toRender.innerHTML = output;
         // Render any diagrams to be drawn
-        diagramsRenderer(toRender)
+        diagramsRenderer.process(toRender)
         .then((out) => {
           // Check if Expected output === Actual rendered output
           const diff = compareDom(mermaidOutput, toRender);
@@ -408,11 +416,16 @@ describe('Renderer', () => {
       fullHtmlData.then((output) => {
         toRender.innerHTML = output;
         // Render any diagrams to be drawn
-        diagramsRenderer(toRender)
+        diagramsRenderer.process(toRender)
         .then((out) => {
           // Check if Expected output === Actual rendered output
           const diff = compareDom(diagramsRenderedOutput, toRender);
           const errorArray = regexHelper(diff, diagramsRenderedOutput, toRender);
+          errorArray.forEach((errorLine) => {
+            /* eslint no-console: 0 */
+            // console.log to be shown on travis for debugging purposes
+            console.log(errorLine);
+          });
           expect(errorArray.length).to.equal(0);
           done();
         })

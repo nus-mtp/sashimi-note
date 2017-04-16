@@ -8,6 +8,12 @@
  * @return {Promise<string, error>} Promise - containing the HTML string with rendered diagrams
  */
 
+
+export default function DiagramsRenderer() {
+  this.mermaid = mermaidAPI;
+  this.mermaid.initialize({ startOnLoad: false });
+}
+
 // Helper function to clear HTML Element
 function clearAll(element) {
   while (element.firstChild) {
@@ -15,7 +21,7 @@ function clearAll(element) {
   }
 }
 
-export default function diagramsRenderer(ele) {
+DiagramsRenderer.prototype.process = function process(ele) {
   const observerConfig = { childList: true };
   // get all pre tags with class name = sequence
   const seqDiagrams = ele.querySelectorAll('pre.sequence');
@@ -88,17 +94,14 @@ export default function diagramsRenderer(ele) {
   }
 
   // Draws all the mermaid diagrams found
-  if (mermaidDiagrams.length !== 0) {
-    mermaidAPI.initialize({ startOnLoad: false });
-  }
   for (let i = 0; i < mermaidDiagrams.length; i+=1) {
     let content = mermaidDiagrams[i].innerHTML;
     content = content.replace(/&gt;/g, '>');
-    if (window.mermaidAPI.parse(content)) {
+    if (this.mermaid.parse(content)) {
       const cb = (html, bindFunc) => {
         mermaidDiagrams[i].innerHTML = html;
       };
-      mermaidAPI.render(`mermaidChart${i}`, content, cb);
+      this.mermaid.render(`mermaidChart${i}`, content, cb);
     } else {
       mermaidDiagrams[i].innerHTML = `<code class='hljs'>${mermaidDiagrams[i].innerHTML}</code>`;
     }
@@ -106,4 +109,4 @@ export default function diagramsRenderer(ele) {
 
   // returns resolved if all the promises are resolved, otherwise returns rejected
   return Promise.all(promiseArr);
-}
+};

@@ -5,12 +5,16 @@
       <div class="col editor-wrapper">
         <editor 
           v-model="mdContent"
+          :scrollPosition="editorScrollPosition"
+          v-on:updateViewerScrollPosition="updateViewerScrollPosition"
         ></editor>
       </div>
       <div class="col viewer-wrapper">
         <viewer 
-          :editor-content="mdContent" 
-          :file-format="fileFormat" 
+          :editor-content="mdContent"
+          :file-format="fileFormat"
+          :scrollPosition="viewerScrollPosition"
+          v-on:updateEditorScrollPosition="updateEditorScrollPosition"
           >
         </viewer>
       </div>
@@ -21,6 +25,7 @@
 <script>
 import _ from 'lodash';
 import fileManager from 'src/logic/filemanager';
+import featureData from 'src/../static/data/features.txt';
 import navbar from './Navbar';
 import viewer from './Viewer';
 import editor from './Editor';
@@ -40,7 +45,9 @@ export default {
       file: null,
       viewMode: 'split',
       navbarInput: this.viewMode,
-      changeViewModeOnResize: function() {
+      editorScrollPosition: 1,
+      viewerScrollPosition: 1,
+      changeViewModeOnResize() {
         if (window.innerWidth < 768 && this.viewMode === 'split') {
           this.viewMode = 'editor';
           this.navbarInput = 'editor';
@@ -69,27 +76,40 @@ export default {
       }
     },
     mdContent: _.debounce(function saveFile(value) {
-      this.file.save(value);
+      if (this.file) {
+        this.file.save(value);
+      }
     }, 1000),
   },
-  method: {
+  methods: {
+    updateViewerScrollPosition(position) {
+      this.viewerScrollPosition = position;
+    },
+    updateEditorScrollPosition(position) {
+      this.editorScrollPosition = position;
+    }
   },
   computed: {
   },
   mounted() {
     contentVue = this;
 
-    // for testing purposes
-    // will be handled by fileManager logic
-    const fileID = parseInt(this.$route.query.id);
-    if (fileID && fileManager.getFileByID(fileID)) {
-      this.file = fileManager.getFileByID(fileID);
-      this.file.load()
-        .then((data) => {
-          this.mdContent = data;
-        });
+    if (this.$route.path === '/features') {
+      // Special case to handle feature document
+      this.mdContent = featureData;
     } else {
-      this.$router.push('/');
+      // for testing purposes
+      // will be handled by fileManager logic
+      const fileID = parseInt(this.$route.query.id);
+      if (fileID && fileManager.getFileByID(fileID)) {
+        this.file = fileManager.getFileByID(fileID);
+        this.file.load()
+          .then((data) => {
+            this.mdContent = data;
+          });
+      } else {
+        this.$router.push('/');
+      }
     }
 
     if (window.innerWidth < 768) {
