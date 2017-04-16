@@ -131,7 +131,7 @@ function regexHelper(diff, exp, act) {
   diff.forEach((line) => {
     const regex1 = /(.*) '(.*)':.* '(.*)'.*'(.*)'/g;
     const regex2 = /(.*) '(.*)' (is missed)/g;
-    const regex3 = /Extra attribute '(.*)'/g;
+    const regex3 = /Extra (attribute|element) '(.*)'/g;
     const regex4 = /Expected text '(.*)' instead of '(.*)'/g;
     const arr1 = regex1.exec(line.message);
     const arr2 = regex2.exec(line.message);
@@ -198,10 +198,10 @@ function regexHelper(diff, exp, act) {
         errorArray.push(line);
       }
     } else if (arr3 !== null) {
-      // ignore extra attribute error
+      // ignore extra attribute/element error
       if (missedArray.length !== 0) {
-        const pos = missedArray.indexOf(arr3[1]);
-        if (pos !== -1) {
+        const pos = missedArray.indexOf(arr3[2]);
+        if (arr3[1] === 'attribute' && pos !== -1) {
           missedArray.splice(pos, 1);
         } else {
           errorArray.push(line);
