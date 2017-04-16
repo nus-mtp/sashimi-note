@@ -177,7 +177,7 @@ export default class storage {
   }
 
   /**
-   * retrieve md string in file
+   * save md string into file
    *
    * @param number fileId, string fileString
    * @return {Promise}
