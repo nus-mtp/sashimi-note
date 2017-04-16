@@ -201,9 +201,10 @@ function regexHelper(diff, exp, act) {
       // ignore extra attribute/element error
       if (missedArray.length !== 0) {
         const pos = missedArray.indexOf(arr3[2]);
-        if (arr3[1] === 'attribute' && pos !== -1) {
+        if (pos !== -1) {
+          // Ignore, not an actual error
           missedArray.splice(pos, 1);
-        } else {
+        } else if (arr3[1] !== 'element') {
           errorArray.push(line);
         }
       }
