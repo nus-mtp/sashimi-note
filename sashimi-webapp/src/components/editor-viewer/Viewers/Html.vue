@@ -54,10 +54,10 @@
         .then(() => {
           this.renderDoc = this.$el.contentWindow.document;
           this.renderDoc.body.innerHTML = this.htmlData;
-          
+
           this.diagramsRenderer = new DiagramsRenderer();
           this.diagramsRenderer.process(this.renderDoc.body);
-          
+
           scrollSync.vueHelper.setDomBehaviour.call(this, 'scrollPosition', this.renderDoc);
         });
       });

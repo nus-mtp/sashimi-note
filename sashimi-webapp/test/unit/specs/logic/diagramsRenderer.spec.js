@@ -131,7 +131,7 @@ function regexHelper(diff, exp, act) {
   diff.forEach((line) => {
     const regex1 = /(.*) '(.*)':.* '(.*)'.*'(.*)'/g;
     const regex2 = /(.*) '(.*)' (is missed)/g;
-    const regex3 = /Extra attribute '(.*)'/g;
+    const regex3 = /Extra (attribute|element) '(.*)'/g;
     const regex4 = /Expected text '(.*)' instead of '(.*)'/g;
     const arr1 = regex1.exec(line.message);
     const arr2 = regex2.exec(line.message);
@@ -154,6 +154,9 @@ function regexHelper(diff, exp, act) {
                 // Ignore, not an actual error. Just randomly generated id value
           } else if ((arr1[3].indexOf('arrowhead') !== -1
               && arr1[4].indexOf('arrowhead') !== -1)) {
+                // Ignore, not an actual error.
+          } else if ((arr1[3].indexOf('actor') !== -1
+              && arr1[4].indexOf('actor') !== -1)) {
                 // Ignore, not an actual error.
           } else {
             errorArray.push(line);
@@ -195,12 +198,13 @@ function regexHelper(diff, exp, act) {
         errorArray.push(line);
       }
     } else if (arr3 !== null) {
-      // ignore extra attribute error
+      // ignore extra attribute/element error
       if (missedArray.length !== 0) {
-        const pos = missedArray.indexOf(arr3[1]);
+        const pos = missedArray.indexOf(arr3[2]);
         if (pos !== -1) {
+          // Ignore, not an actual error
           missedArray.splice(pos, 1);
-        } else {
+        } else if (arr3[1] !== 'element') {
           errorArray.push(line);
         }
       }
@@ -417,6 +421,9 @@ describe('Renderer', () => {
           // Check if Expected output === Actual rendered output
           const diff = compareDom(diagramsRenderedOutput, toRender);
           const errorArray = regexHelper(diff, diagramsRenderedOutput, toRender);
+          errorArray.forEach((errorLine) => {
+            console.log(errorLine);
+          });
           expect(errorArray.length).to.equal(0);
           done();
         })
