@@ -11,6 +11,7 @@
         tabindex="2"
         class="inline-block folder-name"
         ref="nameField"
+            :class="{ renameError: hasError }"
         v-on:blur="saveFolderName"
         v-on:keypress="onKeyPress"
         v-on:keyup="onKeyUp"
@@ -30,6 +31,7 @@
           y: '',
           isClickInProgress: false
         },
+        hasError: false,
         clearIsClick: () => {
           this.isClickInProgress = false;
           this.focusFolder();
@@ -52,7 +54,19 @@
         let newFolderName = this.$refs.nameField.innerText;
         newFolderName = newFolderName.trim().replace(/&nbsp;/gi, '');
 
-        this.folder.rename(newFolderName);
+        this.folder.rename(newFolderName)
+        .then(() => {
+          this.hasError = false;
+          window.getSelection().removeAllRanges();
+        })
+        .catch((error) => {
+          this.hasError = true;
+          this.$refs.nameField.innerText = this.folder.name;
+          setTimeout(() => {
+            this.hasError = false;
+            this.blurFolder();
+          }, 500);
+        });
       },
       onClick(event) {
         if (this.dblClickCheck(event)) {
@@ -96,6 +110,9 @@
 </script>
 
 <style scoped lang="scss">
-@import 'src/assets/styles/variables.scss';
+@import 'src/assets/styles/keyframes.scss';
 
+.renameError {
+  animation: renameError 0.2s;
+}
 </style>
