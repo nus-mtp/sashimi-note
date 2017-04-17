@@ -10,7 +10,7 @@
   </a>
 </p>
 
-<img height="30"></img>
+<img height="30">
 
 PowerPoint slides are often used to deliver lecture content to the students. The same printable PowerPoint slides are often provided to the students in a PDF format. This causes several problems. In most cases, all interactive material (*such as video, animation, things that the lecturer has said*) are removed or disabled in this format (*pdf*). Printed PowerPoint may not be the best way to represent information. It waste space and may not have an effective organisation of information.
 
@@ -19,7 +19,7 @@ PowerPoint slides are often used to deliver lecture content to the students. The
 To provide a **flexible** and **extensible** document viewing and editing platform that can be used in class (during lecture) and out of class (revision) to allow lecturers to provide a more effective and comfortable learning experience to students, so that students can learn more effectively.
 [Read more](https://github.com/nus-mtp/sashimi-note/wiki/1.-Introduction)
 
-<img height="60"></img>
+<img height="60">
 
 ## Development
 
@@ -33,3 +33,7 @@ yarn
 cd sashimi-webapp
 yarn run dev
 ```
+
+<br>
+
+Click [here](https://github.com/nus-mtp/sashimi-note/wiki/5.-Developer-Guide) for the full developer guide
