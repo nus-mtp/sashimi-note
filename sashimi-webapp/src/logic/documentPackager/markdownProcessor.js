@@ -17,6 +17,8 @@ import mdTOC from 'markdown-it-table-of-contents';
 // Other plugins
 // Katex plugin for parsing LaTeX mathematical formulas
 import mdKatex from 'markdown-it-katex';
+import mdAbbr from 'markdown-it-abbr';
+import mdMark from 'markdown-it-mark';
 
 // Customised/DIY plugins
 // ASCIIMath Plugin
@@ -55,6 +57,8 @@ md.use(mdTOC);
 // Other plugins
 // For KaTeX
 md.use(mdKatex);
+md.use(mdMark);
+md.use(mdAbbr);
 // For drawing diagrams
 md.use(mdDiagrams);
 // For ASCIIMath
