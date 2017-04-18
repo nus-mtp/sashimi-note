@@ -46,8 +46,4 @@ Click [here](https://github.com/nus-mtp/sashimi-note/wiki/5.-Developer-Guide) fo
 2. Sashimi Note Webapp
   [sashimi-note.herokuapp.com](https://sashimi-note.herokuapp.com) 
 2. Video demo
-  https://youtu.be/O3wBi7Hid7kay not be the best way to represent information. It waste space and may not have an effective organisation of information.
-
-
-### Our goal:
-To provide a **flexible** and **extensible** document viewing and editing platform that can be u
+  [youtu.be/O3wBi7Hid7kay](https://youtu.be/O3wBi7Hid7kay)
