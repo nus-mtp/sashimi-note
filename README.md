@@ -45,5 +45,7 @@ Click [here](https://github.com/nus-mtp/sashimi-note/wiki/5.-Developer-Guide) fo
   [nus-mtp.github.io/sashimi-note](https://nus-mtp.github.io/sashimi-note)
 2. Sashimi Note Webapp
   [sashimi-note.herokuapp.com](https://sashimi-note.herokuapp.com) 
-2. Video demo
+3. Video demo
   [youtu.be/O3wBi7Hid7kay](https://youtu.be/O3wBi7Hid7kay)
+4. Changelog
+  [nus-mtp/sashimi-note/releases](https://github.com/nus-mtp/sashimi-note/releases)
