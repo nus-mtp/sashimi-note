@@ -10,11 +10,14 @@ import MarkdownIt from 'markdown-it';
 // Code highlighting plugins
 import hljs from 'highlight.js'; // https://highlightjs.org/
 import mdHighlight from 'markdown-it-highlightjs';
-// Katex plugin for parsing LaTeX mathematical forumla
-import mdKatex from 'markdown-it-katex';
 // Table of Contents plugins
 import mdAnchor from 'markdown-it-anchor';
 import mdTOC from 'markdown-it-table-of-contents';
+
+// Other plugins
+// Katex plugin for parsing LaTeX mathematical formulas
+import mdKatex from 'markdown-it-katex';
+
 // Customised/DIY plugins
 // ASCIIMath Plugin
 import mdAsciiMath from './plugins/markdown-it-asciimath';
@@ -22,6 +25,7 @@ import mdAsciiMath from './plugins/markdown-it-asciimath';
 import mdDiagrams from './plugins/markdown-it-diagram';
 // Custom conditional plugin
 import mdConditional from './plugins/conditionalProcessor';
+import mdContainerWrapper from './plugins/markdown-it-container-wrapper';
 import mdLineNumber from './plugins/markdown-it-line-number';
 
 
@@ -43,13 +47,14 @@ const md = new MarkdownIt({
 });
 
 // Getting markdown-it to use plugins
-// For KaTeX
-md.use(mdKatex);
 // For Code Highlighting
 md.use(mdHighlight, { auto: true, code: true });
 // For TOC generation
 md.use(mdAnchor);
 md.use(mdTOC);
+// Other plugins
+// For KaTeX
+md.use(mdKatex);
 // For drawing diagrams
 md.use(mdDiagrams);
 // For ASCIIMath
@@ -58,6 +63,7 @@ md.use(mdAsciiMath);
 md.use(mdConditional.hideShowPlugin);
 // For injecting line number into the html content
 md.use(mdLineNumber);
+md.use(mdContainerWrapper);
 
 const validateData = function validateData(data) {
   return data || '';

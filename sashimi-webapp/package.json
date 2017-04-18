@@ -71,6 +71,7 @@
     "lolex": "^1.5.2",
     "markdown-it": "^8.2.2",
     "markdown-it-anchor": "^3.0.0",
+    "markdown-it-container": "^2.0.0",
     "markdown-it-highlightjs": "^2.0.0",
     "markdown-it-katex": "^2.0.3",
     "markdown-it-table-of-contents": "^0.3.2",

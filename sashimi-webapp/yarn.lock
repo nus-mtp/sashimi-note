@@ -3923,6 +3923,10 @@ markdown-it-anchor@^3.0.0:
   dependencies:
     string "^3.0.1"
 
+markdown-it-container@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/markdown-it-container/-/markdown-it-container-2.0.0.tgz#0019b43fd02eefece2f1960a2895fba81a404695"
+
 markdown-it-highlightjs@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/markdown-it-highlightjs/-/markdown-it-highlightjs-2.0.0.tgz#f9b55723d037ec1e71bc66e3499d4f7487018b26"
