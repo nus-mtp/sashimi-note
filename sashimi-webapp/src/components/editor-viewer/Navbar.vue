@@ -126,15 +126,13 @@ export default {
 
   &[data-viewMode="editor"], 
   &[data-viewMode="split"] {
-    #button-editor, 
-    #button-split-screen {
+    #button-editor {
       display: none;
     }
   }
 
   &[data-viewMode="viewer"] {
-    #button-viewer,
-    #button-split-screen {
+    #button-viewer {
       display: none;
     }
   }

@@ -30,8 +30,6 @@ import navbar from './Navbar';
 import viewer from './Viewer';
 import editor from './Editor';
 
-let contentVue = null;
-
 export default {
   components: {
     navbar,
@@ -47,12 +45,6 @@ export default {
       navbarInput: this.viewMode,
       editorScrollPosition: 1,
       viewerScrollPosition: 1,
-      changeViewModeOnResize() {
-        if (window.innerWidth < 768 && this.viewMode === 'split') {
-          this.viewMode = 'editor';
-          this.navbarInput = 'editor';
-        }
-      }
     };
   },
   watch: {
@@ -92,8 +84,6 @@ export default {
   computed: {
   },
   mounted() {
-    contentVue = this;
-
     if (this.$route.path === '/features') {
       // Special case to handle feature document
       this.mdContent = featureData;
@@ -111,17 +101,8 @@ export default {
         this.$router.push('/');
       }
     }
-
-    if (window.innerWidth < 768) {
-      this.viewMode = 'editor';
-    }
-
-    window.addEventListener('resize', this.changeViewModeOnResize.bind(contentVue));
   },
   beforeDestroy() {
-    contentVue = this;
-
-    window.removeEventListener('resize', this.changeViewModeOnResize.bind(contentVue));
   }
 };
 
@@ -153,9 +134,16 @@ export default {
   &[data-viewMode="split"] {
     .viewer-wrapper,
     .editor-wrapper {
-      width: 50%;
-    }
 
+      width: 50%;
+      @media screen and (orientation: portrait) {
+        width: 100%;
+
+        & > div {
+          height: calc(50vh - 78px/2);
+        }
+      }
+    }
   }
 
   &[data-viewMode="viewer"] {
