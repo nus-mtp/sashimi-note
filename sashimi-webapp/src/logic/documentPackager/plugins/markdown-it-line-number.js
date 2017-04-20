@@ -38,7 +38,6 @@ function dataLineInjector(md, options) {
     const rule = md.renderer.rules[name];
     md.renderer.rules[name] = injectWrapper(rule);
   });
-  console.log(md.renderer.rules);
 }
 
 export default dataLineInjector;
