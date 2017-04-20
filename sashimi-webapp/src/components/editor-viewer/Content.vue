@@ -41,7 +41,7 @@ export default {
       mdContent: '',
       fileFormat: 'html',
       file: null,
-      viewMode: 'split',
+      viewMode: 'editor',
       navbarInput: this.viewMode,
       editorScrollPosition: 1,
       viewerScrollPosition: 1,
