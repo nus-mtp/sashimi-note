@@ -59,18 +59,48 @@ describe('Test for MarkdownProcessor', () => {
     'Or minuses\n+ Or pluses\n* Sub-lists of unordered lists are made by ' +
     'indenting 2 spaces\n  * Hi');
 
-    expect(testOList).to.equal('<ol>\n<li>\n<p>First ordered list item</p>\n' +
-          '</li>\n<li>\n<p>Another item</p>\n<ul>\n<li>Sub-list of ordered ' +
-          'lists. Just indent by 3 spaces (or tab) to make a sub-list</li>\n' +
-          '</ul>\n</li>\n<li>\n<p>Actual numbers do not matter, just that it ' +
-          'is a number</p>\n<ol>\n<li>Ordered sub-list</li>\n</ol>\n</li>\n' +
-          '<li>\n<p>And another item.</p>\n<p>You can have properly indented ' +
-          'paragraphs within list items. Notice the blank line above, and ' +
-          'the leading spaces (indent 3 spaces).</p>\n</li>\n</ol>\n');
-    expect(testUList).to.equal('<ul>\n<li>Unordered list can use asterisks' +
-          '</li>\n</ul>\n<ul>\n<li>Or minuses</li>\n</ul>\n<ul>\n<li>Or ' +
-          'pluses</li>\n</ul>\n<ul>\n<li>Sub-lists of unordered lists are ' +
-          'made by indenting 2 spaces\n<ul>\n<li>Hi</li>\n</ul>\n</li>\n' +
-          '</ul>\n');
+    // In the future, we should only compare tag and its content;
+    // Instead of comparing character by character.
+    const expectedOrderedList = `<ol class="code-line" data-line-start="1" data-line-end="8">
+<li class="code-line" data-line-start="1" data-line-end="1">
+<p class="code-line" data-line-start="1" data-line-end="1">First ordered list item</p>
+</li>
+<li class="code-line" data-line-start="2" data-line-end="3">
+<p class="code-line" data-line-start="2" data-line-end="2">Another item</p>
+<ul class="code-line" data-line-start="3" data-line-end="3">
+<li>Sub-list of ordered lists. Just indent by 3 spaces (or tab) to make a sub-list</li>
+</ul>
+</li>
+<li class="code-line" data-line-start="4" data-line-end="5">
+<p class="code-line" data-line-start="4" data-line-end="4">Actual numbers do not matter, just that it is a number</p>
+<ol class="code-line" data-line-start="5" data-line-end="5">
+<li>Ordered sub-list</li>
+</ol>
+</li>
+<li class="code-line" data-line-start="6" data-line-end="8">
+<p class="code-line" data-line-start="6" data-line-end="6">And another item.</p>
+<p class="code-line" data-line-start="8" data-line-end="8">You can have properly indented paragraphs within list items. Notice the blank line above, and the leading spaces (indent 3 spaces).</p>
+</li>
+</ol>
+`;
+    const expectedUnorderedList = `<ul class="code-line" data-line-start="1" data-line-end="1">
+<li class="code-line" data-line-start="1" data-line-end="1">Unordered list can use asterisks</li>
+</ul>
+<ul class="code-line" data-line-start="2" data-line-end="2">
+<li class="code-line" data-line-start="2" data-line-end="2">Or minuses</li>
+</ul>
+<ul class="code-line" data-line-start="3" data-line-end="3">
+<li class="code-line" data-line-start="3" data-line-end="3">Or pluses</li>
+</ul>
+<ul class="code-line" data-line-start="4" data-line-end="5">
+<li class="code-line" data-line-start="4" data-line-end="5">Sub-lists of unordered lists are made by indenting 2 spaces
+<ul class="code-line" data-line-start="5" data-line-end="5">
+<li>Hi</li>
+</ul>
+</li>
+</ul>
+`;
+    expect(testOList).to.equal(expectedOrderedList);
+    expect(testUList).to.equal(expectedUnorderedList);
   });
 });
