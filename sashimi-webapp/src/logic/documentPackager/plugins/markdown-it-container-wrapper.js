@@ -22,9 +22,12 @@ const plugins = {
   },
   classname: {
     validate: name => name.trim().length,
-    render: (tokens, idx) => {
+    render: (tokens, idx, options, env, slf) => {
       if (tokens[idx].nesting === 1) {
-        return `<div class="${tokens[idx].info.trim()}">\n`;
+        const className = tokens[idx].info.trim();
+        tokens[idx].attrJoin('class', className);
+        tokens[idx.tag] = 'div';
+        return `<div class="${className}">\n`;
       } else {
         return '</div>\n';
       }
