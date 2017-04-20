@@ -109,6 +109,8 @@ export default {
 </script>
 
 <style scoped lang="scss">
+@import 'src/assets/styles/variables.scss';
+
 .hide {
   display: none;
 }
@@ -121,38 +123,29 @@ export default {
 .content {
   overflow-x: hidden;
 
-  &[data-viewMode="editor"] {
-    .viewer-wrapper {
-      width: 0;
-    }
+  .viewer-wrapper,
+  .editor-wrapper {
+    & > div { height: calc(100vh - #{$content-navbar-height}); }
+  }
 
-    .editor-wrapper {
-      width: 100%;
-    }
+  &[data-viewMode="editor"] {
+    .viewer-wrapper { width: 0; }
+    .editor-wrapper { width: 100%; }
+  }
+
+  &[data-viewMode="viewer"] {
+    .viewer-wrapper { width: 100%; }
+    .editor-wrapper { width: 0; }
   }
 
   &[data-viewMode="split"] {
     .viewer-wrapper,
     .editor-wrapper {
-
-      width: 50%;
-      @media screen and (orientation: portrait) {
-        width: 100%;
-
-        & > div {
-          height: calc(50vh - 78px/2);
-        }
-      }
-    }
-  }
-
-  &[data-viewMode="viewer"] {
-    .viewer-wrapper {
       width: 100%;
-    }
-
-    .editor-wrapper {
-      width: 0;
+      & > div { height: calc(50vh - #{$content-navbar-height/2}); }
+      @media screen and (min-width: 768px) {
+        & > div { height: initial }
+      }
     }
   }
 } 

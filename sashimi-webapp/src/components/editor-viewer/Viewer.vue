@@ -80,10 +80,7 @@
 </script>
 
 <style lang='scss'>
-  @import 'src/assets/styles/variables.scss';
-  
   .viewer {
-    height: calc(100vh - #{$content-navbar-height});
     overflow: hidden;
   }
 </style>
