@@ -46,6 +46,7 @@ whiteList.kbd = [];
 whiteList.iframe = ['allowfullscreen', 'name', 'referrerpolicy', 'sandbox', 'src', 'srcdoc', 'width', 'height'];
 // allow summary tag
 whiteList.summary = [];
+whiteList.canvas = ['width', 'height'];
 
 // Custom safeAttrValue function for whiteList
 function safeAttrValue(tag, name, value) {
