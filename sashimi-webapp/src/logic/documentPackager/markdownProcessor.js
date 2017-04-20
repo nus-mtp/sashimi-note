@@ -30,7 +30,6 @@ import mdConditional from './plugins/conditionalProcessor';
 import mdContainerWrapper from './plugins/markdown-it-container-wrapper';
 import mdLineNumber from './plugins/markdown-it-line-number';
 
-
 const md = new MarkdownIt({
   html: true,
   breaks: true,
@@ -66,8 +65,8 @@ md.use(mdAsciiMath);
 // For custom conditional plugin
 md.use(mdConditional.hideShowPlugin);
 // For injecting line number into the html content
-md.use(mdLineNumber);
 md.use(mdContainerWrapper);
+md.use(mdLineNumber);
 
 const validateData = function validateData(data) {
   return data || '';
