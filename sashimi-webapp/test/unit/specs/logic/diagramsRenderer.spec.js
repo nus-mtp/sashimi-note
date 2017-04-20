@@ -437,6 +437,6 @@ describe('Renderer', () => {
         done(error);
       });
     // Change default timeout value because this test requires more time for rendering
-    }).timeout(4000);
+    }).timeout(20000);
   });
 });
