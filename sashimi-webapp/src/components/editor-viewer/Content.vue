@@ -144,7 +144,8 @@ export default {
       width: 100%;
       & > div { height: calc(50vh - #{$content-navbar-height/2}); }
       @media screen and (min-width: 768px) {
-        & > div { height: initial }
+        width: 50%;
+        & > div { height: calc(100vh - #{$content-navbar-height}); }
       }
     }
   }
