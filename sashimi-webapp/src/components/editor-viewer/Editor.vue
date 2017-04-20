@@ -114,11 +114,9 @@ export default {
 </script>
 
 <style scoped lang="scss">
-@import 'src/assets/styles/variables.scss';
 
 .editor {
   box-shadow: 4px 0 12px 0px rgba(0, 0, 0, 0.3);
-  height: calc(100vh - #{$content-navbar-height});
 }
 </style>
 

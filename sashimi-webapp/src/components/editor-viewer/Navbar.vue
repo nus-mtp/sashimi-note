@@ -124,8 +124,7 @@ export default {
   box-shadow: 0px 1px 10px rgba(0,0,0,0.4);
   height: $content-navbar-height;
 
-  &[data-viewMode="editor"], 
-  &[data-viewMode="split"] {
+  &[data-viewMode="editor"] {
     #button-editor {
       display: none;
     }
