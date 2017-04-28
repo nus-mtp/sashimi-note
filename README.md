@@ -7,10 +7,12 @@
 <p align="center">
   <a href="https://travis-ci.org/nus-mtp/sashimi-note">
     <img src="https://travis-ci.org/nus-mtp/sashimi-note.svg?branch=master" title="Build Status of master branch">
-    [![Test
-    Coverage](https://codeclimate.com/github/nus-mtp/sashimi-note/badges/coverage.svg)](https://codeclimate.com/github/nus-mtp/sashimi-note/coverage)
-    [![Code
-    Climate](https://codeclimate.com/github/nus-mtp/sashimi-note/badges/gpa.svg)](https://codeclimate.com/github/nus-mtp/sashimi-note)
+  </a>
+  <a href="https://codeclimate.com/github/nus-mtp/sashimi-note/coverage">
+    <img src="https://codeclimate.com/github/nus-mtp/sashimi-note/badges/coverage.svg" title="[Test Coverage">
+  </a>
+  <a href="https://codeclimate.com/github/nus-mtp/sashimi-note">
+    <img src="https://codeclimate.com/github/nus-mtp/sashimi-note/badges/gpa.svg" title="Code Climate">
   </a>
 </p>
 
