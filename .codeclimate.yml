@@ -5,21 +5,17 @@ engines:
     config:
       languages:
       - javascript
-      - python
-      - php
   eslint:
     enabled: true
   fixme:
     enabled: true
 ratings:
   paths:
+  - "**.vue"
   - "**.inc"
   - "**.js"
   - "**.jsx"
   - "**.module"
-  - "**.php"
-  - "**.py"
-  - "**.rb"
 exclude_paths:
 - dist/
 - sashimi-webapp/static/vendors
