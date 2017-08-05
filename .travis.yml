@@ -2,6 +2,15 @@ language: node_js
 node_js:
   - "6"
 env:
-  - NODE_ENV=testing TEST_DIR=sashimi-webapp
-  - NODE_ENV=testing TEST_DIR=sashimi-platform
+  - NODE_ENV=testing TEST_DIR=sashimi-webapp CXX=g++-4.8
+  - NODE_ENV=testing TEST_DIR=sashimi-platform CXX=g++-4.8
 script: cd $TEST_DIR && yarn && yarn test-travis
+addons:
+  apt:
+    sources:
+      - ubuntu-toolchain-r-test
+    packages:
+      - g++-4.8
+after_success:
+  - npm install -g codeclimate-test-reporter
+  - codeclimate-test-reporter < test/unit/coverage/lcov.info
